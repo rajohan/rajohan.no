@@ -1,0 +1,147 @@
+// Page general font styling
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: $default-font-size;
+  line-height: 1.7;
+  color: $color-black-light;
+}
+
+// Styling for text heading
+.heading-primary {
+  color: $color-white;
+  text-transform: uppercase;
+
+  &--main {
+    display: block;
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: 3.3rem;
+    margin-left: 1.65rem;
+
+    @include respond(phone) { // width < 600px?
+      letter-spacing: 0.6rem;
+      margin-left: 0.3rem;
+    }
+
+  }
+
+  &--sub {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1.1rem;
+    margin-left: 0.55rem;
+
+    @include respond(phone) { // width < 600px?
+      letter-spacing: 0.1rem;
+      margin-left: 0.05rem;
+    }
+  }
+
+  &--sub2 {
+    display: block;
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: 2rem;
+    margin-left: 1rem;
+
+    @include respond(phone) { // width < 600px?
+      letter-spacing: 0.2rem;
+      margin-left: 0.1rem;
+    }
+  }
+}
+
+.heading-secondary {
+  display: block;
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  margin-left: 0.1rem;
+
+  &--white {
+    color: $color-white;
+  }
+}
+
+.heading-tertiary {
+  display: block;
+  font-size: $default-font-size;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: $color-grey !important;
+}
+
+.heading-quaternary {
+  display: block;
+  font-size: $default-font-size;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: $color-white !important;
+}
+
+.letter-spacing-small {
+  letter-spacing: 0.3rem;
+  margin-left: 0.15rem;
+}
+
+.letter-spacing-medium {
+  letter-spacing: 0.8rem;
+  margin-left: 0.4rem;
+}
+
+.paragraph {
+  font-size: $default-font-size;
+
+  &:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+}
+
+/* Styling for links */
+a {
+  cursor: pointer;
+}
+
+a:link {
+  color: $color-black;
+  text-decoration: none;
+}
+
+a:active {
+  color: $color-black;
+  text-decoration: none;
+}
+
+a:visited {
+  color: $color-black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $color-primary;
+  text-decoration: none;
+}
+
+/* White styling for links */
+a.whitelink:link {
+  color: $color-white;
+  text-decoration: none;
+}
+
+a.whitelink:active {
+  color: $color-white;
+  text-decoration: none;
+}
+
+a.whitelink:visited {
+  color: $color-white;
+  text-decoration: none;
+}
+
+a.whitelink:hover {
+  color: $color-primary-lightest;
+  text-decoration: none;
+}

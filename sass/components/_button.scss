@@ -1,0 +1,91 @@
+/* Global Button Styles */
+.btn {
+  &,
+  &:link,
+  &:visited {
+    position: relative;
+    display: inline-block;
+    padding: 1.5rem 4rem;
+    text-align: center;
+    border-radius: 10rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: $default-font-size;
+    z-index: 1;
+    text-shadow: 0 0 1px rgba($color-black, 0.2), 0 1px 0 rgba($color-black, 0.2);
+    transition: all 0.75s ease;
+    cursor: pointer; 
+
+    &:hover {
+      color: $color-white;
+      text-shadow: none;
+      transform: translateY(-0.3rem);
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); // up, down, blur, color
+    }
+
+    &:active,
+    &:focus {
+      outline: none;
+      transform: translateY(-0.1rem);
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); // up, down, blur, color
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      height: 0%;
+      left: 50%;
+      border-radius: 10rem;
+      top: 50%;
+      width: 102%;
+      z-index: -1;
+      transition: all 0.5s ease 0s;
+    }
+  }
+
+  &--primary {
+    &:link,
+    &:visited {
+      color: $color-white;
+    }
+  }
+  
+  &--primary, 
+  &--secondary {
+
+    &:link,
+    &:visited {
+      border: 2px solid $color-primary;
+    }
+
+    &:after {
+      background: $color-primary;
+      opacity: 0.5;
+      transform: translateX(-50%) translateY(-50%);
+    }
+
+    &:hover:after {
+      height: 103%;
+      opacity: 1;
+    }
+  }
+
+  &--tertiary {
+    background-color: $color-primary;
+    color: $color-grey;
+    border: 2px solid $color-grey;
+    &:hover {
+      color: $color-black;
+    }
+    &:after {
+      background: $color-grey;
+      opacity: 0.5;
+      transform: translateX(-50%) translateY(-50%);
+     }
+ 
+     &:hover:after {
+       height: 103%;
+       opacity: 1;
+     }
+  }
+}
