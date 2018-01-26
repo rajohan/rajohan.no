@@ -16,19 +16,19 @@
         <a href="#" class="btn btn--secondary u-margin-top-medium">Contact me</a>  
     </div>
     <div class="section-about__social">
-        <a href="https://www.facebook.com/raymond.johannessen.5" target="_blank" class="section-about__social--link">
+        <a href="<?php echo $GLOBALS['facebook']; ?>" target="_blank" class="section-about__social--link">
             <img src="img/icons/facebook.svg" alt="Facebook" class="section-about__social--img">
         </a>
-        <a href="https://twitter.com/Rajohan" target="_blank" class="section-about__social--link">
+        <a href="<?php echo $GLOBALS['twitter']; ?>" target="_blank" class="section-about__social--link">
             <img src="img/icons/twitter.svg" alt="Twitter" class="section-about__social--img">
         </a>
-        <a href="https://www.linkedin.com/in/rajohan/" target="_blank" class="section-about__social--link">
+        <a href="<?php echo $GLOBALS['linkedin']; ?>" target="_blank" class="section-about__social--link">
             <img src="img/icons/linkedin.svg" alt="LinkedIn" class="section-about__social--img">
         </a>
-        <a href="https://github.com/rajohan" target="_blank" class="section-about__social--link">
+        <a href="<?php echo $GLOBALS['github']; ?>" target="_blank" class="section-about__social--link">
             <img src="img/icons/github.svg" alt="Github" class="section-about__social--img">
         </a>
-        <a href="mailto:mail@rajohan.no" class="section-about__social--link">
+        <a href="mailto:<?php echo $GLOBALS['mail']; ?>" class="section-about__social--link">
             <img src="img/icons/mail.svg" alt="Mail" class="section-about__social--img">
         </a>
     </div>

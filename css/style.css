@@ -334,7 +334,8 @@ a.whitelink:hover {
   background-color: #363636;
   padding: 2rem;
   color: #fff;
-  text-align: center; }
+  text-align: center;
+  font-size: 1.6rem; }
   .footer a:link {
     color: #fff;
     text-decoration: none; }

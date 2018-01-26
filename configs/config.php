@@ -42,7 +42,8 @@
     $GLOBALS['company']         =   'Raymond Johannessen Webutvikling'; // Company that made this
     $GLOBALS['org_link']        =   'https://w2.brreg.no/enhet/sok/detalj.jsp?orgnr=998619335';
     $GLOBALS['author']          =   'Raymond Johannessen'; // Person that made this
-    $GLOBALS['copyright']       =   'Copyright&nbsp;&copy;&nbsp;2017-'.date('Y').'&nbsp;'; // Copyright
+    $GLOBALS['copyright_link']  =   'https://www.copyrighted.com/website/uSpDm4NTL5wPLq0d?url=https%3A%2F%2Frajohan.no%2F';
+    $GLOBALS['copyright']       =   '<a href="'.$GLOBALS['copyright_link'].'" target="_blank">Copyrighted.com</a> registered &amp; protected&nbsp;&copy;&nbsp;2017-'.date('Y').'&nbsp;'; // Copyright
     $GLOBALS['authorweb']       =   'https://rajohan.no'; // Authors website
     $GLOBALS['self']            =    htmlentities( substr($_SERVER['PHP_SELF'], 0, strcspn( $_SERVER['PHP_SELF'] , "\n\r") ), ENT_QUOTES );
     $GLOBALS['url']             =   'https://rajohan.no'; // Url to the page
@@ -50,7 +51,7 @@
     $GLOBALS['webmaster']       =   'webmaster@rajohan.no'; // Webmaster mail address
     $GLOBALS['timezone']        =   'Europe/Oslo'; // Timezone
     $GLOBALS['language']        =   'en'; // Set language page is meant for
-    $GLOBALS['homepage']        =   "/"; // Path to index.php
+    $GLOBALS['homepage']        =   '/'; // Path to index.php
     $GLOBALS['page_title']      =   'Rajohan.no'; // Page title
     $GLOBALS['twitter']         =   'https://twitter.com/Rajohan'; // Path to twitter
     $GLOBALS['facebook']        =   'https://www.facebook.com/raymond.johannessen.5'; // Path to facebook profile
@@ -63,28 +64,28 @@
     $GLOBALS['gwebmaster']      =   'googlef02d6c3d5697c444'; // google-site-verification ID
     $GLOBALS['csvmaster']       =   '2c138698bdd758f3'; // copyrighted site verification ID
     $GLOBALS['font']            =   'https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900'; // Link to selected main font
-    $GLOBALS['error']           =   "Beklager en feil har oppst&aring;tt!"; // Set default error message
-    $GLOBALS['debug']           =   "true"; // Toggle debug mode on = true, off = false
+    $GLOBALS['error']           =   'Beklager en feil har oppst&aring;tt!'; // Set default error message
+    $GLOBALS['debug']           =   'true'; // Toggle debug mode on = true, off = false
     ############################################################################
     # DEBUG SETTINGS
     ############################################################################
-    if($GLOBALS['debug'] == "true") {
+    if($GLOBALS['debug'] == 'true') {
         ini_set('error_reporting', E_ALL); // Report all errors
-        ini_set("display_errors", 1); // Toggle showing error on
-        ini_set("display_startup_errors", 1); // Toggle showing startup errors on
-        ini_set("track_errors", 1); // Toggle tracking of errors on
-        ini_set("docref_root", "/var/www/rajohan.no/"); // Set root to docref file to enable it.
+        ini_set('display_errors', 1); // Toggle showing error on
+        ini_set('display_startup_errors', 1); // Toggle showing startup errors on
+        ini_set('track_errors', 1); // Toggle tracking of errors on
+        ini_set('docref_root', '/var/www/rajohan.no/'); // Set root to docref file to enable it.
         // phpinfo(); // Echo phpinfo();
     }
     else {
-        ini_set("display_startup_errors", E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED); // Dont report Notice, Strict or Deprecated.
-        ini_set("display_errors", 0); // Toggle showing error off.
-        ini_set("display_startup_errors", 0); // Toggle showing startup errors off.
-        ini_set("track_errors", 1); // Toggle tracking of errors off.
-        ini_set("docref_root", ""); // Remove root to docref file to disable it.
+        ini_set('display_startup_errors', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED); // Dont report Notice, Strict or Deprecated.
+        ini_set('display_errors', 0); // Toggle showing error off.
+        ini_set('display_startup_errors', 0); // Toggle showing startup errors off.
+        ini_set('track_errors', 1); // Toggle tracking of errors off.
+        ini_set('docref_root', ''); // Remove root to docref file to disable it.
     }
-    // ini_set("log_errors", 1); // Toggle log errors
-    // ini_set("error_log", "/home/2/r/rajohan/log/php_errors.log"); // Set dir to log file
+    // ini_set('log_errors', 1); // Toggle log errors
+    // ini_set('error_log', '/home/2/r/rajohan/log/php_errors.log'); // Set dir to log file
     ###########################################################################
     # THE END. Run final commands
     ###########################################################################
