@@ -10,7 +10,7 @@
             preg_match_all('/ss_url_p1(.*?)=(.*?)"(.*?)"/s', $url, $url_part1);
             preg_match_all('/ss_url_p2(.*?)=(.*?)"(.*?)"/s', $url, $url_part2);
             preg_match_all('/ss_url_p3(.*?)=(.*?)"(.*?)"/s', $url, $url_part3);
-            return "https://seal.alphassl.com/SiteSeal/siteSeal/profile/profile.do?p1=".$url_part1['3']['0']."&p2=".$url_part2['3']['0']."&p3=".$url_part3['3']['0'];
+            echo "https://seal.alphassl.com/SiteSeal/siteSeal/profile/profile.do?p1=".$url_part1['3']['0']."&p2=".$url_part2['3']['0']."&p3=".$url_part3['3']['0'];
         
         }
 
