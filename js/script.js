@@ -7,6 +7,13 @@ function getScrollBarWidth() {
 }
 var webpage_width = 900 - getScrollBarWidth(); // Set var with webpage width - scrollbar
 
+// Animate scroll to scrollTo
+function scroll(scrollTo, time) {
+    var $container = $("html,body");
+    var $scrollTo = scrollTo;
+    $container.animate({scrollTop: $scrollTo.offset().top , scrollLeft: 0},time);
+}
+
 // Check if website is resized to width > 900 and set navbar to flex if it is and hide navbar if not
 $(window).resize(function() {
     if($(window).width() > webpage_width) {
@@ -21,7 +28,7 @@ $(window).resize(function() {
 $(".navigation__hamburger-menu").on("click", function() {
     if($(".navigation__list").css("display") === "none") {
         $(".navigation__list").css("display", "flex");
-        scroll($(".navigation"));
+        scroll($(".navigation"), 300);
     } else {
         $(".navigation__list").css("display", "none");
     }
@@ -40,9 +47,17 @@ $(".navigation__item").on("click", function() {
     }
 });
 
-// Animate scroll to scrollTo
-function scroll(scrollTo) {
-    var $container = $("html,body");
-    var $scrollTo = scrollTo;
-    $container.animate({scrollTop: $scrollTo.offset().top , scrollLeft: 0},300);
-}
+// Take user Back to top
+$(".back-to-top").on("click", function() {
+    scroll($(".navigation"), 700);
+});
+
+// Hide/Show back to top button based on scroll posistion
+$(window).on("scroll", function() {
+    var scrollPosition = $(".navigation").offset().top;
+    if (scrollPosition < window.scrollY) {
+        $(".back-to-top").css("display", "block");
+    } else {
+        $(".back-to-top").css("display", "none");
+    }
+});

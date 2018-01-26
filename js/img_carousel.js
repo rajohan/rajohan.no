@@ -4,10 +4,10 @@
 var images = new Array();
 images = [
 
-    {"Source":"img/header1.jpg","Title":"Learn the basics","Text":"HTML, CSS, JavaScript, jQuery and PHP tutorials","Button_text":"View tutorials","Link":"#header1"},
-    {"Source":"img/header2.jpg","Title":"Need a website?","Text":"I'm a single source high quality solution for enforcing your business existence online","Button_text":"View services","Link":"#header2"},
-    {"Source":"img/header3.jpg","Title":"Personal blog","Text":"Read about my life and follow me through my projects","Button_text":"View blog","Link":"#header3"},
-    {"Source":"img/header4.jpg","Title":"Computer basics","Text":"Linux, security and other computer related guides","Button_text":"View guides","Link":"#header4"}
+    {"Source":"img/header/header1.jpg","Title":"Learn the basics","Text":"HTML, CSS, JavaScript, jQuery and PHP tutorials","Button_text":"View tutorials","Link":"#header1"},
+    {"Source":"img/header/header2.jpg","Title":"Need a website?","Text":"I'm a single source high quality solution for enforcing your business existence online","Button_text":"View services","Link":"#header2"},
+    {"Source":"img/header/header3.jpg","Title":"Personal blog","Text":"Read about my life and follow me through my projects","Button_text":"View blog","Link":"#header3"},
+    {"Source":"img/header/header4.jpg","Title":"Computer basics","Text":"Linux, security and other computer related guides","Button_text":"View guides","Link":"#header4"}
 
 ];
 
@@ -19,8 +19,8 @@ var count = images.length - 1; // Subtracting 1 accounts for the array starting 
 var counting = 0; // Start couting at 0
 var timerSwitcher; // Timer to switch header image
 var loadCount = 1; // Counter for slow loading of images
-var cycleTime = 6000; // Time between each image change
-var fadeTime = 200; // Fade in/out time
+var cycleTime = 8000; // Time between each image change
+var fadeTime = 500; // Fade in/out time
 
 /////////////////////////////////////////////////////////
 // Slow load all header images
@@ -36,7 +36,7 @@ var slowLoad = setInterval(function() {
         clearInterval(slowLoad); // Clear timer slowLoad
     }
 
-},500);
+},1000);
 
 
 /////////////////////////////////////////////////////////
@@ -54,6 +54,7 @@ function changeImage() {
     
     });
 
+    $(".header__placeholder").css({"background-image":"linear-gradient(to right bottom,rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.8)), url("+images[counting]["Source"]+")"}); // Change placeholder image
 }
 
 
