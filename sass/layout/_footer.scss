@@ -4,6 +4,11 @@
     color: $color-white;
     text-align: center;
     font-size: 1.6rem;
+    position: absolute;
+    width: 100vw;
+    max-width: 100%;
+    bottom: 0;
+    left: 0;
 
     a { 
     

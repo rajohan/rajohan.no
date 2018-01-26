@@ -1,6 +1,6 @@
 <?php
     include_once('configs/config.php');
-
+    include_once('classes/page_handler.php');
     ob_start(); // start output buffering
 
     if (session_status() == PHP_SESSION_NONE) {
@@ -27,7 +27,8 @@
     </head>
     <body>
         <?php
-            include_once('pages/landing_page.php');
+            $page = new Page_handler(); 
+            $page->get_page();
         ?>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.validate.min.js"></script>

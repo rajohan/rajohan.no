@@ -54,7 +54,7 @@ $(".back-to-top").on("click", function() {
 
 // Hide/Show back to top button based on scroll posistion
 $(window).on("scroll", function() {
-    var scrollPosition = $(".navigation").offset().top;
+    var scrollPosition = $(".navigation").offset().top + $(".navigation").height();
     if (scrollPosition < window.scrollY) {
         $(".back-to-top").css("display", "block");
     } else {

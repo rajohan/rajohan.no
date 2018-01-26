@@ -1,34 +1,38 @@
+<?php
+    include_once('classes/page_handler.php');
+    $active = new Page_handler(); 
+?>
 <!-- NAVIGATION START -->
 <nav class="navigation">
-    <img src="img/logo_white.png" alt="Logo" class="navigation__logo">
+    <a href="index.php?page=home"><img src="img/logo_white.png" alt="Logo" class="navigation__logo"></a>
     <ul class="navigation__list">
         <li class="navigation__item">
-            <a href="#" class="navigation__link navigation__link--active">
+            <a href="index.php?page=home" class="navigation__link <?php $active->set_active('home'); ?>">
                 Home
             </a>
         </li>
         <li class="navigation__item">
-            <a href="#" class="navigation__link">
+            <a href="index.php?page=about" class="navigation__link <?php $active->set_active('about'); ?>">
                 About
             </a>
         </li>
         <li class="navigation__item">
-            <a href="#" class="navigation__link">
+            <a href="#" class="navigation__link <?php $active->set_active('services'); ?>">
                 Services
             </a>
         </li>
         <li class="navigation__item">
-            <a href="#" class="navigation__link">
+            <a href="#" class="navigation__link <?php $active->set_active('projects'); ?>">
                 Projects
             </a>
         </li>
         <li class="navigation__item">
-            <a href="#" class="navigation__link">
+            <a href="#" class="navigation__link <?php $active->set_active('blog'); ?>">
                 Blog
             </a>
         </li>
         <li class="navigation__item">
-            <a href="#" class="navigation__link">
+            <a href="#" class="navigation__link <?php $active->set_active('contact'); ?>">
                 Contact
             </a>
         </li>
