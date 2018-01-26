@@ -1,5 +1,6 @@
 <!-- LANDING PAGE START -->
 <?php
+    
     include_once('layout/back_to_top_button.php');     // BACK TO TOP BUTTON
     include_once('layout/header.php');                 // HEADER
     include_once('layout/navigation.php');             // NAVIGATION
@@ -10,5 +11,6 @@
     include_once('modules/latest_news.php');           // LATEST NEWS
     include_once('modules/contact_me.php');            // CONTACT ME
     include_once('layout/footer.php');                 // FOOTER
+
 ?>
 <!-- LANDING PAGE END -->

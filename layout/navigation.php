@@ -1,6 +1,8 @@
 <?php
+    
     include_once('classes/page_handler.php'); // PAGE HANDLER
     $active = new Page_handler(); // GET ACTIVE PAGE TO SET ACTIVE BUTTON
+    
 ?>
 <!-- NAVIGATION START -->
 <nav class="navigation">

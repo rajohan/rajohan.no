@@ -1,11 +1,18 @@
 <?php
-    include_once('configs/config.php');
-    include_once('classes/page_handler.php');
+    
+    include_once('configs/config.php'); // CONFIG
+    include_once('classes/page_handler.php'); // PAGE HANDLER
+
     ob_start(); // start output buffering
 
+    $page = new Page_handler(); // Request new page
+
     if (session_status() == PHP_SESSION_NONE) {
+     
         session_start(); // start a new session, if its not allready started
+   
     }
+    
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +26,7 @@
         <meta name="author" content="<?php echo $GLOBALS['author'].", ".$GLOBALS['company']; ?>">
         <meta name="google-site-verification" content="<?php echo $GLOBALS['gwebmaster'] ?>">
         <meta name="copyrighted-site-verification" content="<?php echo $GLOBALS['csvmaster']; ?>">
-        <title><?php echo $GLOBALS['page_title']; ?></title>
+        <title><?php $page->page_title(); ?></title>
         <link href="<?php echo $GLOBALS['font']; ?>">
         <link rel="shortcut icon" type="image/png" href="img/favicon/favicon.png">
         <link rel="stylesheet" href="css/style.css">
@@ -27,8 +34,7 @@
     </head>
     <body>
         <?php
-            $page = new Page_handler(); 
-            $page->get_page();
+            $page->get_page(); // Include page equal to 'page' parameter in url
         ?>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.validate.min.js"></script>

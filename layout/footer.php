@@ -1,6 +1,8 @@
 <?php
+    
     include_once('classes/ssl_seal.php'); // SSL SEAL CLASS
     $ssl_seal = new Ssl_seal(); // GENERATE NEW SSL SEAL LINK
+    
 ?>
 <!-- SECTION FOOTER START -->
 <footer class="footer">

@@ -1,4 +1,5 @@
 <?php 
+
     ###########################################################################
     # Page handler. Include the correct page and set active button.
     ###########################################################################
@@ -43,6 +44,23 @@
 
         }
 
+        // Metod to generate page title
+        function page_title() {
+
+            if($this->valid_page()) {
+
+                $title = $GLOBALS['page_title']." - ".ucfirst($this->page);
+
+            } else {
+
+                $title = $GLOBALS['page_title'];
+
+            }
+
+            echo $title;
+
+        }
+
         // Metod to include the correct page
         function get_page() {
 
@@ -70,4 +88,5 @@
         }
 
     }
+
 ?>

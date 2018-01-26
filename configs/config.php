@@ -1,4 +1,5 @@
 <?php
+    
     ############################################################################
     #          A Project of Raymond Johannessen Webutvikling
     ############################################################################
@@ -7,10 +8,7 @@
     #   Project:    rajohan.no
     #   Page:       config.php
     #   Modules:    (in order top->bottom) Startup commands,
-    #               Setting page and category and updating cookies,
-    #               Global variables, Debug settings, Cookie permission function,
-    #               Pager function, Filter and BBcode parser,
-    #               Error function, The end.
+    #               Global variables, Debug settings, The end.
     #
     #   Version:    1.0 - 2018-01-26
     #   Authors:    Raymond Johannessen <mail@rajohan.no>
@@ -32,7 +30,9 @@
     ob_start(); // start output buffering
     
     if (session_status() == PHP_SESSION_NONE) { 
+        
         session_start(); // start a new session, if its not allready started
+        
     }
     ############################################################################
     # GLOBAL VARIABLES
@@ -70,24 +70,29 @@
     # DEBUG SETTINGS
     ############################################################################
     if($GLOBALS['debug'] == 'true') {
+        
         ini_set('error_reporting', E_ALL); // Report all errors
         ini_set('display_errors', 1); // Toggle showing error on
         ini_set('display_startup_errors', 1); // Toggle showing startup errors on
         ini_set('track_errors', 1); // Toggle tracking of errors on
         ini_set('docref_root', '/var/www/rajohan.no/'); // Set root to docref file to enable it.
         // phpinfo(); // Echo phpinfo();
-    }
-    else {
+    
+    } else {
+        
         ini_set('display_startup_errors', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED); // Dont report Notice, Strict or Deprecated.
         ini_set('display_errors', 0); // Toggle showing error off.
         ini_set('display_startup_errors', 0); // Toggle showing startup errors off.
         ini_set('track_errors', 1); // Toggle tracking of errors off.
         ini_set('docref_root', ''); // Remove root to docref file to disable it.
+    
     }
+    
     // ini_set('log_errors', 1); // Toggle log errors
     // ini_set('error_log', '/home/2/r/rajohan/log/php_errors.log'); // Set dir to log file
     ###########################################################################
     # THE END. Run final commands
     ###########################################################################
     ob_end_flush(); // We are done and are ending the output buffering
+
 ?>
