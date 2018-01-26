@@ -55,7 +55,7 @@
         // Metod to add active page class to button equivalent to $page
         function set_active($button) {
 
-            if($this->valid_page() && $this->page == $button) {
+            if($this->valid_page() && $this->page === $button) {
 
                 echo "navigation__link--active";
 
