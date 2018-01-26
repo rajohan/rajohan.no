@@ -34,6 +34,6 @@
             </div>
         </div>
     </div>
-    <a href="#" class="btn btn--secondary u-margin-top-medium u-margin-bottom-medium">See all news/tutorials</a> 
+    <a href="index.php?page=blog" class="btn btn--secondary u-margin-top-medium u-margin-bottom-medium">See all news/tutorials</a> 
 </section>
 <!-- SECTION LATEST NEWS END -->

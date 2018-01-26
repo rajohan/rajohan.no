@@ -11,9 +11,9 @@
         From simple one page websites, all the way to custom built content management systems from scratch.
     </p>
     <div class="section-about__cta">
-        <a href="#" class="btn btn--secondary u-margin-top-medium">More about me</a>
-        <a href="#" class="btn btn--secondary u-margin-sides-medium u-margin-top-medium">View services</a>    
-        <a href="#" class="btn btn--secondary u-margin-top-medium">Contact me</a>  
+        <a href="index.php?page=about" class="btn btn--secondary u-margin-top-medium">More about me</a>
+        <a href="index.php?page=services" class="btn btn--secondary u-margin-sides-medium u-margin-top-medium">View services</a>    
+        <a href="index.php?page=contact" class="btn btn--secondary u-margin-top-medium">Contact me</a>  
     </div>
     <div class="section-about__social">
         <a href="<?php echo $GLOBALS['facebook']; ?>" target="_blank" class="section-about__social--link">

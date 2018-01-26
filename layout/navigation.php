@@ -22,17 +22,17 @@
             </a>
         </li>
         <li class="navigation__item">
-            <a href="#" class="navigation__link <?php $active->set_active('projects'); ?>">
+            <a href="index.php?page=projects" class="navigation__link <?php $active->set_active('projects'); ?>">
                 Projects
             </a>
         </li>
         <li class="navigation__item">
-            <a href="#" class="navigation__link <?php $active->set_active('blog'); ?>">
+            <a href="index.php?page=blog" class="navigation__link <?php $active->set_active('blog'); ?>">
                 Blog
             </a>
         </li>
         <li class="navigation__item">
-            <a href="#" class="navigation__link <?php $active->set_active('contact'); ?>">
+            <a href="index.php?page=contact" class="navigation__link <?php $active->set_active('contact'); ?>">
                 Contact
             </a>
         </li>

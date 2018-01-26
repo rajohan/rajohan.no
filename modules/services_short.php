@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="services__cta">
-        <a href="#" class="btn btn--secondary u-margin-top-medium u-margin-bottom-medium">View all services</a> 
+        <a href="index.php?page=services" class="btn btn--secondary u-margin-top-medium u-margin-bottom-medium">View all services</a> 
     </div> 
 </section>
 <!-- SECTION SERVICES END -->

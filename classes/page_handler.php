@@ -14,7 +14,12 @@
 
                 'home'     => 'landing_page.php', 
                 'about'    => 'about.php',
-                'services' => 'services.php'
+                'services' => 'services.php',
+                'projects' => 'projects.php',
+                'blog'     => 'blog.php',
+                'contact'  => 'contact.php',
+                'legal'    => 'legal.php',
+                'sitemap'  => 'sitemap.php'
 
             );
 

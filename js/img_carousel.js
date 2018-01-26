@@ -4,10 +4,10 @@
 var images = new Array();
 images = [
 
-    {"Source":"img/header/header1.jpg","Title":"Learn the basics","Text":"HTML, CSS, JavaScript, jQuery and PHP tutorials","Button_text":"View tutorials","Link":"#header1"},
-    {"Source":"img/header/header2.jpg","Title":"Need a website?","Text":"I'm a single source high quality solution for enforcing your business existence online","Button_text":"View services","Link":"#header2"},
-    {"Source":"img/header/header3.jpg","Title":"Personal blog","Text":"Read about my life and follow me through my projects","Button_text":"View blog","Link":"#header3"},
-    {"Source":"img/header/header4.jpg","Title":"Computer basics","Text":"Linux, security and other computer related guides","Button_text":"View guides","Link":"#header4"}
+    {"Source":"img/header/header1.jpg","Title":"Learn the basics","Text":"HTML, CSS, JavaScript, jQuery and PHP tutorials","Button_text":"View tutorials","Link":"index.php?page=blog"},
+    {"Source":"img/header/header2.jpg","Title":"Need a website?","Text":"I'm a single source high quality solution for enforcing your business existence online","Button_text":"View services","Link":"index.php?page=services"},
+    {"Source":"img/header/header3.jpg","Title":"Personal blog","Text":"Read about my life and follow me through my projects","Button_text":"View blog","Link":"index.php?page=blog"},
+    {"Source":"img/header/header4.jpg","Title":"Computer basics","Text":"Linux, security and other computer related guides","Button_text":"View guides","Link":"index.php?page=blog"}
 
 ];
 

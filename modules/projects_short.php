@@ -8,7 +8,7 @@
             <h3 class="u-margin-top-small">Webpage &ndash; Natours</h3>
             Exciting tours for adventurous people. This page was made for learning purposes. This site should work in all browsers.
             <span class="u-margin-top-small">
-                <a href="#" class="projects__view whitelink">View project <span>&roarr;</span></a>
+                <a href="https://rajohan.no/design/index.php" target="_blank" class="projects__view whitelink">View project <span>&roarr;</span></a>
             </span>
         </div>
         <div class="projects__box">
@@ -16,7 +16,7 @@
             <h3 class="u-margin-top-small">Webpage &ndash; Nexter</h3>
             Your home, your freedom. This page was made for learning purposes. Because this site is made with new technology it will not work in Internet explorer.
             <span class="u-margin-top-small">
-                <a href="#" class="projects__view whitelink">View project <span>&roarr;</span></a>
+                <a href="https://rajohan.no/design3/index.php" target="_blank" class="projects__view whitelink">View project <span>&roarr;</span></a>
             </span>
         </div>
         <div class="projects__box">
@@ -24,10 +24,10 @@
             <h3 class="u-margin-top-small">Webpage &ndash; Trillo</h3>
             Your all-in-one booking app. This page was made for learning purposes. Because this site is made with new technology it will not work in Internet explorer.
             <span class="u-margin-top-small">
-                <a href="#" class="projects__view whitelink">View project <span>&roarr;</span></a>
+                <a href="https://rajohan.no/design2/index.php" target="_blank" class="projects__view whitelink">View project <span>&roarr;</span></a>
             </span>
         </div>
     </div>
-    <a href="#" class="btn btn--primary u-margin-top-medium u-margin-bottom-medium">See more projects</a>  
+    <a href="index.php?page=projects" class="btn btn--primary u-margin-top-medium u-margin-bottom-medium">See more projects</a>  
 </section>
 <!-- SECTION PROJECTS END -->

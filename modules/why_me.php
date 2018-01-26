@@ -16,6 +16,6 @@
     Most design agencies can take months to build a website for you. 
     Meanwhile, you are missing out on customer orders, website traffic, search engine indexing, and greater visibility on the web from social media links to your website.
     </p>
-    <a href="#" class="btn btn--primary u-margin-top-medium">Contact me today!</a>  
+    <a href="index.php?page=contact" class="btn btn--primary u-margin-top-medium">Contact me today!</a>  
 </section>
 <!-- SECTION WHY ME END -->
