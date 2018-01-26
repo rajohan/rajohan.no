@@ -1,3 +1,4 @@
+// Navigation
 .navigation {
     background-color: $color-primary;
     width: 100%;
@@ -91,6 +92,7 @@
         }
     }
 
+    // Navigation for small devices
     &__hamburger-menu {
         cursor: pointer;
         position: absolute;

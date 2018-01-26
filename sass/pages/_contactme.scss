@@ -1,3 +1,4 @@
+// Contact me
 .contact-me {
   background-color: $color-primary;
   text-align: center;
@@ -68,14 +69,17 @@ fieldset {
   }
 }
 
+// Error border
 .error {
   border: 2px solid $red;
 }
 
+// Valid border
 .valid {
   border: 2px solid $green;
 }
 
+// Input field img
 #contact-me__name-img {
   background-image: url('../img/icons/user.svg');
 }
@@ -104,6 +108,7 @@ fieldset {
   background-image: url('../img/icons/message.svg');
 }
 
+// Error box
 [id$='-error'] {
   background: $red;
   padding: 1rem;
@@ -128,6 +133,7 @@ fieldset {
   }
 }
 
+// Required input fields
 .required {
   position: relative;
   display: inline-block;
@@ -216,6 +222,7 @@ fieldset {
 
 }
 
+// Not required input fields
 .not-required {
   position: relative;
   display: block;
