@@ -248,27 +248,6 @@ a.whitelink:hover {
       margin-left: 2rem;
       margin-right: 2rem; } }
 
-.back-to-top {
-  position: fixed;
-  bottom: 5rem;
-  right: 5rem;
-  z-index: 10;
-  border-radius: 10rem;
-  width: 6rem;
-  height: 6rem;
-  border: 0;
-  padding: 2rem;
-  background-color: #476D7C;
-  fill: #fff;
-  cursor: pointer;
-  display: none; }
-  @media only screen and (max-width: 56.25em) {
-    .back-to-top {
-      bottom: 3rem;
-      right: 3rem; } }
-  .back-to-top:hover {
-    background-color: #77ABB7; }
-
 /* Global Button Styles */
 .btn, .btn:link, .btn:visited {
   position: relative;
@@ -331,6 +310,27 @@ a.whitelink:hover {
   .btn--tertiary:hover:after {
     height: 103%;
     opacity: 1; }
+
+.back-to-top {
+  position: fixed;
+  bottom: 5rem;
+  right: 5rem;
+  z-index: 10;
+  border-radius: 10rem;
+  width: 6rem;
+  height: 6rem;
+  border: 0;
+  padding: 2rem;
+  background-color: #476D7C;
+  fill: #fff;
+  cursor: pointer;
+  display: none; }
+  @media only screen and (max-width: 56.25em) {
+    .back-to-top {
+      bottom: 3rem;
+      right: 3rem; } }
+  .back-to-top:hover {
+    background-color: #77ABB7; }
 
 .footer {
   background-color: #363636;
