@@ -7,6 +7,7 @@ function getScrollBarWidth() {
 }
 var webpage_width = 900 - getScrollBarWidth(); // Set var with webpage width - scrollbar
 
+<<<<<<< HEAD
 // Animate scroll to scrollTo
 function scroll(scrollTo, time) {
     var $container = $("html,body");
@@ -14,6 +15,8 @@ function scroll(scrollTo, time) {
     $container.animate({scrollTop: $scrollTo.offset().top , scrollLeft: 0},time);
 }
 
+=======
+>>>>>>> ba8f360... Add files via upload
 // Check if website is resized to width > 900 and set navbar to flex if it is and hide navbar if not
 $(window).resize(function() {
     if($(window).width() > webpage_width) {
@@ -28,7 +31,11 @@ $(window).resize(function() {
 $(".navigation__hamburger-menu").on("click", function() {
     if($(".navigation__list").css("display") === "none") {
         $(".navigation__list").css("display", "flex");
+<<<<<<< HEAD
         scroll($(".navigation"), 300);
+=======
+        scroll($(".navigation"));
+>>>>>>> ba8f360... Add files via upload
     } else {
         $(".navigation__list").css("display", "none");
     }
@@ -47,6 +54,7 @@ $(".navigation__item").on("click", function() {
     }
 });
 
+<<<<<<< HEAD
 // Take user Back to top
 $(".back-to-top").on("click", function() {
     scroll($(".navigation"), 700);
@@ -61,3 +69,11 @@ $(window).on("scroll", function() {
         $(".back-to-top").css("display", "none");
     }
 });
+=======
+// Animate scroll to scrollTo
+function scroll(scrollTo) {
+    var $container = $("html,body");
+    var $scrollTo = scrollTo;
+    $container.animate({scrollTop: $scrollTo.offset().top , scrollLeft: 0},300);
+}
+>>>>>>> ba8f360... Add files via upload
