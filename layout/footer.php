@@ -1,6 +1,6 @@
 <?php
     
-    include_once('classes/ssl_seal.php'); // SSL SEAL CLASS
+    include_once('classes/ssl_seal.php'); // SSL SEAL
     $ssl_seal = new Ssl_seal(); // GENERATE NEW SSL SEAL LINK
     
 ?>
