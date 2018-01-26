@@ -20,7 +20,7 @@
             // Set the $page variable
             if(isset($_GET['page']) && !empty($_GET['page'])) {
 
-                $this->page = $_GET['page'];
+                $this->page = filter_var($_GET['page'], FILTER_SANITIZE_URL);
 
             } else {
 
