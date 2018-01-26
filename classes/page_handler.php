@@ -12,8 +12,9 @@
             // Array containing allowed pages
             $this->allowed_pages = array(
 
-                'home' => 'landing_page.php', 
-                'about' => 'about.php'
+                'home'     => 'landing_page.php', 
+                'about'    => 'about.php',
+                'services' => 'services.php'
 
             );
 

@@ -17,7 +17,7 @@
             </a>
         </li>
         <li class="navigation__item">
-            <a href="#" class="navigation__link <?php $active->set_active('services'); ?>">
+            <a href="index.php?page=services" class="navigation__link <?php $active->set_active('services'); ?>">
                 Services
             </a>
         </li>
