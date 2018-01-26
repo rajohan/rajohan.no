@@ -19,8 +19,8 @@ var count = images.length - 1; // Subtracting 1 accounts for the array starting 
 var counting = 0; // Start couting at 0
 var timerSwitcher; // Timer to switch header image
 var loadCount = 1; // Counter for slow loading of images
-var cycleTime = 6000; // Time between each image change
-var fadeTime = 200; // Fade in/out time
+var cycleTime = 8000; // Time between each image change
+var fadeTime = 500; // Fade in/out time
 
 /////////////////////////////////////////////////////////
 // Slow load all header images
@@ -36,7 +36,7 @@ var slowLoad = setInterval(function() {
         clearInterval(slowLoad); // Clear timer slowLoad
     }
 
-},500);
+},1000);
 
 
 /////////////////////////////////////////////////////////
@@ -54,6 +54,7 @@ function changeImage() {
     
     });
 
+    $(".header__placeholder").css({"background-image":"linear-gradient(to right bottom,rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.8)), url("+images[counting]["Source"]+")"}); // Change placeholder image
 }
 
 

@@ -30,10 +30,16 @@ body {
   box-sizing: border-box;
   width: 100vw;
   max-width: 100%;
+  position: relative;
 }
 
 // Selected text styling
 ::selection {
   background-color: $color-primary;
   color: $color-white;
+}
+
+// Set outline of all buttons to 0
+button {
+  outline-width: 0;
 }
