@@ -1,0 +1,39 @@
+// CSS basic reset
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+// Set defualt font size to 62.5% (100% = 16px, 62.5% = 10%) for easy use of the 'rem' unit for measurements
+html {
+  font-size: 62.5%; // 1rem = 10px, 10/16 = 62.5%
+  
+  @include respond(tab-land) { // width < 1300px?
+    font-size: 56.25%; // 1rem = 9px, 9/16 = 56.25%
+  }
+  @include respond(medium-desktop) { // width < 1100px?
+    font-size: 50%; // 1rem = 8px, 9/16 = 50%
+  }
+  @include respond(phone) { // width < 600px?
+    font-size: 30%; // 1rem = 8px, 9/16 = 50%
+  }
+  @include respond(big-desktop) { // width > 1800px?
+    font-size: 62.5%; // 1rem = 12px, 12/16 = 75%
+  }
+}
+
+// Page general font styling
+body {
+  box-sizing: border-box;
+  width: 100vw;
+  max-width: 100%;
+}
+
+// Selected text styling
+::selection {
+  background-color: $color-primary;
+  color: $color-white;
+}

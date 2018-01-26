@@ -1,0 +1,29 @@
+.footer {
+    background-color: $color-black-light;
+    padding: 2rem;
+    color: $color-white;
+    text-align: center;
+
+    a { 
+    
+        &:link {
+            color: $color-white;
+            text-decoration: none;
+        }
+      
+        &:active {
+            color: $color-white;
+            text-decoration: none;
+        }
+      
+        &:visited {
+            color: $color-white;
+            text-decoration: none;
+        }
+      
+        &:hover {
+            color: $color-primary-lightest;
+            text-decoration: none;
+        }
+    }
+}
