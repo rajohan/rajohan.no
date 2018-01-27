@@ -30,26 +30,27 @@
 
             );
 
+            $params = preg_split("/\//", $_SERVER['REQUEST_URI']); // Split url at each '/' 
+
             // Set the $page variable
-            if(isset($_GET['page']) && !empty($_GET['page'])) {
-                
+            if(!empty($params[2])) {
                 // Only allow word characters (a-z, A-Z, 0-9 and _.)
-                if (preg_match('~\W~', $_GET['page'])) {
-                    
-                    $this->page = 'home'; // Value in url parameter page is invalid. Set $page to home
+                if (preg_match('~\W~', $params[2])) {
+
+                    $this->page = 'home'; // Value in url parameter is invalid. Setting $page to home
 
                 } else {
-                   
-                    $this->page = $_GET['page']; // Value in url parameter is valid. Set $page equal to url parameter page
+
+                    $this->page = $params[2]; // Value in url parameter is valid. Settting $page equal to url parameter
 
                 }
 
             } else {
 
-                $this->page = 'home'; // Page does not exist or is empty. Set $page to home
+                $this->page = 'home'; // Url parameter is empty. Setting $page to home
 
-            }   
-
+            }     
+         
         }
         
         // Metod to check if $page is valid
@@ -85,7 +86,7 @@
 
             } else {
 
-                echo $GLOBALS['error'];
+                require_once('pages/landing_page.php');
 
             }
 

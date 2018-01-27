@@ -11,13 +11,12 @@
     $filter = new Filter(); // Start filter
     $bbcode = new Bbcode(); // Start bbcode parser
     
-    $stmt = $db_conn->connect->prepare("SELECT * FROM `ABOUT` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
+    $stmt = $db_conn->connect->prepare("SELECT TITLE, SUB_TITLE, ABOUT FROM `ABOUT` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
     $stmt->execute(); // select from database
     $result = $stmt->get_result(); // Get the result
  
     while ($row = $result->fetch_assoc()) {
 
-        $id = $filter->sanitize($row['ID']);
         $title = $filter->sanitize($row['TITLE']);
         $sub_title = $filter->sanitize($row['SUB_TITLE']);
         $about = $bbcode->replace($filter->sanitize($row['ABOUT']));
@@ -25,6 +24,7 @@
     }
 
     $db_conn->free_close($result, $stmt);
+    
 ?>
 
 <!-- SECTION ABOUT START -->
@@ -37,9 +37,9 @@
         ?>
     </p>
     <div class="section-about__cta">
-        <a href="index.php?page=about" class="btn btn--secondary u-margin-top-medium">More about me</a>
-        <a href="index.php?page=services" class="btn btn--secondary u-margin-sides-medium u-margin-top-medium">View services</a>    
-        <a href="index.php?page=contact" class="btn btn--secondary u-margin-top-medium">Contact me</a>  
+        <a href="about/" class="btn btn--secondary u-margin-top-medium">More about me</a>
+        <a href="services/" class="btn btn--secondary u-margin-sides-medium u-margin-top-medium">View services</a>    
+        <a href="contact/" class="btn btn--secondary u-margin-top-medium">Contact me</a>  
     </div>
     <div class="section-about__social">
         <a href="<?php echo $GLOBALS['facebook']; ?>" target="_blank" class="section-about__social--link">

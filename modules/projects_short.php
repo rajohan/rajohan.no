@@ -1,10 +1,20 @@
 <?php
+
     // Check that the file is included and not accessed directly
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
+ 
+    $db_conn = new Database(); // connect to database
+    $filter = new Filter(); // Start filter
+    $bbcode = new Bbcode(); // Start bbcode parser
+    
+    $stmt = $db_conn->connect->prepare("SELECT NAME, CATEGORY, DESCRIPTION, IMAGE, URL FROM `PROJECTS` ORDER BY `ID` DESC LIMIT 3"); // prepare statement
+    $stmt->execute(); // select from database
+    $result = $stmt->get_result(); // Get the result
+
 ?>
 
 <!-- SECTION PROJECTS START -->
@@ -12,31 +22,31 @@
     <h1 class="heading-secondary heading-secondary--white letter-spacing-medium u-margin-top-medium">Projects</h1>
     <h1 class="heading-tertiary letter-spacing-small">My latest projects</h1>
     <div class="projects__container">
-        <div class="projects__box">
-            <img src="img/projects/natours.png" alt="Natours" class="projects__img">
-            <h3 class="u-margin-top-small">Webpage &ndash; Natours</h3>
-            Exciting tours for adventurous people. This page was made for learning purposes. This site should work in all browsers.
-            <span class="u-margin-top-small">
-                <a href="https://rajohan.no/design/index.php" target="_blank" class="projects__view whitelink">View project <span>&roarr;</span></a>
-            </span>
-        </div>
-        <div class="projects__box">
-            <img src="img/projects/nexter.png" alt="Nexter" class="projects__img">
-            <h3 class="u-margin-top-small">Webpage &ndash; Nexter</h3>
-            Your home, your freedom. This page was made for learning purposes. Because this site is made with new technology it will not work in Internet explorer.
-            <span class="u-margin-top-small">
-                <a href="https://rajohan.no/design3/index.php" target="_blank" class="projects__view whitelink">View project <span>&roarr;</span></a>
-            </span>
-        </div>
-        <div class="projects__box">
-            <img src="img/projects/trillo.png" alt=">Trillo" class="projects__img">
-            <h3 class="u-margin-top-small">Webpage &ndash; Trillo</h3>
-            Your all-in-one booking app. This page was made for learning purposes. Because this site is made with new technology it will not work in Internet explorer.
-            <span class="u-margin-top-small">
-                <a href="https://rajohan.no/design2/index.php" target="_blank" class="projects__view whitelink">View project <span>&roarr;</span></a>
-            </span>
-        </div>
+        <?php 
+
+            while ($row = $result->fetch_assoc()) {
+
+                $name = $filter->sanitize($row['NAME']);
+                $category = $filter->sanitize($row['CATEGORY']);
+                $description = $filter->sanitize($row['DESCRIPTION']);
+                $img = $filter->sanitize($row['IMAGE']);
+                $url = $filter->sanitize($row['URL']);
+
+                echo '<div class="projects__box">';
+                echo '<img src="img/projects/'.$img.'" alt="'.$name.'" class="projects__img">';
+                echo '<h3 class="u-margin-top-small">'.$category.' &ndash; '.$name.'</h3>';
+                echo $description;
+                echo '<span class="u-margin-top-small">';
+                echo '<a href="'.$url.'" target="_blank" class="projects__view whitelink">View project <span>&roarr;</span></a>';
+                echo '</span>';
+                echo '</div>';
+
+            }
+
+            $db_conn->free_close($result, $stmt);
+
+        ?>
     </div>
-    <a href="index.php?page=projects" class="btn btn--primary u-margin-top-medium u-margin-bottom-medium">See more projects</a>  
+    <a href="projects/" class="btn btn--primary u-margin-top-medium u-margin-bottom-medium">See more projects</a>  
 </section>
 <!-- SECTION PROJECTS END -->

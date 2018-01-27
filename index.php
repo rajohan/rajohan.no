@@ -38,13 +38,16 @@
         <meta name="copyrighted-site-verification" content="<?php echo $GLOBALS['csvmaster']; ?>">
         <title><?php $page->page_title(); ?></title>
         <link href="<?php echo $GLOBALS['font']; ?>">
+        <base href="/designv2/">
         <link rel="shortcut icon" type="image/png" href="img/favicon/favicon.png">
         <link rel="stylesheet" href="css/style.css">
         
     </head>
     <body>
         <?php
+
             $page->get_page(); // Include page equal to 'page' parameter in url
+
         ?>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.validate.min.js"></script>

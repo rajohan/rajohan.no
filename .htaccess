@@ -1,0 +1,34 @@
+Options +FollowSymLinks
+Options -Indexes
+
+# Set Path to error documents.
+ErrorDocument 403 /error.html
+ErrorDocument 404 /error.html
+
+#Turn on the rewrite engine.
+RewriteEngine on
+RewriteBase /
+
+# Make sure php.ini is blocked.
+<FilesMatch "^php?\.(ini|cgi)$">
+Order Deny,Allow 
+Deny from All 
+Allow from env=REDIRECT_STATUS 
+</FilesMatch>
+
+# Make sure user.ini is blocked.
+<FilesMatch "^user?\.(ini|cgi)$">
+Order Deny,Allow 
+Deny from All 
+Allow from env=REDIRECT_STATUS 
+</FilesMatch>
+
+# Remove www.
+RewriteCond %{SERVER_PORT} ^443
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1%{REQUEST_URI} [R=301,QSA,NC,L]
+
+# Make pretty urls.
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ^.*$ ./designv2/index.php

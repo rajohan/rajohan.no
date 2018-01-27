@@ -821,4 +821,5 @@ fieldset {
   .section-why-me__text {
     color: #fff;
     max-width: 80rem;
-    margin: 0 3rem; }
+    margin-left: 3rem;
+    margin-right: 3rem; }

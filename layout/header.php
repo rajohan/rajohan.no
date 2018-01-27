@@ -22,7 +22,7 @@
                     HTML, CSS, JavaScript, jQuery and PHP tutorials
                 </span>
             </h1>
-            <a href="index.php?page=blog" id="header__button" class="btn btn--primary u-margin-top-medium">See tutorials</a>
+            <a href="blog/" id="header__button" class="btn btn--primary u-margin-top-medium">See tutorials</a>
         </div>
         <button class="header__img-switcher header__img-switcher--prev">
             <svg viewBox="0 0 100 100">
