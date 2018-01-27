@@ -1,3 +1,12 @@
+<?php
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+?>
+
 <!-- SECTION CONTACT ME START -->
 <section class="contact-me">
     <h1 class="heading-secondary heading-secondary--white letter-spacing-medium u-margin-top-medium">Contact me</h1>

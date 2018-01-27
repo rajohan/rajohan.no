@@ -1,3 +1,12 @@
+<?php
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+?>
+
 <!-- SECTION WHY ME START -->
 <section class="section-why-me u-margin-top-medium">
     <h1 class="heading-primary heading-primary--sub2 u-center-text">

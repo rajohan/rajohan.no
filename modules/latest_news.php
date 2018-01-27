@@ -1,3 +1,12 @@
+<?php
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+?>
+
 <!-- SECTION LATEST NEWS START -->
 <section class="latest-news">
     <h1 class="heading-secondary letter-spacing-medium u-margin-top-medium">LATEST</h1>

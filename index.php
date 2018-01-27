@@ -1,7 +1,17 @@
 <?php
-    
-    include_once('configs/config.php'); // CONFIG
-    include_once('classes/page_handler.php'); // PAGE HANDLER
+
+    if (!defined('INCLUDE')) {
+
+        define('INCLUDE','true'); // Define INCLUDE to be able to show/use the files
+
+    }
+
+    require_once('configs/config.php');            // CONFIG
+    require_once('classes/database_handler.php');  // DATABASE HANDLER
+    require_once('classes/filter.php');            // FILTER
+    require_once('classes/bbcode.php');            // BBCODE
+    require_once('classes/page_handler.php');      // PAGE HANDLER
+    require_once('classes/ssl_seal.php');          // SSL SEAL
 
     ob_start(); // start output buffering
 

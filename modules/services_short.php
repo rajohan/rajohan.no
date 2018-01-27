@@ -1,3 +1,12 @@
+<?php
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+?>
+
 <!-- SECTION SERVICES START -->
 <section class="services u-margin-top-medium">
     <h1 class="heading-secondary letter-spacing-medium">Services</h1>

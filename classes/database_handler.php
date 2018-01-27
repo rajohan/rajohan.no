@@ -1,15 +1,30 @@
 <?php 
 
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+
     class Database {
 
-        private $connect;
+        public $connect;
 
         function __construct() {
 
-            include_once('config/db.php'); // Get database username, password etc
+            require_once('configs/db.php'); // Get database username, password etc
 
-            $this->connect = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-            
+            try {
+                
+                $this->connect = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME); // Try the connection
+
+            } catch (Exception $error) {
+
+                echo "error"; // Output if an error is catched
+           
+            }
+
         }
 
         /////////////////////////////////////////////////////////
@@ -47,6 +62,16 @@
 
             $stmt->close(); // Close statement
             $this->connect->close(); // Close connection
+
+        }
+
+        /////////////////////////////////////////////////////////
+        // Method to free result and close connection
+        /////////////////////////////////////////////////////////
+        function free_close($result, $stmt) {
+
+            $result->free_result(); // Free results
+            $this->close_connection($stmt); // Close statement and connection
 
         }
 

@@ -1,16 +1,25 @@
+<?php
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+?>
+
 <!-- LANDING PAGE START -->
 <?php
     
-    include_once('layout/back_to_top_button.php');     // BACK TO TOP BUTTON
-    include_once('layout/header.php');                 // HEADER
-    include_once('layout/navigation.php');             // NAVIGATION
-    include_once('modules/about_short.php');           // ABOUT
-    include_once('modules/why_me.php');                // WHY ME
-    include_once('modules/projects_short.php');        // PROJECTS
-    include_once('modules/services_short.php');        // SERVICES
-    include_once('modules/latest_news.php');           // LATEST NEWS
-    include_once('modules/contact_me.php');            // CONTACT ME
-    include_once('layout/footer.php');                 // FOOTER
+    require_once('layout/back_to_top_button.php');     // BACK TO TOP BUTTON
+    require_once('layout/header.php');                 // HEADER
+    require_once('layout/navigation.php');             // NAVIGATION
+    require_once('modules/about_short.php');           // ABOUT
+    require_once('modules/why_me.php');                // WHY ME
+    require_once('modules/projects_short.php');        // PROJECTS
+    require_once('modules/services_short.php');        // SERVICES
+    require_once('modules/latest_news.php');           // LATEST NEWS
+    require_once('modules/contact_me.php');            // CONTACT ME
+    require_once('layout/footer.php');                 // FOOTER
 
 ?>
 <!-- LANDING PAGE END -->

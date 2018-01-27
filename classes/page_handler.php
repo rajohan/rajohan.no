@@ -1,4 +1,10 @@
 <?php 
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+        
+        die('Direct access is not permitted.');
+        
+    }
 
     ###########################################################################
     # Page handler. Include the correct page and set active button.
@@ -26,12 +32,21 @@
 
             // Set the $page variable
             if(isset($_GET['page']) && !empty($_GET['page'])) {
+                
+                // Only allow word characters (a-z, A-Z, 0-9 and _.)
+                if (preg_match('~\W~', $_GET['page'])) {
+                    
+                    $this->page = 'home'; // Value in url parameter page is invalid. Set $page to home
 
-                $this->page = filter_var($_GET['page'], FILTER_SANITIZE_URL);
+                } else {
+                   
+                    $this->page = $_GET['page']; // Value in url parameter is valid. Set $page equal to url parameter page
+
+                }
 
             } else {
 
-                $this->page = 'home';
+                $this->page = 'home'; // Page does not exist or is empty. Set $page to home
 
             }   
 
@@ -66,7 +81,7 @@
 
             if($this->valid_page()) {
 
-                include_once("pages/".$this->allowed_pages[$this->page]);
+                require_once("pages/".$this->allowed_pages[$this->page]);
 
             } else {
 

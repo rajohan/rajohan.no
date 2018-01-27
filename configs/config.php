@@ -1,5 +1,5 @@
 <?php
-    
+
     ############################################################################
     #          A Project of Raymond Johannessen Webutvikling
     ############################################################################
@@ -27,8 +27,15 @@
     ############################################################################
     # RUN STARTUP COMMANDS
     ############################################################################
-    ob_start(); // start output buffering
+    if(!defined('INCLUDE')) {
+        
+        die('Direct access is not permitted.'); // Check that the file is included and not accessed directly
     
+    }
+
+    ob_start(); // start output buffering
+    mysqli_report(MYSQLI_REPORT_STRICT); // Set mysqli reporting to strict
+
     if (session_status() == PHP_SESSION_NONE) { 
         
         session_start(); // start a new session, if its not allready started

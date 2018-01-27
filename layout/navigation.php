@@ -1,8 +1,14 @@
 <?php
-    
-    include_once('classes/page_handler.php'); // PAGE HANDLER
-    $active = new Page_handler(); // GET ACTIVE PAGE TO SET ACTIVE BUTTON
-    
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+?>
+
+<?php
+    $active = new Page_handler(); // GET ACTIVE PAGE TO SET ACTIVE BUTTON 
 ?>
 <!-- NAVIGATION START -->
 <nav class="navigation">

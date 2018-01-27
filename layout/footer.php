@@ -1,6 +1,14 @@
 <?php
-    
-    include_once('classes/ssl_seal.php'); // SSL SEAL
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+?>
+
+<?php
+
     $ssl_seal = new Ssl_seal(); // GENERATE NEW SSL SEAL LINK
     
 ?>
