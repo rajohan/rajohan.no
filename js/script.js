@@ -11,11 +11,11 @@ function getScrollBarWidth() {
 var webpage_width = 900 - getScrollBarWidth(); // Set var with webpage width - scrollbar
 
 // Animate scroll to scrollTo
-function scroll(scrollTo, time) {
+function scroll(scrollTo, offset) {
   
     var $container = $("html,body");
     var $scrollTo = scrollTo;
-    $container.animate({scrollTop: $scrollTo.offset().top , scrollLeft: 0},time);
+    $container.animate({scrollTop: $scrollTo.offset().top+offset , scrollLeft: 0}, "slow");
 
 }
 
@@ -39,7 +39,7 @@ $(".navigation__hamburger-menu").on("click", function() {
     if($(".navigation__list").css("display") === "none") {
       
         $(".navigation__list").css("display", "flex");
-        scroll($(".navigation"), 300);
+        scroll($(".navigation"), 0);
    
     } else {
      
@@ -71,7 +71,7 @@ $(".navigation__item").on("click", function() {
 // Take user Back to top
 $(".back-to-top").on("click", function() {
   
-    scroll($(".navigation"), 700);
+    scroll($(".navigation"), 0);
 
 });
 
@@ -90,4 +90,27 @@ $(window).on("scroll", function() {
   
     }
     
+});
+
+/*##########################################################################
+#  Functions to scroll page to desired element on the legal policies page
+##########################################################################*/
+$("#legal__disclaimer").click(function() {
+    scroll($("#legal__disclaimer-target"), -15);
+});
+
+$("#legal__privacy").click(function() {
+    scroll($("#legal__privacy-target"), -15);
+});
+
+$("#legal__cookies").click(function() {
+    scroll($("#legal__cookies-target"), -15);
+});
+
+$("#legal__refund").click(function() {
+    scroll($("#legal__refund-target"), -15);
+});
+
+$("#legal__tos").click(function() {
+    scroll($("#legal__tos-target"), -15);
 });

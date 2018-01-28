@@ -43,7 +43,8 @@ body {
   max-width: 100%;
   position: relative;
   min-height: 100vh;
-  max-height: 100%; }
+  max-height: 100%;
+  padding-bottom: 8rem; }
 
 ::selection {
   background-color: #254B62;
@@ -743,34 +744,31 @@ fieldset {
       .latest-news__read-more:hover span {
         padding-left: 0.4rem; }
 
-.services {
+.legal {
+  width: 100vw;
+  max-width: 100%;
   display: flex;
-  align-items: center;
-  flex-direction: column; }
-  .services__container {
-    display: flex;
-    justify-content: center;
-    margin-right: 3rem; }
-    @media only screen and (max-width: 56.25em) {
-      .services__container {
-        flex-direction: column; } }
-  .services__box {
-    max-width: 30rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 3rem; }
-  .services__icon {
-    width: 5rem;
-    height: 5rem; }
-  .services__text {
-    margin-top: 1rem;
-    text-align: center; }
-    @media only screen and (max-width: 56.25em) {
-      .services__text {
-        margin-bottom: 2rem; } }
-  .services__cta {
-    display: block; }
+  justify-content: center;
+  padding: 2rem; }
+  .legal__box {
+    max-width: 100rem; }
+  .legal__navigation {
+    cursor: pointer;
+    color: #000; }
+    .legal__navigation:hover {
+      color: #254B62; }
+  .legal__contact {
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin: 2rem 0; }
+  .legal__update {
+    margin: 2rem 0; }
+  .legal u {
+    border-top: 1px solid #c5c5c5;
+    border-bottom: 1px solid #c5c5c5;
+    display: block;
+    text-decoration: none;
+    margin: 2rem 0; }
 
 .projects {
   background-color: #363636;
@@ -804,6 +802,35 @@ fieldset {
       font-weight: 700; }
     .projects__view:hover span {
       padding-left: 0.4rem; }
+
+.services {
+  display: flex;
+  align-items: center;
+  flex-direction: column; }
+  .services__container {
+    display: flex;
+    justify-content: center;
+    margin-right: 3rem; }
+    @media only screen and (max-width: 56.25em) {
+      .services__container {
+        flex-direction: column; } }
+  .services__box {
+    max-width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 3rem; }
+  .services__icon {
+    width: 5rem;
+    height: 5rem; }
+  .services__text {
+    margin-top: 1rem;
+    text-align: center; }
+    @media only screen and (max-width: 56.25em) {
+      .services__text {
+        margin-bottom: 2rem; } }
+  .services__cta {
+    display: block; }
 
 .section-why-me {
   background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(../img/why_me.jpeg);

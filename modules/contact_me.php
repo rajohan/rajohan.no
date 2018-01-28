@@ -49,7 +49,7 @@
                 <textarea placeholder="Your message..." id="contact-me__message" class="contact-me__textarea" name="contact-me__message" tabindex="7"></textarea>
             </fieldset>
             <fieldset>
-                <button type="submit" name="contact-me__submit" class="btn btn--tertiary u-margin-top-medium u-margin-bottom-medium">Send message</button>
+                <button type="submit" name="contact-me__submit" class="btn btn--tertiary u-margin-top-medium">Send message</button>
             </fieldset>
         </form>
     </div>
