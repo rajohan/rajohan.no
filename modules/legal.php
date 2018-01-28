@@ -7,15 +7,17 @@
         
     }
 ?>
-
-<div class="legal">
+<!-- SECTION LEGAL START -->
+<section class="legal">
     <div class="legal__box">
+        
         <u><span style="font-size:30px;"><b>Legal policies</b></span></u>
-        <div id="legal__disclaimer" class="legal__navigation">1. Disclaimer</div>
-        <div id="legal__privacy" class="legal__navigation">2. Privacy policy</div>
-        <div id="legal__cookies" class="legal__navigation">3. Cookies</div>
-        <div id="legal__refund" class="legal__navigation">4. Refund policy</div>
-        <div id="legal__tos" class="legal__navigation">5. Terms and conditions</div>
+
+        <span id="legal__disclaimer" class="legal__navigation">1. Disclaimer</span>
+        <span id="legal__privacy" class="legal__navigation">2. Privacy policy</span>
+        <span id="legal__cookies" class="legal__navigation">3. Cookies</span>
+        <span id="legal__refund" class="legal__navigation">4. Refund policy</span>
+        <span id="legal__tos" class="legal__navigation">5. Terms and conditions</span>
 
         <div class="legal__contact">If you require any more information or have any questions about my legal policies, please feel free to <a href="contact/">contact me</a>.</div>
         
@@ -37,6 +39,8 @@
                 $user = $filter->sanitize($row['USER']);
                 $date = $filter->sanitize($row['DATE']);
             }
+            
+            $db_conn->free_close($result, $stmt); // free result and close db connection
 
             $date = strtotime($date); // convert date/time to unix timestap
             $date = date('d.m.Y', $date); // convert date/time back to desired format
@@ -51,4 +55,5 @@
 
         ?>
     </div>
-</div>
+</section>
+<!-- SECTION LEGAL END -->

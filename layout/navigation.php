@@ -28,13 +28,13 @@
                 $url = $filter->sanitize($row['URL']);
 
                 echo '<li class="navigation__item">';
-                echo '<a href="'.$url.'/" class="navigation__link <?php $active->set_active('.$url.'); ?>">';
+                echo '<a href="'.$url.'/" class="navigation__link '.$active->set_active($url).'">';
                 echo $name;
                 echo '</a>';
 
             }
 
-            $db_conn->free_close($result, $stmt);  
+            $db_conn->free_close($result, $stmt); // free result and close db connection
         ?>
     </ul>
     <div class="navigation__hamburger-menu">

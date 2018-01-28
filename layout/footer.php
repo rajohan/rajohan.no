@@ -34,7 +34,7 @@
 
         }
 
-        $db_conn->free_close($result, $stmt);
+        $db_conn->free_close($result, $stmt); // free result and close db connection
 
     ?>
     <br> 

@@ -42,7 +42,7 @@
 
             }
 
-            $db_conn->free_close($result, $stmt);
+            $db_conn->free_close($result, $stmt); // free result and close db connection
         ?>
     </div>
     <a href="blog/" class="btn btn--secondary u-margin-top-medium u-margin-bottom-medium">See all news/tutorials</a> 

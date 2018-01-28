@@ -106,7 +106,7 @@
 
             if($this->valid_page() && $this->page === $button) {
 
-                echo "navigation__link--active";
+                return "navigation__link--active";
 
             }
             
