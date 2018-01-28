@@ -9,7 +9,6 @@
  
     $db_conn = new Database(); // connect to database
     $filter = new Filter(); // Start filter
-    $bbcode = new Bbcode(); // Start bbcode parser
     
     $stmt = $db_conn->connect->prepare("SELECT TITLE, SUB_TITLE, OVERVIEW_1_IMAGE, OVERVIEW_1_TITLE, OVERVIEW_1_DESCRIPTION, OVERVIEW_2_IMAGE, OVERVIEW_2_TITLE, OVERVIEW_2_DESCRIPTION, OVERVIEW_3_IMAGE, OVERVIEW_3_TITLE, OVERVIEW_3_DESCRIPTION, OVERVIEW_4_IMAGE, OVERVIEW_4_TITLE, OVERVIEW_4_DESCRIPTION  FROM `SERVICES` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
     $stmt->execute(); // select from database
@@ -45,28 +44,28 @@
     <div class="services__container">
         <div class="services__box">
             <img src="img/icons/<?php echo $overview_1_image; ?>" alt="<?php echo $overview_1_title; ?>" class="services__icon">
-            <h3><?php echo $overview_1_title; ?></h3>
+            <h3><?php echo ucfirst($overview_1_title); ?></h3>
             <p class="services__text">
                 <?php echo $overview_1_description; ?>
             </p>
         </div>
         <div class="services__box">
         <img src="img/icons/<?php echo $overview_2_image; ?>" alt="<?php echo $overview_2_title; ?>" class="services__icon">
-        <h3><?php echo $overview_2_title; ?></h3>
+        <h3><?php echo ucfirst($overview_2_title); ?></h3>
             <p class="services__text">
                 <?php echo $overview_2_description; ?>
             </p>
         </div>
         <div class="services__box">
         <img src="img/icons/<?php echo $overview_3_image; ?>" alt="<?php echo $overview_3_title; ?>" class="services__icon">
-        <h3><?php echo $overview_3_title; ?></h3>
+        <h3><?php echo ucfirst($overview_3_title); ?></h3>
             <p class="services__text">
                 <?php echo $overview_3_description; ?>
             </p>
         </div>
         <div class="services__box">
         <img src="img/icons/<?php echo $overview_4_image; ?>" alt="<?php echo $overview_4_title; ?>" class="services__icon">
-        <h3><?php echo $overview_4_title; ?></h3>
+        <h3><?php echo ucfirst($overview_4_title); ?></h3>
             <p class="services__text">
                 <?php echo $overview_4_description; ?>  
             </p>

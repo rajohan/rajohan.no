@@ -13,8 +13,6 @@
 
         function __construct() {
 
-            require_once('configs/db.php'); // Get database username, password etc
-
             try {
                 
                 $this->connect = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME); // Try the connection
