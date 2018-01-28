@@ -11,24 +11,33 @@
     ###########################################################################
     class Page_handler {
 
-        private $allowed_pages;
-        private $page;
+        private $allowed_pages = []; // Array containing allowed pages
+        private $page; // Current page
 
         function __construct() {
 
-            // Array containing allowed pages
-            $this->allowed_pages = array(
+            //-----------------------------------------------
+            // ALLOWED PAGES
+            //-----------------------------------------------
+            
+            $db_conn = new Database(); // connect to database
+            $filter = new Filter(); // Start filter
+            $stmt = $db_conn->connect->prepare("SELECT PAGE, URL FROM `PAGES` ORDER BY `ID` DESC"); // prepare statement
+            $stmt->execute(); // select from database
+            $result = $stmt->get_result(); // Get the result
+           
+            while ($row = $result->fetch_assoc()) {
+                
+                $this->allowed_pages[$filter->sanitize($row['PAGE'])] = $filter->sanitize($row['URL']); // Push rows to array
+        
+            }
 
-                'home'     => 'landing_page.php', 
-                'about'    => 'about.php',
-                'services' => 'services.php',
-                'projects' => 'projects.php',
-                'blog'     => 'blog.php',
-                'contact'  => 'contact.php',
-                'legal'    => 'legal.php',
-                'sitemap'  => 'sitemap.php'
+            $db_conn->free_close($result, $stmt); // Free result and close database connection
 
-            );
+
+            //-----------------------------------------------
+            // URL HANDLER
+            //-----------------------------------------------
 
             $params = preg_split("/\//", $_SERVER['REQUEST_URI']); // Split url at each '/' 
 
@@ -65,11 +74,11 @@
 
             if($this->valid_page()) {
 
-                $title = $GLOBALS['page_title']." - ".ucfirst($this->page);
+                $title = ucfirst($GLOBALS['page_title'])." - ".ucfirst($this->page);
 
             } else {
 
-                $title = $GLOBALS['page_title'];
+                $title = ucfirst($GLOBALS['page_title']);
 
             }
 

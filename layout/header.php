@@ -1,28 +1,48 @@
 <?php
+
     // Check that the file is included and not accessed directly
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
+ 
+    $db_conn = new Database(); // connect to database
+    $filter = new Filter(); // Start filter
+    $stmt = $db_conn->connect->prepare("SELECT IMAGE, TITLE, SUB_TITLE, BUTTON_TEXT, LINK FROM `HEADER` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
+    $stmt->execute(); // select from database
+    $result = $stmt->get_result(); // Get the result
+
+    while ($row = $result->fetch_assoc()) {
+
+        $img = $filter->sanitize($row['IMAGE']);
+        $title = $filter->sanitize($row['TITLE']);
+        $sub_title = $filter->sanitize($row['SUB_TITLE']);
+        $button_text = $filter->sanitize($row['BUTTON_TEXT']);
+        $url = $filter->sanitize($row['LINK']);
+ 
+    }
+
+    $db_conn->free_close($result, $stmt); // free result and close db connection
+    
 ?>
 
 <!-- HEADER START -->
 <div class="header__placeholder">
-    <header class="header">
+    <header class="header" style="background-image:linear-gradient(to right bottom,rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.8)),url(img/header/<?php echo $img; ?>);">
         <div class="header__logo-box">
             <img src="img/logo_white.png" alt="Logo" class="header__logo">
         </div>
         <div class="header__text-box">
             <h1 class="heading-primary u-center-text">
                 <span id="header__title" class="heading-primary--main">
-                    Learn the basics
+                    <?php echo $title; ?>
                 </span>
                 <span id="header__text" class="heading-primary--sub">
-                    HTML, CSS, JavaScript, jQuery and PHP tutorials
+                    <?php echo $sub_title; ?>
                 </span>
             </h1>
-            <a href="blog/" id="header__button" class="btn btn--primary u-margin-top-medium">See tutorials</a>
+            <a href="<?php echo $url; ?>" id="header__button" class="btn btn--primary u-margin-top-medium"><?php echo $button_text; ?></a>
         </div>
         <button class="header__img-switcher header__img-switcher--prev">
             <svg viewBox="0 0 100 100">
@@ -35,18 +55,36 @@
             </svg>
         </button>
         <div class="header__circles">
-            <div id="header__switcher-1" data="1" class="header__circle-switcher header__circle-switcher--active">
-                &nbsp;
-            </div>
-            <div id="header__switcher-2" data="2" class="header__circle-switcher">
-                &nbsp;
-            </div>
-            <div id="header__switcher-3" data="3" class="header__circle-switcher">
-                &nbsp;
-            </div>
-            <div id="header__switcher-4" data="4" class="header__circle-switcher">
-                &nbsp;
-            </div>
+        <?php
+
+            // Crate circle buttons
+            $db_conn = new Database(); // connect to database
+            $stmt = $db_conn->connect->prepare("SELECT ID FROM `HEADER`"); // prepare statement
+            $stmt->execute(); // select from database
+            $result = $stmt->get_result(); // Get the result
+            $num_of_rows = $result->num_rows; // Get the number of rows
+
+            // Crate the buttons based on num rows
+            for($i=1; $i <= $num_of_rows; $i++) {
+                
+                // if its the first circle give it the active class
+                if($i === 1) {
+
+                    echo '<div id="header__switcher-'.$i.'" data="'.$i.'" class="header__circle-switcher header__circle-switcher--active">';
+                
+                } else { // else give it the normal class
+                 
+                    echo '<div id="header__switcher-'.$i.'" data="'.$i.'" class="header__circle-switcher">';
+               
+                }
+                echo '&nbsp;';
+                echo '</div>';
+
+            }
+
+            $db_conn->free_close($result, $stmt); // free result and close db connection
+
+        ?>
         </div>
     </header>
 </div>

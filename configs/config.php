@@ -44,35 +44,57 @@
     ############################################################################
     # GLOBAL VARIABLES
     ############################################################################
-    $GLOBALS['program']         =   'Rajohan.no'; // Website name
-    $GLOBALS['version']         =   'v1.0 - 06.12.2017'; // Version of the site
-    $GLOBALS['company']         =   'Raymond Johannessen Webutvikling'; // Company that made this
-    $GLOBALS['org_link']        =   'https://w2.brreg.no/enhet/sok/detalj.jsp?orgnr=998619335';
-    $GLOBALS['author']          =   'Raymond Johannessen'; // Person that made this
-    $GLOBALS['copyright_link']  =   'https://www.copyrighted.com/website/uSpDm4NTL5wPLq0d?url=https%3A%2F%2Frajohan.no%2F';
-    $GLOBALS['copyright']       =   '<a href="'.$GLOBALS['copyright_link'].'" target="_blank">Copyrighted.com</a> registered &amp; protected&nbsp;&copy;&nbsp;2017-'.date('Y').'&nbsp;'; // Copyright
-    $GLOBALS['authorweb']       =   'https://rajohan.no'; // Authors website
-    $GLOBALS['self']            =    htmlentities( substr($_SERVER['PHP_SELF'], 0, strcspn( $_SERVER['PHP_SELF'] , "\n\r") ), ENT_QUOTES );
-    $GLOBALS['url']             =   'https://rajohan.no'; // Url to the page
-    $GLOBALS['mail']            =   'mail@rajohan.no'; // Mail adress to site owner
-    $GLOBALS['webmaster']       =   'webmaster@rajohan.no'; // Webmaster mail address
-    $GLOBALS['timezone']        =   'Europe/Oslo'; // Timezone
-    $GLOBALS['language']        =   'en'; // Set language page is meant for
-    $GLOBALS['homepage']        =   '/'; // Path to index.php
-    $GLOBALS['page_title']      =   'Rajohan.no'; // Page title
-    $GLOBALS['twitter']         =   'https://twitter.com/Rajohan'; // Path to twitter
-    $GLOBALS['facebook']        =   'https://www.facebook.com/raymond.johannessen.5'; // Path to facebook profile
-    $GLOBALS['linkedin']        =   'https://www.linkedin.com/in/rajohan/'; // Path to linkedin profile
-    $GLOBALS['github']          =   'https://github.com/rajohan'; // Path to github profile
-    $GLOBALS['charset']         =   'UTF-8'; // Charset to be used
-    $GLOBALS['bot']             =   'index, follow'; // Choose how to be indexed by spider/crawler/bot
-    $GLOBALS['desc']            =   'Web development, Programming tutorials, Computer guides'; // Page description for meta tags
-    $GLOBALS['keywords']        =   'Web development, Web design, Programming, Coding, Tutorials, Guides, Computer, Blog, HTML, CSS, JavaScript, jQuery, PHP, MYSQL, Linux, Ubuntu'; // Page keywords for meta tags
-    $GLOBALS['gwebmaster']      =   'googlef02d6c3d5697c444'; // google-site-verification ID
-    $GLOBALS['csvmaster']       =   '2c138698bdd758f3'; // copyrighted site verification ID
-    $GLOBALS['font']            =   'https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900'; // Link to selected main font
-    $GLOBALS['error']           =   'Beklager en feil har oppst&aring;tt!'; // Set default error message
-    $GLOBALS['debug']           =   'true'; // Toggle debug mode on = true, off = false
+       
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+
+    $db_conn = new Database(); // connect to database
+    $filter = new Filter(); // Start filter
+
+    $stmt = $db_conn->connect->prepare("SELECT * FROM `CONFIG` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
+    $stmt->execute(); // select from database
+    $result = $stmt->get_result(); // Get the result
+
+    while ($row = $result->fetch_assoc()) {
+
+        $GLOBALS['program']         =   $filter->sanitize($row['PROGRAM']); // Website name
+        $GLOBALS['version']         =   $filter->sanitize($row['VERSION']); // Version of the site
+        $GLOBALS['company']         =   $filter->sanitize($row['COMPANY']); // Company that made this
+        $GLOBALS['org_link']        =   $filter->sanitize($row['ORG_LINK']); // Organization link
+        $GLOBALS['author']          =   $filter->sanitize($row['AUTHOR']); // Person that made this
+        $GLOBALS['authorweb']       =   $filter->sanitize($row['AUTHOR_WEB']); // Authors website
+        $GLOBALS['copyright_link']  =   $filter->sanitize($row['COPYRIGHT_LINK']); // Link to copyright certificate
+        $GLOBALS['copyright']       =   '<a href="'.$GLOBALS['copyright_link'].'" target="_blank">Copyrighted.com</a> registered &amp; protected&nbsp;&copy;&nbsp;2017-'.date('Y').'&nbsp;'; // Copyright
+        $GLOBALS['self']            =    htmlentities( substr($_SERVER['PHP_SELF'], 0, strcspn( $_SERVER['PHP_SELF'] , "\n\r") ), ENT_QUOTES );
+        $GLOBALS['url']             =   $filter->sanitize($row['URL']); // Url to the page
+        $GLOBALS['mail']            =   $filter->sanitize($row['MAIL']); // Mail adress to site owner
+        $GLOBALS['webmaster']       =   $filter->sanitize($row['WEBMASTER']); // Webmaster mail address
+        $GLOBALS['timezone']        =   $filter->sanitize($row['TIMEZONE']); // Timezone
+        $GLOBALS['language']        =   $filter->sanitize($row['LANGUAGE']); // Set language page is meant for
+        $GLOBALS['homepage']        =   $filter->sanitize($row['BASE_PATH']); // Path to index.php
+        $GLOBALS['page_title']      =   $filter->sanitize($row['PAGE_TITLE']); // Page title
+        $GLOBALS['twitter']         =   $filter->sanitize($row['TWITTER_PATH']); // Path to twitter
+        $GLOBALS['facebook']        =   $filter->sanitize($row['FACEBOOK_PATH']); // Path to facebook profile
+        $GLOBALS['linkedin']        =   $filter->sanitize($row['LINKEDIN_PATH']); // Path to linkedin profile
+        $GLOBALS['github']          =   $filter->sanitize($row['GITHUB_PATH']); // Path to github profile
+        $GLOBALS['charset']         =   $filter->sanitize($row['CHARSET']); // Charset to be used
+        $GLOBALS['bot']             =   $filter->sanitize($row['BOT']); // Choose how to be indexed by spider/crawler/bot
+        $GLOBALS['desc']            =   $filter->sanitize($row['DESCRIPTION']); // Page description for meta tags
+        $GLOBALS['keywords']        =   $filter->sanitize($row['KEYWORDS']); // Page keywords for meta tags
+        $GLOBALS['gwebmaster']      =   $filter->sanitize($row['GWEB_MASTER']); // google-site-verification ID
+        $GLOBALS['csvmaster']       =   $filter->sanitize($row['CSV_MASTER']); // copyrighted site verification ID
+        $GLOBALS['font']            =   $filter->sanitize($row['FONT']); // Link to selected main font
+        $GLOBALS['error']           =   $filter->sanitize($row['GLOBAL_ERROR']); // Set default error message
+        $GLOBALS['debug']           =   $filter->sanitize($row['DEBUG']); // Toggle debug mode on = true, off = false
+
+    }
+
+    $db_conn->free_close($result, $stmt);
+
     ############################################################################
     # DEBUG SETTINGS
     ############################################################################

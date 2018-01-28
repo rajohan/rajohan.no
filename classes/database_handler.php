@@ -19,7 +19,7 @@
 
             } catch (Exception $error) {
 
-                echo "error"; // Output if an error is catched
+                echo $GLOBALS['error']; // Output if an error is catched
            
             }
 

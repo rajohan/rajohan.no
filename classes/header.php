@@ -35,7 +35,7 @@
 
         function get_header_content() {
 
-            $stmt = $this->db_conn->connect->prepare("SELECT * FROM `HEADER` ORDER BY `ID` DESC"); // prepare statement
+            $stmt = $this->db_conn->connect->prepare("SELECT IMAGE, TITLE, SUB_TITLE, BUTTON_TEXT, LINK FROM `HEADER` ORDER BY `ID` DESC"); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
             $header = []; // Crate array to put database rows in
@@ -51,6 +51,7 @@
             echo json_encode($header); // Output the result
 
         }
+        
     }
  
 ?>

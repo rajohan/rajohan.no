@@ -6,11 +6,11 @@
 
     }
 
-    require_once('configs/config.php');            // CONFIG
     require_once('configs/db.php');                // Get database username, password etc
     require_once('classes/database_handler.php');  // DATABASE HANDLER
     require_once('classes/filter.php');            // FILTER
     require_once('classes/bbcode.php');            // BBCODE
+    require_once('configs/config.php');            // CONFIG
     require_once('classes/page_handler.php');      // PAGE HANDLER
     require_once('classes/ssl_seal.php');          // SSL SEAL
 
