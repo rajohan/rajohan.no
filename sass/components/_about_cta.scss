@@ -1,8 +1,20 @@
 .about__cta {
     display: flex;
     justify-content: center;
-    
+    margin-bottom: 5rem;
+
+    @include respond(tab-port) { // width < 900px?
+        margin-bottom: 3rem;
+    }
+
     @include respond(phone) { // width < 600px?
         flex-direction: column;
+        align-items: center;
+        
+        a {
+            &:not(:last-of-type) {
+                margin-bottom: 2rem;
+            }
+        }
     }
 }

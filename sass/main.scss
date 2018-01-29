@@ -10,7 +10,8 @@
 @import "components/button";
 @import "components/about_cta";
 @import "components/popup";
-@import "components/socialmedia";
+@import "components/services_cta";
+@import "components/social_media";
 // Layout
 @import "layout/footer";
 @import "layout/grid";
@@ -19,10 +20,11 @@
 // Pages
 @import "pages/about";
 @import "pages/computer_setup";
-@import "pages/contactme";
+@import "pages/contact_me";
 @import "pages/cv";
-@import "pages/latestnews";
+@import "pages/latest_blog";
 @import "pages/legal";
 @import "pages/projects";
+@import "pages/services_extended";
 @import "pages/services";
-@import "pages/whyme";
+@import "pages/why_me";

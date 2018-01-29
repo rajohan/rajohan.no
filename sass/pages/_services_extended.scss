@@ -1,0 +1,31 @@
+.services {
+    &__new-webpage,
+    &__hosting,
+    &__backup,
+    &__seo,
+    &__price {
+        display: flex;
+        justify-content: center;
+        width: 100vw;
+        max-width: 100%;
+
+        &__box {
+            width: 100%;
+            max-width: 80rem;
+            padding: 0 2.5rem;
+
+            h1 {
+                text-align: center;
+            }
+        }
+    }
+
+    &__new-webpage,
+    &__backup,
+    &__price {
+        background-color: $color-grey-light;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+}

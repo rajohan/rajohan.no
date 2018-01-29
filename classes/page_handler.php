@@ -95,7 +95,7 @@
 
             } else {
 
-                require_once('pages/landing_page.php');
+                require_once('pages/home.php');
 
             }
 

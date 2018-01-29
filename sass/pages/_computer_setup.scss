@@ -6,15 +6,14 @@
     max-width: 100%;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 4rem;
+    padding-bottom: 6rem;
 
     &__box {
         display: flex;
         width: auto;
         max-width: 80rem;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        text-align: left;
 
         h3 {
             width: 100%;

@@ -1,4 +1,4 @@
-// Services landing page
+// Services
 .services {
     display: flex;
     align-items: center;
@@ -33,9 +33,5 @@
         @include respond(tab-port) { // width < 900px?
             margin-bottom: 2rem;
         }
-    }
-
-    &__cta {
-        display: block;
     }
 }

@@ -307,10 +307,23 @@ a.whitelink:hover {
 
 .about__cta {
   display: flex;
-  justify-content: center; }
+  justify-content: center;
+  margin-bottom: 5rem; }
+  @media only screen and (max-width: 56.25em) {
+    .about__cta {
+      margin-bottom: 3rem; } }
   @media only screen and (max-width: 37.5em) {
     .about__cta {
-      flex-direction: column; } }
+      flex-direction: column;
+      align-items: center; }
+      .about__cta a:not(:last-of-type) {
+        margin-bottom: 2rem; } }
+
+.services__cta {
+  display: flex;
+  width: 100vw;
+  max-width: 100%;
+  justify-content: center; }
 
 .social-media {
   display: flex;
@@ -530,14 +543,13 @@ a.whitelink:hover {
   max-width: 100%;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 4rem; }
+  padding-bottom: 6rem; }
   .computer-setup__box {
     display: flex;
     width: auto;
     max-width: 80rem;
     flex-direction: column;
-    align-items: center;
-    text-align: center; }
+    text-align: left; }
     .computer-setup__box h3 {
       width: 100%;
       padding: 0 2.5rem; }
@@ -832,40 +844,40 @@ fieldset {
       .cv__content {
         min-width: 100%; } }
 
-.latest-news {
+.latest-blog {
   background-color: #f7f7f7;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: 0 4rem; }
-  .latest-news__wrapper {
+  .latest-blog__wrapper {
     display: flex; }
     @media only screen and (max-width: 56.25em) {
-      .latest-news__wrapper {
+      .latest-blog__wrapper {
         flex-direction: column; } }
-  .latest-news__box {
+  .latest-blog__box {
     display: flex;
     flex-direction: column;
     max-width: 35rem;
     margin: 3rem;
     margin-bottom: 0;
     align-items: center; }
-  .latest-news__img {
+  .latest-blog__img {
     max-width: 100%; }
-  .latest-news__text {
+  .latest-blog__text {
     max-width: 35rem;
     margin-top: 2rem; }
-  .latest-news__read-more {
+  .latest-blog__read-more {
     display: block;
     margin-top: 0.3rem; }
-    .latest-news__read-more:link, .latest-news__read-more:visited {
+    .latest-blog__read-more:link, .latest-blog__read-more:visited {
       font-size: 1.5rem;
       font-weight: 700;
       color: #363636; }
-    .latest-news__read-more:hover {
+    .latest-blog__read-more:hover {
       color: #254B62; }
-      .latest-news__read-more:hover span {
+      .latest-blog__read-more:hover span {
         padding-left: 0.4rem; }
 
 .legal {
@@ -929,6 +941,23 @@ fieldset {
     .projects__view:hover span {
       padding-left: 0.4rem; }
 
+.services__new-webpage, .services__hosting, .services__backup, .services__seo, .services__price {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  max-width: 100%; }
+  .services__new-webpage__box, .services__hosting__box, .services__backup__box, .services__seo__box, .services__price__box {
+    width: 100%;
+    max-width: 80rem;
+    padding: 0 2.5rem; }
+    .services__new-webpage__box h1, .services__hosting__box h1, .services__backup__box h1, .services__seo__box h1, .services__price__box h1 {
+      text-align: center; }
+
+.services__new-webpage, .services__backup, .services__price {
+  background-color: #f7f7f7;
+  padding-top: 3rem;
+  padding-bottom: 3rem; }
+
 .services {
   display: flex;
   align-items: center;
@@ -955,8 +984,6 @@ fieldset {
     @media only screen and (max-width: 56.25em) {
       .services__text {
         margin-bottom: 2rem; } }
-  .services__cta {
-    display: block; }
 
 .why-me {
   background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(../img/why_me.jpeg);
