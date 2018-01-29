@@ -1,0 +1,8 @@
+.about__cta {
+    display: flex;
+    justify-content: center;
+    
+    @include respond(phone) { // width < 600px?
+        flex-direction: column;
+    }
+}

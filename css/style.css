@@ -305,6 +305,25 @@ a.whitelink:hover {
   .back-to-top:hover {
     background-color: #77ABB7; }
 
+.about__cta {
+  display: flex;
+  justify-content: center; }
+  @media only screen and (max-width: 37.5em) {
+    .about__cta {
+      flex-direction: column; } }
+
+.social-media {
+  display: flex;
+  justify-content: center; }
+  .social-media__img {
+    height: 4rem;
+    width: 4rem;
+    margin: 1rem;
+    transition: all;
+    transition-duration: 0.3s; }
+    .social-media__img:hover {
+      opacity: 0.7; }
+
 .footer {
   background-color: #363636;
   padding: 2rem;
@@ -494,30 +513,40 @@ a.whitelink:hover {
     .navigation__button::after {
       transform: translateY(1.3rem); }
 
-.section-about {
+.about {
   background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column; }
-  .section-about__text {
+  .about__text {
     max-width: 80rem;
     padding: 0 2.5rem; }
-  .section-about__social {
-    margin-top: 4rem; }
-  .section-about__cta {
-    display: flex; }
-    @media only screen and (max-width: 37.5em) {
-      .section-about__cta {
-        flex-direction: column; } }
-  .section-about__social--img {
-    height: 4rem;
-    width: 4rem;
-    margin: 1rem;
-    transition: all;
-    transition-duration: 0.3s; }
-    .section-about__social--img:hover {
-      opacity: 0.7; }
+
+.computer-setup {
+  background-color: #fff;
+  display: flex;
+  width: 100vw;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 4rem; }
+  .computer-setup__box {
+    display: flex;
+    width: auto;
+    max-width: 80rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; }
+    .computer-setup__box h3 {
+      width: 100%;
+      padding: 0 2.5rem; }
+      .computer-setup__box h3:not(:first-of-type) {
+        padding-top: 2.5rem; }
+  .computer-setup__text {
+    width: 100%;
+    padding: 0 2.5rem;
+    padding-top: 1rem; }
 
 .contact-me {
   background-color: #254B62;
@@ -713,7 +742,8 @@ fieldset {
   width: 100vw;
   max-width: 100%;
   display: flex;
-  justify-content: center; }
+  justify-content: center;
+  background-color: #f7f7f7; }
   .cv__box {
     width: 100%;
     max-width: 80rem;
@@ -722,9 +752,6 @@ fieldset {
     flex-direction: column;
     padding: 0 2.5rem;
     margin-bottom: 3rem; }
-    .cv__box h6 {
-      text-align: center;
-      margin-top: 1rem; }
     @media only screen and (max-width: 37.5em) {
       .cv__box {
         align-items: center; } }
@@ -737,7 +764,8 @@ fieldset {
       .cv__top {
         flex-direction: column;
         align-items: center;
-        text-align: center; } }
+        text-align: center;
+        margin-top: 2rem; } }
   .cv__img {
     display: flex;
     align-items: center;
@@ -748,7 +776,7 @@ fieldset {
         justify-content: center; } }
     .cv__img img {
       max-width: 16.9rem;
-      border: 2px solid #e8e8e8;
+      border: 1px solid #e8e8e8;
       border-radius: 1rem;
       margin-right: 1rem; }
       @media only screen and (max-width: 37.5em) {
@@ -775,8 +803,9 @@ fieldset {
       display: flex;
       flex-wrap: nowrap;
       padding-top: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #e8e8e8; }
+      padding-bottom: 1rem; }
+      .cv__bottom__boxes:not(:last-of-type) {
+        border-bottom: 1px solid #e8e8e8; }
       @media only screen and (max-width: 37.5em) {
         .cv__bottom__boxes {
           min-width: auto;
@@ -929,7 +958,7 @@ fieldset {
   .services__cta {
     display: block; }
 
-.section-why-me {
+.why-me {
   background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(../img/why_me.jpeg);
   background-size: cover;
   background-position: center;
@@ -939,9 +968,9 @@ fieldset {
   flex-direction: column;
   justify-content: center;
   align-items: center; }
-  .section-why-me h1 {
+  .why-me h1 {
     margin: 0 3rem; }
-  .section-why-me__text {
+  .why-me__text {
     color: #fff;
     max-width: 80rem;
     margin-left: 3rem;

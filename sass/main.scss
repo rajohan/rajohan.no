@@ -8,7 +8,9 @@
 @import "base/utilities";
 // Components
 @import "components/button";
+@import "components/about_cta";
 @import "components/popup";
+@import "components/socialmedia";
 // Layout
 @import "layout/footer";
 @import "layout/grid";
@@ -16,9 +18,9 @@
 @import "layout/navigation";
 // Pages
 @import "pages/about";
+@import "pages/computer_setup";
 @import "pages/contactme";
 @import "pages/cv";
-@import "pages/home";
 @import "pages/latestnews";
 @import "pages/legal";
 @import "pages/projects";

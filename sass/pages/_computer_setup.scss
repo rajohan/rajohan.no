@@ -1,0 +1,34 @@
+// Computer setup
+.computer-setup {
+    background-color: $color-white;
+    display: flex;
+    width: 100vw;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 4rem;
+
+    &__box {
+        display: flex;
+        width: auto;
+        max-width: 80rem;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        h3 {
+            width: 100%;
+            padding: 0 2.5rem;
+
+            &:not(:first-of-type) {
+                padding-top: 2.5rem;
+            }
+        }    
+    }
+
+    &__text {
+        width: 100%;
+        padding: 0 2.5rem;
+        padding-top: 1rem;
+    }
+}
