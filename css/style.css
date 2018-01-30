@@ -255,6 +255,10 @@ a.whitelink:hover {
     z-index: -1;
     transition: all 0.5s ease 0s; }
 
+.btn--white {
+  background-color: #fff;
+  border: 2px solid #254B62; }
+
 .btn--primary:link, .btn--primary:visited {
   color: #fff; }
 
@@ -561,12 +565,15 @@ a.whitelink:hover {
     padding-top: 1rem; }
 
 .contact-me {
-  background-color: #254B62;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: 9rem; }
+  .contact-me__bg-color-primary {
+    background-color: #254B62; }
+  .contact-me__bg-color-white {
+    background-color: #fff; }
   .contact-me__container {
     max-width: 45rem;
     width: 100%;

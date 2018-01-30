@@ -38,6 +38,6 @@
 
     ?>
     <br> 
-    <?php echo $GLOBALS['copyright']; ?><a href="<?php echo$GLOBALS['url']; ?>"><?php echo $GLOBALS['program']; ?></a>, <a href="<?php echo $GLOBALS['org_link']; ?>" target="_blank"><?php echo $GLOBALS['company']; ?>.</a>
+    <?php echo $GLOBALS['copyright']; ?><a href="<?php echo$GLOBALS['url']; ?>"><?php echo ucfirst($GLOBALS['program']); ?></a>, <a href="<?php echo $GLOBALS['org_link']; ?>" target="_blank"><?php echo $GLOBALS['company']; ?>.</a>
 </footer>
 <!-- SECTION FOOTER END -->

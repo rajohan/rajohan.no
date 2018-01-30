@@ -28,7 +28,7 @@
            
             while ($row = $result->fetch_assoc()) {
                 
-                $this->allowed_pages[$filter->sanitize($row['PAGE'])] = $filter->sanitize($row['URL']); // Push rows to array
+                $this->allowed_pages[$filter->sanitize(strtolower($row['PAGE']))] = $filter->sanitize($row['URL']); // Push rows to array
         
             }
 
@@ -50,7 +50,7 @@
 
                 } else {
 
-                    $this->page = $params[2]; // Value in url parameter is valid. Settting $page equal to url parameter
+                    $this->page = strtolower($params[2]); // Value in url parameter is valid. Settting $page equal to url parameter
 
                 }
 

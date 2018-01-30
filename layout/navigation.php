@@ -19,7 +19,7 @@
 
 <!-- NAVIGATION START -->
 <nav class="navigation">
-    <a href="index.php?page=home"><img src="img/logo_white.png" alt="Logo" class="navigation__logo"></a>
+    <a href="home/"><img src="img/logo_white.png" alt="Logo" class="navigation__logo"></a>
     <ul class="navigation__list">
         <?php
             while ($row = $result->fetch_assoc()) {

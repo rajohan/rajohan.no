@@ -42,7 +42,7 @@
                     <?php echo $sub_title; ?>
                 </span>
             </h1>
-            <a href="<?php echo $url; ?>" id="header__button" class="btn btn--primary u-margin-top-medium"><?php echo $button_text; ?></a>
+            <a href="<?php echo $url."/"; ?>" id="header__button" class="btn btn--primary u-margin-top-medium"><?php echo $button_text; ?></a>
         </div>
         <button class="header__img-switcher header__img-switcher--prev">
             <svg viewBox="0 0 100 100">

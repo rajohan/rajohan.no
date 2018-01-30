@@ -10,8 +10,8 @@
 ?>
 
 <!-- SECTION CONTACT ME START -->
-<section class="contact-me <?php if ($page->page === "contact") { echo "contact-me__bg-color-white"; } else { echo "contact-me__bg-color-primary"; } ?>">
-    <h1 class="heading-secondary <?php if ($page->page === "contact") { echo "heading-secondary"; } else { echo "heading-secondary--white"; } ?> letter-spacing-medium u-margin-top-medium">Contact me</h1>
+<section class="contact-me <?php if ($page->page === "contact") { echo "contact-me__bg-color-white"; } ?>">
+    <h1 class="heading-secondary heading-secondary letter-spacing-medium u-margin-top-medium">Contact me</h1>
     <h1 class="heading-tertiary">And get answer within 24 hours!</h1>
     <div class="contact-me__container">
         <form class="contact-me__form" method="post">
@@ -51,7 +51,7 @@
                 <textarea placeholder="Your message..." id="contact-me__message" class="contact-me__textarea" name="contact-me__message" tabindex="7"></textarea>
             </fieldset>
             <fieldset>
-                <button type="submit" name="contact-me__submit" class="btn <?php if ($page->page === "contact") { echo "btn--primary btn--white"; } else { echo "btn--tertiary"; } ?> u-margin-top-medium">Send message</button>
+                <button type="submit" name="contact-me__submit" class="btn btn--primary btn--white u-margin-top-medium">Send message</button>
             </fieldset>
         </form>
     </div>
