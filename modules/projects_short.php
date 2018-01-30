@@ -17,10 +17,10 @@
 ?>
 
 <!-- SECTION PROJECTS START -->
-<section class="projects">
+<section class="projects-short">
     <h1 class="heading-secondary heading-secondary--white letter-spacing-medium u-margin-top-medium">Projects</h1>
     <h1 class="heading-tertiary letter-spacing-small">My latest projects</h1>
-    <div class="projects__container">
+    <div class="projects-short__box">
         <?php 
 
             while ($row = $result->fetch_assoc()) {
@@ -31,12 +31,12 @@
                 $img = $filter->sanitize($row['IMAGE']);
                 $url = $filter->sanitize($row['URL']);
 
-                echo '<div class="projects__box">';
-                echo '<img src="img/projects/'.$img.'" alt="'.$name.'" class="projects__img">';
+                echo '<div class="projects-short__item">';
+                echo '<img src="img/projects/'.$img.'" alt="'.$name.'" class="projects-short__img">';
                 echo '<h3 class="u-margin-top-small">'.ucfirst($category).' &ndash; '.ucfirst($name).'</h3>';
                 echo $description;
                 echo '<span class="u-margin-top-small">';
-                echo '<a href="'.$url.'" target="_blank" class="projects__view whitelink">View project <span>&roarr;</span></a>';
+                echo '<a href="'.$url.'" target="_blank" class="projects-short__view whitelink">View project <span>&roarr;</span></a>';
                 echo '</span>';
                 echo '</div>';
 

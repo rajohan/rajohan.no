@@ -1,21 +1,22 @@
-// Projects landing page
-.projects {
+// Projects short
+.projects-short {
     background-color: $color-black-light;
     display: flex;
     align-items: center;
     flex-direction: column;
 
-    &__container {
+    &__box {
         display: flex;
         justify-content: center;
         margin-top: 4rem;
 
         @include respond(tab-port) { // width < 900px?
             flex-direction: column;
+            margin-bottom: 2rem;
         }
     }
 
-    &__box {
+    &__item {
         display: flex;
         flex-direction: column;
         color: $color-white;
