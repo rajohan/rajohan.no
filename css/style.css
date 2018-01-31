@@ -551,11 +551,14 @@ a.whitelink:hover {
   align-items: flex-start; }
   .blog-short__box {
     padding: 2rem;
-    max-width: 80rem; }
+    max-width: 100rem; }
   .blog-short__img {
     width: 100%; }
     .blog-short__img img {
-      width: 100%; }
+      width: 100%;
+      max-height: 40rem;
+      object-fit: cover;
+      object-position: center; }
   .blog-short__title {
     width: 100%;
     font-size: 30px;
@@ -590,11 +593,14 @@ a.whitelink:hover {
   margin-left: 0;
   background-color: #f7f7f7; }
   .blog-navigation__sort {
-    width: 100%; }
+    width: 100%;
+    display: flex;
+    flex-direction: column; }
     .blog-navigation__sort__buttons {
-      display: flex; }
+      display: flex;
+      justify-content: space-around; }
       .blog-navigation__sort__buttons__item {
-        width: 33.3333333333%;
+        width: 100%;
         background-color: #254B62;
         color: #fff;
         padding: 0.5rem;
