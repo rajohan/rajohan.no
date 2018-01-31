@@ -543,6 +543,103 @@ a.whitelink:hover {
     max-width: 80rem;
     padding: 0 2.5rem; }
 
+.blog-short {
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; }
+  .blog-short__box {
+    padding: 2rem;
+    max-width: 80rem; }
+  .blog-short__img {
+    width: 100%; }
+    .blog-short__img img {
+      width: 100%; }
+  .blog-short__title {
+    width: 100%;
+    font-size: 30px;
+    font-weight: bold;
+    border-bottom: 1px solid #b2b2b2;
+    padding-bottom: 5px; }
+  .blog-short__by {
+    width: 100%;
+    font-size: 13px;
+    margin-top: 5px; }
+  .blog-short__updated-by {
+    width: 100%;
+    font-size: 13px; }
+  .blog-short__tags {
+    width: 100%;
+    font-size: 13px;
+    margin-top: 10px; }
+    .blog-short__tags__item {
+      background-color: #efefef;
+      color: #b2b2b2;
+      margin-right: 5px;
+      padding: 3px; }
+  .blog-short__story {
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #b2b2b2; }
+
+.blog-navigation {
+  max-width: 33rem;
+  margin: 2rem;
+  margin-left: 0;
+  background-color: #f7f7f7; }
+  .blog-navigation__sort {
+    width: 100%; }
+    .blog-navigation__sort__buttons {
+      display: flex; }
+      .blog-navigation__sort__buttons__item {
+        width: 33.3333333333%;
+        background-color: #254B62;
+        color: #fff;
+        padding: 0.5rem;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer; }
+        .blog-navigation__sort__buttons__item:hover {
+          color: #000; }
+        .blog-navigation__sort__buttons__item__active {
+          color: #000;
+          background-color: #1D3E53; }
+    .blog-navigation__sort__content {
+      display: flex;
+      align-items: flex-start;
+      padding: 2rem; }
+      .blog-navigation__sort__content img {
+        width: 30%;
+        padding-right: 2rem; }
+      .blog-navigation__sort__content__text h6 {
+        font-weight: 400; }
+  .blog-navigation__search__item {
+    padding: 2rem; }
+  .blog-navigation__newsletter__item {
+    padding: 2rem; }
+  .blog-navigation__archive__item {
+    padding: 2rem; }
+  .blog-navigation__tags__box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 2rem; }
+    .blog-navigation__tags__box__item {
+      background-color: #efefef;
+      color: #b2b2b2;
+      margin: 0.5rem;
+      padding: 0 0.3rem;
+      font-size: 1.3rem; }
+  .blog-navigation__heading {
+    background-color: #254B62;
+    color: #fff;
+    display: block;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    text-transform: uppercase; }
+
 .computer-setup {
   background-color: #fff;
   display: flex;

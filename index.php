@@ -42,7 +42,6 @@
         <base href="/designv2/">
         <link rel="shortcut icon" type="image/png" href="img/favicon/favicon.png">
         <link rel="stylesheet" href="css/style.css">
-        
     </head>
     <body>
         <?php
