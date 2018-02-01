@@ -27,7 +27,7 @@
         }
 
         // Metod to check if page number is valid
-        private function valid_page_number($page_number, $table) {
+        function valid_page_number($page_number, $table) {
 
             if($page_number > $this->count_table_rows($table)) {
 

@@ -12,7 +12,7 @@
     $bbcode = new Bbcode(); // Start bbcode parser
     $pagination = new Pagination(); // Crate new pagination
 
-    $offset = ($pagination->get_page_number() - 1) * 1; // Get the page number to generate offset
+    $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Get the page number to generate offset
 
     $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER, UPDATE_DATE, UPDATED_BY_USER, SEEN, LIKES, DISLIKES, TAGS, SHORT_BLOG FROM `BLOG` ORDER BY `ID` DESC LIMIT $offset, 1"); // prepare statement
     $stmt->execute(); // select from database
