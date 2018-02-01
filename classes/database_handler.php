@@ -75,6 +75,22 @@
 
 
         ////////////////////////////////////////////////////////
+        // Method to count rows in table
+        ///////////////////////////////////////////////////////
+        function count($table) {
+
+            $stmt = $this->connect->prepare("SELECT COUNT(ID) FROM $table"); // prepare statement
+            $stmt->execute(); // select from database
+            $result = $stmt->get_result(); // Get the result
+            $number_of_rows = $result->fetch_row(); // Get the result
+            $this->free_close($result, $stmt); // free result and close db connection
+
+            return $number_of_rows[0]; // Return number of rows
+
+        }
+
+
+        ////////////////////////////////////////////////////////
         // Method to insert data to database
         ///////////////////////////////////////////////////////
         function db_insert($db_table, $db_columns, $identifiers, $variables) {

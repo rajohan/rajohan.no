@@ -12,7 +12,7 @@
     class Page_handler {
 
         private $allowed_pages = []; // Array containing allowed pages
-        private $page; // Current page
+        public $page; // Current page
 
         function __construct() {
 
@@ -63,7 +63,8 @@
         }
         
         private function split_url() {
-            $params = preg_split("/\//", $_SERVER['REQUEST_URI']); // Split url at each '/' 
+            $params = rtrim($_SERVER['REQUEST_URI'], " /");
+            $params = preg_split("/\//", $params); // Split url at each '/' 
             return $params;
         }
 
