@@ -12,6 +12,7 @@
     require_once('classes/bbcode.php');            // BBCODE
     require_once('configs/config.php');            // CONFIG
     require_once('classes/page_handler.php');      // PAGE HANDLER
+    require_once('classes/pagination.php');      // PAGINATION
     require_once('classes/ssl_seal.php');          // SSL SEAL
 
     ob_start(); // start output buffering

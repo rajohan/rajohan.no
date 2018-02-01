@@ -39,7 +39,7 @@
             // URL HANDLER
             //-----------------------------------------------
 
-            $params = preg_split("/\//", $_SERVER['REQUEST_URI']); // Split url at each '/' 
+            $params = $this->split_url(); // Split the url at each '/' 
 
             // Set the $page variable
             if(!empty($params[2])) {
@@ -62,6 +62,11 @@
          
         }
         
+        private function split_url() {
+            $params = preg_split("/\//", $_SERVER['REQUEST_URI']); // Split url at each '/' 
+            return $params;
+        }
+
         // Metod to check if $page is valid
         private function valid_page() {
 
@@ -96,6 +101,34 @@
             } else {
 
                 require_once('pages/home.php');
+
+            }
+
+        }
+
+        // Metod to get current page number for pagination etc
+        function get_page_number() {
+
+            $params = $this->split_url(); // Split the url at each '/' 
+            $last_param = $params[count($params)-1]; // Select the last parameter
+
+            // Set the $page variable
+            if(!empty($last_param)) {
+
+                // Only allow word numbers (0-9)
+                if (!preg_match('/^[0-9]+$/', $last_param)) {
+
+                    return 1; // Value in url parameter is invalid. Returning 1 as page.
+
+                } else {
+
+                    return (int)$last_param; // Value in url parameter is valid. Settting $last_param equal to url parameter
+
+                }
+
+            } else {
+
+                return 1; // Last parameter is empty. Returning 1 as page.
 
             }
 

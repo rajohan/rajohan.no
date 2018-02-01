@@ -118,3 +118,9 @@
     </div>
 </section>
 <!-- SECTION BLOG SHORT END -->
+<?php 
+
+$pagination = new Pagination(); // Crate new pagination
+$pagination->output_pagination(1, "BLOG"); // Output the pagination
+
+?>
