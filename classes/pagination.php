@@ -120,6 +120,7 @@
                     echo "<a href='".$this->page->page."/".($num_pages)."/'> >> </a>";
 
                 }
+                
             }
 
         }
