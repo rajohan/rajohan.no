@@ -88,13 +88,13 @@
                 }
                 
                 // Output "...", last page number and next page arrow. if we have 10 pages or more. Then break the loop. We are done.
-                else if(($i >= $start + $max_nav_pages+1) || ($i === $num_pages)) {
+                else if((($i >= $start + $max_nav_pages+1) || ($i === $num_pages)) && ($num_pages > $max_nav_pages)) {
                     
                     // Check if page number equals number of pages - max allowed nav pages
                     if($page_number === $num_pages-1) {
 
                         echo "<a href='".$this->page->page."/".$i."/'>".$i."</a>";
-
+                    
                     } else {
 
                         echo " ... ";
@@ -109,13 +109,13 @@
                 }
 
                 // Output next page number if $i is greater then $start and $i + 1 is equal or greater then number of total pages
-                else if(($i > $start) && ($i <= $start + $max_nav_pages)) {
+                else if(($i > $start) && ($i <= $start + $max_nav_pages) && ($i !== $num_pages)) {
 
                     echo " <a href='".$this->page->page."/".$i."/'>".$i."</a> ";
 
                 } else { // Output last page number and next page arrow. We are done.
 
-                    echo $i;
+                    echo " <a href='".$this->page->page."/".$i."/'>".$i."</a> ";
                     echo "<a href='".$this->page->page."/".($page_number+1)."/'> > </a>";;
                     echo "<a href='".$this->page->page."/".($num_pages)."/'> >> </a>";
 
