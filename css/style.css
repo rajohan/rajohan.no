@@ -549,9 +549,12 @@ a.whitelink:hover {
   display: flex;
   justify-content: center;
   align-items: flex-start; }
+  .blog-short__container {
+    text-align: center; }
   .blog-short__box {
     padding: 2rem;
-    max-width: 100rem; }
+    max-width: 100rem;
+    text-align: left; }
   .blog-short__img {
     width: 100%; }
     .blog-short__img img {
