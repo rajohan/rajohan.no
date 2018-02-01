@@ -15,6 +15,9 @@
         private function count_table_rows($table) {
 
             $db_conn = new Database(); // connect to database
+            $filter = new Filter(); // Start filter
+            $table = $filter->sanitize($table); // Sanitize table name
+
             $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM $table"); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
