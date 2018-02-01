@@ -46,7 +46,7 @@
             
             $page_number = $this->valid_page_number($this->get_page_number(), $table); // Get current page number
             $num_pages = $this->count_table_rows($table) / $max_per_page; // Set the number of pages
-            $max_nav_pages = 10; // Max numbers of pages in the page navigation
+            $max_nav_pages = 4; // Max numbers of pages in the page navigation
             $start = $page_number-$max_nav_pages; // Value to start the loop on
 
             // Set start to 1 if it equals 0
@@ -91,7 +91,7 @@
                 else if(($i >= $start + $max_nav_pages+1) || ($i === $num_pages)) {
                     
                     // Check if page number equals number of pages - max allowed nav pages
-                    if(($page_number === $num_pages-1 || $num_pages-2)) {
+                    if($page_number === $num_pages-1) {
 
                         echo "<a href='".$this->page->page."/".$i."/'>".$i."</a>";
 
