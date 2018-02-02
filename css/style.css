@@ -647,7 +647,8 @@ a.whitelink:hover {
     flex-direction: column; }
     .blog-navigation__sort__buttons {
       display: flex;
-      justify-content: space-around; }
+      justify-content: space-around;
+      margin-bottom: 2rem; }
       .blog-navigation__sort__buttons__item {
         width: 100%;
         background-color: #254B62;
@@ -664,7 +665,8 @@ a.whitelink:hover {
     .blog-navigation__sort__content {
       display: flex;
       align-items: flex-start;
-      padding: 2rem; }
+      padding: 2rem;
+      padding-top: 0; }
       .blog-navigation__sort__content img {
         width: 30%;
         padding-right: 2rem; }
@@ -673,8 +675,6 @@ a.whitelink:hover {
   .blog-navigation__search__item {
     padding: 2rem; }
   .blog-navigation__newsletter__item {
-    padding: 2rem; }
-  .blog-navigation__archive__item {
     padding: 2rem; }
   .blog-navigation__tags__box {
     padding: 2rem; }

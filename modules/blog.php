@@ -27,6 +27,7 @@
         <?php
 
             while ($row = $result->fetch_assoc()) {
+
                 $id = $filter->sanitize($row['ID']);
                 $img = $filter->sanitize($row['IMAGE']);
                 $title = $filter->sanitize($row['TITLE']);
@@ -90,13 +91,43 @@
                 <div class="blog-navigation__sort__buttons__item">Popular</div>
                 <div class="blog-navigation__sort__buttons__item">Comments</div>
             </div>
-            <div class="blog-navigation__sort__content">
-                <img src="img/blog/<?php echo $img; ?>" alt="<?php echo $title; ?>">
-                <div class="blog-navigation__sort__content__text">
-                    <?php echo "<span class='u-bold-text'>".$title."</span><br>"; ?>
-                    <?php echo "<h6>".$publish_date." by ".ucfirst($published_by)."</h6>"; ?>
-                </div>
-            </div>
+            <?php   
+
+                $db_conn = new Database(); // connect to database
+                $filter = new Filter(); // Start filter
+
+                $stmt = $db_conn->connect->prepare("SELECT IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER FROM `BLOG` ORDER BY `ID` DESC LIMIT 3"); // prepare statement
+                $stmt->execute(); // select from database
+                $result = $stmt->get_result(); // Get the result
+
+                while ($row = $result->fetch_assoc()) {
+
+                    $img = $filter->sanitize($row['IMAGE']);
+                    $title = $filter->sanitize($row['TITLE']);
+                    $publish_date = $filter->sanitize($row['PUBLISH_DATE']);
+                    $published_by = $filter->sanitize($row['PUBLISHED_BY_USER']);
+    
+                    // Dates
+                    $publish_date = $converter->date($publish_date);
+                    $update_date = $converter->date($update_date);
+                    
+                    echo
+
+                    '<div class="blog-navigation__sort__content">
+                        <img src="img/blog/'.$img.'" alt="'.$title.'">
+                        <div class="blog-navigation__sort__content__text">
+                            <span class="u-bold-text">'.$title.'</span>
+                            <br>
+                            <h6>'.$publish_date.' by '.ucfirst($published_by).'</h6>
+                        </div>
+                    </div>';
+
+    
+                }
+    
+                $db_conn->free_close($result, $stmt); // free result and close db connection
+
+            ?>
         </div>
         <div class="blog-navigation__search">
             <span class="blog-navigation__heading">Search</span>
@@ -110,24 +141,15 @@
                 <input placeholder="Email..." class="navigation__newsletter__input" type="text">
             </div>
         </div>
-        <div class="blog-navigation__archive">
-        <span class="blog-navigation__heading">Blog archive</span>
-        <div class="blog-navigation__archive__item">
-            <select class="blog-navigation__archive__dropdown">
-                <option value="">Blog archive</option>
-                <option value="">Value 1</option>
-                <option value="">Value 2</option>
-                <option value="">Value 3</option>
-            </select>
-        </div>
-        </div>
         <div class="blog-navigation__tags">
             <span class="blog-navigation__heading">Tags</span>
             <div class="blog-navigation__tags__box">
                     <?php 
+
                         $tags = $tag->get_tags("BLOG");
                         $tags = $tag->add_count($tags);
                         $tag->output_tags($tags);
+
                     ?>            
             </div>
         </div>
