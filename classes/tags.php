@@ -24,13 +24,13 @@
             
             $tags = array_reduce($tags, 'array_merge', array()); // Convert multi dimensional array into single array
             $tags_count = array_count_values($tags); // Count array values that match
-            $tags = array_unique($tags); // Remove all duplicate values
+            arsort($tags_count); // Sort array based on count values
             $tags_with_count = []; // Crate array
 
             // Add the count value to corresponding tags
-            foreach ($tags as $value) {
+            foreach ($tags_count as $key => $value) {
 
-               array_push($tags_with_count, $value."<span class='tags__count'>".$tags_count[$value]."</span>");
+               array_push($tags_with_count, $key."<span class='tags__count'>".$value."</span>");
 
             }
 
