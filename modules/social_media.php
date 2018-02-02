@@ -1,3 +1,13 @@
+<?php
+    
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+        
+        die('Direct access is not permitted.');
+        
+    }
+
+?>
 <!-- SECTION SOCIAL MEDIA START -->
 <section class="social-media u-margin-top-small">
     <a href="<?php echo $GLOBALS['facebook']; ?>" target="_blank" class="social-media__link">

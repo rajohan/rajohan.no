@@ -11,6 +11,8 @@
     $filter = new Filter(); // Start filter
     $bbcode = new Bbcode(); // Start bbcode parser
     $pagination = new Pagination(); // Crate new pagination
+    $tag = new Tags(); // Start the tag handler
+    $converter = new Converter; // Start the converter
 
     $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Get the page number to generate offset
 
@@ -39,22 +41,10 @@
                 $short_blog = $bbcode->replace($filter->sanitize($row['SHORT_BLOG']));
 
                 // Dates
-                $publish_date = strtotime($publish_date);
-                $publish_date = date('d.m.Y', $publish_date);
-                $update_date = strtotime($update_date);
-                $update_date = date('d.m.Y', $update_date);
-
-                // Tags
-                $tags = strtoupper($tags);
-                $string = $tags;
-                $pattern = '/[ ,]+/';
-                $replacement = '</span><span class="blog-short__tags__item">';
-                $replacement2 = '</span><span class="blog-navigation__tags__box__item">';
-                $tags = preg_replace($pattern, $replacement, $string);
-                $tags2 = preg_replace($pattern, $replacement2, $string);
+                $publish_date = $converter->date($publish_date);
+                $update_date = $converter->date($update_date);
 
                 echo
-
                 '<div class="blog-short__box">
                 <div class="blog-short__img" >
                     <img src="img/blog/'.$img.'" alt="'.$title.'">
@@ -68,9 +58,13 @@
                 <div class="blog-short__updated-by">
                     Updated '.$update_date.' by '.ucfirst($updated_by).'
                 </div>
-                <div class="blog-short__tags">
-                    <span class="blog-short__tags__item">'.$tags.'</span>
-                </div>
+                <div class="blog-short__tags">';
+                
+                    $tags = $tag->split($tags); // Split the tags
+                    $tag->output_tags($tags);
+
+                echo    
+                '</div>
                 <div class="blog-short__story">
                     '.$short_blog.'
                 </div>
@@ -130,7 +124,11 @@
         <div class="blog-navigation__tags">
             <span class="blog-navigation__heading">Tags</span>
             <div class="blog-navigation__tags__box">
-                <span class="blog-navigation__tags__box__item"><?php echo $tags2; ?></span>
+                    <?php 
+                        $tags = $tag->get_tags("BLOG");
+                        $tags = $tag->add_count($tags);
+                        $tag->output_tags($tags);
+                    ?>            
             </div>
         </div>
     </div>

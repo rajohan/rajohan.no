@@ -1,0 +1,23 @@
+.tags {
+        display: inline-block;
+        background-color: $color-grey-2;
+        color: $color-black-light;
+        padding: 0.4rem;
+        font-size: 1.1rem;
+        border-radius: 0.5rem;
+        margin-right: 0.8rem;
+        margin-bottom: 0.8rem;
+        box-shadow: 0px 0px 2px 0px rgba($color-black,0.5);
+        line-height: 1;
+        
+        &__count {
+            color: $color-primary-lightest;
+            margin: -0.2rem 0;
+            margin-left: 0.3rem;
+            background-color: $color-grey-light;
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            box-shadow: inset 0px 0px 2px 0px rgba($color-black,0.5);
+            border-radius: 0.5rem;
+        }
+}

@@ -1,7 +1,16 @@
 <?php
+    
+    // Check that the file is included and not accessed directly
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+
     $db_conn = new Database(); // connect to database
     $filter = new Filter(); // Start filter
     $bbcode = new Bbcode(); // Start bbcode parser
+    $converter = new Converter; // Start the converter
 
 
     $stmt = $db_conn->connect->prepare("SELECT * FROM `CV` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
@@ -9,13 +18,13 @@
     $result = $stmt->get_result(); // Get the result
     
     // Set variables with the result.
-    while ($row = mysqli_fetch_assoc($result)) {
+    while ($row = $result->fetch_assoc()) {
+
         $name = $filter->sanitize($row["NAME"]);
         $title = $filter->sanitize($row["TITLE"]);
         $address = $filter->sanitize($row["ADDRESS"]);
         $tlf = $filter->sanitize($row["TLF"]);
-        $born_unix = $filter->sanitize(strtotime($row["BORN"])); // Set birth date to unix timestap to order the date differently
-        $birth_date = $filter->sanitize($row["BORN"]);
+        $born = $filter->sanitize($row["BORN"]);
         $homepage = $filter->sanitize($row["HOMEPAGE"]);
         $mail = $filter->sanitize($row["MAIL"]);
         $profil = $bbcode->replace($filter->sanitize($row["PROFILE"]));
@@ -27,18 +36,14 @@
         $interests = $bbcode->replace($filter->sanitize($row["INTERESTS"]));
         $img = $filter->sanitize($row["IMG"]);
         $user = $filter->sanitize($row["USER"]);
+
     }
 
     $db_conn->free_close($result, $stmt); // free result and close db connection
 
-    // Calculate age
-    $birth = explode("-", $birth_date);
-    $age = date("Y") - $birth[0];
-    if(($birth[1] > date("m")) || ($birth[1] == date("m") && date("d") < $birth[2])) {
-        $age = $age - 1;
-    }
+    $age = $converter->age($born);
+    $born = $converter->date($born);
 
-    $born = date('d.m.Y', $born_unix); // Set birth date in right order from unix timestamp
 ?>
 
 <!-- SECTION CV START -->

@@ -6,6 +6,7 @@
         die('Direct access is not permitted.');
         
     }
+    
 ?>
 <!-- SECTION LEGAL START -->
 <section class="legal">

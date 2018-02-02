@@ -33,6 +33,7 @@
             
         }
 
+        // Method to get header content
         function get_header_content() {
 
             $stmt = $this->db_conn->connect->prepare("SELECT IMAGE, TITLE, SUB_TITLE, BUTTON_TEXT, LINK FROM `HEADER` ORDER BY `ID` DESC"); // prepare statement

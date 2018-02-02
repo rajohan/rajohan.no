@@ -1,5 +1,12 @@
 <?php
+     
+     // Check that the file is included and not accessed directly
+     if(!defined('INCLUDE')) {
+      
+        die('Direct access is not permitted.');
     
+    }
+
     // Class for the pagination
     class Pagination {
 
@@ -27,7 +34,7 @@
             
         }
 
-        // Metod to generate the output
+        // Method to generate the output
         private function output($number, $value) {
             echo "<a href='".$this->page->page."/".($number)."/'>".$value."</a>";
         }
@@ -82,7 +89,7 @@
 
         }
 
-        // Metod to check if page number is valid
+        // Method to check if page number is valid
         function valid_page_number($page_number, $table) {
 
             if($page_number > $this->count_table_rows($table)) {

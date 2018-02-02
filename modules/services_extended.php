@@ -16,6 +16,7 @@
     $result = $stmt->get_result(); // Get the result
  
     while ($row = $result->fetch_assoc()) {
+        
         $new_webpage_title = $filter->sanitize($row['NEW_WEBPAGE_TITLE']);
         $new_webpage_sub_title = $filter->sanitize($row['NEW_WEBPAGE_SUB_TITLE']);
         $new_webpage = $bbcode->replace($filter->sanitize($row['NEW_WEBPAGE']));

@@ -8,6 +8,7 @@
 
     $db_conn = new Database(); // connect to database
     $filter = new Filter(); // Start filter
+    $converter = new Converter; // Start the converter
     
     $stmt = $db_conn->connect->prepare("SELECT NAME, CATEGORY, DESCRIPTION, IMAGE, URL, SKILLS, DATE, CLIENT FROM `PROJECTS` ORDER BY `ID` DESC LIMIT 6"); // prepare statement
     $stmt->execute(); // select from database
@@ -33,8 +34,7 @@
                 $date = $filter->sanitize($row['DATE']);
                 $client = $filter->sanitize($row['CLIENT']);
 
-                $date = strtotime($date);
-                $date = date('d.m.Y', $date);
+                $date = $converter->date($date);
 
                 echo '<div class="projects-full__item">';
                 echo '<div class="projects-full__item--left">';

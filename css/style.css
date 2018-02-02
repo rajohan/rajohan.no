@@ -379,6 +379,27 @@ a.whitelink:hover {
     .social-media__img:hover {
       opacity: 0.7; }
 
+.tags {
+  display: inline-block;
+  background-color: #e8e8e8;
+  color: #363636;
+  padding: 0.4rem;
+  font-size: 1.1rem;
+  border-radius: 0.5rem;
+  margin-right: 0.8rem;
+  margin-bottom: 0.8rem;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.5);
+  line-height: 1; }
+  .tags__count {
+    color: #77ABB7;
+    margin: -0.2rem 0;
+    margin-left: 0.3rem;
+    background-color: #f7f7f7;
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem; }
+
 .footer {
   background-color: #363636;
   padding: 2rem;
@@ -608,14 +629,7 @@ a.whitelink:hover {
     width: 100%;
     font-size: 13px; }
   .blog-short__tags {
-    width: 100%;
-    font-size: 13px;
-    margin-top: 10px; }
-    .blog-short__tags__item {
-      background-color: #efefef;
-      color: #b2b2b2;
-      margin-right: 5px;
-      padding: 3px; }
+    width: 100%; }
   .blog-short__story {
     width: 100%;
     margin-top: 10px;
@@ -663,16 +677,7 @@ a.whitelink:hover {
   .blog-navigation__archive__item {
     padding: 2rem; }
   .blog-navigation__tags__box {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     padding: 2rem; }
-    .blog-navigation__tags__box__item {
-      background-color: #efefef;
-      color: #b2b2b2;
-      margin: 0.5rem;
-      padding: 0 0.3rem;
-      font-size: 1.3rem; }
   .blog-navigation__heading {
     background-color: #254B62;
     color: #fff;

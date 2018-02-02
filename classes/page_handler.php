@@ -62,20 +62,23 @@
          
         }
         
+        // Method to split the url
         private function split_url() {
+
             $params = rtrim($_SERVER['REQUEST_URI'], " /");
             $params = preg_split("/\//", $params); // Split url at each '/' 
             return $params;
+
         }
 
-        // Metod to check if $page is valid
+        // Method to check if $page is valid
         private function valid_page() {
 
             return array_key_exists($this->page, $this->allowed_pages);
 
         }
 
-        // Metod to generate page title
+        // Method to generate page title
         function page_title() {
 
             if($this->valid_page()) {
@@ -92,7 +95,7 @@
 
         }
 
-        // Metod to include the correct page
+        // Method to include the correct page
         function get_page() {
 
             if($this->valid_page()) {
@@ -107,7 +110,7 @@
 
         }
 
-        // Metod to get current page number for pagination etc
+        // Method to get current page number for pagination etc
         function get_page_number() {
 
             $params = $this->split_url(); // Split the url at each '/' 
@@ -135,7 +138,7 @@
 
         }
 
-        // Metod to add active page class to button equivalent to $page
+        // Method to add active page class to button equivalent to $page
         function set_active($button) {
 
             if($this->valid_page() && $this->page === $button) {

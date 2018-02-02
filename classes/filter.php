@@ -12,7 +12,7 @@
     ###########################################################################
     class Filter {
 
-        // Metod to sanitize strings
+        // Method to sanitize strings
         function sanitize($data) {
 
             $data = trim($data);
@@ -28,7 +28,7 @@
             return $data;
         }
 
-        // Metod to sanitize arrays
+        // Method to sanitize arrays
         function sanitize_array($data) {
 
             $data = array_map('trim', $data);

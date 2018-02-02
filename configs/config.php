@@ -27,6 +27,7 @@
     ############################################################################
     # RUN STARTUP COMMANDS
     ############################################################################
+    
     if(!defined('INCLUDE')) {
         
         die('Direct access is not permitted.'); // Check that the file is included and not accessed directly
@@ -44,13 +45,6 @@
     ############################################################################
     # GLOBAL VARIABLES
     ############################################################################
-       
-    // Check that the file is included and not accessed directly
-    if(!defined('INCLUDE')) {
-
-        die('Direct access is not permitted.');
-        
-    }
 
     $db_conn = new Database(); // connect to database
     $filter = new Filter(); // Start filter
