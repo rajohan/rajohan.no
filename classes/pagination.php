@@ -56,7 +56,9 @@
 
         // Method to output value of $i as page number
         private function number($i) {
+
             $this->output($i, $i);
+            
         }
 
         // Method to output last page number
