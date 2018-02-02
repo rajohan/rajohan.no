@@ -224,6 +224,20 @@ a.whitelink:hover {
       margin-left: 2rem;
       margin-right: 2rem; } }
 
+.about__cta {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5rem; }
+  @media only screen and (max-width: 56.25em) {
+    .about__cta {
+      margin-bottom: 3rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .about__cta {
+      flex-direction: column;
+      align-items: center; }
+      .about__cta a:not(:last-of-type) {
+        margin-bottom: 2rem; } }
+
 /* Global Button Styles */
 .btn, .btn:link, .btn:visited {
   position: relative;
@@ -312,19 +326,40 @@ a.whitelink:hover {
   .back-to-top:hover {
     background-color: #77ABB7; }
 
-.about__cta {
+.pagination {
   display: flex;
-  justify-content: center;
-  margin-bottom: 5rem; }
-  @media only screen and (max-width: 56.25em) {
-    .about__cta {
-      margin-bottom: 3rem; } }
-  @media only screen and (max-width: 37.5em) {
-    .about__cta {
-      flex-direction: column;
-      align-items: center; }
-      .about__cta a:not(:last-of-type) {
-        margin-bottom: 2rem; } }
+  justify-content: center; }
+  .pagination__dots {
+    display: flex;
+    padding: 0.8rem 1.6rem;
+    text-decoration: none;
+    border: 1px solid #c5c5c5;
+    border-left: 0;
+    line-height: 2rem;
+    text-align: center;
+    cursor: default; }
+  .pagination a {
+    padding: 0.8rem 1.6rem;
+    text-decoration: none;
+    border: 1px solid #c5c5c5; }
+    .pagination a:not(:first-of-type) {
+      border-left: 0; }
+    .pagination a:hover:not(.active) {
+      background-color: #77ABB7;
+      border: 1px solid #77ABB7;
+      color: #fff; }
+      .pagination a:hover:not(.active):not(:first-of-type) {
+        border-left: 0; }
+    .pagination a.active {
+      background-color: #254B62;
+      color: #fff;
+      border: 1px solid #476D7C; }
+    .pagination a:first-child {
+      border-top-left-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem; }
+    .pagination a:last-child {
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem; }
 
 .services__cta {
   display: flex;
@@ -549,12 +584,9 @@ a.whitelink:hover {
   display: flex;
   justify-content: center;
   align-items: flex-start; }
-  .blog-short__container {
-    text-align: center; }
   .blog-short__box {
     padding: 2rem;
-    max-width: 100rem;
-    text-align: left; }
+    max-width: 100rem; }
   .blog-short__img {
     width: 100%; }
     .blog-short__img img {

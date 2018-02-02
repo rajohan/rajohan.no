@@ -83,7 +83,9 @@
 
             $db_conn->free_close($result, $stmt); // free result and close db connection
 
+            echo '<div class="pagination u-margin-bottom-medium">';
             $pagination->output_pagination(1, "BLOG"); // Output the pagination
+            echo '</div>';
 
         ?>
     </div>

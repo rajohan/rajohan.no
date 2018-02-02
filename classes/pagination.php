@@ -28,29 +28,27 @@
         }
 
         private function output($number, $value) {
-            echo "<a href='".$this->page->page."/".($number)."/'> ".$value." </a>";
+            echo "<a href='".$this->page->page."/".($number)."/'>".$value."</a>";
         }
 
         // Method to output current active page number
         private function current($i) {
 
-            echo " <b>[<a href='".$this->page->page."/".$i."/'>".$i."</a>"."]</b> ";
+            echo "<a class='active' href='".$this->page->page."/".$i."/'>".$i."</a>";
 
         }
 
         // Method to output the first page arrow and prev arrow 
         private function start_arrow($page_number) {
 
-            $this->output(1, "<<");
             $this->output($page_number-1, "<");
 
         }
 
         // Method to output last page arrow end arrow
-        private function end_arrow($page_number, $num_pages) {
+        private function end_arrow($page_number) {
 
             $this->output($page_number+1, ">");
-            $this->output($num_pages, ">>");
 
         }
 
@@ -71,7 +69,7 @@
         // Method to output '...'
         private function dots() {
 
-            echo " ... ";
+            echo " <div class='pagination__dots'>...</div>";
 
         }
 
@@ -174,7 +172,7 @@
 
                     }
 
-                    $this->end_arrow($page_number, $num_pages); // Output last page arrow and end arrow
+                    $this->end_arrow($page_number); // Output last page arrow and end arrow
                     break;
 
                 }
@@ -188,7 +186,7 @@
                 } else { // Output last page number and next page arrow. We are done.
 
                     $this->number($i); // Output $i
-                    $this->end_arrow($page_number, $num_pages); // Output last page arrow end arrow
+                    $this->end_arrow($page_number); // Output last page arrow end arrow
 
                 }
 
