@@ -27,6 +27,7 @@
             
         }
 
+        // Metod to generate the output
         private function output($number, $value) {
             echo "<a href='".$this->page->page."/".($number)."/'>".$value."</a>";
         }
