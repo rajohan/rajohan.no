@@ -41,14 +41,14 @@
         // Method to output the first page arrow and prev arrow 
         private function start_arrow($page_number) {
 
-            $this->output($page_number-1, "<");
+            $this->output($page_number-1, "&LT;");
 
         }
 
         // Method to output last page arrow end arrow
         private function end_arrow($page_number) {
 
-            $this->output($page_number+1, ">");
+            $this->output($page_number+1, "&GT;");
 
         }
 
