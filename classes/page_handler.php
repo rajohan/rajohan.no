@@ -53,8 +53,32 @@
 
                 } else {
                     
-                    $this->page = strtolower($params[2]); // Value in url parameter is valid. Settting $page equal to url parameter
+                    // Check if the first paramater is blog and that second parameter is set
+                    if(($params[2] === "blog") && (!empty($params[3]))) {
+
+                        // Check if parametyer 3 is set and is valid
+                        if((($params[3]) === "read") && (!preg_match('~\W~', $params[3]))) {
+                        
+                            $this->page = $params[3]; // Value in url parameter 2 is valid. Setting $page equal to url parameter 2
+                        
+                        }
+
+                        else {
+
+                            $this->page = $params[2]; // Value in second url parameter is invalid. Settting $page equal to first url parameter
+
+                        }
+
+                    }
+
+                    else {
+
+                        $this->page = $params[2]; // Value in url parameter is valid. Settting $page equal to url parameter
+
+                    }
+
                     $this->url = $this->current_url(); // Set current url
+                    
                 }
 
             } else {
@@ -79,6 +103,7 @@
                 $url = strtolower($_SERVER['REQUEST_URI']);
             }
 
+            $url = $this->filter->sanitize($url);
             $params = rtrim($url, " /");
             $params = preg_split("/\//", $params); // Split url at each '/' 
             return $params;
@@ -88,7 +113,7 @@
         // Method to get current url without page number
         function current_url() {
 
-            $current_url = strtolower($_SERVER['REQUEST_URI']);
+            $current_url = strtolower($this->filter->sanitize($_SERVER['REQUEST_URI']));
             $replace = '/\/[0-9]\/$/';
             return rtrim(preg_replace($replace, '', $current_url), " /"); // Remove trailing slash and pagination number from url 
 

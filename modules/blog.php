@@ -73,7 +73,7 @@
                     '.$short_blog.'
                 </div>
                 <div class="blog-short__read">
-                    <a href="blog/'.$id.'/">Read more <span>&roarr;</span></a>
+                    <a href="blog/read/'.$id.'/'.$converter->generate_slug($title).'/">Read more <span>&roarr;</span></a>
                 </div>
                 </div>';
 
