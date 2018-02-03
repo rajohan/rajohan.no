@@ -13,10 +13,14 @@
     $pagination = new Pagination(); // Crate new pagination
     $tag = new Tags(); // Start the tag handler
     $converter = new Converter; // Start the converter
+    $page = new Page_handler(); // Start page handler
+    $sort_data = new Sort(); // Start sorting
 
     $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Get the page number to generate offset
 
-    $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER, UPDATE_DATE, UPDATED_BY_USER, SEEN, LIKES, DISLIKES, TAGS, SHORT_BLOG FROM `BLOG` ORDER BY `ID` DESC LIMIT $offset, 1"); // prepare statement
+    $sort = $sort_data->by_tag();
+
+    $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER, UPDATE_DATE, UPDATED_BY_USER, SEEN, LIKES, DISLIKES, TAGS, SHORT_BLOG FROM `BLOG` $sort ORDER BY `ID` DESC LIMIT $offset, 1"); // prepare statement
     $stmt->execute(); // select from database
     $result = $stmt->get_result(); // Get the result
 
@@ -79,7 +83,7 @@
             $db_conn->free_close($result, $stmt); // free result and close db connection
 
             echo '<div class="pagination u-margin-bottom-medium">';
-            $pagination->output_pagination(1, "BLOG"); // Output the pagination
+            $pagination->output_pagination(1, "BLOG", $sort); // Output the pagination
             echo '</div>';
 
         ?>

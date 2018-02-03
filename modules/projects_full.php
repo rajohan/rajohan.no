@@ -8,9 +8,12 @@
 
     $db_conn = new Database(); // connect to database
     $filter = new Filter(); // Start filter
+    $pagination = new Pagination(); // Crate new pagination
     $converter = new Converter; // Start the converter
     
-    $stmt = $db_conn->connect->prepare("SELECT NAME, CATEGORY, DESCRIPTION, IMAGE, URL, SKILLS, DATE, CLIENT FROM `PROJECTS` ORDER BY `ID` DESC LIMIT 6"); // prepare statement
+    $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Get the page number to generate offset
+
+    $stmt = $db_conn->connect->prepare("SELECT NAME, CATEGORY, DESCRIPTION, IMAGE, URL, SKILLS, DATE, CLIENT FROM `PROJECTS` ORDER BY `ID` DESC LIMIT $offset, 1"); // prepare statement
     $stmt->execute(); // select from database
     $result = $stmt->get_result(); // Get the result
 
@@ -54,6 +57,9 @@
 
             $db_conn->free_close($result, $stmt); // free result and close db connection
 
+            echo '<div class="pagination u-margin-top-medium u-margin-bottom-medium">';
+            $pagination->output_pagination(1, "BLOG"); // Output the pagination
+            echo '</div>';
         ?>
     </div>
 </section>

@@ -15,6 +15,7 @@
 
             $tags = strtoupper($tags);
             $tags = preg_split('/[ ,]+/', $tags);
+            $tags = $this->add_link($tags);
             return $tags;
 
         }
@@ -61,6 +62,19 @@
             $db_conn->free_close($result, $stmt); // free result and close db connection
 
             return $all_tags;
+
+        }
+        
+        function add_link($tags) {
+
+
+            foreach($tags as $key => $tags_with_link) {
+
+              $tags[$key] = '<a href="blog/sort/tag/'.strtolower($tags_with_link).'">'.$tags_with_link.'</a>';
+
+            }
+
+            return $tags;
 
         }
 

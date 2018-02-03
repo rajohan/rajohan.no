@@ -27,22 +27,22 @@
         }
 
         // Method to count the table rows
-        private function count_table_rows($table) {
+        private function count_table_rows($table, $sort = '') {
 
             $db_conn = new Database(); // connect to database
-            return $db_conn->count($table); // return count value
+            return $db_conn->count($table, $sort); // return count value
             
         }
 
         // Method to generate the output
         private function output($number, $value) {
-            echo "<a href='".$this->page->page."/".($number)."/'>".$value."</a>";
+            echo "<a href='".$this->page->url."/".($number)."/'>".$value."</a>";
         }
 
         // Method to output current active page number
         private function current($i) {
 
-            echo "<a class='active' href='".$this->page->page."/".$i."/'>".$i."</a>";
+            echo "<a class='active' href='".$this->page->url."/".$i."/'>".$i."</a>";
 
         }
 
@@ -105,10 +105,10 @@
         }
         
         // Method to output the pagination
-        function output_pagination($max_per_page, $table) {
+        function output_pagination($max_per_page, $table, $sort = '') {
             
             $page_number = $this->valid_page_number($this->get_page_number(), $table); // Get current page number
-            $num_pages = $this->count_table_rows($table) / $max_per_page; // Set the number of pages
+            $num_pages = $this->count_table_rows($table, $sort) / $max_per_page; // Set the number of pages
             
             $max_nav_pages = $this->max_nav_pages;
             
