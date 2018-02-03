@@ -88,7 +88,7 @@
         // Method to get current url without page number
         function current_url() {
 
-            $current_url = $_SERVER['REQUEST_URI'];
+            $current_url = strtolower($_SERVER['REQUEST_URI']);
             $replace = '/\/[0-9]\/$/';
             return rtrim(preg_replace($replace, '', $current_url), " /"); // Remove trailing slash and pagination number from url 
 
