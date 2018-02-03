@@ -26,6 +26,53 @@
 
         }
 
+        // Method to get the tag id
+        private function get_tag_id($tag) {
+
+            $db_conn = new Database(); // connect to database
+            
+            $stmt = $db_conn->connect->prepare('SELECT ID FROM `TAGS` WHERE TAG = "'.$tag.'" LIMIT 1'); // prepare statement
+            $stmt->execute(); // select from database
+            $result = $stmt->get_result(); // Get the result
+
+            while ($row = $result->fetch_assoc()) {
+                
+                $tag_id = $row['ID'];
+
+            }
+
+            $db_conn->free_close($result, $stmt); // free result and close db connection
+
+            return $tag_id;
+        }
+
+        // Method to get blog id
+        private function get_blog_id($tag_id) {
+            $db_conn = new Database(); // connect to database
+            
+            $stmt = $db_conn->connect->prepare('SELECT BLOG_ID FROM `TAGS_LINK_BLOG` WHERE TAG_ID = "'.$tag_id.'"'); // prepare statement
+            $stmt->execute(); // select from database
+            $result = $stmt->get_result(); // Get the result
+            $blog_id = [];
+
+            while ($row = $result->fetch_assoc()) {
+                
+                array_push($blog_id, $row['BLOG_ID']);
+
+            }
+
+            $db_conn->free_close($result, $stmt); // free result and close db connection
+
+            $sort = 'WHERE ID = "'.$blog_id[0].'"';
+
+            for($i = 1; $i < count($blog_id); $i++) {
+                $sort = $sort.' OR ID = "'.$blog_id[$i].'"';
+            }
+
+            return $sort;
+
+        }
+
         // Method to sort by tag
         function by_tag() {
 
@@ -42,14 +89,19 @@
                         if (!empty($this->params[$this->params_count-1])) {
 
                             // Check that the parameter to sort by is valid
-                            if(!preg_match('~\W~', $this->params[$this->params_count-1])) {
+                            if(!preg_match('[a-z0-9.\-_#@!+?]', $this->params[$this->params_count-1])) {
 
                                 $tag = $this->filter->sanitize(strtolower($this->params[$this->params_count-1]));
-                                $sort = 'WHERE TAGS = "'.$tag.'" OR TAGS LIKE "% '.$tag.'" OR TAGS LIKE "'.$tag.' %" OR TAGS LIKE "% '.$tag.' %" OR TAGS LIKE "'.$tag.', %" OR TAGS LIKE "% '.$tag.', %" OR TAGS LIKE ",'.$tag.'%" OR TAGS LIKE "%,'.$tag.' %"'; 
-                                
+                                $sort = 'WHERE TAG = "'.$tag.'"';
+
                                 // Check that tag exists in the database
-                                if($this->db_conn->count("BLOG", $sort) > 0) {
+                                if($this->db_conn->count("TAGS", $sort) > 0) {
+
+                                    $tag_id = $this->get_tag_id($tag);
+                                    $sort = $this->get_blog_id($tag_id);
+
                                     return $sort; 
+
                                 }
 
                             }

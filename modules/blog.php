@@ -42,7 +42,6 @@
                 $seen = $filter->sanitize($row['SEEN']);
                 $likes = $filter->sanitize($row['LIKES']);
                 $dislikes = $filter->sanitize($row['DISLIKES']);
-                $tags = $filter->sanitize($row['TAGS']);
                 $short_blog = $bbcode->replace($filter->sanitize($row['SHORT_BLOG']));
 
                 // Dates
@@ -65,8 +64,8 @@
                 </div>
                 <div class="blog-short__tags">';
                 
-                    $tags = $tag->split($tags); // Split the tags
-                    $tag->output_tags($tags);
+                    $tag_name = $tag->get_blog_tags($id);
+                    $tag->output_tags($tag_name);
 
                 echo    
                 '</div>
@@ -150,7 +149,7 @@
             <div class="blog-navigation__tags__box">
                     <?php 
 
-                        $tags = $tag->get_tags("BLOG");
+                        $tags = $tag->get_all_tags();
                         $tags = $tag->add_count($tags);
                         $tag->output_tags($tags);
 
