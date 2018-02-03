@@ -24,21 +24,21 @@
 
     &__title {
         width: 100%;
-        font-size: 30px;
+        font-size: 3rem;
         font-weight: bold;
-        border-bottom: 1px solid #b2b2b2;
-        padding-bottom: 5px;
+        border-bottom: 1px solid $color-grey-2;
+        padding-bottom: 0.5rem;
     }
 
     &__by {
         width: 100%;
-        font-size: 13px;
-        margin-top: 5px;
+        font-size: 1.3rem;
+        margin-top: 0.5rem;
     }
 
     &__updated-by {
         width: 100%;
-        font-size: 13px;
+        font-size: 1.3rem;
     }
 
     &__tags {
@@ -47,9 +47,26 @@
 
     &__story {
         width: 100%;
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid #b2b2b2;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid $color-grey-2;
+    }
+
+    &__read {
+        
+        &:link,
+        &:visited {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        &:hover {
+            span {
+                padding-left: 0.4rem;
+                transition: all;
+                transition-duration: 0.2s;
+            }
+        }
     }
 }
 

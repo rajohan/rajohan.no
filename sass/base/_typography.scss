@@ -103,6 +103,8 @@ body {
 /* Styling for links */
 a {
   cursor: pointer;
+  transition: all;
+  transition-duration: 0.3s;
 }
 
 a:link {

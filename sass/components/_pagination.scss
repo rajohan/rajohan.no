@@ -19,6 +19,8 @@
         padding: 0.8rem 1.6rem;
         text-decoration: none;
         border: 1px solid $color-grey;
+        transition: all;
+        transition-duration: 0.4s;
         
         &:not(:first-of-type) {
             border-left: 0;

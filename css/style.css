@@ -133,7 +133,9 @@ body {
 
 /* Styling for links */
 a {
-  cursor: pointer; }
+  cursor: pointer;
+  transition: all;
+  transition-duration: 0.3s; }
 
 a:link {
   color: #000;
@@ -318,7 +320,9 @@ a.whitelink:hover {
   background-color: #476D7C;
   fill: #fff;
   cursor: pointer;
-  display: none; }
+  display: none;
+  transition: all;
+  transition-duration: 0.4s; }
   @media only screen and (max-width: 56.25em) {
     .back-to-top {
       bottom: 3rem;
@@ -341,7 +345,9 @@ a.whitelink:hover {
   .pagination a {
     padding: 0.8rem 1.6rem;
     text-decoration: none;
-    border: 1px solid #c5c5c5; }
+    border: 1px solid #c5c5c5;
+    transition: all;
+    transition-duration: 0.4s; }
     .pagination a:not(:first-of-type) {
       border-left: 0; }
     .pagination a:hover:not(.active) {
@@ -533,7 +539,7 @@ a.whitelink:hover {
     text-transform: uppercase;
     height: 100%;
     padding: 0 2rem;
-    transition: background-color, color;
+    transition: all;
     transition-duration: 0.4s;
     font-weight: 700;
     letter-spacing: 0.1rem; }
@@ -617,24 +623,31 @@ a.whitelink:hover {
       object-position: center; }
   .blog-short__title {
     width: 100%;
-    font-size: 30px;
+    font-size: 3rem;
     font-weight: bold;
-    border-bottom: 1px solid #b2b2b2;
-    padding-bottom: 5px; }
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 0.5rem; }
   .blog-short__by {
     width: 100%;
-    font-size: 13px;
-    margin-top: 5px; }
+    font-size: 1.3rem;
+    margin-top: 0.5rem; }
   .blog-short__updated-by {
     width: 100%;
-    font-size: 13px; }
+    font-size: 1.3rem; }
   .blog-short__tags {
     width: 100%; }
   .blog-short__story {
     width: 100%;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #b2b2b2; }
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e8e8e8; }
+  .blog-short__read:link, .blog-short__read:visited {
+    font-size: 1.5rem;
+    font-weight: 700; }
+  .blog-short__read:hover span {
+    padding-left: 0.4rem;
+    transition: all;
+    transition-duration: 0.2s; }
 
 .blog-navigation {
   max-width: 33rem;
@@ -1094,7 +1107,9 @@ fieldset {
       font-size: 1.5rem;
       font-weight: 700; }
     .projects-short__view:hover span {
-      padding-left: 0.4rem; }
+      padding-left: 0.4rem;
+      transition: all;
+      transition-duration: 0.2s; }
 
 .projects-full {
   display: flex;
@@ -1144,7 +1159,9 @@ fieldset {
     font-size: 1.5rem;
     font-weight: 700; }
   .projects-full__view:hover span {
-    padding-left: 0.4rem; }
+    padding-left: 0.4rem;
+    transition: all;
+    transition-duration: 0.2s; }
 
 .services__new-webpage, .services__hosting, .services__backup, .services__seo, .services__price {
   display: flex;

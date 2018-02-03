@@ -110,6 +110,8 @@
   fill: $color-white;
   cursor: pointer;
   display: none;
+  transition: all;
+  transition-duration: 0.4s;
 
   @include respond(tab-port) { // width < 900px?
       bottom: 3rem;

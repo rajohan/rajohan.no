@@ -47,6 +47,8 @@
         &:hover {
             span {
                 padding-left: 0.4rem;
+                transition: all;
+                transition-duration: 0.2s;
             }
         }
     }

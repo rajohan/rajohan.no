@@ -15,6 +15,7 @@
             
             $tags_count = [];
 
+            // Count how many times a tag is used
             foreach($tags as $key => $value) {
 
                 $db_conn = new Database(); // connect to database
@@ -25,10 +26,10 @@
                 
             }
 
-            arsort($tags_count);
-
+            arsort($tags_count); // Sort the array highest count first
             $tags_with_count = []; // Crate array
 
+            // Merge the array
             foreach ($tags_count as $key => $value) {
 
               array_push($tags_with_count, $key."<span class='tags__count'>".$value."</span>");
@@ -49,8 +50,9 @@
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
 
-            $all_tags = [];
+            $all_tags = []; // Crate array
 
+            // Get all tag names
             while ($row = $result->fetch_assoc()) {
                 
                 $id = $filter->sanitize($row['ID']);
@@ -61,11 +63,12 @@
 
             $db_conn->free_close($result, $stmt); // free result and close db connection
 
-            $all_tags = $this->add_link($all_tags);
+            $all_tags = $this->add_link($all_tags); // Add link to the tags
             return $all_tags;
 
         }
 
+        // Method to get the tags associated with the blog post
         function get_blog_tags($id) {
             
             $db_conn = new Database(); // connect to database
@@ -75,6 +78,7 @@
             $result = $stmt->get_result(); // Get the result
             $tag_id = [];
 
+            // Get the tag id
             while ($row = $result->fetch_assoc()) {
 
                 array_push($tag_id, $row['TAG_ID']);
@@ -83,8 +87,9 @@
 
             $db_conn->free_close($result, $stmt); // free result and close db connection
             
-            $tag_name = [];
+            $tag_name = []; // Crate array
 
+            // Get the tag name based on the tag id
             foreach($tag_id as $tags) {
 
                 $db_conn = new Database(); // connect to database
@@ -93,6 +98,7 @@
                 $stmt->execute(); // select from database
                 $result = $stmt->get_result(); // Get the result
                 
+                // Push tag names to the array
                 while ($row = $result->fetch_assoc()) {
 
                     array_push($tag_name, strtoupper($row['TAG']));
@@ -103,7 +109,7 @@
 
             }
 
-            $tag_name = $this->add_link($tag_name);
+            $tag_name = $this->add_link($tag_name); // Add link to the tag
             return $tag_name;
 
         }
@@ -113,6 +119,7 @@
 
             $page = new Page_handler(); // Request new page
 
+            // Add the links to the tags
             foreach($tags as $key => $tags_with_link) {
 
               $tags[$key] = '<a href="'.$page->page.'/sort/tag/'.strtolower($tags_with_link).'">'.$tags_with_link.'</a>';
