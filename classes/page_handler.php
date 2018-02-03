@@ -76,7 +76,7 @@
         function split_url($url = '') {
             
             if(empty($url)) {
-                $url = $_SERVER['REQUEST_URI'];
+                $url = strtolower($_SERVER['REQUEST_URI']);
             }
 
             $params = rtrim($url, " /");
