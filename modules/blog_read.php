@@ -41,258 +41,238 @@
 
 ?>
 <!-- SECTION BLOG READ START -->
-<div class="blog-short__container">
-    <div class="blog-short__box">
-        <div class="blog-short__img" >
+<div class="blog__container u-margin-bottom-medium">
+    <div class="blog__box">
+        <div class="blog__img" >
             <img src="img/blog/<?php echo $img; ?>" alt="<?php echo $title; ?>">
         </div>
-        <div class="blog-short__title">
+        <div class="blog__title">
             <?php echo $title; ?>
         </div>
-        <div class="blog-short__by">
-            <?php echo "Postet ".$publish_date." av ".$published_by ?>
+        <div class="blog__by">
+            <?php echo "Posted ".$publish_date." by ".$published_by ?>
         </div>
-        <div class="blog-short__updated-by">
-            <?php echo "Oppdatert ".$update_date." av ".$updated_by; ?>
+        <div class="blog__updated-by">
+            <?php echo "Updated ".$update_date." by ".$updated_by; ?>
         </div>
-        <div id="story_votes_wrapper">
-            <div id="story_seen" class="story_votes">
+        <div class="blog__stats">
+            <img src="img/icons/seen.svg" alt="seen" class="blog__stats__img">
+            <?php echo $seen; ?>
+            <img src="img/icons/like.svg" alt="like" class="blog__stats__img">
+            <?php echo $likes; ?>
+            <img src="img/icons/dislike.svg" alt="dislike" class="blog__stats__img">
+            <?php echo $dislikes; ?>
         </div>
-        <?php echo $seen; ?>
-        <div id="story_vote_up" class="story_votes">
-        </div>
-        <?php echo $likes; ?>
-        <div id="story_vote_down" class="story_votes">
-        </div>
-        <?php echo $dislikes; ?>
-        <div class="blog-short__tags">
+        <div class="blog__tags">
             <?php 
                 $tag_name = $tag->get_blog_tags($id);
                 $tag->output_tags($tag_name); 
             ?>
         </div>
-        <div class="blog-short__story">
+        <div class="blog__short">
             <?php echo $short_blog; ?>
         </div>
-        <div id="full_story">
+        <div class="blog__full">
             <?php echo $blog; ?>
         </div>
-    </div>
-    <div id="comment_count_social_wrapper">
-        <div id="comment_count_wrapper">
-            <div id="comment_text">
-                KOMMENTARER
-            </div>
-            <div id="comment_img">
-                <div id="comment_count">
-                    158
+        <div class="blog__comment__stats">
+            <div class="blog__comment__stats__count">
+                <div class="blog__comment__stats__count__text">
+                    COMMENTS
+                </div>
+                <div class="blog__comment__stats__count__img">
+                    <div class="blog__comment__stats__count__img__text">
+                        158
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="social_media__share_wrapper">
-            DEL DETTE
-            <div id="facebook_share" class="social_media_share">
-            </div>
-            <div id="twitter_share" class="social_media_share">
-            </div>
-            <div id="reddit_share" class="social_media_share">
+            <div class="blog__comment__stats__social_media">
+                SHARE
+                <img src="img/icons/facebook.svg" alt="facebook" class="blog__comment__stats__social_media__img">
+                <img src="img/icons/twitter.svg" alt="twitter" class="blog__comment__stats__social_media__img">
+                <img src="img/icons/reddit.svg" alt="reddit" class="blog__comment__stats__social_media__img">
             </div>
         </div>
-    </div>
-    <div id="comment_sort_wrapper">
-        <div>
-            Eldste først | Nyeste først | Beste kommentarer
+        <div class="blog__comment__sort">
+            <div class="blog__comment__sort__by">
+                Eldste først | Nyeste først | Beste kommentarer
+            </div>
+            <div class="blog__comment__sort__pagination">
+                Side 1 2 3 4 5 6 Neste
+            </div>
         </div>
-        <div>
-            Side 1 2 3 4 5 6 Neste
-        </div>
-    </div>
-    <div class="comment_top">
-        <div>
-            Rajohan (<span class="rating">53</span>)<span class="admin">ADMIN</span>
-        </div>
-        <div class="date_reply">
+        <div class="blog__comment__user">
             <div>
+                Rajohan (<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
+            </div>
+            <div class="blog__comment__date-reply">
                 27.12.2017 19:37
-            </div>
-            <div class="reply">
-            </div>
-        </div>
-    </div>
-    <div class="comment">
-        <?php echo $short_blog; ?>
-    </div>
-    <div class="comment_vote_userstats">
-        <div class="comment_vote">
-            <div class="comment_vote_up">
-            </div>
-            <div>
-                <span class="comment_stats">+36 </span>(+47 / -11)
-            </div>
-            <div class="comment_vote_down">
+                <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
             </div>
         </div>
-        <div>
-            Skjul svar
-        </div>
-        <div class="comment_userstats">
-            254 kommentarer | Registrert 28.12.2017
-        </div>
-    </div>
-    <div style="padding-left: 100px;">
-        <div class="comment_top">
-            <div>
-                Rajohan (<span class="rating">53</span>)<span class="admin">ADMIN</span>
-            </div>
-            <div class="date_reply">
-                <div>
-                    27.12.2017 19:37
-                </div>
-                <div class="reply">
-                </div>
-            </div>
-        </div>
-        <div class="comment">
+        <div class="blog__comment__message">
             <?php echo $short_blog; ?>
         </div>
-        <div class="comment_vote_userstats">
-            <div class="comment_vote">
-                <div class="comment_vote_up">
+        <div class="blog__comment__message__stats">
+            <div class="blog__comment__message__vote">
+                <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
+                <div class="blog__comment__message__vote__stats">
+                    <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
                 </div>
-                <div>
-                    <span class="comment_stats">+36 </span>(+47 / -11)
-                </div>
-                <div class="comment_vote_down">
-                </div>
+                <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
             </div>
-            <div class="comment_userstats">
-                254 kommentarer | Registrert 28.12.2017
+            <div class="blog__comment__message__hide">
+                Hide answers
+            </div>
+            <div class="blog__comment__user__stats">
+                254 comments | Registered 28.12.2017
             </div>
         </div>
-    </div>
-    <div style="padding-left: 100px;">
-        <div class="comment_top">
-            <div>
-                Rajohan (<span class="rating">53</span>)<span class="admin">ADMIN</span>
-            </div>
-            <div class="date_reply">
+        <div style="padding-left: 100px;">
+            <div class="blog__comment__user">
                 <div>
+                    Rajohan (<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
+                </div>
+                <div class="blog__comment__date-reply">
                     27.12.2017 19:37
+                    <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
                 </div>
-                <div class="reply">
+            </div>
+            <div class="blog__comment__message">
+                <?php echo $short_blog; ?>
+            </div>
+            <div class="blog__comment__message__stats">
+                <div class="blog__comment__message__vote">
+                    <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
+                    <div class="blog__comment__message__vote__stats">
+                        <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
+                    </div>
+                    <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
+                </div>
+                <div class="blog__comment__message__hide">
+                    
+                </div>
+                <div class="blog__comment__user__stats">
+                    254 comments | Registered 28.12.2017
                 </div>
             </div>
         </div>
-        <div class="comment">
+        <div style="padding-left: 100px;">
+            <div class="blog__comment__user">
+                <div>
+                    Rajohan (<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
+                </div>
+                <div class="blog__comment__date-reply">
+                    27.12.2017 19:37
+                    <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
+                </div>
+            </div>
+            <div class="blog__comment__message">
+                <?php echo $short_blog; ?>
+            </div>
+            <div class="blog__comment__message__stats">
+                <div class="blog__comment__message__vote">
+                    <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
+                    <div class="blog__comment__message__vote__stats">
+                        <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
+                    </div>
+                    <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
+                </div>
+                <div class="blog__comment__message__hide">
+                    
+                </div>
+                <div class="blog__comment__user__stats">
+                    254 comments | Registered 28.12.2017
+                </div>
+            </div>
+        </div>
+        <div class="blog__comment__user">
+            <div>
+                Rajohan (<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
+            </div>
+            <div class="blog__comment__date-reply">
+                27.12.2017 19:37
+                <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
+            </div>
+        </div>
+        <div class="blog__comment__message">
             <?php echo $short_blog; ?>
         </div>
-        <div class="comment_vote_userstats">
-            <div class="comment_vote">
-                <div class="comment_vote_up">
+        <div class="blog__comment__message__stats">
+            <div class="blog__comment__message__vote">
+                <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
+                <div class="blog__comment__message__vote__stats">
+                    <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
                 </div>
-                <div>
-                    <span class="comment_stats">+36 </span>(+47 / -11)
+                <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
+            </div>
+            <div class="blog__comment__message__hide">
+                
+            </div>
+            <div class="blog__comment__user__stats">
+                254 comments | Registered 28.12.2017
+            </div>
+        </div>
+        <div class="blog__comment__user">
+            <div>
+                Rajohan (<span class="rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
+            </div>
+            <div class="blog__comment__date-reply">
+                27.12.2017 19:37
+                <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
+            </div>
+        </div>
+        <div class="blog__comment__message">
+            <?php echo $short_blog; ?>
+        </div>
+        <div class="blog__comment__message__stats">
+            <div class="blog__comment__message__vote">
+                <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
+                <div class="blog__comment__message__vote__stats">
+                    <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
                 </div>
-                <div class="comment_vote_down">
+                <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
+            </div>
+            <div class="blog__comment__message__hide">
+                
+            </div>
+            <div class="blog__comment__user__stats">
+                254 comments | Registered 28.12.2017
+            </div>
+        </div>
+        <div class="blog__comment__user">
+            <div>
+                Rajohan (<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
+            </div>
+            <div class="blog__comment__date-reply">
+                27.12.2017 19:37
+                <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
+            </div>
+        </div>
+        <div class="blog__comment__message">
+            <?php echo $short_blog; ?>
+        </div>
+        <div class="blog__comment__message__stats">
+            <div class="blog__comment__message__vote">
+                <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
+                <div class="blog__comment__message__vote__stats">
+                    <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
                 </div>
+                <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
             </div>
-            <div class="comment_userstats">
-                254 kommentarer | Registrert 28.12.2017
+            <div class="blog__comment__message__hide">
+                
+            </div>
+            <div class="blog__comment__user__stats">
+                254 comments | Registered 28.12.2017
             </div>
         </div>
+        <fieldset>
+            <textarea placeholder="Din kommentar..." class="blog__comment__textarea" tabindex="1"></textarea>
+        </fieldset>
+        <fieldset>
+            <button name="submit" type="submit" class="blog__comment__submit">Send kommentar</button>
+        </fieldset>
     </div>
-    <div class="comment_top">
-        <div>
-            Rajohan (<span class="rating">53</span>)<span class="admin">ADMIN</span>
-        </div>
-        <div class="date_reply">
-            <div>
-                27.12.2017 19:37
-            </div>
-            <div class="reply">
-            </div>
-        </div>
-    </div>
-    <div class="comment">
-        <?php echo $short_blog; ?>
-    </div>
-    <div class="comment_vote_userstats">
-        <div class="comment_vote">
-            <div class="comment_vote_up">
-            </div>
-            <div>
-                <span class="comment_stats">+36 </span>(+47 / -11)
-            </div>
-            <div class="comment_vote_down">
-            </div>
-        </div>
-        <div class="comment_userstats">
-            254 kommentarer | Registrert 28.12.2017
-        </div>
-    </div>
-    <div class="comment_top">
-        <div>
-            Rajohan (<span class="rating">53</span>)<span class="admin">ADMIN</span>
-        </div>
-        <div class="date_reply">
-            <div>
-                27.12.2017 19:37
-            </div>
-            <div class="reply">
-            </div>
-        </div>
-    </div>
-    <div class="comment">
-        <?php echo $short_blog; ?>
-    </div>
-    <div class="comment_vote_userstats">
-        <div class="comment_vote">
-            <div class="comment_vote_up">
-            </div>
-            <div>
-                <span class="comment_stats">+36 </span>(+47 / -11)
-            </div>
-            <div class="comment_vote_down">
-            </div>
-        </div>
-        <div class="comment_userstats">
-            254 kommentarer | Registrert 28.12.2017
-        </div>
-    </div>
-    <div class="comment_top">
-        <div>
-            Rajohan (<span class="rating">53</span>)<span class="admin">ADMIN</span>
-        </div>
-        <div class="date_reply">
-            <div>
-                27.12.2017 19:37
-            </div>
-            <div class="reply">
-            </div>
-        </div>
-    </div>
-    <div class="comment">
-        <?php echo $short_blog; ?>
-    </div>
-    <div class="comment_vote_userstats">
-        <div class="comment_vote">
-            <div class="comment_vote_up">
-            </div>
-            <div>
-                <span class="comment_stats">+36 </span>(+47 / -11)
-            </div>
-            <div class="comment_vote_down">
-            </div>
-        </div>
-        <div class="comment_userstats">
-            254 kommentarer | Registrert 28.12.2017
-        </div>
-    </div>
-    <fieldset>
-        <textarea placeholder="Din kommentar..." class="comment_textarea" tabindex="1" style="margin-top: 15px; min-width: 100%; padding:10px; max-width: 100%; height:100px; background:#FFF; border:1px solid #CCC;"></textarea>
-    </fieldset>
-    <fieldset>
-        <button name="submit" type="submit" class="comment_submit" style="width:100%; padding: 10px; border:none;">Send kommentar</button>
-    </fieldset>
 </div>
 <!-- SECTION BLOG READ END -->
