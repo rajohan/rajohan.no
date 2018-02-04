@@ -95,10 +95,10 @@
         </div>
         <div class="blog__comment__sort">
             <div class="blog__comment__sort__by">
-                Eldste først | Nyeste først | Beste kommentarer
+                Oldest first | Newest first | Best comments
             </div>
             <div class="blog__comment__sort__pagination">
-                Side 1 2 3 4 5 6 Neste
+                Page 1 2 3 4 5 6 Next
             </div>
         </div>
         <div class="blog__comment__user">
