@@ -406,6 +406,63 @@ a.whitelink:hover {
     box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem; }
 
+.blog-navigation {
+  max-width: 33rem;
+  margin: 2rem;
+  margin-left: 0;
+  background-color: #f7f7f7; }
+  .blog-navigation__sort {
+    width: 100%;
+    display: flex;
+    flex-direction: column; }
+    .blog-navigation__sort__buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 2rem; }
+      .blog-navigation__sort__buttons__item {
+        width: 100%;
+        background-color: #254B62;
+        color: #fff;
+        padding: 0.5rem;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer; }
+        .blog-navigation__sort__buttons__item:hover {
+          color: #000; }
+        .blog-navigation__sort__buttons__item__active {
+          color: #000;
+          background-color: #1D3E53; }
+    .blog-navigation__sort__content {
+      display: flex;
+      align-items: flex-start;
+      padding: 2rem;
+      padding-top: 0; }
+      .blog-navigation__sort__content a {
+        width: 30%;
+        transition: all;
+        transition-duration: 0.3s; }
+        .blog-navigation__sort__content a:hover {
+          opacity: 0.7; }
+      .blog-navigation__sort__content__img {
+        width: 100%;
+        padding-right: 2rem; }
+      .blog-navigation__sort__content__text h6 {
+        font-weight: 400;
+        cursor: default; }
+  .blog-navigation__search__item {
+    padding: 2rem; }
+  .blog-navigation__newsletter__item {
+    padding: 2rem; }
+  .blog-navigation__tags__box {
+    padding: 2rem; }
+  .blog-navigation__heading {
+    background-color: #254B62;
+    color: #fff;
+    display: block;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    text-transform: uppercase; }
+
 .footer {
   background-color: #363636;
   padding: 2rem;
@@ -539,7 +596,7 @@ a.whitelink:hover {
     text-transform: uppercase;
     height: 100%;
     padding: 0 2rem;
-    transition: all;
+    transition: background-color, color, border;
     transition-duration: 0.4s;
     font-weight: 700;
     letter-spacing: 0.1rem; }
@@ -641,63 +698,13 @@ a.whitelink:hover {
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid #e8e8e8; }
-  .blog-short__read:link, .blog-short__read:visited {
+  .blog-short__read a:link, .blog-short__read a:visited {
     font-size: 1.5rem;
     font-weight: 700; }
-  .blog-short__read:hover span {
+  .blog-short__read a:hover span {
     padding-left: 0.4rem;
     transition: all;
     transition-duration: 0.2s; }
-
-.blog-navigation {
-  max-width: 33rem;
-  margin: 2rem;
-  margin-left: 0;
-  background-color: #f7f7f7; }
-  .blog-navigation__sort {
-    width: 100%;
-    display: flex;
-    flex-direction: column; }
-    .blog-navigation__sort__buttons {
-      display: flex;
-      justify-content: space-around;
-      margin-bottom: 2rem; }
-      .blog-navigation__sort__buttons__item {
-        width: 100%;
-        background-color: #254B62;
-        color: #fff;
-        padding: 0.5rem;
-        text-align: center;
-        text-transform: uppercase;
-        cursor: pointer; }
-        .blog-navigation__sort__buttons__item:hover {
-          color: #000; }
-        .blog-navigation__sort__buttons__item__active {
-          color: #000;
-          background-color: #1D3E53; }
-    .blog-navigation__sort__content {
-      display: flex;
-      align-items: flex-start;
-      padding: 2rem;
-      padding-top: 0; }
-      .blog-navigation__sort__content img {
-        width: 30%;
-        padding-right: 2rem; }
-      .blog-navigation__sort__content__text h6 {
-        font-weight: 400; }
-  .blog-navigation__search__item {
-    padding: 2rem; }
-  .blog-navigation__newsletter__item {
-    padding: 2rem; }
-  .blog-navigation__tags__box {
-    padding: 2rem; }
-  .blog-navigation__heading {
-    background-color: #254B62;
-    color: #fff;
-    display: block;
-    padding: 0.5rem;
-    padding-left: 1rem;
-    text-transform: uppercase; }
 
 .computer-setup {
   background-color: #fff;

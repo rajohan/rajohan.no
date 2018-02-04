@@ -1,3 +1,4 @@
+// Blog
 .blog-short {
     
     width: 100vw;
@@ -52,107 +53,24 @@
         border-top: 1px solid $color-grey-2;
     }
 
-    &__read {
-        
-        &:link,
-        &:visited {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
+    &__read {   
 
-        &:hover {
-            span {
-                padding-left: 0.4rem;
-                transition: all;
-                transition-duration: 0.2s;
+        a {
+
+            &:link,
+            &:visited {
+                font-size: 1.5rem;
+                font-weight: 700;
             }
-        }
-    }
-}
 
-.blog-navigation {
-    max-width: 33rem;
-    margin: 2rem;
-    margin-left: 0;
-    background-color: $color-grey-light;
-    
-    &__sort {
-        width: 100%; 
-        display: flex;
-        flex-direction: column;
-        
-        &__buttons {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 2rem;
-
-            &__item {
-                width: 100%;
-                background-color: $color-primary;
-                color: $color-white;
-                padding: 0.5rem;
-                text-align: center;
-                text-transform: uppercase;
-                cursor: pointer;
-
-                &:hover {
-                    color: $color-black;
-                }
-
-                &__active {
-                    color: $color-black;
-                    background-color: $color-primary-dark;
+            &:hover {
+                
+                span {
+                    padding-left: 0.4rem;
+                    transition: all;
+                    transition-duration: 0.2s;
                 }
             }
         }
-
-        &__content {
-            display: flex;
-            align-items: flex-start;
-            padding: 2rem;
-            padding-top: 0;
-
-            img {
-                width: 30%;
-                padding-right: 2rem;
-            }
-
-            &__text {
-                h6 {
-                    font-weight: 400;
-                }
-            }
-        }
-    }
-
-    &__search {
-        
-        &__item {
-            padding: 2rem;
-        }
-    }
-
-    &__newsletter {
-        
-        &__item {
-            padding: 2rem;
-        }
-    }
-
-    &__tags {
-
-        &__box {
-            padding: 2rem;
-        }
-        
-    }
-
-    &__heading {
-        background-color: $color-primary;
-        color: $color-white;
-        display: block;
-        padding: 0.5rem;
-        padding-left: 1rem;
-        text-transform: uppercase;
     }
 }
