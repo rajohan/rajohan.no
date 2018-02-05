@@ -90,7 +90,7 @@
 
                 else {
 
-                    echo "you allready voted!"; // User allready voted
+                    echo "you already voted!"; // User allready voted
 
                 }
 
@@ -126,7 +126,7 @@
 
                 else {
 
-                    echo "you allready voted!"; // User allready voted
+                    echo "you already voted!"; // User allready voted
 
                 }
 
