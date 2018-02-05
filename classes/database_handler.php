@@ -56,7 +56,7 @@
         /////////////////////////////////////////////////////////
         // Method to close connection
         /////////////////////////////////////////////////////////
-        private function close_connection($stmt) {
+        function close_connection($stmt) {
 
             $stmt->close(); // Close statement
             $this->connect->close(); // Close connection

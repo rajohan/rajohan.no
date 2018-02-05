@@ -35,7 +35,6 @@
         $certificates = $bbcode->replace($filter->sanitize($row["CERTIFICATES"]));
         $interests = $bbcode->replace($filter->sanitize($row["INTERESTS"]));
         $img = $filter->sanitize($row["IMG"]);
-        $user = $filter->sanitize($row["USER"]);
 
     }
 

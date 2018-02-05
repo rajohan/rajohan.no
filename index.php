@@ -16,6 +16,7 @@
     require_once('classes/tags.php');              // TAGS
     require_once('classes/converter.php');         // CONVERTER
     require_once('classes/sort.php');              // SORTER
+    require_once('classes/vote.php');              // VOTE
     require_once('classes/ssl_seal.php');          // SSL SEAL
 
     ob_start(); // start output buffering

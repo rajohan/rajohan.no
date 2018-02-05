@@ -13,7 +13,7 @@
     
     $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Get the page number to generate offset
 
-    $stmt = $db_conn->connect->prepare("SELECT NAME, CATEGORY, DESCRIPTION, IMAGE, URL, SKILLS, DATE, CLIENT FROM `PROJECTS` ORDER BY `ID` DESC LIMIT $offset, 1"); // prepare statement
+    $stmt = $db_conn->connect->prepare("SELECT NAME, CATEGORY, DESCRIPTION, IMAGE, URL, SKILLS, CREATED_DATE, CLIENT FROM `PROJECTS` ORDER BY `ID` DESC LIMIT $offset, 1"); // prepare statement
     $stmt->execute(); // select from database
     $result = $stmt->get_result(); // Get the result
 
@@ -34,7 +34,7 @@
                 $img = $filter->sanitize($row['IMAGE']);
                 $url = $filter->sanitize($row['URL']);
                 $skills = $filter->sanitize($row['SKILLS']);
-                $date = $filter->sanitize($row['DATE']);
+                $date = $filter->sanitize($row['CREATED_DATE']);
                 $client = $filter->sanitize($row['CLIENT']);
 
                 $date = $converter->date($date);

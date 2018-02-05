@@ -11,6 +11,7 @@
     $bbcode = new Bbcode(); // Start bbcode parser
     $tag = new Tags(); // Start the tag handler
     $converter = new Converter; // Start the converter
+    $vote = new Vote;
 
     $id = 3;
 
@@ -47,13 +48,13 @@
             <img src="img/blog/<?php echo $img; ?>" alt="<?php echo $title; ?>">
         </div>
         <div class="blog__title">
-            <?php echo $title; ?>
+            <?php echo ucfirst($title); ?>
         </div>
         <div class="blog__by">
-            <?php echo "Posted ".$publish_date." by ".$published_by ?>
+            <?php echo "Posted ".$publish_date." by ".ucfirst($published_by); ?>
         </div>
         <div class="blog__updated-by">
-            <?php echo "Updated ".$update_date." by ".$updated_by; ?>
+            <?php echo "Updated ".$update_date." by ".ucfirst($updated_by); ?>
         </div>
         <div class="blog__stats">
             <img src="img/icons/seen.svg" alt="seen" class="blog__stats__img">
@@ -70,10 +71,10 @@
             ?>
         </div>
         <div class="blog__short">
-            <?php echo $short_blog; ?>
+            <?php echo ucfirst($short_blog); ?>
         </div>
         <div class="blog__full">
-            <?php echo $blog; ?>
+            <?php echo ucfirst($blog); ?>
         </div>
         <div class="blog__comment__stats">
             <div class="blog__comment__stats__count">

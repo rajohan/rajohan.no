@@ -37,8 +37,8 @@
                 $privacy_part2 = $bbcode->replace($filter->sanitize($row['PRIVACY_PART2']));
                 $refund = $bbcode->replace($filter->sanitize($row['REFUND']));
                 $tos = $bbcode->replace($filter->sanitize($row['TOS']));
-                $user = $filter->sanitize($row['USER']);
-                $date = $filter->sanitize($row['DATE']);
+                $user = $filter->sanitize($row['CREATED_BY_USER']);
+                $date = $filter->sanitize($row['CREATED_DATE']);
             }
             
             $db_conn->free_close($result, $stmt); // free result and close db connection

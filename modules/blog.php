@@ -52,7 +52,7 @@
                 <img src="img/blog/'.$img.'" alt="'.$title.'">
             </div>
             <div class="blog-short__title">
-                '.$title.'
+                '.ucfirst($title).'
             </div>
             <div class="blog-short__by">
                 Posted '.$publish_date.' by '.ucfirst($published_by).'
@@ -68,7 +68,7 @@
             echo    
             '</div>
             <div class="blog-short__story">
-                '.$short_blog.'
+                '.ucfirst($short_blog).'
             </div>
             <div class="blog-short__read">
                 <a href="blog/read/'.$id.'/'.$converter->generate_slug($title).'/">Read more <span>&roarr;</span></a>
