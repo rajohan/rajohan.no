@@ -6,7 +6,7 @@
         
     }
 
-    $page = new Page_handler(); // Request new page
+    $page = new Page_handler; // Request new page
 ?>
 
 <!-- SECTION CONTACT ME START -->

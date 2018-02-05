@@ -6,9 +6,9 @@
         
     }
 
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
-    $pagination = new Pagination(); // Crate new pagination
+    $db_conn = new Database; // connect to database
+    $filter = new Filter; // Start filter
+    $pagination = new Pagination; // Crate new pagination
     $converter = new Converter; // Start the converter
     
     $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Get the page number to generate offset

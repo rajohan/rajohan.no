@@ -7,9 +7,9 @@
         
     }
  
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
-    $bbcode = new Bbcode(); // Start bbcode parser
+    $db_conn = new Database; // connect to database
+    $filter = new Filter; // Start filter
+    $bbcode = new Bbcode; // Start bbcode parser
     
     $stmt = $db_conn->connect->prepare("SELECT TITLE, WHY_ME FROM `WHY_ME` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
     $stmt->execute(); // select from database

@@ -6,12 +6,15 @@
         
     }
 
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
-    $bbcode = new Bbcode(); // Start bbcode parser
-    $tag = new Tags(); // Start the tag handler
+    $db_conn = new Database; // connect to database
+    $filter = new Filter; // Start filter
+    $bbcode = new Bbcode; // Start bbcode parser
+    $tag = new Tags; // Start the tag handler
     $converter = new Converter; // Start the converter
-    $vote = new Vote;
+    $vote = new Vote; // Start vote registering
+    $view = new Views; // Start view registering
+    
+    $view->add_blog_view(); // Add blog view to db if its a new user
 
     $id = 3;
 
@@ -28,9 +31,6 @@
         $published_by = $filter->sanitize($row['PUBLISHED_BY_USER']);
         $update_date = $filter->sanitize($row['UPDATE_DATE']);
         $updated_by = $filter->sanitize($row['UPDATED_BY_USER']);
-        $seen = $filter->sanitize($row['SEEN']);
-        $likes = $filter->sanitize($row['LIKES']);
-        $dislikes = $filter->sanitize($row['DISLIKES']);
         $short_blog = $bbcode->replace($filter->sanitize($row['SHORT_BLOG']));
         $blog = $bbcode->replace($filter->sanitize($row['BLOG']));
         // Dates
@@ -58,11 +58,11 @@
         </div>
         <div class="blog__stats">
             <img src="img/icons/seen.svg" alt="seen" class="blog__stats__img">
-            <?php echo $seen; ?>
+            544
             <img src="img/icons/like.svg" alt="like" class="blog__stats__img">
-            <?php echo $likes; ?>
+            243
             <img src="img/icons/dislike.svg" alt="dislike" class="blog__stats__img">
-            <?php echo $dislikes; ?>
+            53
         </div>
         <div class="blog__tags">
             <?php 

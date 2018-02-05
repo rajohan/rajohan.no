@@ -7,19 +7,19 @@
         
     }
 
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
-    $bbcode = new Bbcode(); // Start bbcode parser
-    $pagination = new Pagination(); // Crate new pagination
-    $tag = new Tags(); // Start the tag handler
+    $db_conn = new Database; // connect to database
+    $filter = new Filter; // Start filter
+    $bbcode = new Bbcode; // Start bbcode parser
+    $pagination = new Pagination; // Crate new pagination
+    $tag = new Tags; // Start the tag handler
     $converter = new Converter; // Start the converter
-    $sort_data = new Sort(); // Start sorting
+    $sort_data = new Sort; // Start sorting
 
     $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Get the page number to generate offset
 
     $sort = $sort_data->by_tag();
 
-    $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER, UPDATE_DATE, UPDATED_BY_USER, SEEN, LIKES, DISLIKES, SHORT_BLOG FROM `BLOG` $sort ORDER BY `ID` DESC LIMIT $offset, 1"); // prepare statement
+    $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER, UPDATE_DATE, UPDATED_BY_USER, SHORT_BLOG FROM `BLOG` $sort ORDER BY `ID` DESC LIMIT $offset, 1"); // prepare statement
     $stmt->execute(); // select from database
     $result = $stmt->get_result(); // Get the result
 
@@ -37,9 +37,6 @@
             $published_by = $filter->sanitize($row['PUBLISHED_BY_USER']);
             $update_date = $filter->sanitize($row['UPDATE_DATE']);
             $updated_by = $filter->sanitize($row['UPDATED_BY_USER']);
-            $seen = $filter->sanitize($row['SEEN']);
-            $likes = $filter->sanitize($row['LIKES']);
-            $dislikes = $filter->sanitize($row['DISLIKES']);
             $short_blog = $bbcode->replace($filter->sanitize($row['SHORT_BLOG']));
 
             // Dates

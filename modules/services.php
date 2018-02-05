@@ -7,8 +7,8 @@
         
     }
  
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
+    $db_conn = new Database; // connect to database
+    $filter = new Filter; // Start filter
     
     $stmt = $db_conn->connect->prepare("SELECT TITLE, SUB_TITLE, OVERVIEW_1_IMAGE, OVERVIEW_1_TITLE, OVERVIEW_1_DESCRIPTION, OVERVIEW_2_IMAGE, OVERVIEW_2_TITLE, OVERVIEW_2_DESCRIPTION, OVERVIEW_3_IMAGE, OVERVIEW_3_TITLE, OVERVIEW_3_DESCRIPTION, OVERVIEW_4_IMAGE, OVERVIEW_4_TITLE, OVERVIEW_4_DESCRIPTION  FROM `SERVICES` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
     $stmt->execute(); // select from database

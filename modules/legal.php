@@ -23,9 +23,11 @@
         <div class="legal__contact">If you require any more information or have any questions about my legal policies, please feel free to <a href="contact/">contact me</a>.</div>
         
         <?php
-            $db_conn = new Database(); // connect to database
-            $filter = new Filter(); // Start filter
-            $bbcode = new Bbcode(); // Start bbcode parser
+        
+            $db_conn = new Database; // connect to database
+            $filter = new Filter; // Start filter
+            $bbcode = new Bbcode; // Start bbcode parser
+
             $stmt = $db_conn->connect->prepare("SELECT * FROM `LEGAL` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result

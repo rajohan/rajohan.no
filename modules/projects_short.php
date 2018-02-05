@@ -7,8 +7,8 @@
         
     }
  
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
+    $db_conn = new Database; // connect to database
+    $filter = new Filter; // Start filter
     
     $stmt = $db_conn->connect->prepare("SELECT NAME, CATEGORY, DESCRIPTION, IMAGE, URL FROM `PROJECTS` ORDER BY `ID` DESC LIMIT 3"); // prepare statement
     $stmt->execute(); // select from database
