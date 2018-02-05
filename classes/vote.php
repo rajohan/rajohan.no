@@ -7,7 +7,7 @@
         
     }
     
-    // Class for the tags
+    // Class for votes
     class Vote {
         
         public $ip; // User ip
@@ -28,7 +28,7 @@
 
         }
 
-        // Method to check if old vote is of opposite value
+        // Method to check if old vote on item is of opposite value
         private function check_vote_value($table, $id_col_name, $item_id, $vote, $user) {
 
             $db_conn = new Database(); // connect to database
@@ -38,7 +38,7 @@
 
         }
 
-        // Method to add new vote
+        // Method to add a new vote
         private function add_vote($table, $id_col_name, $blog_id, $vote, $user) {
 
             $db_conn = new Database(); // connect to database
@@ -48,7 +48,7 @@
 
         }
 
-        // Method to delete vote
+        // Method to delete a vote
         private function delete_vote($table, $user) {
 
             $db_conn = new Database(); // connect to database
