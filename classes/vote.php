@@ -10,7 +10,7 @@
     // Class for votes
     class Vote {
         
-        public $ip; // User ip
+        private $ip; // User ip
 
         function __construct() {
 
