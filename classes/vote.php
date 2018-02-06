@@ -35,7 +35,7 @@
         private function check_old_votes($table, $id_col_name, $item_id, $user) {
             
             $db_conn = new Database(); // connect to database
-            $sort = 'WHERE '.$id_col_name.' = "'.$item_id.'" AND (VOTE_BY_IP = "'.$this->ip.'" OR VOTE_BY_USER = "'.$user.'")'; // What to search for
+            $sort = 'WHERE '.$id_col_name.' = "'.$item_id.'" AND (VOTE_BY_IP = "'.$this->ip.'" OR (VOTE_BY_USER = "'.$user.'" AND VOTE_BY_USER != "0"))'; // What to search for
             $count = $db_conn->count($table, $sort); // Count row's in db
             return $count;
 
@@ -48,7 +48,7 @@
         private function check_vote_value($table, $id_col_name, $item_id, $vote, $user) {
 
             $db_conn = new Database(); // connect to database
-            $sort = 'WHERE '.$id_col_name.' = "'.$item_id.'" AND VOTE = "'.$vote.'" AND (VOTE_BY_IP = "'.$this->ip.'" OR VOTE_BY_USER = "'.$user.'")'; // What to search for
+            $sort = 'WHERE '.$id_col_name.' = "'.$item_id.'" AND VOTE = "'.$vote.'" AND (VOTE_BY_IP = "'.$this->ip.'" OR VOTE_BY_USER = "'.$user.'" AND VOTE_BY_USER != "0"))'; // What to search for
             $count = $db_conn->count($table, $sort); // Count row's in db
             return $count;
 
