@@ -14,28 +14,50 @@
     // Initialize classes
     //-------------------------------------------------
 
-    $db_conn = new Database;
     $filter = new Filter;
     $bbcode = new Bbcode;
     $tag = new Tags;
     $converter = new Converter;
     $vote = new Vote;
     $view = new Views;
+    $page = new Page_handler;
+
+    //-------------------------------------------------
+    //  Set the blog id
+    //-------------------------------------------------
     
+    $blog_id = $page->blog_id;
+
     //-------------------------------------------------
     // Add blog view to db to db if its a new user
     //-------------------------------------------------
 
-    $view->add_blog_view();
+    $view->add_blog_view($blog_id);
+
+    //-------------------------------------------------
+    //  Get views count
+    //-------------------------------------------------
+
+    $db_conn = new Database;
+    $view_count = $db_conn->count('BLOG_VIEWS', $sort = 'WHERE BLOG_ID = "'.$blog_id.'"');
+
+    //-------------------------------------------------
+    //  Get blog vote count
+    //-------------------------------------------------
+
+    $db_conn = new Database;
+    $blog_votes_like = $db_conn->count('BLOG_VOTES', $sort = 'WHERE BLOG_ID = "'.$blog_id.'" AND VOTE = 1');
+
+    $db_conn = new Database;
+    $blog_votes_dislike = $db_conn->count('BLOG_VOTES', $sort = 'WHERE BLOG_ID = "'.$blog_id.'" AND VOTE = 0');
 
     //-------------------------------------------------
     //  Get the blog post
     //-------------------------------------------------
-    
-    $id = 3;
 
+    $db_conn = new Database;
     $stmt = $db_conn->connect->prepare("SELECT * FROM `BLOG` WHERE ID=? ORDER BY `ID` DESC LIMIT 1");
-    $stmt->bind_param("i", $id);
+    $stmt->bind_param("i", $blog_id);
     $stmt->execute();
     $result = $stmt->get_result();
     
@@ -75,15 +97,15 @@
         </div>
         <div class="blog__stats">
             <img src="img/icons/seen.svg" alt="seen" class="blog__stats__img">
-            544
+            <?php echo $view_count; ?>
             <img src="img/icons/like.svg" alt="like" class="blog__stats__img">
-            243
+            <?php echo $blog_votes_like; ?>
             <img src="img/icons/dislike.svg" alt="dislike" class="blog__stats__img">
-            53
+            <?php echo $blog_votes_dislike; ?>
         </div>
         <div class="blog__tags">
             <?php 
-                $tag_name = $tag->get_blog_tags($id);
+                $tag_name = $tag->get_blog_tags($blog_id);
                 $tag->output_tags($tag_name); 
             ?>
         </div>

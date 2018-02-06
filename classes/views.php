@@ -56,10 +56,7 @@
         // Method to add blog views
         //-------------------------------------------------
         
-        function add_blog_view() {
-        
-            $user = 3423;
-            $blog_id = 1;
+        function add_blog_view($blog_id, $user = 0) {
 
             $count = $this->check_views("BLOG_VIEWS", "BLOG_ID", $blog_id, $user); // Check for old view on item by user
 

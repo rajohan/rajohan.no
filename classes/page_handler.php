@@ -18,8 +18,10 @@
 
         private $allowed_pages = [];
         private $filter;
+        private $converter;
         public $page;
         public $url;
+        public $blog_id;
 
         //-----------------------------------------------
         // Construct
@@ -31,8 +33,9 @@
             // Allowed pages
             //-----------------------------------------------
             
-            $db_conn = new Database(); // connect to database
-            $this->filter = new Filter(); // Start filter
+            $db_conn = new Database; // connect to database
+            $this->filter = new Filter; // Start filter
+            $this->converter = new Converter;
             $stmt = $db_conn->connect->prepare("SELECT PAGE, URL FROM `PAGES` ORDER BY `ID` DESC"); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
@@ -65,22 +68,41 @@
                     // Check if the first paramater is blog and that second parameter is set
                     if(($params[2] === "blog") && (!empty($params[3]))) {
 
-                        // Check if parametyer 3 is set and is valid
+                        // Check if parameter 2 is set and is valid
                         if((($params[3]) === "read") && (!preg_match('~\W~', $params[3]))) {
+
+                            // Check if parameter 3 is set and is valid
+                            if((!empty($params[4])) && preg_match('/^[1-9][0-9]*$/', $params[4])) {
+
+                                $db_conn = new Database;
+                                $count = $db_conn->count('BLOG', $sort = 'WHERE ID = "'.$params[4].'"');
+
+                                // Check that the blog post exist
+                                if($count > 0) {
+
+                                    $this->blog_id = $params[4]; // Set blog id
+                                    $this->page = $params[3]; // Value in url parameter 2 is valid. Setting $page equal to url parameter 2
+
+                                } else {
+
+                                    $this->page = $params[2]; // Blog post does not exist. Setting $page equal to first url parameter
+
+                                }
+
+                            } else {
+
+                                $this->page = $params[2]; // Value in second url parameter is invalid. Setting $page equal to first url parameter
+
+                            }
+
                         
-                            $this->page = $params[3]; // Value in url parameter 2 is valid. Setting $page equal to url parameter 2
-                        
+                        } else {
+
+                            $this->page = $params[2]; // Value in second url parameter is invalid. Setting $page equal to first url parameter
+
                         }
 
-                        else {
-
-                            $this->page = $params[2]; // Value in second url parameter is invalid. Settting $page equal to first url parameter
-
-                        }
-
-                    }
-
-                    else {
+                    } else {
 
                         $this->page = $params[2]; // Value in url parameter is valid. Settting $page equal to url parameter
 
@@ -144,7 +166,41 @@
 
             if($this->valid_page()) {
 
-                $title = ucfirst($GLOBALS['page_title'])." - ".ucfirst($this->page);
+                // Check if page is read and if it is set title equal to blog title
+                if($this->page === "read") { 
+
+                    $db_conn = new Database;
+                    $count = $db_conn->count('BLOG', $sort = 'WHERE ID = "'.$this->blog_id.'"');
+
+                    // Check that the blog post exist
+                    if($count > 0) {
+
+                        $db_conn = new Database; // connect to database
+                        $stmt = $db_conn->connect->prepare('SELECT TITLE FROM `BLOG` WHERE ID = "'.$this->blog_id.'"'); // prepare statement
+                        $stmt->execute(); // select from database
+                        $result = $stmt->get_result(); // Get the result
+
+                        while ($row = $result->fetch_assoc()) {
+                
+                            $blog_title = $this->converter->generate_slug($this->filter->sanitize($row['TITLE']), ' '); // Push rows to array
+                    
+                        }
+            
+                        $db_conn->free_close($result, $stmt); // Free result and close database connection
+
+                        $title = ucfirst($GLOBALS['page_title'])." - ".ucfirst($blog_title);
+
+                    } else {
+
+                        $title = ucfirst($GLOBALS['page_title'])." - ".ucfirst($this->page); 
+
+                    }
+
+                } else {
+
+                    $title = ucfirst($GLOBALS['page_title'])." - ".ucfirst($this->page); 
+
+                }
 
             } else {
 

@@ -52,7 +52,7 @@
         // Method to generate slug
         //-------------------------------------------------
 
-        function generate_slug($title) {
+        function generate_slug($title, $replace = '-') {
 
             setlocale(LC_ALL, 'en_US.UTF8'); // Set charset
 
@@ -60,7 +60,7 @@
             $clean = str_replace("',*,`", " ", $clean); // Replace ', *, `, with a whitespace
             $clean = preg_replace("/[^a-zA-Z0-9_|+ -]/", ' ', $clean); // Replace everything that's not characters, numbers or _ | + - with a whitespace
             $clean = strtolower(trim($clean, '-')); // Make all characters lowercase and trim all whitespaces replacing them with -
-            $clean = preg_replace("/[_|+ -]+/", "-", $clean); // Finaly replace _ | + - with -
+            $clean = preg_replace("/[_|+ -]+/", $replace, $clean); // Finaly replace _ | + - with -
 
             return $clean;
 
