@@ -136,11 +136,16 @@
         function add_link($tags) {
 
             $page = new Page_handler(); // Request new page
+            $tag_page = $page->page;
+
+            if($tag_page === "read") {
+                $tag_page = "blog";
+            }
 
             // Add the links to the tags
             foreach($tags as $key => $tags_with_link) {
-
-              $tags[$key] = '<a href="'.$page->page.'/sort/tag/'.strtolower($tags_with_link).'">'.$tags_with_link.'</a>';
+                
+                $tags[$key] = '<a href="'.$tag_page.'/sort/tag/'.strtolower($tags_with_link).'">'.$tags_with_link.'</a>';
 
             }
 

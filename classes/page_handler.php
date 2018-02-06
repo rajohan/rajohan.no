@@ -19,6 +19,7 @@
         private $allowed_pages = [];
         private $filter;
         private $converter;
+        private $base_param_num;
         public $page;
         public $url;
         public $blog_id;
@@ -33,9 +34,12 @@
             // Allowed pages
             //-----------------------------------------------
             
-            $db_conn = new Database; // connect to database
-            $this->filter = new Filter; // Start filter
+            $db_conn = new Database;
+            $this->filter = new Filter;
             $this->converter = new Converter;
+
+            $base_param_num = 2; // What parameter number website base is on
+
             $stmt = $db_conn->connect->prepare("SELECT PAGE, URL FROM `PAGES` ORDER BY `ID` DESC"); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
@@ -57,54 +61,54 @@
             $params_count = count($params); // Count parameters
 
             // Set the $page variable
-            if(!empty($params[2])) {
+            if(!empty($params[$base_param_num])) {
                 // Only allow word characters (a-z, A-Z, 0-9 and _.)
-                if (preg_match('~\W~', $params[2])) {
+                if (preg_match('~\W~', $params[$base_param_num])) {
 
                     $this->page = 'home'; // Value in url parameter is invalid. Setting $page to home
 
                 } else {
                     
                     // Check if the first paramater is blog and that second parameter is set
-                    if(($params[2] === "blog") && (!empty($params[3]))) {
+                    if(($params[$base_param_num] === "blog") && (!empty($params[$base_param_num+1]))) {
 
                         // Check if parameter 2 is set and is valid
-                        if((($params[3]) === "read") && (!preg_match('~\W~', $params[3]))) {
+                        if((($params[$base_param_num+1]) === "read") && (!preg_match('~\W~', $params[$base_param_num+1]))) {
 
                             // Check if parameter 3 is set and is valid
-                            if((!empty($params[4])) && preg_match('/^[1-9][0-9]*$/', $params[4])) {
+                            if((!empty($params[$base_param_num+2])) && preg_match('/^[1-9][0-9]*$/', $params[$base_param_num+2])) {
 
                                 $db_conn = new Database;
-                                $count = $db_conn->count('BLOG', $sort = 'WHERE ID = "'.$params[4].'"');
+                                $count = $db_conn->count('BLOG', $sort = 'WHERE ID = "'.$params[$base_param_num+2].'"');
 
                                 // Check that the blog post exist
                                 if($count > 0) {
 
-                                    $this->blog_id = $params[4]; // Set blog id
-                                    $this->page = $params[3]; // Value in url parameter 2 is valid. Setting $page equal to url parameter 2
+                                    $this->blog_id = $params[$base_param_num+2]; // Set blog id
+                                    $this->page = $params[$base_param_num+1]; // Value in url parameter 2 is valid. Setting $page equal to url parameter 2
 
                                 } else {
 
-                                    $this->page = $params[2]; // Blog post does not exist. Setting $page equal to first url parameter
+                                    $this->page = $params[$base_param_num]; // Blog post does not exist. Setting $page equal to first url parameter
 
                                 }
 
                             } else {
 
-                                $this->page = $params[2]; // Value in second url parameter is invalid. Setting $page equal to first url parameter
+                                $this->page = $params[$base_param_num]; // Value in second url parameter is invalid. Setting $page equal to first url parameter
 
                             }
 
                         
                         } else {
 
-                            $this->page = $params[2]; // Value in second url parameter is invalid. Setting $page equal to first url parameter
+                            $this->page = $params[$base_param_num]; // Value in second url parameter is invalid. Setting $page equal to first url parameter
 
                         }
 
                     } else {
 
-                        $this->page = $params[2]; // Value in url parameter is valid. Settting $page equal to url parameter
+                        $this->page = $params[$base_param_num]; // Value in url parameter is valid. Settting $page equal to url parameter
 
                     }
 
