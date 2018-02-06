@@ -1,16 +1,24 @@
 <?php
    
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
-      
+
         die('Direct access is not permitted.');
-    
+        
     }
 
-    ###########################################################################
-    # Get url id parts from alphassl and generate url
-    ###########################################################################
+    //-------------------------------------------------
+    // Ssl_seal 
+    //-------------------------------------------------
+    
     class Ssl_seal {
+
+        //-------------------------------------------------
+        // Get url id parts from alphassl and generate url
+        //-------------------------------------------------
 
         function generate_url() {
 

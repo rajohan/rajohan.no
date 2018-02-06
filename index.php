@@ -1,10 +1,30 @@
 <?php
 
+    //-------------------------------------------------
+    // Define INCLUDE (Allow to include other pages)
+    //-------------------------------------------------
+
     if (!defined('INCLUDE')) {
 
-        define('INCLUDE','true'); // Define INCLUDE to be able to show/use the files
+        define('INCLUDE','true');
 
     }
+
+    //-------------------------------------------------
+    //  Start output buffering & start a new session
+    //-------------------------------------------------
+    
+    ob_start();
+
+    if (session_status() == PHP_SESSION_NONE) {
+     
+        session_start();
+   
+    }
+
+    //-------------------------------------------------
+    // Require classes
+    //-------------------------------------------------
 
     require_once('configs/db.php');                // Get database username, password etc
     require_once('classes/database_handler.php');  // DATABASE HANDLER
@@ -20,15 +40,11 @@
     require_once('classes/views.php');             // VIEWS
     require_once('classes/ssl_seal.php');          // SSL SEAL
 
-    ob_start(); // start output buffering
-
-    $page = new Page_handler; // Request new page
-
-    if (session_status() == PHP_SESSION_NONE) {
-     
-        session_start(); // start a new session, if its not allready started
-   
-    }
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
+    
+    $page = new Page_handler;
     
 ?>
 
@@ -52,7 +68,11 @@
     <body>
         <?php
 
-            $page->get_page(); // Include page equal to 'page' parameter in url
+            //-------------------------------------------------
+            // Include page equal to 'page' parameter in url
+            //-------------------------------------------------
+
+            $page->get_page();
 
         ?>
         <script src="js/jquery.min.js"></script>
@@ -65,5 +85,11 @@
 </html>
 
 <?php
-    ob_end_flush(); // We are done and are ending the output buffering
+
+    //-------------------------------------------------
+    // End output buffering
+    //-------------------------------------------------
+
+    ob_end_flush();
+
 ?>

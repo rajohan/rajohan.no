@@ -1,12 +1,20 @@
 <?php
-    // Check that the file is included and not accessed directly
+    
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
-        
+
         die('Direct access is not permitted.');
         
     }
 
-    // Class to sort data
+
+    //-------------------------------------------------
+    // Sort
+    //-------------------------------------------------
+
     class Sort {
 
         private $filter;
@@ -14,6 +22,10 @@
         private $page;
         private $params;
         private $params_count;
+
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
 
         function __construct() {
 
@@ -25,8 +37,11 @@
             $this->params_count = count($this->params); // Count parameters
 
         }
-
+        
+        //-------------------------------------------------
         // Method to get the tag id
+        //-------------------------------------------------
+
         private function get_tag_id($tag) {
 
             $db_conn = new Database(); // connect to database
@@ -46,7 +61,10 @@
             return $tag_id;
         }
 
+        //-------------------------------------------------
         // Method to get blog id
+        //-------------------------------------------------
+
         private function get_blog_id($tag_id) {
             $db_conn = new Database(); // connect to database
             
@@ -73,7 +91,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to sort by tag
+        //-------------------------------------------------
+        
         function by_tag() {
 
             // Check if sort parameter is set

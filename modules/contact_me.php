@@ -1,12 +1,21 @@
 <?php
-    // Check that the file is included and not accessed directly
+    
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
 
-    $page = new Page_handler; // Request new page
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
+
+    $page = new Page_handler;
+
 ?>
 
 <!-- SECTION CONTACT ME START -->

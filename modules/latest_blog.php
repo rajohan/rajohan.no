@@ -1,18 +1,29 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
+
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
  
-    $db_conn = new Database; // connect to database
-    $filter = new Filter; // Start filter
+    $db_conn = new Database;
+    $filter = new Filter;
     
-    $stmt = $db_conn->connect->prepare("SELECT IMAGE, TITLE, SHORT_BLOG, ID FROM `BLOG` ORDER BY `ID` DESC LIMIT 3"); // prepare statement
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    //-------------------------------------------------
+    // Get the blog posts
+    //-------------------------------------------------
+
+    $stmt = $db_conn->connect->prepare("SELECT IMAGE, TITLE, SHORT_BLOG, ID FROM `BLOG` ORDER BY `ID` DESC LIMIT 3");
+    $stmt->execute();
+    $result = $stmt->get_result();
     
 ?>
 
@@ -42,7 +53,7 @@
 
             }
 
-            $db_conn->free_close($result, $stmt); // free result and close db connection
+            $db_conn->free_close($result, $stmt);
         ?>
     </div>
     <a href="blog/" class="btn btn--secondary u-margin-top-medium u-margin-bottom-medium">See all blog posts</a> 

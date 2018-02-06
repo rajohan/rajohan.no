@@ -1,25 +1,34 @@
 <?php 
-    // Check that the file is included and not accessed directly
+    
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
-        
+
         die('Direct access is not permitted.');
         
     }
 
-    ###########################################################################
-    # Page handler. Include the correct page and set active button.
-    ###########################################################################
+    //-------------------------------------------------
+    // Page handler
+    //-------------------------------------------------
+
     class Page_handler {
 
-        private $allowed_pages = []; // Array containing allowed pages
+        private $allowed_pages = [];
         private $filter;
-        public $page; // Current page
+        public $page;
         public $url;
+
+        //-----------------------------------------------
+        // Construct
+        //-----------------------------------------------
 
         function __construct() {
 
             //-----------------------------------------------
-            // ALLOWED PAGES
+            // Allowed pages
             //-----------------------------------------------
             
             $db_conn = new Database(); // connect to database
@@ -38,7 +47,7 @@
             
 
             //-----------------------------------------------
-            // URL HANDLER
+            // Url handler
             //-----------------------------------------------
 
             $params = $this->split_url(); // Split the url at each '/' 
@@ -88,15 +97,20 @@
          
         }
 
-
+        //-----------------------------------------------
         // Method to check if $page is valid
+        //-----------------------------------------------
+
         private function valid_page() {
 
             return array_key_exists($this->page, $this->allowed_pages);
 
         }
 
+        //-----------------------------------------------
         // Method to split the url
+        //-----------------------------------------------
+
         function split_url($url = '') {
             
             if(empty($url)) {
@@ -110,7 +124,10 @@
 
         }
 
+        //-----------------------------------------------
         // Method to get current url without page number
+        //-----------------------------------------------
+
         function current_url() {
 
             $current_url = strtolower($this->filter->sanitize($_SERVER['REQUEST_URI']));
@@ -119,7 +136,10 @@
 
         }
 
+        //-----------------------------------------------
         // Method to generate page title
+        //-----------------------------------------------
+
         function page_title() {
 
             if($this->valid_page()) {
@@ -136,7 +156,10 @@
 
         }
 
+        //-----------------------------------------------
         // Method to include the correct page
+        //-----------------------------------------------
+
         function get_page() {
 
             if($this->valid_page()) {
@@ -151,7 +174,10 @@
 
         }
 
+        //-----------------------------------------------
         // Method to get current page number for pagination etc
+        //-----------------------------------------------
+
         function get_page_number() {
 
             $params = $this->split_url(); // Split the url at each '/' 
@@ -179,7 +205,10 @@
 
         }
 
+        //-----------------------------------------------
         // Method to add active page class to button equivalent to $page
+        //-----------------------------------------------
+
         function set_active($button) {
 
             if($this->valid_page() && $this->page === $button) {

@@ -1,18 +1,29 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
+
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
  
-    $db_conn = new Database; // connect to database
-    $filter = new Filter; // Start filter
+    $db_conn = new Database;
+    $filter = new Filter;
     
-    $stmt = $db_conn->connect->prepare("SELECT TITLE, SUB_TITLE, OVERVIEW_1_IMAGE, OVERVIEW_1_TITLE, OVERVIEW_1_DESCRIPTION, OVERVIEW_2_IMAGE, OVERVIEW_2_TITLE, OVERVIEW_2_DESCRIPTION, OVERVIEW_3_IMAGE, OVERVIEW_3_TITLE, OVERVIEW_3_DESCRIPTION, OVERVIEW_4_IMAGE, OVERVIEW_4_TITLE, OVERVIEW_4_DESCRIPTION  FROM `SERVICES` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    //-------------------------------------------------
+    // Get the services page
+    //-------------------------------------------------
+
+    $stmt = $db_conn->connect->prepare("SELECT TITLE, SUB_TITLE, OVERVIEW_1_IMAGE, OVERVIEW_1_TITLE, OVERVIEW_1_DESCRIPTION, OVERVIEW_2_IMAGE, OVERVIEW_2_TITLE, OVERVIEW_2_DESCRIPTION, OVERVIEW_3_IMAGE, OVERVIEW_3_TITLE, OVERVIEW_3_DESCRIPTION, OVERVIEW_4_IMAGE, OVERVIEW_4_TITLE, OVERVIEW_4_DESCRIPTION  FROM `SERVICES` ORDER BY `ID` DESC LIMIT 1");
+    $stmt->execute();
+    $result = $stmt->get_result();
  
     while ($row = $result->fetch_assoc()) {
 
@@ -33,7 +44,7 @@
 
     }
 
-    $db_conn->free_close($result, $stmt); // free result and close db connection
+    $db_conn->free_close($result, $stmt);
     
 ?>
 

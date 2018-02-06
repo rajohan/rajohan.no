@@ -1,16 +1,25 @@
 <?php 
     
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
 
-    // Class for the tags
+    //-------------------------------------------------
+    // Tags
+    //-------------------------------------------------
+
     class Tags {
 
+        //-------------------------------------------------
         // Method to add count value to the tags
+        //-------------------------------------------------
+
         function add_count($tags) {
             
             $tags_count = [];
@@ -40,7 +49,10 @@
             
         }
 
+        //-------------------------------------------------
         // Method to get the tags
+        //-------------------------------------------------
+
         function get_all_tags() {
 
             $db_conn = new Database(); // connect to database
@@ -68,7 +80,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to get the tags associated with the blog post
+        //-------------------------------------------------
+
         function get_blog_tags($id) {
             
             $db_conn = new Database(); // connect to database
@@ -113,8 +128,11 @@
             return $tag_name;
 
         }
-        
+
+        //-------------------------------------------------
         // Method to add link to the tags
+        //-------------------------------------------------
+
         function add_link($tags) {
 
             $page = new Page_handler(); // Request new page
@@ -130,7 +148,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to output the tags
+        //-------------------------------------------------
+        
         function output_tags($tags) {
 
             for ($i = 0; $i < count($tags); $i++) {

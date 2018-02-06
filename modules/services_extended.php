@@ -1,19 +1,30 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
+
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
  
-    $db_conn = new Database; // connect to database
-    $filter = new Filter; // Start filter
-    $bbcode = new Bbcode; // Start bbcode parser
-    
-    $stmt = $db_conn->connect->prepare("SELECT NEW_WEBPAGE_TITLE, NEW_WEBPAGE_SUB_TITLE, NEW_WEBPAGE, HOSTING_TITLE, HOSTING_SUB_TITLE, HOSTING, BACKUP_TITLE, BACKUP_SUB_TITLE, BACKUP, SEO_TITLE, SEO_SUB_TITLE, SEO, PRICE_TITLE, PRICE_SUB_TITLE, PRICE FROM `SERVICES` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    $db_conn = new Database;
+    $filter = new Filter;
+    $bbcode = new Bbcode;
+
+    //-------------------------------------------------
+    // Get the services page
+    //-------------------------------------------------
+
+    $stmt = $db_conn->connect->prepare("SELECT NEW_WEBPAGE_TITLE, NEW_WEBPAGE_SUB_TITLE, NEW_WEBPAGE, HOSTING_TITLE, HOSTING_SUB_TITLE, HOSTING, BACKUP_TITLE, BACKUP_SUB_TITLE, BACKUP, SEO_TITLE, SEO_SUB_TITLE, SEO, PRICE_TITLE, PRICE_SUB_TITLE, PRICE FROM `SERVICES` ORDER BY `ID` DESC LIMIT 1");
+    $stmt->execute();
+    $result = $stmt->get_result();
  
     while ($row = $result->fetch_assoc()) {
         
@@ -35,7 +46,7 @@
 
     }
 
-    $db_conn->free_close($result, $stmt); // free result and close db connection
+    $db_conn->free_close($result, $stmt);
     
 ?>
 

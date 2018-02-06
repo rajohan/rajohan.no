@@ -1,20 +1,27 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
 
-    ###########################################################################
-    # BBcode parser
-    ###########################################################################
+    //-------------------------------------------------
+    // BBcode parser
+    //-------------------------------------------------
+    
     class Bbcode {
+
+        //-------------------------------------------------
+        // Method to replace bbcodes with html
+        //-------------------------------------------------
 
         function replace($data) {
             
-            // BBcode array
             $find = array(
             '~\[b\]~s',
             '~\[/b\]~s',
@@ -48,7 +55,6 @@
             '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~s'
             );
 
-            // HTML tags to replace BBcode
             $replace = array(
             '<b>',
             '</b>',
@@ -82,7 +88,6 @@
             '<img src="$1" alt="" />'
             );
 
-            // Replacing the BBcodes with corresponding HTML tags
             return preg_replace($find,$replace,$data);
 
         }

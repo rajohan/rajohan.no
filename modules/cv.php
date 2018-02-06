@@ -1,22 +1,32 @@
 <?php
     
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
 
-    $db_conn = new Database; // connect to database
-    $filter = new Filter; // Start filter
-    $bbcode = new Bbcode; // Start bbcode parser
-    $converter = new Converter; // Start the converter
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT * FROM `CV` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    $db_conn = new Database;
+    $filter = new Filter;
+    $bbcode = new Bbcode;
+    $converter = new Converter;
+
+    //-------------------------------------------------
+    // Get the cv
+    //-------------------------------------------------
+
+    $stmt = $db_conn->connect->prepare("SELECT * FROM `CV` ORDER BY `ID` DESC LIMIT 1");
+    $stmt->execute();
+    $result = $stmt->get_result();
     
-    // Set variables with the result.
     while ($row = $result->fetch_assoc()) {
 
         $name = $filter->sanitize($row["NAME"]);
@@ -37,7 +47,7 @@
 
     }
 
-    $db_conn->free_close($result, $stmt); // free result and close db connection
+    $db_conn->free_close($result, $stmt);
 
     $age = $converter->age($born);
     $born = $converter->date($born);

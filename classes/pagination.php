@@ -1,17 +1,27 @@
 <?php
      
-     // Check that the file is included and not accessed directly
-     if(!defined('INCLUDE')) {
-      
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
+    if(!defined('INCLUDE')) {
+
         die('Direct access is not permitted.');
-    
+        
     }
 
-    // Class for the pagination
+    //-------------------------------------------------
+    // Pagination
+    //-------------------------------------------------
+
     class Pagination {
 
         private $page;
         private $max_nav_pages;
+
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
 
         function __construct() {
 
@@ -26,7 +36,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to count the table rows
+        //-------------------------------------------------
+
         private function count_table_rows($table, $sort = '') {
 
             $db_conn = new Database(); // connect to database
@@ -34,62 +47,88 @@
             
         }
 
+        //-------------------------------------------------
         // Method to generate the output
+        //-------------------------------------------------
+
         private function output($number, $value) {
             echo "<a href='".$this->page->url."/".($number)."/'>".$value."</a>";
         }
 
+        //-------------------------------------------------
         // Method to output current active page number
+        //-------------------------------------------------
+
         private function current($i) {
 
             echo "<a class='active' href='".$this->page->url."/".$i."/'>".$i."</a>";
 
         }
 
-        // Method to output the first page arrow and prev arrow 
+        //-------------------------------------------------
+        // Method to output the first page arrow and prev arrow
+        //-------------------------------------------------
+
         private function start_arrow($page_number) {
 
             $this->output($page_number-1, "&LT;");
 
         }
 
+        //-------------------------------------------------
         // Method to output last page arrow end arrow
+        //-------------------------------------------------
+
         private function end_arrow($page_number) {
 
             $this->output($page_number+1, "&GT;");
 
         }
 
+        //-------------------------------------------------
         // Method to output value of $i as page number
+        //-------------------------------------------------
+
         private function number($i) {
 
             $this->output($i, $i);
             
         }
 
+        //-------------------------------------------------
         // Method to output last page number
+        //-------------------------------------------------
+
         private function last_page($num_pages) {
 
             $this->output($num_pages, $num_pages);
 
         }
 
+        //-------------------------------------------------
         // Method to output '...'
+        //-------------------------------------------------
+        
         private function dots() {
 
             echo " <div class='pagination__dots'>...</div>";
 
         }
 
-
+        //-------------------------------------------------
         // Method to get the page number
+        //-------------------------------------------------
+
         function get_page_number() {
            
             return $this->page->get_page_number(); // Get the current page number
 
         }
 
+        //-------------------------------------------------
         // Method to check if page number is valid
+        //-------------------------------------------------
+
         function valid_page_number($page_number, $table) {
 
             if($page_number > $this->count_table_rows($table)) {
@@ -104,7 +143,10 @@
 
         }
         
+        //-------------------------------------------------
         // Method to output the pagination
+        //-------------------------------------------------
+        
         function output_pagination($max_per_page, $table, $sort = '') {
             
             $page_number = $this->valid_page_number($this->get_page_number(), $table); // Get current page number

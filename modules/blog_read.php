@@ -1,27 +1,43 @@
 <?php
-    // Check that the file is included and not accessed directly
+
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
 
-    $db_conn = new Database; // connect to database
-    $filter = new Filter; // Start filter
-    $bbcode = new Bbcode; // Start bbcode parser
-    $tag = new Tags; // Start the tag handler
-    $converter = new Converter; // Start the converter
-    $vote = new Vote; // Start vote registering
-    $view = new Views; // Start view registering
-    
-    $view->add_blog_view(); // Add blog view to db if its a new user
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
 
+    $db_conn = new Database;
+    $filter = new Filter;
+    $bbcode = new Bbcode;
+    $tag = new Tags;
+    $converter = new Converter;
+    $vote = new Vote;
+    $view = new Views;
+    
+    //-------------------------------------------------
+    // Add blog view to db to db if its a new user
+    //-------------------------------------------------
+
+    $view->add_blog_view();
+
+    //-------------------------------------------------
+    //  Get the blog post
+    //-------------------------------------------------
+    
     $id = 3;
 
-    $stmt = $db_conn->connect->prepare("SELECT * FROM `BLOG` WHERE ID=? ORDER BY `ID` DESC LIMIT 1"); // prepare statement
-    $stmt->bind_param("i", $id); // Bind variables to the prepared statement as parameters
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    $stmt = $db_conn->connect->prepare("SELECT * FROM `BLOG` WHERE ID=? ORDER BY `ID` DESC LIMIT 1");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
     
     while ($row = $result->fetch_assoc()) {
         $id = $filter->sanitize($row['ID']);
@@ -33,12 +49,13 @@
         $updated_by = $filter->sanitize($row['UPDATED_BY_USER']);
         $short_blog = $bbcode->replace($filter->sanitize($row['SHORT_BLOG']));
         $blog = $bbcode->replace($filter->sanitize($row['BLOG']));
+        
         // Dates
         $publish_date = $converter->date($publish_date);
         $update_date = $converter->date($update_date);   
     }
 
-    $db_conn->free_close($result, $stmt); // free result and close db connection
+    $db_conn->free_close($result, $stmt);
 
 ?>
 <!-- SECTION BLOG READ START -->

@@ -1,16 +1,26 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
     
+    //-------------------------------------------------
     // Class for views
+    //-------------------------------------------------
+
     class Views {
 
         private $ip; // User ip
+
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
 
         function __construct() {
 
@@ -18,7 +28,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to check for earlier views on item from the same user
+        //-------------------------------------------------
+
         private function check_views($table, $id_col_name, $item_id, $user) {
             
             $db_conn = new Database(); // connect to database
@@ -28,7 +41,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to add a new view
+        //-------------------------------------------------
+
         private function add_view($table, $id_col_name, $blog_id, $user) {
 
             $db_conn = new Database(); // connect to database
@@ -36,7 +52,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to add blog views
+        //-------------------------------------------------
+        
         function add_blog_view() {
         
             $user = 3423;

@@ -1,16 +1,26 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
     
+    //-------------------------------------------------
     // Class for votes
+    //-------------------------------------------------
+
     class Vote {
         
         private $ip; // User ip
+
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
 
         function __construct() {
 
@@ -18,7 +28,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to check for earlier votes on item from the same user
+        //-------------------------------------------------
+
         private function check_old_votes($table, $id_col_name, $item_id, $user) {
             
             $db_conn = new Database(); // connect to database
@@ -28,7 +41,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to check if old vote on item is of opposite value
+        //-------------------------------------------------
+
         private function check_vote_value($table, $id_col_name, $item_id, $vote, $user) {
 
             $db_conn = new Database(); // connect to database
@@ -38,7 +54,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to add a new vote
+        //-------------------------------------------------
+
         private function add_vote($table, $id_col_name, $blog_id, $vote, $user) {
 
             $db_conn = new Database(); // connect to database
@@ -48,7 +67,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to delete a vote
+        //-------------------------------------------------
+
         private function delete_vote($table, $user) {
 
             $db_conn = new Database(); // connect to database
@@ -62,7 +84,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to add blog votes
+        //-------------------------------------------------
+
         function add_blog_vote() {
         
             $user = 3423;
@@ -98,7 +123,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to add comment votes
+        //-------------------------------------------------
+        
         function add_comment_vote() {
 
             $user = 3423;

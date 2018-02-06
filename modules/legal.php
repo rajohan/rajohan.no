@@ -1,12 +1,24 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
+
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
     
+    $db_conn = new Database;
+    $filter = new Filter;
+    $bbcode = new Bbcode;
+    $converter = new Converter;
+
 ?>
 <!-- SECTION LEGAL START -->
 <section class="legal">
@@ -23,16 +35,17 @@
         <div class="legal__contact">If you require any more information or have any questions about my legal policies, please feel free to <a href="contact/">contact me</a>.</div>
         
         <?php
-        
-            $db_conn = new Database; // connect to database
-            $filter = new Filter; // Start filter
-            $bbcode = new Bbcode; // Start bbcode parser
+    
+            //-------------------------------------------------
+            // Get the legal page
+            //-------------------------------------------------
 
-            $stmt = $db_conn->connect->prepare("SELECT * FROM `LEGAL` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
-            $stmt->execute(); // select from database
-            $result = $stmt->get_result(); // Get the result
+            $stmt = $db_conn->connect->prepare("SELECT * FROM `LEGAL` ORDER BY `ID` DESC LIMIT 1");
+            $stmt->execute();
+            $result = $stmt->get_result();
 
             while ($row = mysqli_fetch_assoc($result)) {
+
                 $disclaimer = $bbcode->replace($filter->sanitize($row['DISCLAIMER']));
                 $privacy_part1 = $bbcode->replace($filter->sanitize($row['PRIVACY_PART1']));
                 $cookies = $bbcode->replace($filter->sanitize($row['COOKIES']));
@@ -41,12 +54,12 @@
                 $tos = $bbcode->replace($filter->sanitize($row['TOS']));
                 $user = $filter->sanitize($row['CREATED_BY_USER']);
                 $date = $filter->sanitize($row['CREATED_DATE']);
+
             }
             
-            $db_conn->free_close($result, $stmt); // free result and close db connection
+            $db_conn->free_close($result, $stmt);
 
-            $date = strtotime($date); // convert date/time to unix timestap
-            $date = date('d.m.Y', $date); // convert date/time back to desired format
+            $date = $converter->date($date);
 
             echo '<div id="legal__disclaimer-target">'.$disclaimer.'</div>';
             echo '<div id="legal__privacy-target">'.$privacy_part1.'</div>';
@@ -54,7 +67,7 @@
             echo '<div id="legal__privacy-target">'.$privacy_part2.'</div>';
             echo '<div id="legal__refund-target">'.$refund.'</div>';
             echo '<div id="legal__tos-target">'.$tos.'</div>';
-            echo "<h6 class='legal__update'>This legal policies was last updated ".$date." by ".ucfirst($user).".</h6></div>";
+            echo "<h6 class='legal__update'>This legal policies was last updated ".$date." by ".ucfirst($user)."</h6></div>";
 
         ?>
     </div>

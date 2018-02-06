@@ -1,27 +1,41 @@
 <?php
     
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
 
-    $db_conn = new Database; // connect to database
-    $filter = new Filter; // Start filter
-    $bbcode = new Bbcode; // Start bbcode parser
-    $pagination = new Pagination; // Crate new pagination
-    $tag = new Tags; // Start the tag handler
-    $converter = new Converter; // Start the converter
-    $sort_data = new Sort; // Start sorting
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
 
-    $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Get the page number to generate offset
+    $db_conn = new Database;
+    $filter = new Filter;
+    $bbcode = new Bbcode;
+    $pagination = new Pagination;
+    $tag = new Tags;
+    $converter = new Converter;
+    $sort_data = new Sort;
 
-    $sort = $sort_data->by_tag();
+    //-------------------------------------------------
+    //  Set offset and sort values
+    //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER, UPDATE_DATE, UPDATED_BY_USER, SHORT_BLOG FROM `BLOG` $sort ORDER BY `ID` DESC LIMIT $offset, 1"); // prepare statement
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Set the page number to generate offset (* + number of items per site)
+    $sort = $sort_data->by_tag(); // Set sort value 
+
+    //-------------------------------------------------
+    //  Get the blog posts
+    //-------------------------------------------------
+
+    $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER, UPDATE_DATE, UPDATED_BY_USER, SHORT_BLOG FROM `BLOG` $sort ORDER BY `ID` DESC LIMIT $offset, 1");
+    $stmt->execute();
+    $result = $stmt->get_result();
 
 ?>
 <!-- SECTION BLOG SHORT START -->
@@ -39,7 +53,6 @@
             $updated_by = $filter->sanitize($row['UPDATED_BY_USER']);
             $short_blog = $bbcode->replace($filter->sanitize($row['SHORT_BLOG']));
 
-            // Dates
             $publish_date = $converter->date($publish_date);
             $update_date = $converter->date($update_date);
 
@@ -74,10 +87,14 @@
 
         }
 
-        $db_conn->free_close($result, $stmt); // free result and close db connection
+        $db_conn->free_close($result, $stmt);
+        
+        //-------------------------------------------------
+        // Pagination
+        //-------------------------------------------------
 
         echo '<div class="pagination u-margin-bottom-medium">';
-        $pagination->output_pagination(1, "BLOG", $sort); // Output the pagination
+        $pagination->output_pagination(1, "BLOG", $sort);
         echo '</div>';
 
     ?>

@@ -1,19 +1,30 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
+
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
  
-    $db_conn = new Database; // connect to database
-    $filter = new Filter; // Start filter
-    $bbcode = new Bbcode; // Start bbcode parser
+    $db_conn = new Database;
+    $filter = new Filter;
+    $bbcode = new Bbcode;
+
+    //-------------------------------------------------
+    // Get the computer setup
+    //-------------------------------------------------
     
-    $stmt = $db_conn->connect->prepare("SELECT TITLE, SUB_TITLE, PRIMARY_COMPUTER, SECONDARY_COMPUTER, GEAR FROM `COMPUTER_SETUP` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    $stmt = $db_conn->connect->prepare("SELECT TITLE, SUB_TITLE, PRIMARY_COMPUTER, SECONDARY_COMPUTER, GEAR FROM `COMPUTER_SETUP` ORDER BY `ID` DESC LIMIT 1");
+    $stmt->execute();
+    $result = $stmt->get_result();
  
     while ($row = $result->fetch_assoc()) {
 
@@ -25,7 +36,7 @@
  
     }
 
-    $db_conn->free_close($result, $stmt); // free result and close db connection
+    $db_conn->free_close($result, $stmt);
     
 ?>
 

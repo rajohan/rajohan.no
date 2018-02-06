@@ -1,15 +1,25 @@
 <?php
     
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
 
+    //-------------------------------------------------
+    // Converter
+    //-------------------------------------------------
+
     class Converter {
 
+        //-------------------------------------------------
         // Method to convert date format
+        //-------------------------------------------------
+
         function date($date) {
                
             $date = strtotime($date);
@@ -19,7 +29,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to calculate age
+        //-------------------------------------------------
+        
         function age($date) {
 
             $birth = explode("-", $date);
@@ -35,7 +48,10 @@
 
         }
 
+        //-------------------------------------------------
         // Method to generate slug
+        //-------------------------------------------------
+
         function generate_slug($title) {
 
             setlocale(LC_ALL, 'en_US.UTF8'); // Set charset

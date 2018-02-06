@@ -1,15 +1,26 @@
 <?php 
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
 
+    //-------------------------------------------------
+    // Database handler
+    //-------------------------------------------------
+
     class Database {
 
         public $connect;
+
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
 
         function __construct() {
 
@@ -25,9 +36,10 @@
 
         }
 
-        /////////////////////////////////////////////////////////
+        //-------------------------------------------------
         // Method to generate placeholders based on identifiers
-        ////////////////////////////////////////////////////////
+        //-------------------------------------------------
+
         private function placeholders($identifiers) {
 
             $replace = array("i", "d", "s", "m"); // characters to replace
@@ -38,10 +50,10 @@
 
         }
 
-
-        /////////////////////////////////////////////////////////
+        //-------------------------------------------------
         // Method to add placeholders to the inputed db columns
-        ////////////////////////////////////////////////////////
+        //-------------------------------------------------
+
         private function placeholders_columns($db_columns) {
 
             $replace = array(","); // characters to replace
@@ -52,10 +64,10 @@
 
         }
 
-
-        /////////////////////////////////////////////////////////
+        //-------------------------------------------------
         // Method to close connection
-        /////////////////////////////////////////////////////////
+        //-------------------------------------------------
+
         function close_connection($stmt) {
 
             $stmt->close(); // Close statement
@@ -63,9 +75,10 @@
 
         }
 
-        /////////////////////////////////////////////////////////
+        //-------------------------------------------------
         // Method to free result and close connection
-        /////////////////////////////////////////////////////////
+        //-------------------------------------------------
+
         function free_close($result, $stmt) {
 
             $result->free_result(); // Free results
@@ -73,10 +86,10 @@
 
         }
 
-
-        ////////////////////////////////////////////////////////
+        //-------------------------------------------------
         // Method to count rows in table
-        ///////////////////////////////////////////////////////
+        //-------------------------------------------------
+
         function count($table, $sort = '') {
 
             $stmt = $this->connect->prepare("SELECT COUNT(ID) FROM $table $sort"); // prepare statement
@@ -89,10 +102,10 @@
 
         }
 
-
-        ////////////////////////////////////////////////////////
+        //-------------------------------------------------
         // Method to insert data to database
-        ///////////////////////////////////////////////////////
+        //-------------------------------------------------
+
         function db_insert($db_table, $db_columns, $identifiers, $variables) {
             
             // $db_table = database table | $db_columns = columns in database table separated by ',' | 
@@ -119,10 +132,10 @@
 
         }
 
-
-        ///////////////////////////////////////////////////////
+        //-------------------------------------------------
         // Method to update data in database
-        ///////////////////////////////////////////////////////
+        //-------------------------------------------------
+
         function db_update($db_table, $db_columns, $where, $identifiers, $variables) {
 
             // $db_table = database table | $db_columns = columns in database table separated by '=?,' | 
@@ -152,10 +165,10 @@
 
         }
 
-
-        ///////////////////////////////////////////////////////
+        //-------------------------------------------------
         // Method to delete data from the database
-        ///////////////////////////////////////////////////////
+        //-------------------------------------------------
+
         function db_delete($db_table, $where, $identifier, $variable) {
 
             // $db_table = database table | $where = table row identifier 
@@ -183,15 +196,5 @@
         }
 
     }
-
-
-    /* $data = "86";
-    $db_conn = new Database();
-    if($db_conn->db_delete("users", "id", "s", $data)) {
-        echo "ok!";
-    }
-    else {
-        echo "error!";
-    }*/
     
 ?>

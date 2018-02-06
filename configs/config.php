@@ -1,57 +1,71 @@
 <?php
 
-    ############################################################################
-    #          A Project of Raymond Johannessen Webutvikling
-    ############################################################################
-    #                          WWW.RAJOHAN.NO
-    ############################################################################
-    #   Project:    rajohan.no
-    #   Page:       config.php
-    #   Modules:    (in order top->bottom) Startup commands,
-    #               Global variables, Debug settings, The end.
-    #
-    #   Version:    1.0 - 2018-01-26
-    #   Authors:    Raymond Johannessen <mail@rajohan.no>
-    #               Raymond Johannessen Webutvikling.
-    #   Copyright:  (c) 2018 Raymond Johannessen Webutvikling.
-    #
-    #   Purpose:
-    #    Config for rajohan.no
-    #
-    #   License:
-    #     None yet.
-    #
-    #
-    ############################################################################
-    # WARNINGS: DEBUG MODE IS ON!!!
-    ############################################################################
-    # RUN STARTUP COMMANDS
-    ############################################################################
+    //--------------------------------------------------------------------------
+    //          A Project of Raymond Johannessen Webutvikling
+    //--------------------------------------------------------------------------
+    //                          WWW.RAJOHAN.NO
+    //--------------------------------------------------------------------------
+    //   Project:    rajohan.no
+    //   Page:       config.php
+    //   Modules:    (in order top->bottom) Startup commands,
+    //               Global variables, Debug settings, The end.
+    //
+    //   Version:    1.0 - 2018-01-26
+    //   Authors:    Raymond Johannessen <mail@rajohan.no>
+    //               Raymond Johannessen Webutvikling.
+    //   Copyright:  (c) 2018 Raymond Johannessen Webutvikling.
+    //
+    //   Purpose:
+    //    Config for rajohan.no
+    //
+    //   License:
+    //     None yet.
+    //
+    //
+    //--------------------------------------------------------------------------
+    // WARNINGS: DEBUG MODE IS ON!!!
+    //--------------------------------------------------------------------------
+    // Direct access check
+    //--------------------------------------------------------------------------
     
     if(!defined('INCLUDE')) {
         
-        die('Direct access is not permitted.'); // Check that the file is included and not accessed directly
+        die('Direct access is not permitted.');
     
     }
 
-    ob_start(); // start output buffering
-    mysqli_report(MYSQLI_REPORT_STRICT); // Set mysqli reporting to strict
+    //--------------------------------------------------------------------------
+    // Start output buffering & start a new session
+    //--------------------------------------------------------------------------
+
+    ob_start();
 
     if (session_status() == PHP_SESSION_NONE) { 
         
-        session_start(); // start a new session, if its not allready started
+        session_start();
         
     }
-    ############################################################################
-    # GLOBAL VARIABLES
-    ############################################################################
 
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
+    //--------------------------------------------------------------------------
+    // Set mysqli report mode
+    //--------------------------------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT * FROM `CONFIG` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    mysqli_report(MYSQLI_REPORT_STRICT);
+
+    //--------------------------------------------------------------------------
+    // Initialize classes
+    //--------------------------------------------------------------------------
+
+    $db_conn = new Database();
+    $filter = new Filter();
+
+    //--------------------------------------------------------------------------
+    // Global variables
+    //--------------------------------------------------------------------------
+
+    $stmt = $db_conn->connect->prepare("SELECT * FROM `CONFIG` ORDER BY `ID` DESC LIMIT 1");
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     while ($row = $result->fetch_assoc()) {
 
@@ -63,7 +77,7 @@
         $GLOBALS['authorweb']       =   $filter->sanitize($row['AUTHOR_WEB']); // Authors website
         $GLOBALS['copyright_link']  =   $filter->sanitize($row['COPYRIGHT_LINK']); // Link to copyright certificate
         $GLOBALS['copyright']       =   '<a href="'.$GLOBALS['copyright_link'].'" target="_blank">Copyrighted.com</a> registered &amp; protected&nbsp;&copy;&nbsp;2017-'.date('Y').'&nbsp;'; // Copyright
-        $GLOBALS['self']            =    htmlentities( substr($_SERVER['PHP_SELF'], 0, strcspn( $_SERVER['PHP_SELF'] , "\n\r") ), ENT_QUOTES );
+        $GLOBALS['self']            =    htmlentities( substr($_SERVER['PHP_SELF'], 0, strcspn( $_SERVER['PHP_SELF'] , "\n\r") ), ENT_QUOTES ); // Set self
         $GLOBALS['url']             =   $filter->sanitize($row['URL']); // Url to the page
         $GLOBALS['mail']            =   $filter->sanitize($row['MAIL']); // Mail adress to site owner
         $GLOBALS['webmaster']       =   $filter->sanitize($row['WEBMASTER']); // Webmaster mail address
@@ -89,9 +103,10 @@
 
     $db_conn->free_close($result, $stmt);
 
-    ############################################################################
-    # DEBUG SETTINGS
-    ############################################################################
+    //--------------------------------------------------------------------------
+    // DEBUG SETTINGS
+    //--------------------------------------------------------------------------
+
     if($GLOBALS['debug'] == 'true') {
         
         ini_set('error_reporting', E_ALL); // Report all errors
@@ -99,7 +114,6 @@
         ini_set('display_startup_errors', 1); // Toggle showing startup errors on
         ini_set('track_errors', 1); // Toggle tracking of errors on
         ini_set('docref_root', '/var/www/rajohan.no/'); // Set root to docref file to enable it.
-        // phpinfo(); // Echo phpinfo();
     
     } else {
         
@@ -110,12 +124,11 @@
         ini_set('docref_root', ''); // Remove root to docref file to disable it.
     
     }
-    
-    // ini_set('log_errors', 1); // Toggle log errors
-    // ini_set('error_log', '/home/2/r/rajohan/log/php_errors.log'); // Set dir to log file
-    ###########################################################################
-    # THE END. Run final commands
-    ###########################################################################
-    ob_end_flush(); // We are done and are ending the output buffering
+
+    //--------------------------------------------------------------------------
+    // End output buffering
+    //--------------------------------------------------------------------------
+
+    ob_end_flush();
 
 ?>

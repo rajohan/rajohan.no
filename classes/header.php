@@ -1,6 +1,9 @@
 <?php
+    
+    //-------------------------------------------------
+    // Check for ajax calls / direct access check
+    //-------------------------------------------------
 
-    // Check for ajax calls
     if(!empty($_POST['get_headers']) && $_POST['get_headers'] === "true") {
 
         define('INCLUDE','true'); // Define INCLUDE to get access to the files needed 
@@ -21,10 +24,18 @@
         
     }
 
+    //-------------------------------------------------
+    // Header image/title handler
+    //-------------------------------------------------
+    
     class Header {
 
         private $db_conn;
         private $filter;
+
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
 
         function __construct() {
 
@@ -33,7 +44,10 @@
             
         }
 
+        //-------------------------------------------------
         // Method to get header content
+        //-------------------------------------------------
+
         function get_header_content() {
 
             $stmt = $this->db_conn->connect->prepare("SELECT IMAGE, TITLE, SUB_TITLE, BUTTON_TEXT, LINK FROM `HEADER` ORDER BY `ID` DESC"); // prepare statement
