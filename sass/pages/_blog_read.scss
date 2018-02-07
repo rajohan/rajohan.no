@@ -142,23 +142,38 @@
         &__user {
             display: flex;
             min-width: 100%;
-            margin-top: 1rem;
+            margin-top: 3rem;
             justify-content: space-between;
-            align-items: baseline;
-            font-weight: bold;
+            align-items: center;
+            background-color: $color-grey-light;
+            border: 1px solid $color-grey-2;
+            padding: 1rem;
+            line-height: 1;
+            
+            &__box {
+                display: flex;
+                align-items: center;
+                font-size: 1.5rem;
+            }
 
             &__rating {
-                color: green;
-                font-weight: normal;
+                color: $green-dark;
+            }
+
+            &__name {
+                font-weight: 700;
+                margin-right: 0.5rem;
             }
 
             &__admin {
                 margin-left: 1rem;
-                border: 1px solid #fca55d;
-                padding: 0.3rem;
+                border: 1px solid $color-primary-light;
+                padding:  0.4rem;
                 color: $color-white;
-                background-color: #e87f29;
+                background-color: $color-primary-dark;
                 font-size: 1.1rem;
+                border-radius: 0.5rem;
+                
             }
 
             &__stats {
@@ -170,7 +185,7 @@
         &__date-reply {
             display: flex;
             align-items: center;
-            font-weight: bold;
+            font-size: 1.1rem;
 
             &__img {
                 margin-left: 0.5rem;
@@ -178,19 +193,42 @@
                 height: 2.5rem;
             }            
         }
+
+        &__reply {
+            padding-left: 10rem;
+        }
+
+        &__reply-to {
+
+            padding: 1rem;
+            padding-bottom: 0;
+            font-size: 1.1rem;
+            border-left: 1px solid $color-grey-2;
+            border-right: 1px solid $color-grey-2;
+            display: block;
+
+            &__arrow {
+                font-size: 1.4rem;
+            }
+        }
         
         &__message {
             display: flex;
-            margin-top: 10px;
+            padding: 1rem;
+            border-left: 1px solid $color-grey-2;
+            border-right: 1px solid $color-grey-2;
 
             &__stats {
                 display: flex;
-                margin-top: 1rem;
                 min-width: 100%;
                 justify-content: space-between;
                 align-items: center;
                 padding-bottom: 1.5rem;
-                border-bottom: 1px solid $color-grey-2;
+                border: 1px solid $color-grey-2;
+                background-color: $color-grey-light;
+                padding: 1rem;
+                font-size: 1.3rem;
+                
             }
             
             &__vote {
@@ -206,7 +244,7 @@
                 &__stats {
 
                     &__count {
-                        color: green;
+                        color: $green-dark;
                         margin-left: 0.5rem;
                     }
                 }

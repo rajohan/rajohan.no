@@ -21,6 +21,7 @@
     $vote = new Vote;
     $view = new Views;
     $page = new Page_handler;
+    $comments = new Comments;
 
     //-------------------------------------------------
     //  Set the blog id
@@ -72,7 +73,6 @@
         $short_blog = $bbcode->replace($filter->sanitize($row['SHORT_BLOG']));
         $blog = $bbcode->replace($filter->sanitize($row['BLOG']));
         
-        // Dates
         $publish_date = $converter->date($publish_date);
         $update_date = $converter->date($update_date);   
     }
@@ -141,172 +141,97 @@
                 Page 1 2 3 4 5 6 Next
             </div>
         </div>
-        <div class="blog__comment__user">
-            <div>
-                Rajohan (<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
-            </div>
-            <div class="blog__comment__date-reply">
-                27.12.2017 19:37
-                <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
-            </div>
-        </div>
-        <div class="blog__comment__message">
-            <?php echo $short_blog; ?>
-        </div>
-        <div class="blog__comment__message__stats">
-            <div class="blog__comment__message__vote">
-                <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
-                <div class="blog__comment__message__vote__stats">
-                    <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
-                </div>
-                <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
-            </div>
-            <div class="blog__comment__message__hide">
-                Hide answers
-            </div>
-            <div class="blog__comment__user__stats">
-                254 comments | Registered 28.12.2017
-            </div>
-        </div>
-        <div style="padding-left: 100px;">
-            <div class="blog__comment__user">
-                <div>
-                    Rajohan (<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
-                </div>
-                <div class="blog__comment__date-reply">
-                    27.12.2017 19:37
-                    <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
-                </div>
-            </div>
-            <div class="blog__comment__message">
-                <?php echo $short_blog; ?>
-            </div>
-            <div class="blog__comment__message__stats">
-                <div class="blog__comment__message__vote">
-                    <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
-                    <div class="blog__comment__message__vote__stats">
-                        <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
-                    </div>
-                    <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
-                </div>
-                <div class="blog__comment__message__hide">
+
+        <?php 
+
+            $comment = $comments->get_comments($blog_id);
+
+            for($i = 0; $i  < count($comment); $i++) {
+                
+                $id = $filter->sanitize($comment[$i]['ID']);
+                $message = $bbcode->replace($filter->sanitize($comment[$i]['COMMENT']));
+                $reply_to = $filter->sanitize($comment[$i]['REPLY_TO']);
+                $posted_date = $filter->sanitize($comment[$i]['POSTED_BY_DATE']);
+                $posted_by = $filter->sanitize($comment[$i]['POSTED_BY_USER']);
+                $update_date = $filter->sanitize($comment[$i]['UPDATE_DATE']);
+                $updated_by = $filter->sanitize($comment[$i]['UPDATED_BY_USER']);
+            
+                $posted_date = $converter->date_time($posted_date);
+                $update_date = $converter->date_time($update_date);
+
+                
+                
+                //-------------------------------------------------
+                // Output comment
+                //-------------------------------------------------
+
+                if($reply_to > 0) {
+
+                    echo "<div class='blog__comment__reply'>";
                     
-                </div>
-                <div class="blog__comment__user__stats">
-                    254 comments | Registered 28.12.2017
-                </div>
-            </div>
-        </div>
-        <div style="padding-left: 100px;">
-            <div class="blog__comment__user">
-                <div>
-                    Rajohan (<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
-                </div>
-                <div class="blog__comment__date-reply">
-                    27.12.2017 19:37
-                    <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
-                </div>
-            </div>
-            <div class="blog__comment__message">
-                <?php echo $short_blog; ?>
-            </div>
-            <div class="blog__comment__message__stats">
-                <div class="blog__comment__message__vote">
-                    <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
-                    <div class="blog__comment__message__vote__stats">
-                        <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
-                    </div>
-                    <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
-                </div>
-                <div class="blog__comment__message__hide">
+                }
+
+                else {
+
+                    $root_id = $id;
                     
-                </div>
-                <div class="blog__comment__user__stats">
-                    254 comments | Registered 28.12.2017
-                </div>
-            </div>
-        </div>
-        <div class="blog__comment__user">
-            <div>
-                Rajohan (<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
-            </div>
-            <div class="blog__comment__date-reply">
-                27.12.2017 19:37
-                <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
-            </div>
-        </div>
-        <div class="blog__comment__message">
-            <?php echo $short_blog; ?>
-        </div>
-        <div class="blog__comment__message__stats">
-            <div class="blog__comment__message__vote">
-                <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
-                <div class="blog__comment__message__vote__stats">
-                    <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
-                </div>
-                <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
-            </div>
-            <div class="blog__comment__message__hide">
+                }
                 
-            </div>
-            <div class="blog__comment__user__stats">
-                254 comments | Registered 28.12.2017
-            </div>
-        </div>
-        <div class="blog__comment__user">
-            <div>
-                Rajohan (<span class="rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
-            </div>
-            <div class="blog__comment__date-reply">
-                27.12.2017 19:37
-                <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
-            </div>
-        </div>
-        <div class="blog__comment__message">
-            <?php echo $short_blog; ?>
-        </div>
-        <div class="blog__comment__message__stats">
-            <div class="blog__comment__message__vote">
-                <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
-                <div class="blog__comment__message__vote__stats">
-                    <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
+                echo
+                '<div class="blog__comment__user">
+                    <div class="blog__comment__user__box">
+                        <span class="blog__comment__user__name">'.ucfirst($posted_by).'</span>(<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
+                    </div>
+                    <div id="'.$id.'" class="blog__comment__date-reply">
+                        '.$posted_date.'
+                        <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
+                    </div>
+                </div>';
+
+                if(($reply_to > 0) && (!empty($root_id)) && ($root_id !== $reply_to)) {
+
+                    $reply_author = $comments->get_author($reply_to);
+                    echo "<span class='blog__comment__reply-to'><span class='blog__comment__reply-to__arrow'>&ltrif;</span> In reply to ".ucfirst($reply_author)."</span>";
+
+                }
+
+                echo 
+
+                '<div class="blog__comment__message">
+                '.$message.'
                 </div>
-                <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
-            </div>
-            <div class="blog__comment__message__hide">
-                
-            </div>
-            <div class="blog__comment__user__stats">
-                254 comments | Registered 28.12.2017
-            </div>
-        </div>
-        <div class="blog__comment__user">
-            <div>
-                Rajohan (<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
-            </div>
-            <div class="blog__comment__date-reply">
-                27.12.2017 19:37
-                <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
-            </div>
-        </div>
-        <div class="blog__comment__message">
-            <?php echo $short_blog; ?>
-        </div>
-        <div class="blog__comment__message__stats">
-            <div class="blog__comment__message__vote">
-                <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
-                <div class="blog__comment__message__vote__stats">
-                    <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
-                </div>
-                <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
-            </div>
-            <div class="blog__comment__message__hide">
-                
-            </div>
-            <div class="blog__comment__user__stats">
-                254 comments | Registered 28.12.2017
-            </div>
-        </div>
+                <div class="blog__comment__message__stats">
+                    <div class="blog__comment__message__vote">
+                        <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
+                        <div class="blog__comment__message__vote__stats">
+                            <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
+                        </div>
+                        <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
+                    </div>';
+
+                    if($reply_to < 1 && ($comments->count_replys($id) > 0)) {
+                        echo
+                        '<div class="blog__comment__message__hide">
+                            Hide answers &dtrif; 
+                        </div>';
+                    }
+                    
+                    echo
+                    '<div class="blog__comment__user__stats">
+                        254 comments | Registered 28.12.2017
+                    </div>
+                </div>';
+
+                if($reply_to > 0) {
+
+                    echo "</div>";
+
+                }
+
+            }
+
+        ?> 
+
         <fieldset>
             <textarea placeholder="Din kommentar..." class="blog__comment__textarea" tabindex="1"></textarea>
         </fieldset>
