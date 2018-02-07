@@ -1,7 +1,9 @@
-/////////////////////////////////////////////////////////
+//-------------------------------------------------
 // Array of images to cycle
-/////////////////////////////////////////////////////////
+//-------------------------------------------------
+
 var images = new Array(); // Crate image array
+
 // Run the ajax request.
 $(document).ready(function() {
     
@@ -29,9 +31,10 @@ $(document).ready(function() {
         complete: function () {
 
 
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
             // Global variables
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
+
             var count = images.length - 1; // Subtracting 1 accounts for the array starting at [0]
             var counting = 0; // Start couting at 0
             var timerSwitcher; // Timer to switch header image
@@ -39,9 +42,10 @@ $(document).ready(function() {
             var cycleTime = 8000; // Time between each image change
             var fadeTime = 500; // Fade in/out time
 
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
             // Slow load all header images
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
+
             var slowLoad = setInterval(function() {
                 
                 // Slow load images
@@ -60,9 +64,10 @@ $(document).ready(function() {
             },1000);
 
 
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
             // Fade out old header image and fade in the new one
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
+
             function changeImage() {
 
                 $(".header").fadeOut(fadeTime,function(){
@@ -79,9 +84,10 @@ $(document).ready(function() {
             }
 
 
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
             // Change active circle
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
+
             function activeCircle() {
 
                 // If counting not equals count add 1 to counting and change active circle
@@ -103,9 +109,10 @@ $(document).ready(function() {
             }
 
 
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
             // Switch header image
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
+
             function imgSwitcher() {
 
                 timerSwitcher = setInterval(function() {
@@ -119,9 +126,10 @@ $(document).ready(function() {
             imgSwitcher(); // Start imageSwitcher timer
 
 
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
             // Change header image when prev button is clicked
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
+
             $(".header__img-switcher--prev").on("click", function() {
 
                 clearInterval(timerSwitcher); // Clear imageSwitcher timer
@@ -148,9 +156,10 @@ $(document).ready(function() {
             });
 
 
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
             // Change header image when next button is clicked
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
+
             $(".header__img-switcher--next").on("click", function() {
 
                 clearInterval(timerSwitcher); // Clear imageSwitcher timer
@@ -161,9 +170,10 @@ $(document).ready(function() {
             });
 
 
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
             // Change header image when circles are clicked
-            /////////////////////////////////////////////////////////
+            //-------------------------------------------------
+            
             $(".header__circle-switcher").on("click", function() {
 
                 clearInterval(timerSwitcher); // Clear imageSwitcher timer

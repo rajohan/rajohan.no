@@ -18,7 +18,6 @@
     class Sort {
 
         private $filter;
-        private $db_conn;
         private $page;
         private $params;
         private $params_count;
@@ -29,9 +28,8 @@
 
         function __construct() {
 
-            $this->filter = new Filter(); // Start filter
-            $this->db_conn = new Database(); // connect to database
-            $this->page = new Page_handler(); // Start page handler
+            $this->filter = new Filter;
+            $this->page = new Page_handler;
 
             $this->params = $this->page->split_url($this->page->current_url()); // Split the url at each '/' 
             $this->params_count = count($this->params); // Count parameters
@@ -44,7 +42,7 @@
 
         private function get_tag_id($tag) {
 
-            $db_conn = new Database(); // connect to database
+            $db_conn = new Database;
             
             $stmt = $db_conn->connect->prepare('SELECT ID FROM `TAGS` WHERE TAG = "'.$tag.'" LIMIT 1'); // prepare statement
             $stmt->execute(); // select from database
@@ -66,7 +64,8 @@
         //-------------------------------------------------
 
         private function get_blog_id($tag_id) {
-            $db_conn = new Database(); // connect to database
+
+            $db_conn = new Database;
             
             $stmt = $db_conn->connect->prepare('SELECT BLOG_ID FROM `TAGS_LINK_BLOG` WHERE TAG_ID = "'.$tag_id.'"'); // prepare statement
             $stmt->execute(); // select from database
@@ -84,7 +83,9 @@
             $sort = 'WHERE ID = "'.$blog_id[0].'"';
 
             for($i = 1; $i < count($blog_id); $i++) {
+
                 $sort = $sort.' OR ID = "'.$blog_id[$i].'"';
+                
             }
 
             return $sort;
@@ -115,8 +116,10 @@
                                 $tag = $this->filter->sanitize(strtolower($this->params[$this->params_count-1]));
                                 $sort = 'WHERE TAG = "'.$tag.'"';
 
+                                $db_conn = new Database;
+
                                 // Check that tag exists in the database
-                                if($this->db_conn->count("TAGS", $sort) > 0) {
+                                if($db_conn->count("TAGS", $sort) > 0) {
 
                                     $tag_id = $this->get_tag_id($tag);
                                     $sort = $this->get_blog_id($tag_id);

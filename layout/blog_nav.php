@@ -1,17 +1,24 @@
 <?php
     
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
 
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
-    $pagination = new Pagination(); // Crate new pagination
-    $tag = new Tags(); // Start the tag handler
-    $converter = new Converter; // Start the converter
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
+
+    $db_conn = new Database;
+    $filter = new Filter;
+    $pagination = new Pagination;
+    $tag = new Tags;
+    $converter = new Converter;
 
 ?>
 <!-- SECTION BLOG SHORT START -->
@@ -24,9 +31,13 @@
         </div>
         <?php   
 
-            $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER FROM `BLOG` ORDER BY `ID` DESC LIMIT 3"); // prepare statement
-            $stmt->execute(); // select from database
-            $result = $stmt->get_result(); // Get the result
+            //-------------------------------------------------
+            // Get the blog nav
+            //-------------------------------------------------
+
+            $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER FROM `BLOG` ORDER BY `ID` DESC LIMIT 3");
+            $stmt->execute();
+            $result = $stmt->get_result();
 
             while ($row = $result->fetch_assoc()) {
 
@@ -36,7 +47,6 @@
                 $publish_date = $filter->sanitize($row['PUBLISH_DATE']);
                 $published_by = $filter->sanitize($row['PUBLISHED_BY_USER']);
 
-                // Dates
                 $publish_date = $converter->date($publish_date);
                 
                 echo
@@ -55,7 +65,7 @@
 
             }
 
-            $db_conn->free_close($result, $stmt); // free result and close db connection
+            $db_conn->free_close($result, $stmt);
 
         ?>
     </div>
@@ -75,6 +85,10 @@
         <span class="blog-navigation__heading">Tags</span>
         <div class="blog-navigation__tags__box">
                 <?php 
+
+                    //-------------------------------------------------
+                    // Output tags
+                    //-------------------------------------------------
 
                     $tags = $tag->get_all_tags();
                     $tags = $tag->add_count($tags);

@@ -79,6 +79,7 @@
                             if((!empty($params[$base_param_num+2])) && preg_match('/^[1-9][0-9]*$/', $params[$base_param_num+2])) {
 
                                 $db_conn = new Database;
+                                
                                 $count = $db_conn->count('BLOG', $sort = 'WHERE ID = "'.$params[$base_param_num+2].'"');
 
                                 // Check that the blog post exist
@@ -174,12 +175,14 @@
                 if($this->page === "read") { 
 
                     $db_conn = new Database;
+
                     $count = $db_conn->count('BLOG', $sort = 'WHERE ID = "'.$this->blog_id.'"');
 
                     // Check that the blog post exist
                     if($count > 0) {
 
-                        $db_conn = new Database; // connect to database
+                        $db_conn = new Database;
+
                         $stmt = $db_conn->connect->prepare('SELECT TITLE FROM `BLOG` WHERE ID = "'.$this->blog_id.'"'); // prepare statement
                         $stmt->execute(); // select from database
                         $result = $stmt->get_result(); // Get the result

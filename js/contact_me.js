@@ -1,6 +1,6 @@
-/*##########################################################################
-#  Contact me
-##########################################################################*/
+//-------------------------------------------------
+//  Contact me
+//-------------------------------------------------
 
 $.validator.addMethod(
 
@@ -29,8 +29,11 @@ $(document).ready(function () {
             errorElement: "div", // Error box element type
             errorClass: "error", // Error class
             validClass: "valid", // Valid class
-            
+
+            //-------------------------------------------------
             // Rules
+            //-------------------------------------------------
+
             rules: {
               
                 "contact-me__name": {
@@ -72,8 +75,11 @@ $(document).ready(function () {
                 },
 
             },
-            
+
+            //-------------------------------------------------
             // Messages
+            //-------------------------------------------------
+
             messages: {
 
                 "contact-me__name": {
@@ -116,7 +122,10 @@ $(document).ready(function () {
 
             },
             
+            //-------------------------------------------------
             // Highlight error
+            //-------------------------------------------------
+
             highlight: function (element, errorClass, validClass) {
                 
                 if ($(element).parent().hasClass("required")) {
@@ -133,7 +142,10 @@ $(document).ready(function () {
 
             },
            
+            //-------------------------------------------------
             // Unhighlight error
+            //-------------------------------------------------
+
             unhighlight: function (element, errorClass, validClass) {
             
                 if ($(element).parent().hasClass("required")) {
@@ -150,7 +162,10 @@ $(document).ready(function () {
 
             },
 
+            //-------------------------------------------------
             // Submit handler
+            //-------------------------------------------------
+            
             submitHandler: function () {
                
                 var name = $("#contact-me__name").val();

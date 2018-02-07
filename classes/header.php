@@ -11,7 +11,7 @@
         include_once('database_handler.php'); // Database handler
         include_once('filter.php'); // Filter
 
-        $header = new Header; // Crate new header
+        $header = new Header;
         $header->get_header_content(); // Get the headers from the database
 
     } else { // Else check that the file is included and not accessed directly
@@ -39,8 +39,8 @@
 
         function __construct() {
 
-            $this->db_conn = new Database(); // connect to database
-            $this->filter = new Filter(); // Start filter
+            $this->db_conn = new Database;
+            $this->filter = new Filter;
             
         }
 

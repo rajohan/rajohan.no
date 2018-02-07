@@ -34,7 +34,7 @@
 
         private function check_views($table, $id_col_name, $item_id, $user) {
             
-            $db_conn = new Database(); // connect to database
+            $db_conn = new Database;
             $sort = 'WHERE '.$id_col_name.' = "'.$item_id.'" AND (VIEW_BY_IP = "'.$this->ip.'" OR (VIEW_BY_USER = "'.$user.'" AND VIEW_BY_USER != "0"))'; // What to search for
             $count = $db_conn->count($table, $sort); // Count row's in db
             return $count;
@@ -47,7 +47,7 @@
 
         private function add_view($table, $id_col_name, $blog_id, $user) {
 
-            $db_conn = new Database(); // connect to database
+            $db_conn = new Database;
             $db_conn->db_insert($table, ''.$id_col_name.', VIEW_BY_USER, VIEW_BY_IP', 'iis', array($blog_id, $user, $this->ip)); // Add view to db
 
         }

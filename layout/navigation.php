@@ -1,19 +1,30 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
+
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
  
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
-    $active = new Page_handler(); // Get active page to set active button 
+    $db_conn = new Database;
+    $filter = new Filter;
+    $active = new Page_handler;
     
-    $stmt = $db_conn->connect->prepare("SELECT NAME, URL FROM `NAVIGATION` ORDER BY `ID` ASC"); // prepare statement
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    //-------------------------------------------------
+    // Get the navigation
+    //-------------------------------------------------
+
+    $stmt = $db_conn->connect->prepare("SELECT NAME, URL FROM `NAVIGATION` ORDER BY `ID` ASC");
+    $stmt->execute();
+    $result = $stmt->get_result();
 
 ?>
 
@@ -22,6 +33,7 @@
     <a href="home/"><img src="img/logo_white.png" alt="Logo" class="navigation__logo"></a>
     <ul class="navigation__list">
         <?php
+        
             while ($row = $result->fetch_assoc()) {
 
                 $name = $filter->sanitize($row['NAME']);
@@ -34,7 +46,7 @@
 
             }
 
-            $db_conn->free_close($result, $stmt); // free result and close db connection
+            $db_conn->free_close($result, $stmt);
         ?>
     </ul>
     <div class="navigation__hamburger-menu">

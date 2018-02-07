@@ -25,7 +25,7 @@
 
         function __construct() {
 
-            $this->page = new Page_handler(); // Request new page
+            $this->page = new Page_handler;
 
             // Max numbers of pages in the page navigation 
             // Page number 1 and last page do NOT count. 
@@ -42,7 +42,7 @@
 
         private function count_table_rows($table, $sort = '') {
 
-            $db_conn = new Database(); // connect to database
+            $db_conn = new Database;
             return $db_conn->count($table, $sort); // return count value
             
         }

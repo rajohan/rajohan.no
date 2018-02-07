@@ -1,24 +1,39 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
+
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
  
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
+    $db_conn = new Database;
+    $filter = new Filter;
     
-    $stmt = $db_conn->connect->prepare("SELECT NAME, URL FROM `FOOTER_NAVIGATION` ORDER BY `ID` ASC"); // prepare statement
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    //-------------------------------------------------
+    // Get footer nav
+    //-------------------------------------------------
+
+    $stmt = $db_conn->connect->prepare("SELECT NAME, URL FROM `FOOTER_NAVIGATION` ORDER BY `ID` ASC");
+    $stmt->execute();
+    $result = $stmt->get_result();
  
 ?>
 
 <?php
 
-    $ssl_seal = new Ssl_seal(); // GENERATE NEW SSL SEAL LINK
+    //-------------------------------------------------
+    // Generate new ssl seal link
+    //-------------------------------------------------
+
+    $ssl_seal = new Ssl_seal;
     
 ?>
 <!-- SECTION FOOTER START -->

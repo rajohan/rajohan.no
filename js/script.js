@@ -1,4 +1,7 @@
+//-------------------------------------------------
 // Get the width of the scrollbar
+//-------------------------------------------------
+
 function getScrollBarWidth() {
    
     var $outer = $("<div>").css({visibility: "hidden", width: 100, overflow: "scroll"}).appendTo("body");
@@ -10,7 +13,10 @@ function getScrollBarWidth() {
 
 var webpage_width = 900 - getScrollBarWidth(); // Set var with webpage width - scrollbar
 
+//-------------------------------------------------
 // Animate scroll to scrollTo
+//-------------------------------------------------
+
 function scroll(scrollTo, offset) {
   
     var $container = $("html,body");
@@ -19,7 +25,10 @@ function scroll(scrollTo, offset) {
 
 }
 
+//-------------------------------------------------
 // Check if website is resized to width > 900 and set navbar to flex if it is and hide navbar if not
+//-------------------------------------------------
+
 $(window).resize(function() {
   
     if($(window).width() > webpage_width) {
@@ -33,7 +42,10 @@ $(window).resize(function() {
     }
 });
 
+//-------------------------------------------------
 // Hide/Show hamburger menu
+//-------------------------------------------------
+
 $(".navigation__hamburger-menu").on("click", function() {
 
     if($(".navigation__list").css("display") === "none") {
@@ -49,7 +61,10 @@ $(".navigation__hamburger-menu").on("click", function() {
 
 });
 
+//-------------------------------------------------
 // Toggle active class on nav bar buttons
+//-------------------------------------------------
+
 $(".navigation__item").on("click", function() {
 
     if($(window).width() > webpage_width) {
@@ -68,14 +83,20 @@ $(".navigation__item").on("click", function() {
 
 });
 
+//-------------------------------------------------
 // Take user Back to top
+//-------------------------------------------------
+
 $(".back-to-top").on("click", function() {
   
     scroll($(".navigation"), 0);
 
 });
 
+//-------------------------------------------------
 // Hide/Show back to top button based on scroll posistion
+//-------------------------------------------------
+
 $(window).on("scroll", function() {
   
     var scrollPosition = $(".navigation").offset().top + $(".navigation").height();
@@ -92,9 +113,9 @@ $(window).on("scroll", function() {
     
 });
 
-/*##########################################################################
-#  Functions to scroll page to desired element on the legal policies page
-##########################################################################*/
+//-------------------------------------------------
+//  Functions to scroll page to desired element on the legal policies page
+//-------------------------------------------------
 $("#legal__disclaimer").click(function() {
     scroll($("#legal__disclaimer-target"), -15);
 });

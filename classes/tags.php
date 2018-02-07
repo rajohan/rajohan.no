@@ -27,7 +27,7 @@
             // Count how many times a tag is used
             foreach($tags as $key => $value) {
 
-                $db_conn = new Database(); // connect to database
+                $db_conn = new Database;
 
                 $sort = 'WHERE TAG_ID="'.$key.'"';
                 $count = $db_conn->count("TAGS_LINK_BLOG", $sort);
@@ -55,8 +55,8 @@
 
         function get_all_tags() {
 
-            $db_conn = new Database(); // connect to database
-            $filter = new Filter(); // Start filter
+            $db_conn = new Database;
+            $filter = new Filter;
 
             $stmt = $db_conn->connect->prepare("SELECT * FROM `TAGS`"); // prepare statement
             $stmt->execute(); // select from database
@@ -86,7 +86,7 @@
 
         function get_blog_tags($id) {
             
-            $db_conn = new Database(); // connect to database
+            $db_conn = new Database;
             
             $stmt = $db_conn->connect->prepare("SELECT TAG_ID FROM `TAGS_LINK_BLOG` WHERE BLOG_ID = $id"); // prepare statement
             $stmt->execute(); // select from database
@@ -107,7 +107,7 @@
             // Get the tag name based on the tag id
             foreach($tag_id as $tags) {
 
-                $db_conn = new Database(); // connect to database
+                $db_conn = new Database;
                 
                 $stmt = $db_conn->connect->prepare("SELECT TAG FROM `TAGS` WHERE ID = $tags"); // prepare statement
                 $stmt->execute(); // select from database
@@ -135,7 +135,7 @@
 
         function add_link($tags) {
 
-            $page = new Page_handler(); // Request new page
+            $page = new Page_handler;
             $tag_page = $page->page;
 
             if($tag_page === "read") {

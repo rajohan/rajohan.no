@@ -1,17 +1,29 @@
 <?php
 
-    // Check that the file is included and not accessed directly
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
         
     }
+
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
  
-    $db_conn = new Database(); // connect to database
-    $filter = new Filter(); // Start filter
-    $stmt = $db_conn->connect->prepare("SELECT IMAGE, TITLE, SUB_TITLE, BUTTON_TEXT, LINK FROM `HEADER` ORDER BY `ID` DESC LIMIT 1"); // prepare statement
-    $stmt->execute(); // select from database
-    $result = $stmt->get_result(); // Get the result
+    $db_conn = new Database;
+    $filter = new Filter;
+
+    //-------------------------------------------------
+    // Get header
+    //-------------------------------------------------
+
+    $stmt = $db_conn->connect->prepare("SELECT IMAGE, TITLE, SUB_TITLE, BUTTON_TEXT, LINK FROM `HEADER` ORDER BY `ID` DESC LIMIT 1");
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     while ($row = $result->fetch_assoc()) {
 
@@ -23,7 +35,7 @@
  
     }
 
-    $db_conn->free_close($result, $stmt); // free result and close db connection
+    $db_conn->free_close($result, $stmt);
     
 ?>
 
@@ -57,12 +69,15 @@
         <div class="header__circles">
         <?php
 
+            //-------------------------------------------------
             // Crate circle buttons
-            $db_conn = new Database(); // connect to database
-            $stmt = $db_conn->connect->prepare("SELECT ID FROM `HEADER`"); // prepare statement
-            $stmt->execute(); // select from database
-            $result = $stmt->get_result(); // Get the result
-            $num_of_rows = $result->num_rows; // Get the number of rows
+            //-------------------------------------------------
+
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT ID FROM `HEADER`");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $num_of_rows = $result->num_rows;
 
             // Crate the buttons based on num rows
             for($i=1; $i <= $num_of_rows; $i++) {
@@ -72,7 +87,7 @@
 
                     echo '<div id="header__switcher-'.$i.'" data="'.$i.'" class="header__circle-switcher header__circle-switcher--active">';
                 
-                } else { // else give it the normal class
+                } else {
                  
                     echo '<div id="header__switcher-'.$i.'" data="'.$i.'" class="header__circle-switcher">';
                
@@ -82,7 +97,7 @@
 
             }
 
-            $db_conn->free_close($result, $stmt); // free result and close db connection
+            $db_conn->free_close($result, $stmt);
 
         ?>
         </div>

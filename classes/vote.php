@@ -34,7 +34,7 @@
 
         private function check_old_votes($table, $id_col_name, $item_id, $user) {
             
-            $db_conn = new Database(); // connect to database
+            $db_conn = new Database;
             $sort = 'WHERE '.$id_col_name.' = "'.$item_id.'" AND (VOTE_BY_IP = "'.$this->ip.'" OR (VOTE_BY_USER = "'.$user.'" AND VOTE_BY_USER != "0"))'; // What to search for
             $count = $db_conn->count($table, $sort); // Count row's in db
             return $count;
@@ -47,7 +47,7 @@
 
         private function check_vote_value($table, $id_col_name, $item_id, $vote, $user) {
 
-            $db_conn = new Database(); // connect to database
+            $db_conn = new Database;
             $sort = 'WHERE '.$id_col_name.' = "'.$item_id.'" AND VOTE = "'.$vote.'" AND (VOTE_BY_IP = "'.$this->ip.'" OR VOTE_BY_USER = "'.$user.'" AND VOTE_BY_USER != "0"))'; // What to search for
             $count = $db_conn->count($table, $sort); // Count row's in db
             return $count;
@@ -60,7 +60,7 @@
 
         private function add_vote($table, $id_col_name, $blog_id, $vote, $user) {
 
-            $db_conn = new Database(); // connect to database
+            $db_conn = new Database;
             $db_conn->db_insert($table, ''.$id_col_name.', VOTE, VOTE_BY_USER, VOTE_BY_IP', 'iiis', array($blog_id, $vote, $user, $this->ip)); // Add vote to db
             
             echo "added your vote!";
@@ -73,7 +73,7 @@
 
         private function delete_vote($table, $user) {
 
-            $db_conn = new Database(); // connect to database
+            $db_conn = new Database;
 
             $stmt = $db_conn->connect->prepare('DELETE FROM '.$table.' WHERE VOTE_BY_IP = ? OR VOTE_BY_USER = ?'); // prepare statement
             $stmt->bind_param("si", $this->ip, $user); // Bind variables to the prepared statement as parameters
