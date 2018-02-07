@@ -56,8 +56,8 @@
     // Initialize classes
     //--------------------------------------------------------------------------
 
-    $db_conn = new Database();
-    $filter = new Filter();
+    $db_conn = new Database;
+    $filter = new Filter;
 
     //--------------------------------------------------------------------------
     // Global variables
