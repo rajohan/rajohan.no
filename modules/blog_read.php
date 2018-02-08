@@ -48,10 +48,10 @@
     //-------------------------------------------------
 
     $db_conn = new Database;
-    $blog_votes_like = $db_conn->count('BLOG_VOTES', $sort = 'WHERE BLOG_ID = "'.$blog_id.'" AND VOTE = 1');
+    $blog_votes_like = $db_conn->count('BLOG_VOTES', $sort = 'WHERE ITEM_ID = "'.$blog_id.'" AND VOTE = 1');
 
     $db_conn = new Database;
-    $blog_votes_dislike = $db_conn->count('BLOG_VOTES', $sort = 'WHERE BLOG_ID = "'.$blog_id.'" AND VOTE = 0');
+    $blog_votes_dislike = $db_conn->count('BLOG_VOTES', $sort = 'WHERE ITEM_ID = "'.$blog_id.'" AND VOTE = 0');
 
     //-------------------------------------------------
     //  Get comment count
@@ -187,10 +187,10 @@
 
                 // Comment votes
                 $db_conn = new Database;
-                $comment_votes_like = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE COMMENT_ID = "'.$id.'" AND VOTE = 1');
+                $comment_votes_like = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE ITEM_ID = "'.$id.'" AND VOTE = 1');
             
                 $db_conn = new Database;
-                $comment_votes_dislike = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE COMMENT_ID = "'.$id.'" AND VOTE = 0');
+                $comment_votes_dislike = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE ITEM_ID = "'.$id.'" AND VOTE = 0');
 
                 // Username from id
                 $posted_by = $users->get_username($posted_by);

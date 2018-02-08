@@ -20,10 +20,10 @@
         $votes->add_blog_vote($vote, $blog_id);
         
         $db_conn = new Database;
-        $blog_votes_like = $db_conn->count('BLOG_VOTES', $sort = 'WHERE BLOG_ID = "'.$blog_id.'" AND VOTE = 1');
+        $blog_votes_like = $db_conn->count('BLOG_VOTES', $sort = 'WHERE ITEM_ID = "'.$blog_id.'" AND VOTE = 1');
 
         $db_conn = new Database;
-        $blog_votes_dislike = $db_conn->count('BLOG_VOTES', $sort = 'WHERE BLOG_ID = "'.$blog_id.'" AND VOTE = 0');
+        $blog_votes_dislike = $db_conn->count('BLOG_VOTES', $sort = 'WHERE ITEM_ID = "'.$blog_id.'" AND VOTE = 0');
 
         $vote_array['like'] = $blog_votes_like;
         $vote_array['dislike'] = $blog_votes_dislike;
@@ -48,10 +48,10 @@
         $votes->add_comment_vote($vote, $comment_id);
         
         $db_conn = new Database;
-        $comment_votes_like = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE COMMENT_ID = "'.$comment_id.'" AND VOTE = 1');
+        $comment_votes_like = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE ITEM_ID = "'.$comment_id.'" AND VOTE = 1');
     
         $db_conn = new Database;
-        $comment_votes_dislike = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE COMMENT_ID = "'.$comment_id.'" AND VOTE = 0');
+        $comment_votes_dislike = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE ITEM_ID = "'.$comment_id.'" AND VOTE = 0');
 
         $vote_array['like'] = $comment_votes_like;
         $vote_array['dislike'] = $comment_votes_dislike;
@@ -127,12 +127,12 @@
         // Method to delete a vote
         //-------------------------------------------------
 
-        private function delete_vote($table, $user) {
+        private function delete_vote($table, $id, $user) {
 
             $db_conn = new Database;
 
-            $stmt = $db_conn->connect->prepare('DELETE FROM '.$table.' WHERE `VOTE_BY_IP` = ? OR `VOTE_BY_USER` = ?'); // prepare statement
-            $stmt->bind_param("si", $this->ip, $user); // Bind variables to the prepared statement as parameters
+            $stmt = $db_conn->connect->prepare('DELETE FROM '.$table.' WHERE `ITEM_ID` = ? AND (`VOTE_BY_IP` = ? OR `VOTE_BY_USER` = ?)'); // prepare statement
+            $stmt->bind_param("isi", $id, $this->ip, $user); // Bind variables to the prepared statement as parameters
             $stmt->execute(); // delete from database
             $db_conn->close_connection($stmt); // Close connection
 
@@ -144,7 +144,7 @@
 
         function add_blog_vote($vote, $blog_id, $user=0) {
 
-            $count = $this->check_old_votes("BLOG_VOTES", "BLOG_ID", $blog_id, $user); // Check for old votes on item by user
+            $count = $this->check_old_votes("BLOG_VOTES", "ITEM_ID", $blog_id, $user); // Check for old votes on item by user
 
             if($count <= 0) {
 
@@ -154,12 +154,12 @@
 
             else {
 
-                $count = $this->check_vote_value("BLOG_VOTES", "BLOG_ID", $blog_id, $vote, $user); // Check for old votes on item by user of opposite value
+                $count = $this->check_vote_value("BLOG_VOTES", "ITEM_ID", $blog_id, $vote, $user); // Check for old votes on item by user of opposite value
                 
                 if($count <= 0) {
 
-                    $this->delete_vote("BLOG_VOTES", $user); // Delete old vote from db
-                    $this->add_vote("BLOG_VOTES", "BLOG_ID", $blog_id, $vote, $user); // Add new vote to db
+                    $this->delete_vote("BLOG_VOTES", $blog_id, $user); // Delete old vote from db
+                    $this->add_vote("BLOG_VOTES", "ITEM_ID", $blog_id, $vote, $user); // Add new vote to db
 
                 }
 
@@ -179,22 +179,22 @@
         
         function add_comment_vote($vote, $comment_id, $user=0) {
 
-            $count = $this->check_old_votes("COMMENT_VOTES", "COMMENT_ID", $comment_id, $user); // Check for old votes on item by user
+            $count = $this->check_old_votes("COMMENT_VOTES", "ITEM_ID", $comment_id, $user); // Check for old votes on item by user
 
             if($count <= 0) {
 
-                $this->add_vote("COMMENT_VOTES", "COMMENT_ID", $comment_id, $vote, $user); // Add vote to db
+                $this->add_vote("COMMENT_VOTES", "ITEM_ID", $comment_id, $vote, $user); // Add vote to db
 
             }
 
             else {
 
-                $count = $this->check_vote_value("COMMENT_VOTES", "COMMENT_ID", $comment_id, $vote, $user); // Check for old votes on item by user of opposite value
+                $count = $this->check_vote_value("COMMENT_VOTES", "ITEM_ID", $comment_id, $vote, $user); // Check for old votes on item by user of opposite value
                 
                 if($count <= 0) {
 
-                    $this->delete_vote("COMMENT_VOTES", $user); // Delete old vote from db
-                    $this->add_vote("COMMENT_VOTES", "COMMENT_ID", $comment_id, $vote, $user); // Add new vote to db
+                    $this->delete_vote("COMMENT_VOTES", $comment_id, $user); // Delete old vote from db
+                    $this->add_vote("COMMENT_VOTES", "ITEM_ID", $comment_id, $vote, $user); // Add new vote to db
 
                 }
 
