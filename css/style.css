@@ -776,13 +776,11 @@ a.whitelink:hover {
       display: flex;
       align-items: center;
       font-size: 1.5rem; }
-    .blog__comment__user__rating {
-      color: green; }
     .blog__comment__user__name {
       font-weight: 700;
       margin-right: 0.5rem; }
     .blog__comment__user__admin {
-      margin-left: 1rem;
+      margin-left: 0.3rem;
       border: 1px solid #476D7C;
       padding: 0.4rem;
       color: #fff;
@@ -831,11 +829,9 @@ a.whitelink:hover {
       align-items: center; }
       .blog__comment__message__vote__img {
         margin-left: 0.5rem;
+        margin-right: 0.5rem;
         width: 2.5rem;
         height: 2.5rem; }
-      .blog__comment__message__vote__stats__count {
-        color: green;
-        margin-left: 0.5rem; }
   .blog__comment__textarea {
     margin-top: 1.5rem;
     min-width: 100%;

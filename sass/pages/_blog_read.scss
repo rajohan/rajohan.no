@@ -163,17 +163,13 @@
                 font-size: 1.5rem;
             }
 
-            &__rating {
-                color: $green-dark;
-            }
-
             &__name {
                 font-weight: 700;
                 margin-right: 0.5rem;
             }
 
             &__admin {
-                margin-left: 1rem;
+                margin-left: 0.3rem;
                 border: 1px solid $color-primary-light;
                 padding:  0.4rem;
                 color: $color-white;
@@ -244,17 +240,11 @@
 
                 &__img {
                     margin-left: 0.5rem;
+                    margin-right: 0.5rem;
                     width: 2.5rem;
                     height: 2.5rem;
                 }
 
-                &__stats {
-
-                    &__count {
-                        color: $green-dark;
-                        margin-left: 0.5rem;
-                    }
-                }
             }
         }
 

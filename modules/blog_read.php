@@ -167,11 +167,26 @@
                 $update_date = $filter->sanitize($comment[$i]['UPDATE_DATE']);
                 $updated_by = $filter->sanitize($comment[$i]['UPDATED_BY_USER']);
                 
+                // Date
                 $posted_date = $converter->date_time($posted_date);
                 $update_date = $converter->date_time($update_date);
 
+                // User admin level
                 $admin = $users->get_admin_level($posted_by);
+                $reg_date = $converter->date($users->get_reg_date($posted_by));
 
+                // Comment count for user
+                $db_conn = new Database;
+                $comment_count = $db_conn->count('COMMENTS', $sort = 'WHERE POSTED_BY_USER = "'.$posted_by.'"');
+
+                // Comment votes
+                $db_conn = new Database;
+                $comment_votes_like = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE COMMENT_ID = "'.$id.'" AND VOTE = 1');
+            
+                $db_conn = new Database;
+                $comment_votes_dislike = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE COMMENT_ID = "'.$id.'" AND VOTE = 0');
+
+                // Username from id
                 $posted_by = $users->get_username($posted_by);
                 $updated_by = $users->get_username($updated_by);
                 
@@ -195,8 +210,7 @@
                 echo
                 '<div class="blog__comment__user">
                     <div class="blog__comment__user__box">
-                        <span class="blog__comment__user__name">'.ucfirst($posted_by).'</span>
-                        (<span class="blog__comment__user__rating">53</span>)';
+                        <span class="blog__comment__user__name">'.ucfirst($posted_by).'</span>';
                         
                         if($admin === 1) {
                         echo '<span class="blog__comment__user__admin">MODERATOR</span>';
@@ -228,10 +242,9 @@
                 <div class="blog__comment__message__stats">
                     <div class="blog__comment__message__vote">
                         <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
-                        <div class="blog__comment__message__vote__stats">
-                            <span class="blog__comment__message__vote__stats__count">+36 </span>(+47 / -11)
-                        </div>
+                        '.$comment_votes_like.'
                         <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
+                        '.$comment_votes_dislike.'
                     </div>';
 
                     if($reply_to < 1 && ($comments->count_replys($id) > 0)) {
@@ -243,7 +256,20 @@
                     
                     echo
                     '<div class="blog__comment__user__stats">
-                        254 comments | Registered 28.12.2017
+                        '.$comment_count; 
+
+                        if($comment_count === 1) {
+
+                            echo " comment ";
+
+                        } else {
+
+                            echo " comments ";
+
+                        }
+                        
+                        echo
+                        '| Registered '.$reg_date.'
                     </div>
                 </div>';
 

@@ -41,6 +41,30 @@
         }
 
         //-------------------------------------------------
+        //  Get reg date from id
+        //-------------------------------------------------
+
+        function get_reg_date($id) {
+
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT `REG_DATE` FROM `USERS` WHERE `ID`=?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+
+                $username = $row['REG_DATE'];    
+
+            }
+
+            $db_conn->free_close($result, $stmt);   
+
+            return $username;
+
+        }
+
+        //-------------------------------------------------
         //  Get admin level from id
         //-------------------------------------------------
 
