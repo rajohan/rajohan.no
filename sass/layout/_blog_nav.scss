@@ -16,7 +16,7 @@
 
             &__item {
                 width: 100%;
-                background-color: $color-primary;
+                background-color: $color-primary-light;
                 color: $color-white;
                 padding: 0.5rem;
                 text-align: center;
@@ -24,12 +24,16 @@
                 cursor: pointer;
 
                 &:hover {
-                    color: $color-black;
+                    color: $color-black-light;
                 }
 
                 &__active {
-                    color: $color-black;
-                    background-color: $color-primary-dark;
+                    color: $color-white;
+                    background-color: $color-primary;
+
+                    &:hover {
+                        color: $color-white;
+                    }
                 }
             }
         }
@@ -65,18 +69,69 @@
         }
     }
 
-    &__search {
+    &__search, &__newsletter {
         
-        &__item {
-            padding: 2rem;
-        }
-    }
+        &__form {
 
-    &__newsletter {
-        
-        &__item {
             padding: 2rem;
+            padding-left: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &__input {
+
+                font-family: inherit;
+                font-size: inherit;
+                color: inherit;
+                background-color: $color-grey-2;
+                border: none;
+                padding: 0.7rem 2rem;
+                border-radius: 10rem;
+                width: 90%;
+                transition: all;
+                transition-duration: 0.2s;
+                margin-right: -3.25rem;
+                padding-right: 4rem;
+        
+                &:focus {
+                    outline: none;
+                    width: 100%;
+                    background-color: $color-grey;
+                }
+            
+                &::-webkit-input-placeholder {
+                    font-weight: 100;
+                    color: $color-grey-dark;
+                }
+            }
+        
+            &__button {
+                border: none;
+                background-color: rgba(255, 255, 255, .0);
+                transition: all;
+                transition-duration: 0.2s;
+
+                &:focus {
+                    outline: none;
+                }
+        
+                &:active {
+                    transform: translateY(0.2rem);
+                }
+            }
+        
+            &__input:focus + &__button {
+                background-color:  rgba(255, 255, 255, .0);
+            }
+        
+            &__icon {
+                height: 2rem;
+                width: 2rem;
+            }
+
         }
+
     }
 
     &__tags {
@@ -88,7 +143,7 @@
     }
 
     &__heading {
-        background-color: $color-primary;
+        background-color:  $color-primary-light;
         color: $color-white;
         display: block;
         padding: 0.5rem;

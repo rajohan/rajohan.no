@@ -73,15 +73,21 @@
     </div>
     <div class="blog-navigation__search">
         <span class="blog-navigation__heading">Search</span>
-        <div class="blog-navigation__search__item">
-            <input placeholder="Search..." class="navigation__search__input" type="text">
-        </div>
+        <form action="#" class="blog-navigation__search__form">
+            <input type="text" class="blog-navigation__search__form__input" placeholder="Search...">
+            <button class="blog-navigation__search__form__button">
+                <img class="blog-navigation__search__form__icon" src="img/icons/search.svg" alt="search">
+            </button>
+        </form>
     </div>
     <div class="blog-navigation__newsletter">
-    <span class="blog-navigation__heading">Newsletter</span>
-        <div class="blog-navigation__newsletter__item">
-            <input placeholder="Email..." class="navigation__newsletter__input" type="text">
-        </div>
+        <span class="blog-navigation__heading">Newsletter</span>
+        <form action="#" class="blog-navigation__newsletter__form">
+            <input type="text" class="blog-navigation__newsletter__form__input" placeholder="Your email address...">
+            <button class="blog-navigation__newsletter__form__button">
+                <img class="blog-navigation__newsletter__form__icon" src="img/icons/arrow_right.svg" alt="search">
+            </button>
+        </form>
     </div>
     <div class="blog-navigation__tags">
         <span class="blog-navigation__heading">Tags</span>
