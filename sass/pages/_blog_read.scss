@@ -87,33 +87,40 @@
             flex-direction: row;
             min-width: 100%;
             max-width: 100%;
-            align-items: baseline;
+            align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid $color-grey-2;
 
             &__count {
                 display: flex;
-                align-items: baseline;
+                align-items: center;
 
                 &__text {
                     display: flex;
-                    font-weight: bold;
+                    font-weight: 700;
                 }
 
                 &__img {
                     display: flex;
                     background: url('../img/icons/bubble.svg');
                     background-repeat: no-repeat;
-                    background-size: 85%;
+                    background-size: 100%;
                     background-position: center;
-                    padding: 2rem;
+                    padding: 1.5rem;
+                    margin-left: 1rem;
+
+                    &__text {
+                        font-size: 1.3rem;
+                        padding-bottom: 0.3rem;
+                        padding-right: 0.1rem;
+                    }
                 }
             }
 
             &__social_media {
                 display: flex;
                 align-items: center;
-                font-weight: bold;
+                font-weight: 700;
 
                 &__img {
                     height: 4rem;

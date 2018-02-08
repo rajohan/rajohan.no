@@ -21,7 +21,7 @@
     // Get the blog posts
     //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT IMAGE, TITLE, SHORT_BLOG, ID FROM `BLOG` ORDER BY `ID` DESC LIMIT 3");
+    $stmt = $db_conn->connect->prepare("SELECT `IMAGE`, `TITLE`, `SHORT_BLOG`, `ID` FROM `BLOG` ORDER BY `ID` DESC LIMIT 3");
     $stmt->execute();
     $result = $stmt->get_result();
     

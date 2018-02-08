@@ -21,7 +21,7 @@
     // Get header
     //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT IMAGE, TITLE, SUB_TITLE, BUTTON_TEXT, LINK FROM `HEADER` ORDER BY `ID` DESC LIMIT 1");
+    $stmt = $db_conn->connect->prepare("SELECT `IMAGE`, `TITLE`, `SUB_TITLE`, `BUTTON_TEXT`, `LINK` FROM `HEADER` ORDER BY `ID` DESC LIMIT 1");
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -74,7 +74,7 @@
             //-------------------------------------------------
 
             $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT ID FROM `HEADER`");
+            $stmt = $db_conn->connect->prepare("SELECT `ID` FROM `HEADER`");
             $stmt->execute();
             $result = $stmt->get_result();
             $num_of_rows = $result->num_rows;

@@ -1,7 +1,17 @@
 <?php
 
     //-------------------------------------------------
-    //  Get comments
+    // Direct access check
+    //-------------------------------------------------
+
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+
+    //-------------------------------------------------
+    //  Comments
     //-------------------------------------------------
 
     class Comments {
@@ -14,39 +24,6 @@
             $this->comments = [];
 
         }
-
-        //-------------------------------------------------
-        //  Count replys
-        //-------------------------------------------------
-
-        function count_replys($id) {
-
-            $db_conn2 = new Database;
-            $reply_count = $db_conn2->count('COMMENTS', $sort = 'WHERE REPLY_TO = "'.$id.'"');
-
-            return $reply_count;
-
-        }
-
-        function get_author($id) {
-
-            $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT * FROM `COMMENTS` WHERE ID=?");
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-                
-            while ($row = $result->fetch_assoc()) {
-                
-               $author = $row['POSTED_BY_USER'];
-
-            }
-
-            $db_conn->free_close($result, $stmt);   
-
-            return $author;
-
-        }
         
         //-------------------------------------------------
         //  Get reply childs
@@ -57,7 +34,7 @@
             if($this->count_replys($id) > 0) {
                 
                 $db_conn = new Database;
-                $stmt = $db_conn->connect->prepare("SELECT * FROM `COMMENTS` WHERE BLOG_ID=?  AND REPLY_TO=? ORDER BY `ID`");
+                $stmt = $db_conn->connect->prepare("SELECT * FROM `COMMENTS` WHERE `BLOG_ID`=?  AND `REPLY_TO`=? ORDER BY `ID`");
                 $stmt->bind_param("ii", $this->blog_id, $id);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -89,7 +66,7 @@
             if($this->count_replys($id) > 0) {
                 
                 $db_conn = new Database;
-                $stmt = $db_conn->connect->prepare("SELECT * FROM `COMMENTS` WHERE BLOG_ID=?  AND REPLY_TO=? ORDER BY `ID`");
+                $stmt = $db_conn->connect->prepare("SELECT * FROM `COMMENTS` WHERE `BLOG_ID`=?  AND `REPLY_TO`=? ORDER BY `ID`");
                 $stmt->bind_param("ii", $this->blog_id, $id);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -109,6 +86,43 @@
         }
 
         //-------------------------------------------------
+        //  Count replys
+        //-------------------------------------------------
+
+        function count_replys($id) {
+
+            $db_conn2 = new Database;
+            $reply_count = $db_conn2->count('COMMENTS', $sort = 'WHERE `REPLY_TO` = "'.$id.'"');
+
+            return $reply_count;
+
+        }
+
+        //-------------------------------------------------
+        //  Get comment author
+        //-------------------------------------------------
+
+        function get_author($id) {
+
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT `POSTED_BY_USER` FROM `COMMENTS` WHERE `ID`=?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+                
+            while ($row = $result->fetch_assoc()) {
+                
+               $author = $row['POSTED_BY_USER'];
+
+            }
+
+            $db_conn->free_close($result, $stmt);   
+
+            return $author;
+
+        }
+
+        //-------------------------------------------------
         //  Get the comments
         //-------------------------------------------------
 
@@ -117,7 +131,7 @@
             $this->blog_id = $blog_id;
 
             $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT * FROM `COMMENTS` WHERE BLOG_ID=?  AND REPLY_TO < 1 ORDER BY `ID`");
+            $stmt = $db_conn->connect->prepare("SELECT * FROM `COMMENTS` WHERE `BLOG_ID`=?  AND `REPLY_TO` < 1 ORDER BY `ID`");
             $stmt->bind_param("i", $this->blog_id);
             $stmt->execute();
             $result = $stmt->get_result();

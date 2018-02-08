@@ -18,6 +18,7 @@
     $filter = new Filter;
     $bbcode = new Bbcode;
     $converter = new Converter;
+    $users = new Users;
 
 ?>
 <!-- SECTION LEGAL START -->
@@ -55,6 +56,8 @@
                 $user = $filter->sanitize($row['CREATED_BY_USER']);
                 $date = $filter->sanitize($row['CREATED_DATE']);
 
+                $user = $users->get_username($user);
+
             }
             
             $db_conn->free_close($result, $stmt);
@@ -70,6 +73,7 @@
             echo "<h6 class='legal__update'>This legal policies was last updated ".$date." by ".ucfirst($user)."</h6></div>";
 
         ?>
+        
     </div>
 </section>
 <!-- SECTION LEGAL END -->

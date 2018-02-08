@@ -22,7 +22,7 @@
     // Get the why me page
     //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT TITLE, WHY_ME FROM `WHY_ME` ORDER BY `ID` DESC LIMIT 1");
+    $stmt = $db_conn->connect->prepare("SELECT `TITLE`, `WHY_ME` FROM `WHY_ME` ORDER BY `ID` DESC LIMIT 1");
     $stmt->execute();
     $result = $stmt->get_result();
  

@@ -21,6 +21,7 @@
     $tag = new Tags;
     $converter = new Converter;
     $sort_data = new Sort;
+    $users = new Users;
 
     //-------------------------------------------------
     //  Set offset and sort values
@@ -33,7 +34,7 @@
     //  Get the blog posts
     //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER, UPDATE_DATE, UPDATED_BY_USER, SHORT_BLOG FROM `BLOG` $sort ORDER BY `ID` DESC LIMIT $offset, 1");
+    $stmt = $db_conn->connect->prepare("SELECT `ID`, `IMAGE`, `TITLE`, `PUBLISH_DATE`, `PUBLISHED_BY_USER`, `UPDATE_DATE`, `UPDATED_BY_USER`, `SHORT_BLOG` FROM `BLOG` $sort ORDER BY `ID` DESC LIMIT $offset, 1");
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -53,6 +54,8 @@
             $updated_by = $filter->sanitize($row['UPDATED_BY_USER']);
             $short_blog = $bbcode->replace($filter->sanitize($row['SHORT_BLOG']));
 
+            $published_by = $users->get_username($published_by);
+            $updated_by = $users->get_username($updated_by);
             $publish_date = $converter->date($publish_date);
             $update_date = $converter->date($update_date);
 

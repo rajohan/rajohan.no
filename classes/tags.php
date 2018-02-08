@@ -88,7 +88,7 @@
             
             $db_conn = new Database;
             
-            $stmt = $db_conn->connect->prepare("SELECT TAG_ID FROM `TAGS_LINK_BLOG` WHERE BLOG_ID = $id"); // prepare statement
+            $stmt = $db_conn->connect->prepare("SELECT `TAG_ID` FROM `TAGS_LINK_BLOG` WHERE `BLOG_ID` = $id"); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
             $tag_id = [];
@@ -109,7 +109,7 @@
 
                 $db_conn = new Database;
                 
-                $stmt = $db_conn->connect->prepare("SELECT TAG FROM `TAGS` WHERE ID = $tags"); // prepare statement
+                $stmt = $db_conn->connect->prepare("SELECT `TAG` FROM `TAGS` WHERE `ID` = $tags"); // prepare statement
                 $stmt->execute(); // select from database
                 $result = $stmt->get_result(); // Get the result
                 

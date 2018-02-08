@@ -29,7 +29,7 @@
     //  Get the projects
     //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT NAME, CATEGORY, DESCRIPTION, IMAGE, URL, SKILLS, CREATED_DATE, CLIENT FROM `PROJECTS` ORDER BY `ID` DESC LIMIT $offset, 1");
+    $stmt = $db_conn->connect->prepare("SELECT `NAME`, `CATEGORY`, `DESCRIPTION`, `IMAGE`, `URL`, `SKILLS`, `CREATED_DATE`, `CLIENT` FROM `PROJECTS` ORDER BY `ID` DESC LIMIT $offset, 1");
     $stmt->execute();
     $result = $stmt->get_result();
 

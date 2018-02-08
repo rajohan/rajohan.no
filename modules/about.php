@@ -22,7 +22,7 @@
     // Get the about page
     //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT TITLE, SUB_TITLE, ABOUT FROM `ABOUT` ORDER BY `ID` DESC LIMIT 1");
+    $stmt = $db_conn->connect->prepare("SELECT `TITLE`, `SUB_TITLE`, `ABOUT` FROM `ABOUT` ORDER BY `ID` DESC LIMIT 1");
     $stmt->execute();
     $result = $stmt->get_result();
  

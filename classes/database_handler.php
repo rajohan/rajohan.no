@@ -92,7 +92,7 @@
 
         function count($table, $sort = '') {
 
-            $stmt = $this->connect->prepare("SELECT COUNT(ID) FROM $table $sort"); // prepare statement
+            $stmt = $this->connect->prepare("SELECT COUNT(`ID`) FROM $table $sort"); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
             $number_of_rows = $result->fetch_row(); // Get the result

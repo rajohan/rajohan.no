@@ -22,7 +22,7 @@
     // Get the services page
     //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT NEW_WEBPAGE_TITLE, NEW_WEBPAGE_SUB_TITLE, NEW_WEBPAGE, HOSTING_TITLE, HOSTING_SUB_TITLE, HOSTING, BACKUP_TITLE, BACKUP_SUB_TITLE, BACKUP, SEO_TITLE, SEO_SUB_TITLE, SEO, PRICE_TITLE, PRICE_SUB_TITLE, PRICE FROM `SERVICES` ORDER BY `ID` DESC LIMIT 1");
+    $stmt = $db_conn->connect->prepare("SELECT `NEW_WEBPAGE_TITLE`, `NEW_WEBPAGE_SUB_TITLE`, `NEW_WEBPAGE`, `HOSTING_TITLE`, `HOSTING_SUB_TITLE`, `HOSTING`, `BACKUP_TITLE`, `BACKUP_SUB_TITLE`, `BACKUP`, `SEO_TITLE`, `SEO_SUB_TITLE`, `SEO`, `PRICE_TITLE`, `PRICE_SUB_TITLE`, `PRICE` FROM `SERVICES` ORDER BY `ID` DESC LIMIT 1");
     $stmt->execute();
     $result = $stmt->get_result();
  

@@ -22,6 +22,7 @@
     $view = new Views;
     $page = new Page_handler;
     $comments = new Comments;
+    $users = new Users;
 
     //-------------------------------------------------
     //  Set the blog id
@@ -53,6 +54,13 @@
     $blog_votes_dislike = $db_conn->count('BLOG_VOTES', $sort = 'WHERE BLOG_ID = "'.$blog_id.'" AND VOTE = 0');
 
     //-------------------------------------------------
+    //  Get comment count
+    //-------------------------------------------------
+
+    $db_conn = new Database;
+    $comment_count = $db_conn->count('COMMENTS', $sort = 'WHERE BLOG_ID = "'.$blog_id.'"');
+
+    //-------------------------------------------------
     //  Get the blog post
     //-------------------------------------------------
 
@@ -75,6 +83,9 @@
         
         $publish_date = $converter->date($publish_date);
         $update_date = $converter->date($update_date);   
+        $published_by = $users->get_username($published_by);
+        $updated_by = $users->get_username($updated_by);
+
     }
 
     $db_conn->free_close($result, $stmt);
@@ -122,7 +133,7 @@
                 </div>
                 <div class="blog__comment__stats__count__img">
                     <div class="blog__comment__stats__count__img__text">
-                        158
+                        <?php echo $comment_count; ?>
                     </div>
                 </div>
             </div>
@@ -155,10 +166,14 @@
                 $posted_by = $filter->sanitize($comment[$i]['POSTED_BY_USER']);
                 $update_date = $filter->sanitize($comment[$i]['UPDATE_DATE']);
                 $updated_by = $filter->sanitize($comment[$i]['UPDATED_BY_USER']);
-            
+                
                 $posted_date = $converter->date_time($posted_date);
                 $update_date = $converter->date_time($update_date);
 
+                $admin = $users->get_admin_level($posted_by);
+
+                $posted_by = $users->get_username($posted_by);
+                $updated_by = $users->get_username($updated_by);
                 
                 
                 //-------------------------------------------------
@@ -180,8 +195,18 @@
                 echo
                 '<div class="blog__comment__user">
                     <div class="blog__comment__user__box">
-                        <span class="blog__comment__user__name">'.ucfirst($posted_by).'</span>(<span class="blog__comment__user__rating">53</span>)<span class="blog__comment__user__admin">ADMIN</span>
-                    </div>
+                        <span class="blog__comment__user__name">'.ucfirst($posted_by).'</span>
+                        (<span class="blog__comment__user__rating">53</span>)';
+                        
+                        if($admin === 1) {
+                        echo '<span class="blog__comment__user__admin">MODERATOR</span>';
+                        }
+                        elseif($admin ===2) {
+                            echo '<span class="blog__comment__user__admin">SITE OWNER</span>';
+                        }
+
+                    echo
+                    '</div>
                     <div id="'.$id.'" class="blog__comment__date-reply">
                         '.$posted_date.'
                         <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
@@ -190,8 +215,8 @@
 
                 if(($reply_to > 0) && (!empty($root_id)) && ($root_id !== $reply_to)) {
 
-                    $reply_author = $comments->get_author($reply_to);
-                    echo "<span class='blog__comment__reply-to'><span class='blog__comment__reply-to__arrow'>&ltrif;</span> In reply to ".ucfirst($reply_author)."</span>";
+                    $reply_author_name = $users->get_username($comments->get_author($reply_to));
+                    echo "<span class='blog__comment__reply-to'><span class='blog__comment__reply-to__arrow'>&ltrif;</span> In reply to ".ucfirst($reply_author_name)."</span>";
 
                 }
 

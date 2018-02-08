@@ -21,7 +21,7 @@
     // Get the projects
     //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT NAME, CATEGORY, DESCRIPTION, IMAGE, URL FROM `PROJECTS` ORDER BY `ID` DESC LIMIT 3");
+    $stmt = $db_conn->connect->prepare("SELECT `NAME`, `CATEGORY`, `DESCRIPTION`, `IMAGE`, `URL` FROM `PROJECTS` ORDER BY `ID` DESC LIMIT 3");
     $stmt->execute();
     $result = $stmt->get_result();
 

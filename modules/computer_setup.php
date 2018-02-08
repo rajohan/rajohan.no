@@ -22,7 +22,7 @@
     // Get the computer setup
     //-------------------------------------------------
     
-    $stmt = $db_conn->connect->prepare("SELECT TITLE, SUB_TITLE, PRIMARY_COMPUTER, SECONDARY_COMPUTER, GEAR FROM `COMPUTER_SETUP` ORDER BY `ID` DESC LIMIT 1");
+    $stmt = $db_conn->connect->prepare("SELECT `TITLE`, `SUB_TITLE`, `PRIMARY_COMPUTER`, `SECONDARY_COMPUTER`, `GEAR` FROM `COMPUTER_SETUP` ORDER BY `ID` DESC LIMIT 1");
     $stmt->execute();
     $result = $stmt->get_result();
  

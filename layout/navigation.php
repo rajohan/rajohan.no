@@ -22,7 +22,7 @@
     // Get the navigation
     //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT NAME, URL FROM `NAVIGATION` ORDER BY `ID` ASC");
+    $stmt = $db_conn->connect->prepare("SELECT `NAME`, `URL` FROM `NAVIGATION` ORDER BY `ID` ASC");
     $stmt->execute();
     $result = $stmt->get_result();
 

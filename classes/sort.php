@@ -44,7 +44,7 @@
 
             $db_conn = new Database;
             
-            $stmt = $db_conn->connect->prepare('SELECT ID FROM `TAGS` WHERE TAG = "'.$tag.'" LIMIT 1'); // prepare statement
+            $stmt = $db_conn->connect->prepare('SELECT `ID` FROM `TAGS` WHERE `TAG` = "'.$tag.'" LIMIT 1'); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
 
@@ -67,7 +67,7 @@
 
             $db_conn = new Database;
             
-            $stmt = $db_conn->connect->prepare('SELECT BLOG_ID FROM `TAGS_LINK_BLOG` WHERE TAG_ID = "'.$tag_id.'"'); // prepare statement
+            $stmt = $db_conn->connect->prepare('SELECT `BLOG_ID` FROM `TAGS_LINK_BLOG` WHERE `TAG_ID` = "'.$tag_id.'"'); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
             $blog_id = [];

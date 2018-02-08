@@ -39,6 +39,7 @@
     require_once('classes/vote.php');              // VOTE
     require_once('classes/views.php');             // VIEWS
     require_once('classes/comments.php');          // COMMENTS
+    require_once('classes/users.php');             // USERS
     require_once('classes/ssl_seal.php');          // SSL SEAL
 
     //-------------------------------------------------

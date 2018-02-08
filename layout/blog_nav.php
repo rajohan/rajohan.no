@@ -19,6 +19,7 @@
     $pagination = new Pagination;
     $tag = new Tags;
     $converter = new Converter;
+    $users = new Users;
 
 ?>
 <!-- SECTION BLOG SHORT START -->
@@ -35,7 +36,7 @@
             // Get the blog nav
             //-------------------------------------------------
 
-            $stmt = $db_conn->connect->prepare("SELECT ID, IMAGE, TITLE, PUBLISH_DATE, PUBLISHED_BY_USER FROM `BLOG` ORDER BY `ID` DESC LIMIT 3");
+            $stmt = $db_conn->connect->prepare("SELECT `ID`, `IMAGE`, `TITLE`, `PUBLISH_DATE`, `PUBLISHED_BY_USER` FROM `BLOG` ORDER BY `ID` DESC LIMIT 3");
             $stmt->execute();
             $result = $stmt->get_result();
 
@@ -47,6 +48,7 @@
                 $publish_date = $filter->sanitize($row['PUBLISH_DATE']);
                 $published_by = $filter->sanitize($row['PUBLISHED_BY_USER']);
 
+                $published_by = $users->get_username($published_by);
                 $publish_date = $converter->date($publish_date);
                 
                 echo

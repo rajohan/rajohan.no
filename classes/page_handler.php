@@ -40,7 +40,7 @@
 
             $base_param_num = 2; // What parameter number website base is on
 
-            $stmt = $db_conn->connect->prepare("SELECT PAGE, URL FROM `PAGES` ORDER BY `ID` DESC"); // prepare statement
+            $stmt = $db_conn->connect->prepare("SELECT `PAGE`, `URL` FROM `PAGES` ORDER BY `ID` DESC"); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
            
@@ -80,7 +80,7 @@
 
                                 $db_conn = new Database;
                                 
-                                $count = $db_conn->count('BLOG', $sort = 'WHERE ID = "'.$params[$base_param_num+2].'"');
+                                $count = $db_conn->count('BLOG', $sort = 'WHERE `ID` = "'.$params[$base_param_num+2].'"');
 
                                 // Check that the blog post exist
                                 if($count > 0) {
@@ -176,14 +176,14 @@
 
                     $db_conn = new Database;
 
-                    $count = $db_conn->count('BLOG', $sort = 'WHERE ID = "'.$this->blog_id.'"');
+                    $count = $db_conn->count('BLOG', $sort = 'WHERE `ID` = "'.$this->blog_id.'"');
 
                     // Check that the blog post exist
                     if($count > 0) {
 
                         $db_conn = new Database;
 
-                        $stmt = $db_conn->connect->prepare('SELECT TITLE FROM `BLOG` WHERE ID = "'.$this->blog_id.'"'); // prepare statement
+                        $stmt = $db_conn->connect->prepare('SELECT `TITLE` FROM `BLOG` WHERE `ID` = "'.$this->blog_id.'"'); // prepare statement
                         $stmt->execute(); // select from database
                         $result = $stmt->get_result(); // Get the result
 
