@@ -71,6 +71,7 @@
     $result = $stmt->get_result();
     
     while ($row = $result->fetch_assoc()) {
+
         $id = $filter->sanitize($row['ID']);
         $img = $filter->sanitize($row['IMAGE']);
         $title = $filter->sanitize($row['TITLE']);
@@ -91,6 +92,7 @@
     $db_conn->free_close($result, $stmt);
 
 ?>
+
 <!-- SECTION BLOG READ START -->
 <div class="blog__container u-margin-bottom-medium">
     <div class="blog__box">
@@ -106,13 +108,17 @@
         <div class="blog__updated-by">
             <?php echo "Updated ".$update_date." by ".ucfirst($updated_by); ?>
         </div>
-        <div class="blog__stats">
+        <div id="blog__votes" class="blog__stats">
             <img src="img/icons/seen.svg" alt="seen" class="blog__stats__img">
             <?php echo $view_count; ?>
-            <img src="img/icons/like.svg" alt="like" class="blog__stats__img">
-            <?php echo $blog_votes_like; ?>
-            <img src="img/icons/dislike.svg" alt="dislike" class="blog__stats__img">
-            <?php echo $blog_votes_dislike; ?>
+            <img src="img/icons/like.svg" alt="like" id="blog__like" data-id="<?php echo $blog_id; ?>" class="blog__stats__img">
+            <span id="blog__like__count">
+                <?php echo $blog_votes_like; ?>
+            </span>
+            <img src="img/icons/dislike.svg" alt="dislike" id="blog__dislike" data-id="<?php echo $blog_id; ?>" class="blog__stats__img">
+            <span id="blog__dislike__count">
+                <?php echo $blog_votes_dislike; ?>
+            </span>
         </div>
         <div class="blog__tags">
             <?php 
@@ -241,10 +247,14 @@
                 </div>
                 <div class="blog__comment__message__stats">
                     <div class="blog__comment__message__vote">
-                        <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img">
-                        '.$comment_votes_like.'
-                        <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img">
-                        '.$comment_votes_dislike.'
+                        <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img" onclick="add_vote('.$id.', 1);">
+                        <span id="comment__like__count__'.$id.'">
+                            '.$comment_votes_like.'
+                        </span>
+                        <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img" onclick="add_vote('.$id.', 0);">
+                        <span id="comment__dislike__count__'.$id.'">
+                            '.$comment_votes_dislike.'
+                        </span>
                     </div>';
 
                     if($reply_to < 1 && ($comments->count_replys($id) > 0)) {

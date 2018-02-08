@@ -135,3 +135,74 @@ $("#legal__refund").click(function() {
 $("#legal__tos").click(function() {
     scroll($("#legal__tos-target"), -15);
 });
+
+//-------------------------------------------------
+// Vote like / dislike blog
+//-------------------------------------------------
+
+$("#blog__like").on("click", function() {
+    
+    $.ajax({
+            
+        url: "classes/vote.php",
+        type: "post",
+        data: {add_vote: "true", vote: "1", blog_id: $("#blog__like").attr("data-id")},
+        dataType: "json",
+    
+        // On success output the requested site.
+        success: function (data) {
+
+            $("#blog__like__count").html(data.like);
+            $("#blog__dislike__count").html(data.dislike);
+
+        }
+
+    });
+    
+});
+
+$("#blog__dislike").on("click", function() {
+    
+    $.ajax({
+            
+        url: "classes/vote.php",
+        type: "post",
+        data: {add_vote: "true", vote: "0", blog_id: $("#blog__like").attr("data-id")},
+        dataType: "json",
+    
+        // On success output the requested site.
+        success: function (data) {
+
+            $("#blog__like__count").html(data.like);
+            $("#blog__dislike__count").html(data.dislike);
+
+        }
+
+    });
+    
+});
+
+//-------------------------------------------------
+// Vote like / dislike comments
+//-------------------------------------------------
+
+function add_vote(comment_id, vote) {
+    
+    $.ajax({
+            
+        url: "classes/vote.php",
+        type: "post",
+        data: {add_comment_vote: "true", vote: vote, comment_id: comment_id},
+        dataType: "json",
+    
+        // On success output the requested site.
+        success: function (data) {
+
+            $("#comment__like__count__" + comment_id).html(data.like);
+            $("#comment__dislike__count__" + comment_id).html(data.dislike);
+
+        }
+
+    });
+    
+}

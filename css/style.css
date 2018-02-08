@@ -705,7 +705,8 @@ a.whitelink:hover {
       height: 2.5rem;
       margin-right: 0.5rem; }
       .blog__stats__img:not(:first-of-type) {
-        margin-left: 0.5rem; }
+        margin-left: 0.5rem;
+        cursor: pointer; }
   .blog__short {
     width: 100%;
     margin-top: 1rem;
@@ -831,7 +832,8 @@ a.whitelink:hover {
         margin-left: 0.5rem;
         margin-right: 0.5rem;
         width: 2.5rem;
-        height: 2.5rem; }
+        height: 2.5rem;
+        cursor: pointer; }
   .blog__comment__textarea {
     margin-top: 1.5rem;
     min-width: 100%;

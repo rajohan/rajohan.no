@@ -61,6 +61,7 @@
         
             &:not(:first-of-type) {
                 margin-left: 0.5rem;
+                cursor: pointer;
             }
         }
     }
@@ -243,6 +244,7 @@
                     margin-right: 0.5rem;
                     width: 2.5rem;
                     height: 2.5rem;
+                    cursor: pointer;
                 }
 
             }
