@@ -12,52 +12,40 @@
         include_once('filter.php'); // Filter
 
         $filter = new Filter;
-        
-        $vote = $filter->sanitize($_POST['vote']);
-        $blog_id = $filter->sanitize($_POST['blog_id']);
-
         $votes = new Vote;
-        $votes->add_blog_vote($vote, $blog_id);
-        
-        $db_conn = new Database;
-        $blog_votes_like = $db_conn->count('BLOG_VOTES', $sort = 'WHERE ITEM_ID = "'.$blog_id.'" AND VOTE = 1');
-
-        $db_conn = new Database;
-        $blog_votes_dislike = $db_conn->count('BLOG_VOTES', $sort = 'WHERE ITEM_ID = "'.$blog_id.'" AND VOTE = 0');
-
-        $vote_array['like'] = $blog_votes_like;
-        $vote_array['dislike'] = $blog_votes_dislike;
-
-        echo json_encode($vote_array);
-        
-    } 
-
-    else if(!empty($_POST['add_comment_vote']) && $_POST['add_comment_vote'] === "true") {
-
-        define('INCLUDE','true'); // Define INCLUDE to get access to the files needed 
-        require_once('../configs/db.php'); // Get database username, password etc
-        include_once('database_handler.php'); // Database handler
-        include_once('filter.php'); // Filter
-
-        $filter = new Filter;
 
         $vote = $filter->sanitize($_POST['vote']);
-        $comment_id = $filter->sanitize($_POST['comment_id']);
-
-        $votes = new Vote;
-        $votes->add_comment_vote($vote, $comment_id);
+        $id = $filter->sanitize($_POST['id']);
+        $type = $filter->sanitize($_POST['type']);
         
-        $db_conn = new Database;
-        $comment_votes_like = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE ITEM_ID = "'.$comment_id.'" AND VOTE = 1');
+        if($type === "blog") {
+            
+            $votes->add_blog_vote($vote, $id);
+            $table = "BLOG_VOTES";
+
+        }
+
+        else if($type === "comment") {
     
-        $db_conn = new Database;
-        $comment_votes_dislike = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE ITEM_ID = "'.$comment_id.'" AND VOTE = 0');
+            $votes->add_comment_vote($vote, $id);
+            $table = "COMMENT_VOTES";
+            
+        }
 
-        $vote_array['like'] = $comment_votes_like;
-        $vote_array['dislike'] = $comment_votes_dislike;
+        // Get new likes count
+        $db_conn = new Database;
+        $votes_like = $db_conn->count($table, $sort = 'WHERE ITEM_ID = "'.$id.'" AND VOTE = 1');
+        
+        // Get new dislike count
+        $db_conn = new Database;
+        $votes_dislike = $db_conn->count($table, $sort = 'WHERE ITEM_ID = "'.$id.'" AND VOTE = 0');
+
+        // Crate like/dislike arrays
+        $vote_array['like'] = $votes_like;
+        $vote_array['dislike'] = $votes_dislike;
 
         echo json_encode($vote_array);
-        
+     
     } else { // Else check that the file is included and not accessed directly
 
         if(!defined('INCLUDE')) {
@@ -148,7 +136,7 @@
 
             if($count <= 0) {
 
-                $this->add_vote("BLOG_VOTES", "BLOG_ID", $blog_id, $vote, $user); // Add vote to db
+                $this->add_vote("BLOG_VOTES", "ITEM_ID", $blog_id, $vote, $user); // Add vote to db
 
             }
 

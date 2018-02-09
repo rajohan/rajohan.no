@@ -3,6 +3,12 @@
     margin: 2rem;
     margin-left: 0;
     background-color: $color-grey-light;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+
+    @include respond(small-tab) { // width < 800px?
+        display: none;
+    }
     
     &__sort {
         width: 100%; 
@@ -22,6 +28,14 @@
                 text-align: center;
                 text-transform: uppercase;
                 cursor: pointer;
+
+                &:first-of-type {
+                    border-top-left-radius: 1rem;
+                }
+
+                &:last-of-type {
+                    border-top-right-radius: 1rem;
+                }
 
                 &:hover {
                     color: $color-black-light;
@@ -61,11 +75,24 @@
             }
 
             &__text {
-                h6 {
-                    font-weight: 400;
+                line-height: 1.1;
+                margin-top: 0.2rem;
+                display: block;
+                &__by {
+                    line-height: 1.3;
                     cursor: default;
+                    font-size: 1.2rem;
+                    display: flex;
+                    margin-top: 0.5rem;
+                }
+
+                &__img {
+                    width: 1.3rem;
+                    height: 1.3rem;
+                    margin: 0 0.2rem;
                 }
             }
+
         }
     }
 
@@ -145,9 +172,18 @@
     &__heading {
         background-color:  $color-primary-light;
         color: $color-white;
-        display: block;
+        display: flex;
         padding: 0.5rem;
-        padding-left: 1rem;
+        padding-left: 2rem;
         text-transform: uppercase;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        align-items: center;
+
+        &__img {
+            width: 1.7rem;
+            height: 1.7rem;
+            margin: 0 0.2rem;
+        }
     }
 }

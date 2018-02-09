@@ -137,72 +137,52 @@ $("#legal__tos").click(function() {
 });
 
 //-------------------------------------------------
-// Vote like / dislike blog
+// Vote like/dislike blog/comments
 //-------------------------------------------------
 
-$("#blog__like").on("click", function() {
+function add_vote(id, type, vote) {
     
     $.ajax({
             
         url: "classes/vote.php",
         type: "post",
-        data: {add_vote: "true", vote: "1", blog_id: $("#blog__like").attr("data-id")},
+        data: {add_vote: "true", type: type, vote: vote, id: id},
         dataType: "json",
     
         // On success output the requested site.
         success: function (data) {
 
-            $("#blog__like__count").html(data.like);
-            $("#blog__dislike__count").html(data.dislike);
+            $("#"+type+"__like__count__" + id).html(data.like);
+            $("#"+type+"__dislike__count__" + id).html(data.dislike);
 
         }
 
     });
     
-});
-
-$("#blog__dislike").on("click", function() {
-    
-    $.ajax({
-            
-        url: "classes/vote.php",
-        type: "post",
-        data: {add_vote: "true", vote: "0", blog_id: $("#blog__like").attr("data-id")},
-        dataType: "json",
-    
-        // On success output the requested site.
-        success: function (data) {
-
-            $("#blog__like__count").html(data.like);
-            $("#blog__dislike__count").html(data.dislike);
-
-        }
-
-    });
-    
-});
+}
 
 //-------------------------------------------------
-// Vote like / dislike comments
+// Blog navigation buttons (recent, views, votes)
 //-------------------------------------------------
 
-function add_vote(comment_id, vote) {
-    
+function blog_nav_sort(sort) {
+
     $.ajax({
             
-        url: "classes/vote.php",
+        url: "modules/blog_nav_sort.php",
         type: "post",
-        data: {add_comment_vote: "true", vote: vote, comment_id: comment_id},
-        dataType: "json",
+        data: {blog_nav_sort: "true", sort: sort},
     
         // On success output the requested site.
         success: function (data) {
 
-            $("#comment__like__count__" + comment_id).html(data.like);
-            $("#comment__dislike__count__" + comment_id).html(data.dislike);
+            $(".blog-navigation__sort__box").html(data);
+
+            $(".blog-navigation__sort__buttons__item").removeClass("blog-navigation__sort__buttons__item__active");
+            $("#blog-navigation__"+sort).addClass("blog-navigation__sort__buttons__item__active");
 
         }
 
     });
-    
+
 }

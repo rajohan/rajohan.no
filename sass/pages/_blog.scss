@@ -34,16 +34,31 @@
     &__by {
         width: 100%;
         font-size: 1.3rem;
-        margin-top: 0.5rem;
+        margin-top: 1rem;
+        display: flex;
+
+        &__img {
+            width: 1.7rem;
+            height: 1.7rem;
+            margin: 0 0.3rem;
+        }
     }
 
     &__updated-by {
         width: 100%;
         font-size: 1.3rem;
+        display: flex;
+
+        &__img {
+            width: 1.7rem;
+            height: 1.7rem;
+            margin: 0 0.3rem;
+        }
     }
 
     &__tags {
         width: 100%;
+        margin-top: 1rem;
     }
 
     &__story {

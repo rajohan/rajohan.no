@@ -83,9 +83,16 @@
         $blog = $bbcode->replace($filter->sanitize($row['BLOG']));
         
         $publish_date = $converter->date($publish_date);
-        $update_date = $converter->date($update_date);   
+
+        if(!empty($update_date)) {
+            $update_date = $converter->date($update_date);   
+        }
+
         $published_by = $users->get_username($published_by);
-        $updated_by = $users->get_username($updated_by);
+
+        if(!empty($updated_by)) {
+            $updated_by = $users->get_username($updated_by);
+        }
 
     }
 
@@ -103,20 +110,26 @@
             <?php echo ucfirst($title); ?>
         </div>
         <div class="blog__by">
-            <?php echo "Posted ".$publish_date." by ".ucfirst($published_by); ?>
+            <?php echo "<img src='img/icons/write.svg' alt='posted' class='blog__by__img'> ".$publish_date."  <img src='img/icons/user.svg' alt='user' class='blog__by__img'> ".ucfirst($published_by); ?>
         </div>
+        <?php 
+            if(!empty($update_date) && !empty($updated_by)) {
+        ?>
         <div class="blog__updated-by">
-            <?php echo "Updated ".$update_date." by ".ucfirst($updated_by); ?>
+            <?php echo "<img src='img/icons/refresh.svg' alt='updated' class='blog__by__img'> ".$update_date." <img src='img/icons/user.svg' alt='user' class='blog__updated-by__img'> ".ucfirst($updated_by); ?>
         </div>
+        <?php
+            }
+        ?>
         <div id="blog__votes" class="blog__stats">
             <img src="img/icons/seen.svg" alt="seen" class="blog__stats__img">
             <?php echo $view_count; ?>
-            <img src="img/icons/like.svg" alt="like" id="blog__like" data-id="<?php echo $blog_id; ?>" class="blog__stats__img">
-            <span id="blog__like__count">
+            <img src="img/icons/like.svg" alt="like" id="blog__like" class="blog__stats__img" onclick="add_vote(<?php echo $id; ?>, 'blog', 1);">
+            <span id="blog__like__count__<?php echo $id; ?>">
                 <?php echo $blog_votes_like; ?>
             </span>
-            <img src="img/icons/dislike.svg" alt="dislike" id="blog__dislike" data-id="<?php echo $blog_id; ?>" class="blog__stats__img">
-            <span id="blog__dislike__count">
+            <img src="img/icons/dislike.svg" alt="dislike" id="blog__dislike" class="blog__stats__img" onclick="add_vote(<?php echo $id; ?>, 'blog', 0);">
+            <span id="blog__dislike__count__<?php echo $id; ?>">
                 <?php echo $blog_votes_dislike; ?>
             </span>
         </div>
@@ -219,10 +232,10 @@
                         <span class="blog__comment__user__name">'.ucfirst($posted_by).'</span>';
                         
                         if($admin === 1) {
-                        echo '<span class="blog__comment__user__admin">MODERATOR</span>';
+                        echo '<span class="blog__comment__user__admin">Moderator</span>';
                         }
                         elseif($admin ===2) {
-                            echo '<span class="blog__comment__user__admin">SITE OWNER</span>';
+                            echo '<span class="blog__comment__user__admin">Site owner</span>';
                         }
 
                     echo
@@ -247,11 +260,11 @@
                 </div>
                 <div class="blog__comment__message__stats">
                     <div class="blog__comment__message__vote">
-                        <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img" onclick="add_vote('.$id.', 1);">
+                        <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img" onclick="add_vote('.$id.', \'comment\', 1);">
                         <span id="comment__like__count__'.$id.'">
                             '.$comment_votes_like.'
                         </span>
-                        <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img" onclick="add_vote('.$id.', 0);">
+                        <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img" onclick="add_vote('.$id.', \'comment\', 0);">
                         <span id="comment__dislike__count__'.$id.'">
                             '.$comment_votes_dislike.'
                         </span>

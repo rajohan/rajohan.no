@@ -55,9 +55,16 @@
             $short_blog = $bbcode->replace($filter->sanitize($row['SHORT_BLOG']));
 
             $published_by = $users->get_username($published_by);
-            $updated_by = $users->get_username($updated_by);
+
+            if(!empty($updated_by)) {
+                $updated_by = $users->get_username($updated_by);
+            }
+
             $publish_date = $converter->date($publish_date);
-            $update_date = $converter->date($update_date);
+
+            if(!empty($update_date)) {
+                $update_date = $converter->date($update_date);
+            }
 
             echo
             '<div class="blog-short__box">
@@ -68,12 +75,20 @@
                 '.ucfirst($title).'
             </div>
             <div class="blog-short__by">
-                Posted '.$publish_date.' by '.ucfirst($published_by).'
-            </div>
-            <div class="blog-short__updated-by">
-                Updated '.$update_date.' by '.ucfirst($updated_by).'
-            </div>
-            <div class="blog-short__tags">';
+                <img src="img/icons/write.svg" alt="posted" class="blog-short__by__img"> '.$publish_date.'  <img src="img/icons/user.svg" alt="user" class="blog-short__by__img">'.ucfirst($published_by).'
+            </div>';
+            
+            if(!empty($update_date) && !empty($updated_by)) {
+
+                echo
+                '<div class="blog-short__updated-by">
+                    <img src="img/icons/refresh.svg" alt="updated" class="blog-short__by__img"> '.$update_date.' <img src="img/icons/user.svg" alt="user" class="blog-short__updated-by__img">'.ucfirst($updated_by).'
+                </div>';
+
+            }
+
+            echo
+            '<div class="blog-short__tags">';
             
                 $tag_name = $tag->get_blog_tags($id);
                 $tag->output_tags($tag_name);

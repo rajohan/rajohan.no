@@ -14,7 +14,6 @@
     // Initialize classes
     //-------------------------------------------------
 
-    $db_conn = new Database;
     $filter = new Filter;
     $pagination = new Pagination;
     $tag = new Tags;
@@ -26,50 +25,20 @@
 <div class="blog-navigation">
     <div class="blog-navigation__sort">
         <div class="blog-navigation__sort__buttons">
-            <div class="blog-navigation__sort__buttons__item blog-navigation__sort__buttons__item__active">Recent</div>
-            <div class="blog-navigation__sort__buttons__item">Popular</div>
-            <div class="blog-navigation__sort__buttons__item">Comments</div>
+            <div id="blog-navigation__recent" class="blog-navigation__sort__buttons__item blog-navigation__sort__buttons__item__active" onclick="blog_nav_sort('recent');">Recent</div>
+            <div id="blog-navigation__views" class="blog-navigation__sort__buttons__item" onclick="blog_nav_sort('views');">Views</div>
+            <div id="blog-navigation__votes" class="blog-navigation__sort__buttons__item" onclick="blog_nav_sort('votes');">Votes</div>
         </div>
-        <?php   
+        <div class="blog-navigation__sort__box">
+            <?php   
 
-            //-------------------------------------------------
-            // Get the blog nav
-            //-------------------------------------------------
+                //-------------------------------------------------
+                // Get the blog nav
+                //-------------------------------------------------
 
-            $stmt = $db_conn->connect->prepare("SELECT `ID`, `IMAGE`, `TITLE`, `PUBLISH_DATE`, `PUBLISHED_BY_USER` FROM `BLOG` ORDER BY `ID` DESC LIMIT 3");
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            while ($row = $result->fetch_assoc()) {
-
-                $id = $filter->sanitize($row['ID']);
-                $img = $filter->sanitize($row['IMAGE']);
-                $title = $filter->sanitize($row['TITLE']);
-                $publish_date = $filter->sanitize($row['PUBLISH_DATE']);
-                $published_by = $filter->sanitize($row['PUBLISHED_BY_USER']);
-
-                $published_by = $users->get_username($published_by);
-                $publish_date = $converter->date($publish_date);
-                
-                echo
-                
-                '<div class="blog-navigation__sort__content">
-                    <a href="blog/read/'.$id.'/'.$converter->generate_slug($title).'/"">
-                        <img class="blog-navigation__sort__content__img" src="img/blog/'.$img.'" alt="'.$title.'">
-                    </a>
-                    <div class="blog-navigation__sort__content__text">
-                        <a href="blog/read/'.$id.'/'.$converter->generate_slug($title).'/"">'.ucfirst($title).'</a>
-                        <br>
-                        <h6>'.$publish_date.' by '.ucfirst($published_by).'</h6>
-                    </div>
-                </div>';
-
-
-            }
-
-            $db_conn->free_close($result, $stmt);
-
-        ?>
+                require_once('modules/blog_nav_sort.php');
+            ?>
+        </div>
     </div>
     <div class="blog-navigation__search">
         <span class="blog-navigation__heading">Search</span>

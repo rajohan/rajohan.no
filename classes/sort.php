@@ -140,6 +140,51 @@
 
         }
 
+        //-------------------------------------------------
+        // Method to sort blog by views/votes
+        //-------------------------------------------------
+
+        function blog_sort($id_row_name, $table) {
+
+            $db_conn = new Database;
+            $filter = new Filter;
+
+            // Select BLOG_ID from BLOG_VIEWS
+            $stmt = $db_conn->connect->prepare("SELECT $id_row_name FROM $table");
+            $stmt->execute();
+            $result = $stmt->get_result();
+        
+            $blog_sort_count = [];
+        
+            // Crate array with blog ids
+            while ($row = $result->fetch_assoc()) {
+
+                $blog_id = $filter->sanitize($row[$id_row_name]);
+                array_push($blog_sort_count, $blog_id);
+                
+            }
+            
+            $db_conn->free_close($result, $stmt);
+        
+            // Count views on each blog id and add value to blog ids
+            $blog_sort_count = array_count_values($blog_sort_count);
+            
+            // Sort array by views
+            arsort($blog_sort_count);
+        
+            // Create array with the blog id's
+            $blog_sort_id = [];
+
+            foreach($blog_sort_count as $key => $value) {
+
+                array_push($blog_sort_id, $key);
+
+            }
+        
+            return $blog_sort_id;
+
+        }
+
     }
 
 ?>
