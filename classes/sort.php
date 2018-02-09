@@ -9,7 +9,7 @@
         die('Direct access is not permitted.');
         
     }
-
+ 
 
     //-------------------------------------------------
     // Sort
@@ -182,6 +182,81 @@
             }
         
             return $blog_sort_id;
+
+        }
+
+        //-------------------------------------------------
+        // Method to sort blog by views/votes
+        //-------------------------------------------------
+
+        function comment_sort($blog_id) {
+
+            $db_conn = new Database;
+            $filter = new Filter;
+
+            // Get all root comments
+            $stmt = $db_conn->connect->prepare("SELECT ID FROM `COMMENTS` WHERE `BLOG_ID`=?  AND `REPLY_TO` < 1");
+            $stmt->bind_param("i", $blog_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        
+            $comment_root_id = [];
+        
+            // Crate array with root comments
+            while ($row = $result->fetch_assoc()) {
+
+                $comment_ids = $filter->sanitize($row['ID']);
+                array_push($comment_root_id, $comment_ids);
+                
+            }
+            
+            $db_conn->free_close($result, $stmt);
+            
+            // Make a string from array to use in mysqli query
+            $comment_ids = implode(",",$comment_root_id);
+
+            // Get comment count for each root comment
+            $db_conn = new Database;
+            
+            $stmt = $db_conn->connect->prepare("SELECT `ITEM_ID` FROM `COMMENT_VOTES` WHERE VOTE > 0 AND `ITEM_ID` IN ($comment_ids)");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $comment_vote_count = [];
+            
+            // Crate array with comment count
+            while ($row = $result->fetch_assoc()) {
+
+                $comment_id = $filter->sanitize($row['ITEM_ID']);
+                array_push($comment_vote_count, $comment_id);
+                
+            }
+
+            $db_conn->free_close($result, $stmt);
+
+            // Merge array with comment count + id with array containing all root comment id's 
+            // To account for comments with a vote count of 0
+            $output = array_merge($comment_vote_count, $comment_root_id);
+
+            // Put comment id's as key value and count value as value for the associated key (merge equal values and add 1 to count value)
+            $comment_vote_count = array_count_values($output);
+            
+            // Sort the array key with highest count value first
+            arsort($comment_vote_count);
+        
+            $comment_vote_id = [];
+
+             // Create array with only comment id's (key)
+            foreach($comment_vote_count as $key => $value) {
+
+                array_push($comment_vote_id, $key);
+
+            }
+
+            // Make a string from array to use in mysqli query
+            $output = implode(",",$comment_vote_id);
+
+            return $output;
 
         }
 

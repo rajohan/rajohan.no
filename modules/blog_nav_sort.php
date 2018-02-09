@@ -56,9 +56,7 @@
 
             }
 
-        }
-
-        else {
+        } else {
 
             $sort = '';
             $order = "`ID` DESC";
@@ -72,9 +70,7 @@
 
             die('Direct access is not permitted.');
             
-        }
-
-        else {
+        } else {
 
             $sort = '';
             $order = "`ID` DESC";

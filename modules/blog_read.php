@@ -165,147 +165,27 @@
         </div>
         <div class="blog__comment__sort">
             <div class="blog__comment__sort__by">
-                Oldest first | Newest first | Best comments
+                <a href="javascript:void(0);" id="blog__comment__sort__by__oldest" class="blog__comment__sort__by__link blog__comment__sort__by__link__active" onclick="sort_comments('<?php echo $blog_id; ?>','oldest')">Oldest first</a> 
+                | 
+                <a href="javascript:void(0);" id="blog__comment__sort__by__newest" class="blog__comment__sort__by__link" onclick="sort_comments('<?php echo $blog_id; ?>','newest')">Newest first</a> 
+                | 
+                <a href="javascript:void(0);" id="blog__comment__sort__by__best" class="blog__comment__sort__by__link" onclick="sort_comments('<?php echo $blog_id; ?>','best')">Best comments</a>
             </div>
             <div class="blog__comment__sort__pagination">
                 Page 1 2 3 4 5 6 Next
             </div>
         </div>
-
+        <div class="blog__comment">
         <?php 
 
-            $comment = $comments->get_comments($blog_id);
+            //-------------------------------------------------
+            //  Get the blog comments
+            //-------------------------------------------------
 
-            for($i = 0; $i  < count($comment); $i++) {
-                
-                $id = $filter->sanitize($comment[$i]['ID']);
-                $message = $bbcode->replace($filter->sanitize($comment[$i]['COMMENT']));
-                $reply_to = $filter->sanitize($comment[$i]['REPLY_TO']);
-                $posted_date = $filter->sanitize($comment[$i]['POSTED_BY_DATE']);
-                $posted_by = $filter->sanitize($comment[$i]['POSTED_BY_USER']);
-                $update_date = $filter->sanitize($comment[$i]['UPDATE_DATE']);
-                $updated_by = $filter->sanitize($comment[$i]['UPDATED_BY_USER']);
-                
-                // Date
-                $posted_date = $converter->date_time($posted_date);
-                $update_date = $converter->date_time($update_date);
-
-                // User admin level
-                $admin = $users->get_admin_level($posted_by);
-                $reg_date = $converter->date($users->get_reg_date($posted_by));
-
-                // Comment count for user
-                $db_conn = new Database;
-                $comment_count = $db_conn->count('COMMENTS', $sort = 'WHERE POSTED_BY_USER = "'.$posted_by.'"');
-
-                // Comment votes
-                $db_conn = new Database;
-                $comment_votes_like = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE ITEM_ID = "'.$id.'" AND VOTE = 1');
-            
-                $db_conn = new Database;
-                $comment_votes_dislike = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE ITEM_ID = "'.$id.'" AND VOTE = 0');
-
-                // Username from id
-                $posted_by = $users->get_username($posted_by);
-                $updated_by = $users->get_username($updated_by);
-                
-                
-                //-------------------------------------------------
-                // Output comment
-                //-------------------------------------------------
-
-                if($reply_to > 0) {
-
-                    echo "<div class='blog__comment__reply'>";
-                    
-                }
-
-                else {
-
-                    $root_id = $id;
-                    
-                }
-                
-                echo
-                '<div class="blog__comment__user">
-                    <div class="blog__comment__user__box">
-                        <span class="blog__comment__user__name">'.ucfirst($posted_by).'</span>';
-                        
-                        if($admin === 1) {
-                        echo '<span class="blog__comment__user__admin">Moderator</span>';
-                        }
-                        elseif($admin ===2) {
-                            echo '<span class="blog__comment__user__admin">Site owner</span>';
-                        }
-
-                    echo
-                    '</div>
-                    <div id="'.$id.'" class="blog__comment__date-reply">
-                        '.$posted_date.'
-                        <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
-                    </div>
-                </div>';
-
-                if(($reply_to > 0) && (!empty($root_id)) && ($root_id !== $reply_to)) {
-
-                    $reply_author_name = $users->get_username($comments->get_author($reply_to));
-                    echo "<span class='blog__comment__reply-to'><span class='blog__comment__reply-to__arrow'>&ltrif;</span> In reply to ".ucfirst($reply_author_name)."</span>";
-
-                }
-
-                echo 
-
-                '<div class="blog__comment__message">
-                '.$message.'
-                </div>
-                <div class="blog__comment__message__stats">
-                    <div class="blog__comment__message__vote">
-                        <img src="img/icons/like.svg" alt="like" class="blog__comment__message__vote__img" onclick="add_vote('.$id.', \'comment\', 1);">
-                        <span id="comment__like__count__'.$id.'">
-                            '.$comment_votes_like.'
-                        </span>
-                        <img src="img/icons/dislike.svg" alt="dislike" class="blog__comment__message__vote__img" onclick="add_vote('.$id.', \'comment\', 0);">
-                        <span id="comment__dislike__count__'.$id.'">
-                            '.$comment_votes_dislike.'
-                        </span>
-                    </div>';
-
-                    if($reply_to < 1 && ($comments->count_replys($id) > 0)) {
-                        echo
-                        '<div class="blog__comment__message__hide">
-                            Hide answers &dtrif; 
-                        </div>';
-                    }
-                    
-                    echo
-                    '<div class="blog__comment__user__stats">
-                        '.$comment_count; 
-
-                        if($comment_count === 1) {
-
-                            echo " comment ";
-
-                        } else {
-
-                            echo " comments ";
-
-                        }
-                        
-                        echo
-                        '| Registered '.$reg_date.'
-                    </div>
-                </div>';
-
-                if($reply_to > 0) {
-
-                    echo "</div>";
-
-                }
-
-            }
+            require_once('blog_comments.php');            
 
         ?> 
-
+        </div>
         <fieldset>
             <textarea placeholder="Din kommentar..." class="blog__comment__textarea" tabindex="1"></textarea>
         </fieldset>

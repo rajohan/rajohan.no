@@ -838,6 +838,8 @@ a.whitelink:hover {
     justify-content: space-between;
     padding-bottom: 1rem;
     border-bottom: 1px solid #e8e8e8; }
+    .blog__comment__sort__by__link__active {
+      font-weight: 700; }
   .blog__comment__user {
     display: flex;
     min-width: 100%;

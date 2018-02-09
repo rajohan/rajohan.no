@@ -186,3 +186,29 @@ function blog_nav_sort(sort) {
     });
 
 }
+
+//-------------------------------------------------
+// Sort comments (oldest, newest, best)
+//-------------------------------------------------
+
+function sort_comments(blog_id, order) {
+
+    $.ajax({
+            
+        url: "modules/blog_comments.php",
+        type: "post",
+        data: {sort_comments: "true", blog_id: blog_id, order: order},
+    
+        // On success output the requested site.
+        success: function (data) {
+
+            $(".blog__comment").html(data);
+
+            $(".blog__comment__sort__by__link").removeClass("blog__comment__sort__by__link__active");
+            $("#blog__comment__sort__by__"+order).addClass("blog__comment__sort__by__link__active");
+
+        }
+
+    });
+
+}

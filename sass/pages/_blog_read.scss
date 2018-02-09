@@ -161,6 +161,16 @@
             padding-bottom: 1rem;
             border-bottom: 1px solid $color-grey-2;
 
+            &__by {
+            
+                &__link {
+
+                    &__active {
+                        font-weight: 700;
+                    }
+                }
+            }
+
         }
 
         &__user {
