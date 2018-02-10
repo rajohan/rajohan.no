@@ -12,7 +12,7 @@
     //-------------------------------------------------
     // Initialize classes
     //-------------------------------------------------
-
+    
     $filter = new Filter;
     $bbcode = new Bbcode;
     $tag = new Tags;
@@ -23,6 +23,7 @@
     $comments = new Comments;
     $users = new Users;
     $pagination = new Pagination;
+    $sort_data = new Sort;
 
     //-------------------------------------------------
     //  Set the blog id
@@ -163,45 +164,18 @@
                 <img src="img/icons/reddit.svg" alt="reddit" class="blog__comment__stats__social_media__img">
             </div>
         </div>
-        <div class="blog__comment__sort">
-            <div class="blog__comment__sort__by">
-                <a href="javascript:void(0);" id="blog__comment__sort__by__oldest" class="blog__comment__sort__by__link <?php if(($_SESSION['comment_sort'] === "oldest") || (empty($_SESSION['comment_sort']))) { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','oldest')">Oldest first</a> 
-                | 
-                <a href="javascript:void(0);" id="blog__comment__sort__by__newest" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "newest") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','newest')">Newest first</a> 
-                | 
-                <a href="javascript:void(0);" id="blog__comment__sort__by__best" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "best") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','best')">Best comments</a>
-            </div>
-            <div class="blog__comment__sort__pagination">
+        <div id="<?php echo $blog_id; ?>" class="blog__comment">
+            
+            <?php 
 
-                <?php 
+                //-------------------------------------------------
+                //  Get the blog comments
+                //-------------------------------------------------
 
-                    if(empty($_SESSION['order'])) {
-                        
-                        $_SESSION['order'] = "`ID` ASC";
+                require_once('blog_comments.php');            
 
-                    }  
-
-                    $order = $_SESSION['order'];
-                    
-                    $sort = "WHERE `BLOG_ID`= $blog_id  AND `REPLY_TO` < 1 ORDER BY $order";
-
-                    echo '<div class="comments__pagination">';
-                    $pagination->output_pagination(1, "COMMENTS", $sort); 
-                    echo '</div>';
-                ?>
-
-            </div>
-        </div>
-        <div class="blog__comment">
-        <?php 
-
-            //-------------------------------------------------
-            //  Get the blog comments
-            //-------------------------------------------------
-
-            require_once('blog_comments.php');            
-
-        ?> 
+            ?> 
+            
         </div>
         <fieldset>
             <textarea placeholder="Din kommentar..." class="blog__comment__textarea" tabindex="1"></textarea>

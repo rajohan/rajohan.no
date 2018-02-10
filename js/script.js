@@ -194,15 +194,16 @@ function blog_nav_sort(sort) {
 function sort_comments(blog_id, order) {
 
     $.ajax({
-            
-        url: "modules/blog_comments.php",
+        
+        
+        url: "blog/read/"+blog_id+"/1/",
         type: "post",
         data: {sort_comments: "true", blog_id: blog_id, order: order},
     
         // On success output the requested site.
         success: function (data) {
 
-            $(".blog__comment").html(data);
+            $("body").html(data);
 
             $(".blog__comment__sort__by__link").removeClass("blog__comment__sort__by__link__active");
             $("#blog__comment__sort__by__"+order).addClass("blog__comment__sort__by__link__active");
@@ -212,3 +213,30 @@ function sort_comments(blog_id, order) {
     });
 
 }
+
+//-------------------------------------------------
+// Take user Back to top
+//-------------------------------------------------
+
+$(".comments__pagination a").on("click", function(event) {
+
+    event.preventDefault(); // Prevent the page from reloading
+    var blog_id = $(".blog__comment").attr("id");
+    pageurl = $(this).attr("href");
+
+    $.ajax({
+            
+        url: pageurl,
+        type: "post",
+        data: {reload_comments: "true", blog_id: blog_id},
+
+        // On success output the requested site.
+        success: function (data) {
+            
+            $("body").html(data);
+
+        }
+
+    });
+    
+});

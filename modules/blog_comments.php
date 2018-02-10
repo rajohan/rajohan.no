@@ -5,27 +5,6 @@
     //-------------------------------------------------
     if(!empty($_POST['sort_comments']) && $_POST['sort_comments'] === "true") {
 
-        session_start();
-        define('INCLUDE','true'); // Define INCLUDE to get access to the files needed 
-        require_once('../configs/db.php'); // Get database username, password etc
-        include_once('../classes/database_handler.php'); // Database handler
-        include_once('../classes/filter.php'); // Filter
-        include_once('../classes/bbcode.php'); // Bbcode
-        include_once('../classes/converter.php'); // Converter
-        include_once('../classes/users.php'); // Users
-        include_once('../classes/sort.php'); // Sort
-        include_once('../classes/comments.php'); // Comments
-        include_once('../classes/page_handler.php'); // Page handler
-        include_once('../classes/pagination.php'); // Pagination
-        
-        $filter = new Filter;
-        $bbcode = new Bbcode;
-        $converter = new Converter;
-        $users = new Users;
-        $comments = new Comments;
-        $sort_data = new Sort;
-        $pagination = new Pagination;
-
         $blog_id = $filter->sanitize($_POST['blog_id']);
         
         if($_POST['order'] === "oldest") {
@@ -57,6 +36,10 @@
             }
 
         }
+    }
+    else if(!empty($_POST['reload_comments']) && $_POST['reload_comments'] === "true") { 
+        
+        $blog_id = $filter->sanitize($_POST['blog_id']);
 
     } else {
 
@@ -75,6 +58,40 @@
 
     }
 
+    ?>
+    
+    <div class="blog__comment__sort">
+        <div class="blog__comment__sort__by">
+            <a href="javascript:void(0);" id="blog__comment__sort__by__oldest" class="blog__comment__sort__by__link <?php if(($_SESSION['comment_sort'] === "oldest") || (empty($_SESSION['comment_sort']))) { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','oldest')">Oldest first</a> 
+            | 
+            <a href="javascript:void(0);" id="blog__comment__sort__by__newest" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "newest") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','newest')">Newest first</a> 
+            | 
+            <a href="javascript:void(0);" id="blog__comment__sort__by__best" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "best") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','best')">Best comments</a>
+        </div>
+        <div class="blog__comment__sort__pagination">
+
+            <?php 
+
+                if(empty($_SESSION['order'])) {
+                    
+                    $_SESSION['order'] = "`ID` ASC";
+
+                }  
+
+                $order = $_SESSION['order'];
+                
+                $sort = "WHERE `BLOG_ID`= $blog_id  AND `REPLY_TO` < 1 ORDER BY $order";
+
+                echo '<div class="comments__pagination">';
+                $pagination->output_pagination(1, "COMMENTS", $sort); 
+                echo '</div>';
+
+            ?>
+
+        </div>
+    </div>
+
+    <?php
     $max = 1;
 
     $offset = ($pagination->valid_page_number($pagination->get_page_number(), "COMMENTS") - 1) * $max; // Set the page number to generate offset (* + number of items per site)
