@@ -6,13 +6,13 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    text-align: center;
 
     &__container {
         max-width: 100rem;
         width: 100%;
         display: flex;
         flex-direction: column;
+        text-align: center;
     }
     
     &__box {
