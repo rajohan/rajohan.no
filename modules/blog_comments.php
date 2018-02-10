@@ -13,12 +13,14 @@
             $_SESSION['comment_sort'] = "oldest";
 
         }
+
         else if ($_POST['order'] === "newest") {
 
             $_SESSION['order'] = "`ID` DESC";
             $_SESSION['comment_sort'] = "newest";
 
         }
+
         else if ($_POST['order'] === "best") {
 
             $comment_id = $sort_data->comment_sort($blog_id);
@@ -37,6 +39,7 @@
 
         }
     }
+
     else if(!empty($_POST['reload_comments']) && $_POST['reload_comments'] === "true") { 
         
         $blog_id = $filter->sanitize($_POST['blog_id']);
@@ -58,46 +61,47 @@
 
     }
 
-    ?>
+?>
     
-    <div class="blog__comment__sort">
-        <div class="blog__comment__sort__by">
-            <a href="javascript:void(0);" id="blog__comment__sort__by__oldest" class="blog__comment__sort__by__link <?php if(($_SESSION['comment_sort'] === "oldest") || (empty($_SESSION['comment_sort']))) { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','oldest')">Oldest first</a> 
-            | 
-            <a href="javascript:void(0);" id="blog__comment__sort__by__newest" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "newest") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','newest')">Newest first</a> 
-            | 
-            <a href="javascript:void(0);" id="blog__comment__sort__by__best" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "best") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','best')">Best comments</a>
-        </div>
-        <div class="blog__comment__sort__pagination">
-
-            <?php 
-
-                if(empty($_SESSION['order'])) {
-                    
-                    $_SESSION['order'] = "`ID` ASC";
-
-                }  
-
-                $order = $_SESSION['order'];
-                
-                $sort = "WHERE `BLOG_ID`= $blog_id  AND `REPLY_TO` < 1 ORDER BY $order";
-
-                echo '<div class="comments__pagination">';
-                $pagination->output_pagination(1, "COMMENTS", $sort); 
-                echo '</div>';
-
-            ?>
-
-        </div>
+<div class="blog__comment__sort">
+    <div class="blog__comment__sort__by">
+        <a href="javascript:void(0);" id="blog__comment__sort__by__oldest" class="blog__comment__sort__by__link <?php if(($_SESSION['comment_sort'] === "oldest") || (empty($_SESSION['comment_sort']))) { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','oldest')">Oldest first</a> 
+        | 
+        <a href="javascript:void(0);" id="blog__comment__sort__by__newest" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "newest") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','newest')">Newest first</a> 
+        | 
+        <a href="javascript:void(0);" id="blog__comment__sort__by__best" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "best") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','best')">Best comments</a>
     </div>
+    <div class="blog__comment__sort__pagination">
 
-    <?php
+        <?php 
+
+            if(empty($_SESSION['order'])) {
+                
+                $_SESSION['order'] = "`ID` ASC";
+
+            }  
+
+            $order = $_SESSION['order'];
+            
+            $sort = "WHERE `BLOG_ID`= $blog_id  AND `REPLY_TO` < 1 ORDER BY $order";
+
+            echo '<div class="comments__pagination">';
+            $pagination->output_pagination(1, "COMMENTS", $sort); 
+            echo '</div>';
+
+        ?>
+
+    </div>
+</div>
+
+<?php
+
     $max = 1;
 
     $offset = ($pagination->valid_page_number($pagination->get_page_number(), "COMMENTS") - 1) * $max; // Set the page number to generate offset (* + number of items per site)
     $comment = $comments->get_comments($blog_id, $_SESSION['order'], $offset, $max);
 
-    for($i = 0; $i  < count($comment); $i++) {
+    for($i = 0; $i < count($comment); $i++) {
         
         $id = $filter->sanitize($comment[$i]['ID']);
         $message = $bbcode->replace($filter->sanitize($comment[$i]['COMMENT']));
@@ -132,7 +136,23 @@
         
         
         //-------------------------------------------------
-        // Output comment
+        // Create a comment container
+        //-------------------------------------------------
+        if($i === 0) {
+
+            echo "<div class='blog__comment__message__box'>";
+
+        }
+
+        else if (($i > 0) && ($reply_to === "0")) {
+
+            echo "</div>";
+            echo "<div class='blog__comment__message__box'>";
+
+        }
+
+        //-------------------------------------------------
+        // Crate indentation box for child comments and set root id for root comments
         //-------------------------------------------------
 
         if($reply_to > 0) {
@@ -147,16 +167,25 @@
             
         }
 
+        //-------------------------------------------------
+        // Output comment
+        //-------------------------------------------------
+
         echo
         '<div class="blog__comment__user">
             <div class="blog__comment__user__box">
                 <span class="blog__comment__user__name">'.ucfirst($posted_by).'</span>';
                 
                 if($admin === 1) {
+
                 echo '<span class="blog__comment__user__admin">Moderator</span>';
+
                 }
+
                 elseif($admin ===2) {
+
                     echo '<span class="blog__comment__user__admin">Site owner</span>';
+
                 }
 
             echo
@@ -192,10 +221,12 @@
             </div>';
 
             if($reply_to < 1 && ($comments->count_replys($id) > 0)) {
+
                 echo
                 '<div class="blog__comment__message__hide">
-                    Hide answers &dtrif; 
+                    Hide answers <span>&utrif;</span> 
                 </div>';
+
             }
             
             echo
@@ -217,11 +248,26 @@
             </div>
         </div>';
 
+        //-------------------------------------------------
+        // End indentation box for child comments
+        //------------------------------------------------- 
+
         if($reply_to > 0) {
 
             echo "</div>";
 
         }
 
+        //-------------------------------------------------
+        // End comment container
+        //------------------------------------------------- 
+
+        if ($i === count($comment) - 1) {
+
+            echo "</div>";
+
+        }
+
     }
+    
 ?>

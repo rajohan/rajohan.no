@@ -941,6 +941,10 @@ a.whitelink:hover {
       background-color: #f7f7f7;
       padding: 1rem;
       font-size: 1.3rem; }
+    .blog__comment__message__hide {
+      cursor: pointer; }
+      .blog__comment__message__hide span {
+        font-size: 1.5rem; }
     .blog__comment__message__vote {
       display: flex;
       align-items: center; }

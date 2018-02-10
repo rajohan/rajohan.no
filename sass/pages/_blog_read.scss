@@ -259,6 +259,14 @@
                 font-size: 1.3rem;
                 
             }
+
+            &__hide {
+                cursor: pointer;
+
+                span {
+                    font-size: 1.5rem;
+                }
+            }
             
             &__vote {
                 display: flex;

@@ -240,3 +240,25 @@ $(".comments__pagination a").on("click", function(event) {
     });
     
 });
+
+//-------------------------------------------------
+// Hide/show comment answers
+//-------------------------------------------------
+var blog_comments_hide_count = 1;
+
+$(".blog__comment__message__hide").on("click", function() { 
+
+    $(this).parent().siblings().slice(2).toggle();
+
+    if(blog_comments_hide_count === 1)  {
+        blog_comments_hide_count = 0;
+        $(this).html("Show answers <span>&dtrif;</span>");
+
+    } else {
+
+        blog_comments_hide_count = 1;
+        $(this).html("Hide answers <span>&utrif;</span>");
+        
+    }
+
+});
