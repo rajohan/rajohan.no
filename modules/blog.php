@@ -51,7 +51,7 @@
 ?>
 
 <!-- SECTION BLOG SHORT START -->
-<div class="blog-short__container">
+<div class="blog-short__container u-margin-bottom-medium">
     
     <?php
 
@@ -61,7 +61,7 @@
             if($db_conn2->count('BLOG', $sort = $sort) < 1) {
 
                 echo 
-                '<div class="blog-short__box u-margin-top-medium u-margin-sides-huge">
+                '<div class="blog-short__box u-center-text u-margin-top-medium">
                     Sorry, but nothing matched your search terms. Please try again with some different keywords.
                 </div>';
 

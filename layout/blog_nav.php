@@ -51,8 +51,8 @@
     </div>
     <div class="blog-navigation__newsletter">
         <span class="blog-navigation__heading">Newsletter</span>
-        <form action="#" class="blog-navigation__newsletter__form">
-            <input type="text" class="blog-navigation__newsletter__form__input" placeholder="Your email address...">
+        <form action="newsletter/" method="post" class="blog-navigation__newsletter__form">
+            <input type="text" name="newsletter" class="blog-navigation__newsletter__form__input" placeholder="Your email address...">
             <button class="blog-navigation__newsletter__form__button">
                 <img class="blog-navigation__newsletter__form__icon" src="img/icons/arrow_right.svg" alt="search">
             </button>
