@@ -192,9 +192,8 @@ function blog_nav_sort(sort) {
 //-------------------------------------------------
 
 function sort_comments(blog_id, order) {
-
+    
     $.ajax({
-        
         
         url: "blog/read/"+blog_id+"/1/",
         type: "post",
@@ -222,7 +221,7 @@ $(".comments__pagination a").on("click", function(event) {
 
     event.preventDefault(); // Prevent the page from reloading
     var blog_id = $(".blog__comment").attr("id");
-    pageurl = $(this).attr("href");
+    var pageurl = $(this).attr("href");
 
     $.ajax({
             
@@ -260,5 +259,42 @@ $(".blog__comment__message__hide").on("click", function() {
         $(this).html("Hide answers <span>&utrif;</span>");
         
     }
+
+});
+
+//-------------------------------------------------
+// Highlight comment parent 
+//-------------------------------------------------
+$(".blog__comment__reply-to__text").on("click", function() { 
+
+    // Id to parent message
+    var id = $(this).attr("data-reply-id");
+
+    // Highlight message
+    $("#message_id_"+id).css("background-color", "#FDFF47");
+
+    // Check if message to be highlighted have a reply to box and add bg color to it aswell if it exists
+    if($("#message_top_id_"+id).length > 0) {
+
+        $("#message_top_id_"+id).css("background-color", "#FDFF47");
+
+    }
+
+    // Crate timer to remove the bg color
+    var change_bg = setInterval(function() {
+
+        $("#message_id_"+id).css("background-color", "#FFFFFF");
+
+        // Check if message to be unhighlighted have a reply to box and remove bg color from it aswell if it exists
+        if($("#message_top_id_"+id).length > 0) {
+
+            $("#message_top_id_"+id).css("background-color", "#FFFFFF");
+
+        }
+
+        // Clear interval
+        clearInterval(change_bg);  
+
+    },2000);
 
 });

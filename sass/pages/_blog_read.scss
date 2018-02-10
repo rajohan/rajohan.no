@@ -235,6 +235,16 @@
             border-left: 1px solid $color-grey-2;
             border-right: 1px solid $color-grey-2;
             display: block;
+            transition: background-color;
+            transition-duration: 2s;
+            
+            &__text {
+                cursor: pointer;
+
+                &:hover {
+                    color: $color-primary;
+                }
+            }
 
             &__arrow {
                 font-size: 1.4rem;
@@ -246,6 +256,8 @@
             padding: 1rem;
             border-left: 1px solid $color-grey-2;
             border-right: 1px solid $color-grey-2;
+            transition: background-color;
+            transition-duration: 2s;
 
             &__stats {
                 display: flex;

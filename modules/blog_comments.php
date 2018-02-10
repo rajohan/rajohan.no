@@ -199,13 +199,13 @@
         if(($reply_to > 0) && (!empty($root_id)) && ($root_id !== $reply_to)) {
 
             $reply_author_name = $users->get_username($comments->get_author($reply_to));
-            echo "<span class='blog__comment__reply-to'><span class='blog__comment__reply-to__arrow'>&ltrif;</span> In reply to ".ucfirst($reply_author_name)."</span>";
+            echo "<span id='message_top_id_".$id."' class='blog__comment__reply-to'><span data-reply-id='".$reply_to."' class='blog__comment__reply-to__text'><span class='blog__comment__reply-to__arrow'>&ltrif;</span> In reply to ".ucfirst($reply_author_name)."</span></span>";
 
         }
 
         echo 
 
-        '<div class="blog__comment__message">
+        '<div id="message_id_'.$id.'" class="blog__comment__message">
         '.$message.'
         </div>
         <div class="blog__comment__message__stats">

@@ -927,14 +927,22 @@ a.whitelink:hover {
     font-size: 1.1rem;
     border-left: 1px solid #e8e8e8;
     border-right: 1px solid #e8e8e8;
-    display: block; }
+    display: block;
+    transition: background-color;
+    transition-duration: 2s; }
+    .blog__comment__reply-to__text {
+      cursor: pointer; }
+      .blog__comment__reply-to__text:hover {
+        color: #254B62; }
     .blog__comment__reply-to__arrow {
       font-size: 1.4rem; }
   .blog__comment__message {
     display: flex;
     padding: 1rem;
     border-left: 1px solid #e8e8e8;
-    border-right: 1px solid #e8e8e8; }
+    border-right: 1px solid #e8e8e8;
+    transition: background-color;
+    transition-duration: 2s; }
     .blog__comment__message__stats {
       display: flex;
       min-width: 100%;
