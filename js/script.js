@@ -266,19 +266,23 @@ $(".blog__comment__message__hide").on("click", function() {
 // Highlight comment parent 
 //-------------------------------------------------
 $(".blog__comment__reply-to__text").on("click", function() { 
-
-    // Id to parent message
-    var id = $(this).attr("data-reply-id");
-
-    // Highlight message
-    $("#message_id_"+id).css("background-color", "#FDFF47");
+    
+    var id = $(this).attr("data-reply-id"); // Id to parent message
+    $("#message_id_"+id).css("background-color", "#FDFF47"); // Highlight message
 
     // Check if message to be highlighted have a reply to box and add bg color to it aswell if it exists
     if($("#message_top_id_"+id).length > 0) {
 
         $("#message_top_id_"+id).css("background-color", "#FDFF47");
+        scroll($("#message_id_"+id), -100); // Scroll to message
+
+    } else {
+
+        scroll($("#message_id_"+id), -70); // Scroll to message
 
     }
+  
+    
 
     // Crate timer to remove the bg color
     var change_bg = setInterval(function() {
@@ -292,8 +296,7 @@ $(".blog__comment__reply-to__text").on("click", function() {
 
         }
 
-        // Clear interval
-        clearInterval(change_bg);  
+        clearInterval(change_bg); // Clear interval 
 
     },2000);
 
