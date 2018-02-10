@@ -333,7 +333,7 @@ a.whitelink:hover {
 .pagination {
   display: flex;
   justify-content: center; }
-  .pagination__dots {
+  .pagination span {
     display: flex;
     padding: 0.8rem 1.6rem;
     text-decoration: none;
@@ -364,6 +364,46 @@ a.whitelink:hover {
       border-top-left-radius: 0.5rem;
       border-bottom-left-radius: 0.5rem; }
     .pagination a:last-child {
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem; }
+
+.comments__pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.1rem; }
+  .comments__pagination span {
+    display: flex;
+    padding: 0.2rem 0.8rem;
+    text-decoration: none;
+    border: 1px solid #c5c5c5;
+    border-left: 0;
+    text-align: center;
+    cursor: default;
+    line-height: 1; }
+  .comments__pagination a {
+    padding: 0.2rem 0.8rem;
+    padding-top: 0.4rem;
+    text-decoration: none;
+    border: 1px solid #c5c5c5;
+    transition: all;
+    transition-duration: 0.4s;
+    line-height: 1; }
+    .comments__pagination a:not(:first-of-type) {
+      border-left: 0; }
+    .comments__pagination a:hover:not(.active) {
+      background-color: #77ABB7;
+      border: 1px solid #77ABB7;
+      color: #fff; }
+      .comments__pagination a:hover:not(.active):not(:first-of-type) {
+        border-left: 0; }
+    .comments__pagination a.active {
+      background-color: #254B62;
+      color: #fff;
+      border: 1px solid #476D7C; }
+    .comments__pagination a:first-child {
+      border-top-left-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem; }
+    .comments__pagination a:last-child {
       border-top-right-radius: 0.5rem;
       border-bottom-right-radius: 0.5rem; }
 

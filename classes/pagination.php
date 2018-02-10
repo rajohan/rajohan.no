@@ -111,7 +111,7 @@
         
         private function dots() {
 
-            echo " <div class='pagination__dots'>...</div>";
+            echo " <span>...</span>";
 
         }
 
@@ -210,6 +210,13 @@
                         }
                     
                     } else {
+
+                        // If current page equals page number - 1 output current page number
+                        if($page_number === $i-1) {
+
+                            $this->number($i); // Output $i
+
+                        }
 
                         // Output "..." if max nav pages + 2 not equals number of pages
                         if($max_nav_pages + 2 !== $num_pages) {

@@ -126,12 +126,12 @@
         //  Get the comments
         //-------------------------------------------------
 
-        function get_comments($blog_id, $order) {
+        function get_comments($blog_id, $order, $offset = 0, $max = 1000000) {
 
             $this->blog_id = $blog_id;
 
             $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT * FROM `COMMENTS` WHERE `BLOG_ID`=?  AND `REPLY_TO` < 1 ORDER BY $order");
+            $stmt = $db_conn->connect->prepare("SELECT * FROM `COMMENTS` WHERE `BLOG_ID`=?  AND `REPLY_TO` < 1 ORDER BY $order LIMIT $offset , $max");
             $stmt->bind_param("i", $this->blog_id);
             $stmt->execute();
             $result = $stmt->get_result();

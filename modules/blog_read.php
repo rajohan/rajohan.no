@@ -3,7 +3,6 @@
     //-------------------------------------------------
     // Direct access check
     //-------------------------------------------------
-
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
@@ -23,6 +22,7 @@
     $page = new Page_handler;
     $comments = new Comments;
     $users = new Users;
+    $pagination = new Pagination;
 
     //-------------------------------------------------
     //  Set the blog id
@@ -165,14 +165,31 @@
         </div>
         <div class="blog__comment__sort">
             <div class="blog__comment__sort__by">
-                <a href="javascript:void(0);" id="blog__comment__sort__by__oldest" class="blog__comment__sort__by__link blog__comment__sort__by__link__active" onclick="sort_comments('<?php echo $blog_id; ?>','oldest')">Oldest first</a> 
+                <a href="javascript:void(0);" id="blog__comment__sort__by__oldest" class="blog__comment__sort__by__link <?php if(($_SESSION['comment_sort'] === "oldest") || (empty($_SESSION['comment_sort']))) { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','oldest')">Oldest first</a> 
                 | 
-                <a href="javascript:void(0);" id="blog__comment__sort__by__newest" class="blog__comment__sort__by__link" onclick="sort_comments('<?php echo $blog_id; ?>','newest')">Newest first</a> 
+                <a href="javascript:void(0);" id="blog__comment__sort__by__newest" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "newest") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','newest')">Newest first</a> 
                 | 
-                <a href="javascript:void(0);" id="blog__comment__sort__by__best" class="blog__comment__sort__by__link" onclick="sort_comments('<?php echo $blog_id; ?>','best')">Best comments</a>
+                <a href="javascript:void(0);" id="blog__comment__sort__by__best" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "best") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','best')">Best comments</a>
             </div>
             <div class="blog__comment__sort__pagination">
-                Page 1 2 3 4 5 6 Next
+
+                <?php 
+
+                    if(empty($_SESSION['order'])) {
+                        
+                        $_SESSION['order'] = "`ID` ASC";
+
+                    }  
+
+                    $order = $_SESSION['order'];
+                    
+                    $sort = "WHERE `BLOG_ID`= $blog_id  AND `REPLY_TO` < 1 ORDER BY $order";
+
+                    echo '<div class="comments__pagination">';
+                    $pagination->output_pagination(1, "COMMENTS", $sort); 
+                    echo '</div>';
+                ?>
+
             </div>
         </div>
         <div class="blog__comment">

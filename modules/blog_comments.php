@@ -5,6 +5,7 @@
     //-------------------------------------------------
     if(!empty($_POST['sort_comments']) && $_POST['sort_comments'] === "true") {
 
+        session_start();
         define('INCLUDE','true'); // Define INCLUDE to get access to the files needed 
         require_once('../configs/db.php'); // Get database username, password etc
         include_once('../classes/database_handler.php'); // Database handler
@@ -15,6 +16,7 @@
         include_once('../classes/sort.php'); // Sort
         include_once('../classes/comments.php'); // Comments
         include_once('../classes/page_handler.php'); // Page handler
+        include_once('../classes/pagination.php'); // Pagination
         
         $filter = new Filter;
         $bbcode = new Bbcode;
@@ -22,28 +24,37 @@
         $users = new Users;
         $comments = new Comments;
         $sort_data = new Sort;
+        $pagination = new Pagination;
 
         $blog_id = $filter->sanitize($_POST['blog_id']);
-
+        
         if($_POST['order'] === "oldest") {
 
-            $order = "`ID` ASC";
+            $_SESSION['order'] = "`ID` ASC";
+            $_SESSION['comment_sort'] = "oldest";
 
         }
         else if ($_POST['order'] === "newest") {
 
-            $order = "`ID` DESC";
+            $_SESSION['order'] = "`ID` DESC";
+            $_SESSION['comment_sort'] = "newest";
 
         }
         else if ($_POST['order'] === "best") {
 
             $comment_id = $sort_data->comment_sort($blog_id);
 
-            $order = 'FIELD (ID, '.$comment_id.')';
+            $_SESSION['order'] = 'FIELD (ID, '.$comment_id.')';
+            $_SESSION['comment_sort'] = "best";
 
         } else {
 
-            $order = "`ID` ASC";
+            if(empty($_SESSION['order'])) {
+
+                $_SESSION['order'] = "`ID` ASC";
+                $_SESSION['comment_sort'] = "oldest";
+
+            }
 
         }
 
@@ -55,11 +66,19 @@
             
         }
 
-        $order = "`ID` ASC";
+        if(empty($_SESSION['order'])) {
+
+            $_SESSION['order'] = "`ID` ASC";
+            $_SESSION['comment_sort'] = "oldest";
+
+        }
 
     }
 
-    $comment = $comments->get_comments($blog_id, $order);
+    $max = 1;
+
+    $offset = ($pagination->valid_page_number($pagination->get_page_number(), "COMMENTS") - 1) * $max; // Set the page number to generate offset (* + number of items per site)
+    $comment = $comments->get_comments($blog_id, $_SESSION['order'], $offset, $max);
 
     for($i = 0; $i  < count($comment); $i++) {
         
