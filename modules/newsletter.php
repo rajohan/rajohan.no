@@ -1,4 +1,24 @@
-<!-- SECTION LEGAL START -->
+<?php
+
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+
+    //-------------------------------------------------
+    // Initialize classes
+    //-------------------------------------------------
+    
+    $db_conn = new Database;
+    $filter = new Filter;
+
+?>
+<!-- SECTION NEWSLETTER START -->
 <div class="newsletter__container u-margin-bottom-medium">
     <div class="newsletter__box">
         <h1 class="heading-secondary letter-spacing-medium u-center-text u-margin-bottom-small">
@@ -28,4 +48,4 @@
         </form>
     </div>
 </div>
-<!-- SECTION LEGAL END -->
+<!-- SECTION NEWSLETTER END -->
