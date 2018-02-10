@@ -178,10 +178,10 @@
             
         </div>
         <fieldset>
-            <textarea placeholder="Din kommentar..." class="blog__comment__textarea" tabindex="1"></textarea>
+            <textarea placeholder="Your comment..." class="blog__comment__textarea" tabindex="1"></textarea>
         </fieldset>
         <fieldset>
-            <button name="submit" type="submit" class="blog__comment__submit">Send kommentar</button>
+            <button name="submit" type="submit" class="blog__comment__submit">Send comment</button>
         </fieldset>
     </div>
 </div>

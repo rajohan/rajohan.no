@@ -14,7 +14,6 @@
     // Initialize classes
     //-------------------------------------------------
 
-    $db_conn = new Database;
     $filter = new Filter;
     $bbcode = new Bbcode;
     $pagination = new Pagination;
@@ -30,18 +29,45 @@
     $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Set the page number to generate offset (* + number of items per site)
     $sort = $sort_data->by_tag(); // Set sort value 
 
+    $limit = "LIMIT $offset, 1";
+
+    if(isset($_GET['search'])) {
+
+        $search = $filter->sanitize($_GET['search']);
+        $sort = "WHERE (`TITLE` LIKE '%".$search."%') OR (`SHORT_BLOG` LIKE '%".$search."%') OR (`BLOG` LIKE '%".$search."%')";
+
+        $limit = '';
+
+    }
+
     //-------------------------------------------------
     //  Get the blog posts
     //-------------------------------------------------
-
-    $stmt = $db_conn->connect->prepare("SELECT `ID`, `IMAGE`, `TITLE`, `PUBLISH_DATE`, `PUBLISHED_BY_USER`, `UPDATE_DATE`, `UPDATED_BY_USER`, `SHORT_BLOG` FROM `BLOG` $sort ORDER BY `ID` DESC LIMIT $offset, 1");
+    $db_conn = new Database;
+    $stmt = $db_conn->connect->prepare("SELECT `ID`, `IMAGE`, `TITLE`, `PUBLISH_DATE`, `PUBLISHED_BY_USER`, `UPDATE_DATE`, `UPDATED_BY_USER`, `SHORT_BLOG` FROM `BLOG` $sort ORDER BY `ID` DESC $limit");
     $stmt->execute();
     $result = $stmt->get_result();
 
 ?>
+
 <!-- SECTION BLOG SHORT START -->
 <div class="blog-short__container">
+    
     <?php
+
+        if(isset($_GET['search'])) {
+
+            $db_conn2 = new Database;
+            if($db_conn2->count('BLOG', $sort = $sort) < 1) {
+
+                echo 
+                '<div class="blog-short__box u-margin-top-medium u-margin-sides-huge">
+                    Sorry, but nothing matched your search terms. Please try again with some different keywords.
+                </div>';
+
+            }
+
+        }
 
         while ($row = $result->fetch_assoc()) {
 
@@ -110,10 +136,13 @@
         //-------------------------------------------------
         // Pagination
         //-------------------------------------------------
+        if(!isset($_GET['search'])) {
 
-        echo '<div class="pagination u-margin-bottom-medium">';
-        $pagination->output_pagination(1, "BLOG", $sort);
-        echo '</div>';
+            echo '<div class="pagination u-margin-bottom-medium">';
+            $pagination->output_pagination(1, "BLOG", $sort);
+            echo '</div>';
+
+        }
 
     ?>
 </div>

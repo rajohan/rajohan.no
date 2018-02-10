@@ -81,7 +81,7 @@
 
             }  
 
-            $order = $_SESSION['order'];
+            $order = $filter->sanitize($_SESSION['order']);
             
             $sort = "WHERE `BLOG_ID`= $blog_id  AND `REPLY_TO` < 1 ORDER BY $order";
 

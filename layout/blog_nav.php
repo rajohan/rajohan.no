@@ -42,8 +42,8 @@
     </div>
     <div class="blog-navigation__search">
         <span class="blog-navigation__heading">Search</span>
-        <form action="#" class="blog-navigation__search__form">
-            <input type="text" class="blog-navigation__search__form__input" placeholder="Search...">
+        <form action="blog/search/" class="blog-navigation__search__form">
+            <input type="text" name="search" class="blog-navigation__search__form__input" placeholder="Search...">
             <button class="blog-navigation__search__form__button">
                 <img class="blog-navigation__search__form__icon" src="img/icons/search.svg" alt="search">
             </button>
