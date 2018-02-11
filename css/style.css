@@ -1149,7 +1149,7 @@ fieldset {
 #contact-me__message-img {
   background-image: url("../img/icons/message.svg"); }
 
-[id$='-error'] {
+[id^="contact-me__"][id$="-error"] {
   background: #d25f5e;
   padding: 1rem;
   border: 0;
@@ -1160,7 +1160,7 @@ fieldset {
   margin-top: -0.5rem;
   margin-bottom: 0.5rem;
   text-align: left; }
-  [id$='-error']::before {
+  [id^="contact-me__"][id$="-error"]::before {
     content: '';
     width: 0;
     height: 0;
@@ -1422,61 +1422,108 @@ fieldset {
   width: 100vw;
   max-width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: flex-start; }
-  .newsletter__container {
+  justify-content: center; }
+  .newsletter__box {
+    padding: 2rem;
     max-width: 100rem;
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     text-align: center; }
-  .newsletter__box {
-    padding: 2rem;
-    max-width: 100rem;
-    width: 100%; }
-  .newsletter__form {
-    padding: 2rem;
-    padding-left: 0.7rem;
+  .newsletter__subscribe, .newsletter__unsubscribe {
     display: flex;
     align-items: center;
-    justify-content: center; }
-    .newsletter__form__input {
-      font-family: inherit;
-      font-size: inherit;
-      color: inherit;
-      background-color: #e8e8e8;
-      border: none;
-      padding: 0.7rem 2rem;
-      border-radius: 10rem;
-      width: 90%;
-      transition: all;
-      transition-duration: 0.2s;
-      margin-right: -3.25rem;
-      padding-right: 4rem;
-      max-width: 50rem; }
-      .newsletter__form__input:focus {
-        outline: none;
-        width: 100%;
-        background-color: #c5c5c5;
-        max-width: 60rem; }
-      .newsletter__form__input::-webkit-input-placeholder {
-        font-weight: 100;
-        color: #999999; }
-    .newsletter__form__button {
-      border: none;
-      background-color: rgba(255, 255, 255, 0);
-      transition: all;
-      transition-duration: 0.2s; }
-      .newsletter__form__button:focus {
-        outline: none; }
-      .newsletter__form__button:active {
-        transform: translateY(0.2rem); }
-    .newsletter__form__input:focus + .newsletter__form__button {
-      background-color: rgba(255, 255, 255, 0); }
-    .newsletter__form__icon {
-      height: 2rem;
-      width: 2rem;
-      margin-top: 0.4rem; }
+    justify-content: center;
+    flex-direction: column;
+    width: 100%; }
+  .newsletter__form__subscribe, .newsletter__form__unsubscribe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 50rem; }
+    .newsletter__form__subscribe__box, .newsletter__form__unsubscribe__box {
+      padding: 2rem;
+      padding-left: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%; }
+      .newsletter__form__subscribe__box__input, .newsletter__form__unsubscribe__box__input {
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        background-color: #e8e8e8;
+        border: none;
+        padding: 0.7rem 2rem;
+        border-radius: 10rem;
+        width: 95%;
+        transition: all;
+        transition-duration: 0.2s;
+        margin-right: -3.25rem;
+        padding-right: 4rem; }
+        .newsletter__form__subscribe__box__input:focus, .newsletter__form__unsubscribe__box__input:focus {
+          outline: none;
+          width: 100%;
+          background-color: #c5c5c5;
+          max-width: 60rem; }
+        .newsletter__form__subscribe__box__input::-webkit-input-placeholder, .newsletter__form__unsubscribe__box__input::-webkit-input-placeholder {
+          font-weight: 100;
+          color: #999999; }
+      .newsletter__form__subscribe__box__button, .newsletter__form__unsubscribe__box__button {
+        border: none;
+        background-color: rgba(255, 255, 255, 0);
+        transition: all;
+        transition-duration: 0.2s; }
+        .newsletter__form__subscribe__box__button:focus, .newsletter__form__unsubscribe__box__button:focus {
+          outline: none; }
+        .newsletter__form__subscribe__box__button:active, .newsletter__form__unsubscribe__box__button:active {
+          transform: translateY(0.2rem); }
+      .newsletter__form__subscribe__box__input:focus + .newsletter__form__subscribe__box__button, .newsletter__form__unsubscribe__box__input:focus + .newsletter__form__subscribe__box__button, .newsletter__form__subscribe__box__input:focus + .newsletter__form__unsubscribe__box__button, .newsletter__form__unsubscribe__box__input:focus + .newsletter__form__unsubscribe__box__button {
+        background-color: rgba(255, 255, 255, 0); }
+      .newsletter__form__subscribe__box__icon, .newsletter__form__unsubscribe__box__icon {
+        height: 2rem;
+        width: 2rem;
+        margin-top: 0.4rem; }
+    .newsletter__form__subscribe__error, .newsletter__form__unsubscribe__error {
+      margin-top: -1.3rem;
+      margin-left: 2.5rem;
+      align-self: flex-start; }
+  .newsletter__error {
+    border: 2px solid #d25f5e;
+    background-color: #fffafa; }
+    .newsletter__error:focus {
+      background-color: #fffafa; }
+  .newsletter__valid {
+    border: 2px solid #9fd164;
+    background-color: #f5ffea; }
+    .newsletter__valid:focus {
+      background-color: #f5ffea; }
+
+[id^="newsletter__"][id$="-error"] {
+  background: #d25f5e;
+  padding: 1rem;
+  border: 0;
+  color: #fff;
+  position: relative;
+  font-size: 1.3rem;
+  display: none;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  border-radius: 50rem; }
+  [id^="newsletter__"][id$="-error"]::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid transparent;
+    border-bottom: 1rem solid #d25f5e;
+    position: absolute;
+    top: -1rem;
+    left: 2.7rem; }
 
 .projects-short {
   background-color: #363636;

@@ -1,4 +1,20 @@
 //-------------------------------------------------
+// Validator regex method
+//-------------------------------------------------
+
+$.validator.addMethod(
+
+    "regex",
+    function (value, element, regexp) {
+       
+        var re = new RegExp(regexp);
+        return this.optional(element) || re.test(value);
+    
+    }
+
+);
+
+//-------------------------------------------------
 // Get the width of the scrollbar
 //-------------------------------------------------
 
@@ -281,8 +297,6 @@ $(".blog__comment__reply-to__text").on("click", function() {
         scroll($("#message_id_"+id), -70); // Scroll to message
 
     }
-  
-    
 
     // Crate timer to remove the bg color
     var change_bg = setInterval(function() {

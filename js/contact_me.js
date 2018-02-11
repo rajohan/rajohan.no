@@ -2,18 +2,6 @@
 //  Contact me
 //-------------------------------------------------
 
-$.validator.addMethod(
-
-    "regex",
-    function (value, element, regexp) {
-       
-        var re = new RegExp(regexp);
-        return this.optional(element) || re.test(value);
-    
-    }
-
-);
-
 $(document).ready(function () {
    
     $(document).on("click keyup focus focusin focusout blur", function () {

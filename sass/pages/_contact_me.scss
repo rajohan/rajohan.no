@@ -116,7 +116,7 @@ fieldset {
 }
 
 // Error box
-[id$='-error'] {
+[id^="contact-me__"][id$="-error"] {
   background: $red;
   padding: 1rem;
   border: 0;
