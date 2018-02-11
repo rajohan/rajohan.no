@@ -8,8 +8,8 @@
 
         define('INCLUDE','true'); // Define INCLUDE to get access to the files needed 
         require_once('../configs/db.php'); // Get database username, password etc
-        include_once('database_handler.php'); // Database handler
-        include_once('filter.php'); // Filter
+        require_once('database_handler.php'); // Database handler
+        require_once('filter.php'); // Filter
 
         $header = new Header;
         $header->get_header_content(); // Get the headers from the database

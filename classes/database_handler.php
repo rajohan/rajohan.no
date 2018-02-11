@@ -142,7 +142,7 @@
             // $where = table row identifier | $identifiers = variable identifiers
             // $variables = variables passed in as an array
             // $where VALUE HAVE TO BE ADDED LAST IN THE VARIABLES ARRAY!
-            // EX: db_update('users', 'username, password', 'id', 'ss', $variables)
+            // EX: db_update('users', 'username, password', 'id', 'ssi', $variables)
             
             $db_columns = $this->placeholders_columns($db_columns); // Generate placeholders based on the value of $identifiers
             $where = $where."=?"; // add placeholder to $where 

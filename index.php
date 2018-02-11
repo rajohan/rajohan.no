@@ -41,6 +41,7 @@
     require_once('classes/comments.php');          // COMMENTS
     require_once('classes/users.php');             // USERS
     require_once('classes/validator.php');         // VALIDATOR
+    require_once('classes/newsletter.php');        // NEWSLETTER
     require_once('classes/ssl_seal.php');          // SSL SEAL
 
     //-------------------------------------------------

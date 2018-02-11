@@ -1418,6 +1418,100 @@ fieldset {
     text-decoration: none;
     margin: 2rem 0; }
 
+.newsletter__code {
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  justify-content: center; }
+  .newsletter__code__box {
+    padding: 2rem;
+    max-width: 100rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; }
+  .newsletter__code__unsubscribe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%; }
+  .newsletter__code__form__unsubscribe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 50rem; }
+    .newsletter__code__form__unsubscribe__box {
+      padding: 2rem;
+      padding-left: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%; }
+      .newsletter__code__form__unsubscribe__box__input {
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        background-color: #e8e8e8;
+        border: none;
+        padding: 0.7rem 2rem;
+        border-radius: 10rem;
+        width: 95%;
+        transition: all;
+        transition-duration: 0.2s;
+        margin-right: -3.25rem;
+        padding-right: 4rem; }
+        .newsletter__code__form__unsubscribe__box__input:focus {
+          outline: none;
+          width: 100%;
+          background-color: #c5c5c5;
+          max-width: 60rem; }
+        .newsletter__code__form__unsubscribe__box__input::-webkit-input-placeholder {
+          font-weight: 100;
+          color: #999999; }
+    .newsletter__code__form__unsubscribe__error {
+      margin-top: -1.3rem;
+      margin-left: 2.5rem;
+      align-self: flex-start; }
+      .newsletter__code__form__unsubscribe__error:last-of-type {
+        margin-bottom: 2rem; }
+  .newsletter__code__error {
+    border: 2px solid #d25f5e;
+    background-color: #fffafa; }
+    .newsletter__code__error:focus {
+      background-color: #fffafa; }
+  .newsletter__code__valid {
+    border: 2px solid #9fd164;
+    background-color: #f5ffea; }
+    .newsletter__code__valid:focus {
+      background-color: #f5ffea; }
+
+[id^="newsletter__code__"][id$="-error"] {
+  background: #d25f5e;
+  padding: 1rem;
+  border: 0;
+  color: #fff;
+  position: relative;
+  font-size: 1.3rem;
+  display: none;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  border-radius: 50rem; }
+  [id^="newsletter__code__"][id$="-error"]::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid transparent;
+    border-bottom: 1rem solid #d25f5e;
+    position: absolute;
+    top: -1rem;
+    left: 2.7rem; }
+
 .newsletter {
   width: 100vw;
   max-width: 100%;
