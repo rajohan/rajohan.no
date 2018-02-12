@@ -1,0 +1,18 @@
+// CSS basic reset
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+// Set defualt font size to 62.5% (100% = 16px, 62.5% = 10%) for easy use of the 'rem' unit for measurements
+html {
+  font-size: 62.5%; // 1rem = 10px, 10/16 = 62.5%
+}
+
+// Page general font styling
+body {
+  box-sizing: border-box;
+}

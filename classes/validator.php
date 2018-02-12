@@ -17,7 +17,7 @@
     class Validator {
 
         //-------------------------------------------------
-        // Email validater
+        // Email validator
         //-------------------------------------------------
 
         function validate_mail($data) {
@@ -28,7 +28,7 @@
         }
 
         //-------------------------------------------------
-        // Name validater
+        // Name validator
         //-------------------------------------------------
 
         function validate_name($data) {
@@ -39,7 +39,7 @@
         }
 
         //-------------------------------------------------
-        // Url validater
+        // Url validator
         //-------------------------------------------------
 
         function validate_url($data) {
@@ -50,7 +50,7 @@
         }
 
         //-------------------------------------------------
-        // Telephone validater
+        // Telephone validator
         //-------------------------------------------------
 
         function validate_tel($data) {
@@ -61,12 +61,23 @@
         }
 
         //-------------------------------------------------
-        // Firmname validater
+        // Firmname validator
         //-------------------------------------------------
         
         function validate_firmname($data) {
 
             $pattern = '/^(?!\s)(?!.*\s$)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 \' ~ ? ! ~ ` ? ! ^ * ¨ ; @ = $ % { } [ \] \| \/ . < > # “ " \- ‘]{2,}$/';
+            return preg_match($pattern, $data);
+
+        }
+
+        //-------------------------------------------------
+        // Unsubscribe code validator
+        //-------------------------------------------------
+
+        function validate_unsubscribe_code($data) {
+
+            $pattern = '/^[a-z A-Z 0-9]{6,6}$/';
             return preg_match($pattern, $data);
 
         }

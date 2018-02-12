@@ -38,7 +38,7 @@
             $this->filter = new Filter;
             $this->converter = new Converter;
 
-            $base_param_num = 2; // What parameter number website base is on
+            $base_param_num = 1; // What parameter number website base is on
 
             $stmt = $db_conn->connect->prepare("SELECT `PAGE`, `URL` FROM `PAGES` ORDER BY `ID` DESC"); // prepare statement
             $stmt->execute(); // select from database
