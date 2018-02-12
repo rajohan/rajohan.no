@@ -66,7 +66,7 @@
         <meta name="copyrighted-site-verification" content="<?php echo $GLOBALS['csvmaster']; ?>">
         <title><?php $page->page_title(); ?></title>
         <link href="<?php echo $GLOBALS['font']; ?>">
-        <base href="/designv2/">
+        <base href="/">
         <link rel="shortcut icon" type="image/png" href="img/favicon/favicon.png">
         <link rel="stylesheet" href="css/style.css">
     </head>

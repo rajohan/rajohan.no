@@ -315,3 +315,32 @@ $(".blog__comment__reply-to__text").on("click", function() {
     },2000);
 
 });
+
+
+//-------------------------------------------------
+// Newsletter blog_nav bar submit
+//-------------------------------------------------
+
+$("#blog-navigation__newsletter__button").on("click", function(event) { 
+
+    event.preventDefault(); // Prevent the page from reloading
+    var mail = $("#blog-navigation__newsletter__mail").val();
+
+    $.ajax({
+            
+        url: "newsletter/",
+        type: "post",
+        data: {blog_navigation__newsletter: "true",},
+
+        // On success output the requested site.
+        success: function (data) {
+            
+            $("body").html(data);
+            $("#newsletter__subscribe").val(mail);
+            $("#newsletter__subscribe__button").click(); 
+
+        }
+
+    });
+
+});

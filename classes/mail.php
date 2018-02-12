@@ -44,7 +44,7 @@
             $mail->Body    = $body; // The body
             $mail->AltBody = $alt_body; // The alt body
             if(!$mail->send()) {
-            echo $GLOBALS['error'];
+                "Sorry, an error has occurred.";
             // echo 'Mailer Error: ' . $mail->ErrorInfo;
             }
         }

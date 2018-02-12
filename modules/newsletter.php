@@ -3,7 +3,7 @@
     //-------------------------------------------------
     // Direct access check
     //-------------------------------------------------
-
+    
     if(!defined('INCLUDE')) {
 
         die('Direct access is not permitted.');
@@ -22,10 +22,10 @@
     </h1>
     <div class="newsletter__subscribe">
         Subscribe to my newsletters and stay updated on the latest developments and tutorials/guides!
-        <form method="post" class="newsletter__form__subscribe u-margin-top-small">
+        <form method="post" id="newsletter__subscribe__form" class="newsletter__form__subscribe u-margin-top-small">
             <div class="newsletter__form__subscribe__box">
                 <input type="text" id="newsletter__subscribe" name="newsletter__subscribe" class="newsletter__form__subscribe__box__input" placeholder="Your email address...">
-                <button type="submit" name="subscribe__submit" class="newsletter__form__subscribe__box__button">
+                <button type="submit" id="newsletter__subscribe__button" name="subscribe__submit" class="newsletter__form__subscribe__box__button">
                     <img class="newsletter__form__subscribe__box__icon" src="img/icons/arrow_right.svg" alt="search">
                 </button>
             </div>
