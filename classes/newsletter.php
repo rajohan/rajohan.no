@@ -220,13 +220,13 @@
                     $reply_to = "mail@rajohan.no";
                     $subject = "Newsletter unsubscription verification code";
 
-                    $body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$ip.".<br><br>To confirm your unsubscribtion please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code."<br><br>Your verification code: ".$code."<br><br>If this unsubscription was not requested by you this email can be ignored.";
+                    $body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$ip.".<br><br>To confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code."<br><br>Your verification code: ".$code."<br><br>If this unsubscription was not requested by you this email can be ignored.";
                     
-                    $alt_body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$ip.".\r\n\r\nTo confirm your unsubscribtion please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code."\r\n\r\nYour verification code: ".$code."\r\n\r\nIf this unsubscription was not requested by you this email can be ignored.";
+                    $alt_body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$ip.".\r\n\r\nTo confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code."\r\n\r\nYour verification code: ".$code."\r\n\r\nIf this unsubscription was not requested by you this email can be ignored.";
                     
                     $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
 
-                    echo "To confirm your unsubscription an email with a verification code is sent to the email address you entered. Input the verification code in the field underneath or click on the link provided in the email and input the verification code.";
+                    echo "To confirm your unsubscription an email with a verification code is sent to the email address you entered. Input the verification code in the field underneath or click on the link provided in the email.";
                     require_once('../modules/newsletter_unsubscribe.php');
                     
                 }

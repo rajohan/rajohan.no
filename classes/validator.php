@@ -17,6 +17,29 @@
     class Validator {
 
         //-------------------------------------------------
+        // Username validator
+        //-------------------------------------------------
+
+        function validate_username($data) {
+
+            $pattern = '/^[\w\-]{5,15}$/';
+            return preg_match($pattern, $data);
+
+        }
+
+        //-------------------------------------------------
+        // Password validator
+        //-------------------------------------------------
+
+        function validate_password($data) {
+
+            $pattern = '/^.{6,}$/';
+            return preg_match($pattern, $data);
+
+        }
+
+
+        //-------------------------------------------------
         // Email validator
         //-------------------------------------------------
 

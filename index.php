@@ -43,6 +43,7 @@
     require_once('classes/validator.php');         // VALIDATOR
     require_once('classes/newsletter.php');        // NEWSLETTER
     require_once('classes/mail.php');              // MAIL
+    require_once('classes/register.php');          // REGISTER
     require_once('classes/ssl_seal.php');          // SSL SEAL
 
     //-------------------------------------------------
@@ -86,6 +87,7 @@
         <script src="js/img_carousel.js"></script>
         <script src="js/contact_me.js"></script>
         <script src="js/newsletter.js"></script>
+        <script src="js/register.js"></script>
     </body>
   </head>
 </html>

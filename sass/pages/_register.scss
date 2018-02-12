@@ -1,5 +1,5 @@
-// Newsletter
-.newsletter {
+// Register
+.register {
     
     width: 100vw;
     max-width: 100%;
@@ -16,8 +16,7 @@
         text-align: center;
     }
 
-    &__subscribe,
-    &__unsubscribe {
+    &__fields {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -25,8 +24,7 @@
         width: 100%;
     }
 
-    &__form__subscribe,
-    &__form__unsubscribe {
+    &__form {
 
         display: flex;
         align-items: center;
@@ -69,31 +67,7 @@
                     font-weight: 100;
                     color: $color-grey-dark;
                 }
-            }
-        
-            &__button {
-                border: none;
-                background-color: rgba(255, 255, 255, .0);
-                transition: all;
-                transition-duration: 0.2s;
 
-                &:focus {
-                    outline: none;
-                }
-        
-                &:active {
-                    transform: translateY(0.2rem);
-                }
-            }
-        
-            &__input:focus + &__button {
-                background-color:  rgba(255, 255, 255, .0);
-            }
-        
-            &__icon {
-                height: 2rem;
-                width: 2rem;
-                margin-top: 0.4rem;
             }
 
         }
@@ -105,8 +79,17 @@
             margin-left: 2.5rem;
             align-self: flex-start;
 
+            &:last-of-type {
+                margin-bottom: 1rem;
+            }
+
         }
 
+    }
+
+    &__legal {
+        font-size: 1.1rem;
+        font-weight: 700;
     }
 
     // Error border
@@ -132,7 +115,7 @@
 }
 
 // Error box
-[id^="newsletter__"][id$="-error"] {
+[id^="register__"][id$="-error"] {
     background: $red;
     padding: 1rem 1.5rem;
     border: 0;
