@@ -35,7 +35,6 @@
         
         &__box {
             padding: 2rem;
-            padding-left: 0.7rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -53,8 +52,6 @@
                 width: 95%;
                 transition: all;
                 transition-duration: 0.2s;
-                margin-right: -3.25rem;
-                padding-right: 4rem;
         
                 &:focus {
                     outline: none;

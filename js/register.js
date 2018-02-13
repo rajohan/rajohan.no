@@ -199,3 +199,176 @@ $(document).ready(function () {
     });
 
 });
+
+//-------------------------------------------------
+//  Register user verify email
+//-------------------------------------------------
+
+$(document).ready(function () {
+   
+    $(document).on("click keyup focus focusin focusout blur", function () {
+       
+        $(".verify__email__form").validate({
+           
+            onkeyup: function (element) {
+            
+                $(element).valid();
+           
+            },
+          
+            errorElement: "div", // Error box element type
+
+            errorPlacement: function(error, element) {
+
+                error.appendTo( element.parent().next() ); // Error box placement
+
+            },
+
+            errorClass: "verify__error", // Error class
+            validClass: "verify__valid", // Valid class
+
+            //-------------------------------------------------
+            // Rules
+            //-------------------------------------------------
+
+            rules: {
+              
+                "verify__email__mail": {
+               
+                    required: true,
+                    regex: /^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/i,
+                    remote: {
+                        url: "classes/register.php",
+                        type: "post",
+                        data: {
+                            verify_mail_check: true,
+                            mail: function() {
+                                return $("#verify__email__mail").val();
+                            }
+                        }
+
+                    }
+
+                },
+
+                "verify__email__code": {
+               
+                    required: true,
+                    regex: /^[a-z A-Z 0-9]{6,6}$/,
+                    remote: {
+                        url: "classes/register.php",
+                        type: "post",
+                        data: {
+                            verify_check_code: true,
+                            mail: function() {
+                                return $("#verify__email__mail").val();
+                            },
+                            code: function() {
+                                return $("#verify__email__code").val();
+                            }
+                        }
+
+                    }
+               
+                },
+
+            },
+
+            //-------------------------------------------------
+            // Messages
+            //-------------------------------------------------
+
+            messages: {
+
+                "verify__email__mail": {
+               
+                    required: "This field is required, your email address is missing.",
+                    regex: "Invalid email address.",
+                    remote: "The email address you entered is not in the subscription list."
+               
+                },
+
+                "verify__email__code": {
+               
+                    required: "This field is required, verification code is missing.",
+                    regex: "Invalid verification code.",
+                    remote: "The verification code you entered is incorrect."
+                    
+                },
+
+            },
+            
+            //-------------------------------------------------
+            // Highlight error
+            //-------------------------------------------------
+
+            highlight: function (element, errorClass, validClass) {
+
+                $(element).addClass(errorClass).removeClass(validClass);
+
+            },
+           
+            //-------------------------------------------------
+            // Unhighlight error
+            //-------------------------------------------------
+
+            unhighlight: function (element, errorClass, validClass) {
+                   
+                $(element).removeClass(errorClass).addClass(validClass);
+
+            },
+
+            //-------------------------------------------------
+            // Submit handler
+            //-------------------------------------------------
+            
+            submitHandler: function () {
+               
+                var mail = $("#verify__email__mail").val();
+                var code = $("#verify__email__code").val();
+                
+                $(".verify__email").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
+                
+                // Set timer for the loading image.
+                setTimeout(function () {
+                    
+                    // Run the ajax request.
+                    $.ajax({
+                       
+                        data: {
+                          
+                            mail: mail,
+                            code: code,
+                            verify_email: "true",
+                       
+                        },
+                       
+                        type: "post",
+                        url: "classes/register.php",
+                       
+                        // On success output the requested site.
+                        success: function (data) {
+                         
+                            $(".verify__email").html(data);
+                        
+                        },
+                       
+                        // On error output a error message.
+                        error: function () {
+                      
+                            $(".verify__email").html("Sorry, an error has occurred. Please try again.");
+                      
+                        }
+
+                    });
+
+                }, 500);
+
+                return false;
+            }
+
+        });
+
+    });
+
+});

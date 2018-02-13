@@ -102,6 +102,18 @@
 
     class Newsletter {
 
+        private $ip;
+        
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
+
+        function __construct() {
+
+            $this->ip = $_SERVER['REMOTE_ADDR'];;
+            
+        }
+
         //-------------------------------------------------
         // Method to require the files needed for ajax calls
         //-------------------------------------------------
@@ -123,10 +135,10 @@
 
         function check_email($mail) {
 
-            $db_conn = new Database;
             $filter = new Filter;
             $mail = $filter->sanitize($mail);
-
+            
+            $db_conn = new Database;
             $count = $db_conn->count("NEWSLETTER", "WHERE EMAIL = '".$mail."'");
 
             return $count;
@@ -139,11 +151,11 @@
 
         function check_code($mail, $code) {
             
-            $db_conn = new Database;
             $filter = new Filter;
             $mail = $filter->sanitize($mail);
             $code = $filter->sanitize($code);
 
+            $db_conn = new Database;
             $count = $db_conn->count("NEWSLETTER", "WHERE EMAIL = '".$mail."' AND CODE = '".$code."'");
             return  $count;
 
@@ -170,10 +182,8 @@
 
                 } else { // Insert to database
 
-                    $ip = $_SERVER['REMOTE_ADDR'];
-
                     $db_conn = new Database;
-                    $db_conn->db_insert("NEWSLETTER", "EMAIL, IP", "ss", array($mail, $ip));
+                    $db_conn->db_insert("NEWSLETTER", "EMAIL, IP", "ss", array($mail, $this->ip));
                     echo "Thanks! You are now subscribed to my newsletters.";
 
                 }
@@ -208,21 +218,25 @@
 
                 } else { // Insert to database
 
-                    $ip = $_SERVER['REMOTE_ADDR'];
                     $code = substr(md5(uniqid(rand(), true)), 6, 6); // Generate 6 char long verification code
-                    $date = date('Y-m-d H:i:s');
+                    $action = "create";
+                    $function = "unsubscribe";
+                    $user = "1";
 
                     $db_conn = new Database;
-                    $db_conn->db_update("NEWSLETTER", "CODE, IP, DATE", "EMAIL", "ssss", array($code, $ip, $date, $mail));
+                    $db_conn->db_update("NEWSLETTER", "CODE", "EMAIL", "ss", array($code, $mail));
+
+                    $db_conn = new Database;
+                    $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
 
                     $from = "webmaster@rajohan.no";
                     $from_name = "Rajohan.no";
                     $reply_to = "mail@rajohan.no";
                     $subject = "Newsletter unsubscription verification code";
 
-                    $body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$ip.".<br><br>To confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code."<br><br>Your verification code: ".$code."<br><br>If this unsubscription was not requested by you this email can be ignored.";
+                    $body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$this->ip.".<br><br>To confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code."<br><br>Your verification code: ".$code."<br><br>If this unsubscription was not requested by you this email can be ignored.";
                     
-                    $alt_body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$ip.".\r\n\r\nTo confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code."\r\n\r\nYour verification code: ".$code."\r\n\r\nIf this unsubscription was not requested by you this email can be ignored.";
+                    $alt_body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$this->ip.".\r\n\r\nTo confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code."\r\n\r\nYour verification code: ".$code."\r\n\r\nIf this unsubscription was not requested by you this email can be ignored.";
                     
                     $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
 
@@ -280,6 +294,14 @@
 
                     $db_conn = new Database;
                     $db_conn->db_delete("NEWSLETTER", "EMAIL", "s", $mail);
+
+                    $action = "use";
+                    $function = "unsubscribe";
+                    $user = "1";
+
+                    $db_conn = new Database;
+                    $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
+                    
                     echo "You are now unsubscribed from my newsletters.";
 
                 }
