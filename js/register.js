@@ -6,7 +6,7 @@ $(document).ready(function () {
    
     $(document).on("click keyup focus focusin focusout blur", function () {
        
-        $(".register__form").validate({
+        $("#register__form").validate({
            
             onkeyup: function (element) {
             
@@ -22,8 +22,8 @@ $(document).ready(function () {
 
             },
 
-            errorClass: "register__error", // Error class
-            validClass: "register__valid", // Valid class
+            errorClass: "error", // Error class
+            validClass: "valid", // Valid class
 
             //-------------------------------------------------
             // Rules
@@ -152,7 +152,7 @@ $(document).ready(function () {
                 var password = $("#register__password").val();
                 var password_repeat = $("#register__password__repeat").val(); 
                 
-                $(".register__box").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
+                $(".form__box").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
                 
                 // Set timer for the loading image.
                 setTimeout(function () {
@@ -176,14 +176,14 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
                          
-                            $(".register__box").html(data);
+                            $(".form__box").html(data);
                         
                         },
                        
                         // On error output a error message.
                         error: function () {
                       
-                            $(".register__box").html("Sorry, an error has occurred. Please try again.");
+                            $(".form__box").html("Sorry, an error has occurred. Please try again.");
                       
                         }
 
@@ -192,6 +192,7 @@ $(document).ready(function () {
                 }, 500);
 
                 return false;
+
             }
 
         });
@@ -208,7 +209,7 @@ $(document).ready(function () {
    
     $(document).on("click keyup focus focusin focusout blur", function () {
        
-        $(".verify__email__form").validate({
+        $("#verify__mail__form").validate({
            
             onkeyup: function (element) {
             
@@ -224,8 +225,8 @@ $(document).ready(function () {
 
             },
 
-            errorClass: "verify__error", // Error class
-            validClass: "verify__valid", // Valid class
+            errorClass: "error", // Error class
+            validClass: "valid", // Valid class
 
             //-------------------------------------------------
             // Rules
@@ -233,7 +234,7 @@ $(document).ready(function () {
 
             rules: {
               
-                "verify__email__mail": {
+                "verify__mail__mail": {
                
                     required: true,
                     regex: /^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/i,
@@ -241,9 +242,9 @@ $(document).ready(function () {
                         url: "classes/register.php",
                         type: "post",
                         data: {
-                            verify_mail_check: true,
+                            verify_email_check: true,
                             mail: function() {
-                                return $("#verify__email__mail").val();
+                                return $("#verify__mail__mail").val();
                             }
                         }
 
@@ -251,7 +252,7 @@ $(document).ready(function () {
 
                 },
 
-                "verify__email__code": {
+                "verify__mail__code": {
                
                     required: true,
                     regex: /^[a-z A-Z 0-9]{6,6}$/,
@@ -261,10 +262,10 @@ $(document).ready(function () {
                         data: {
                             verify_check_code: true,
                             mail: function() {
-                                return $("#verify__email__mail").val();
+                                return $("#verify__mail__mail").val();
                             },
                             code: function() {
-                                return $("#verify__email__code").val();
+                                return $("#verify__mail__code").val();
                             }
                         }
 
@@ -280,7 +281,7 @@ $(document).ready(function () {
 
             messages: {
 
-                "verify__email__mail": {
+                "verify__mail__mail": {
                
                     required: "This field is required, your email address is missing.",
                     regex: "Invalid email address.",
@@ -288,7 +289,7 @@ $(document).ready(function () {
                
                 },
 
-                "verify__email__code": {
+                "verify__mail__code": {
                
                     required: "This field is required, verification code is missing.",
                     regex: "Invalid verification code.",
@@ -324,10 +325,10 @@ $(document).ready(function () {
             
             submitHandler: function () {
                
-                var mail = $("#verify__email__mail").val();
-                var code = $("#verify__email__code").val();
+                var mail = $("#verify__mail__mail").val();
+                var code = $("#verify__mail__code").val();
                 
-                $(".verify__email").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
+                $("#verify__mail__form").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
                 
                 // Set timer for the loading image.
                 setTimeout(function () {
@@ -349,14 +350,14 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
                          
-                            $(".verify__email").html(data);
+                            $("#verify__mail__form").html(data);
                         
                         },
                        
                         // On error output a error message.
                         error: function () {
                       
-                            $(".verify__email").html("Sorry, an error has occurred. Please try again.");
+                            $("#verify__mail__form").html("Sorry, an error has occurred. Please try again.");
                       
                         }
 
@@ -365,6 +366,7 @@ $(document).ready(function () {
                 }, 500);
 
                 return false;
+
             }
 
         });

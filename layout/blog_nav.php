@@ -42,20 +42,24 @@
     </div>
     <div class="blog-navigation__search">
         <span class="blog-navigation__heading">Search</span>
-        <form action="blog/search/" class="blog-navigation__search__form">
-            <input type="text" name="search" class="blog-navigation__search__form__input" placeholder="Search...">
-            <button class="blog-navigation__search__form__button">
-                <img class="blog-navigation__search__form__icon" src="img/icons/search.svg" alt="search">
+        <form action="blog/search/">
+            <div class="input__box">
+            <input type="text" name="search" placeholder="Search...">
+            <button class="input__button">
+                <img class="input__button__icon" src="img/icons/search.svg" alt="search">
             </button>
+        </div>
         </form>
     </div>
     <div class="blog-navigation__newsletter">
         <span class="blog-navigation__heading">Newsletter</span>
-        <form class="blog-navigation__newsletter__form">
-            <input type="text" id="blog-navigation__newsletter__mail" name="newsletter" class="blog-navigation__newsletter__form__input" placeholder="Your email address...">
-            <button id="blog-navigation__newsletter__button" class="blog-navigation__newsletter__form__button">
-                <img class="blog-navigation__newsletter__form__icon" src="img/icons/arrow_right.svg" alt="search">
-            </button>
+        <form>
+            <div class="input__box">
+                <input type="text" id="blog-navigation__newsletter__mail" name="newsletter" placeholder="Your email address...">
+                <button id="blog-navigation__newsletter__button" class="input__button">
+                    <img class="input__button__icon" src="img/icons/arrow_right.svg" alt="search">
+                </button>
+            </div>
         </form>
     </div>
     <div class="blog-navigation__tags">

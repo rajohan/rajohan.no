@@ -23,17 +23,17 @@
 ?>
 
 <!-- SECTION EMAIL VERIFY START -->
-<div class="verify__email">
-    <form method="post" class="verify__email__form">
-        <div class="verify__email__form__box">    
-            <input type="text" id="verify__email__mail" name="verify__email__mail" value="<?php if(isset($mail)) { echo $mail; } ?>" class="verify__email__form__box__input" placeholder="Your email address...">
+<div class="container">
+    <form method="post" id="verify__mail__form">
+        <div class="input__box">    
+            <input type="text" id="verify__mail__mail" name="verify__mail__mail" value="<?php if(isset($mail)) { echo $mail; } ?>" placeholder="Your email address...">
         </div>
-        <div class="verify__email__error"></div>
-        <div class="verify__email__form__box">    
-            <input type="text" id="verify__email__code" name="verify__email__code" value="<?php if(isset($verification_code)) { echo $verification_code; } ?>" class="verify__email__form__box__input" placeholder="Verification code...">
+        <div class="error__box"></div>
+        <div class="input__box">    
+            <input type="text" id="verify__mail__code" name="verify__mail__code" value="<?php if(isset($verification_code)) { echo $verification_code; } ?>" placeholder="Verification code...">
         </div>
-        <div class="verify__email__error"></div>
-        <button type="submit" name="unsubscribe__code__submit" class="btn btn--primary btn--white u-margin-top-small">
+        <div class="error__box u-margin-bottom-small"></div>
+        <button type="submit" class="btn btn--primary btn--white u-margin-top-small">
             Verify email
         </button>
     </form>

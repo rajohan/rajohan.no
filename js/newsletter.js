@@ -6,7 +6,7 @@ $(document).ready(function () {
    
     $(document).on("click keyup focus focusin focusout blur", function () {
        
-        $(".newsletter__form__subscribe").validate({
+        $("#newsletter__subscribe__form").validate({
            
             onkeyup: function (element) {
             
@@ -22,8 +22,8 @@ $(document).ready(function () {
 
             },
 
-            errorClass: "newsletter__error", // Error class
-            validClass: "newsletter__valid", // Valid class
+            errorClass: "error", // Error class
+            validClass: "valid", // Valid class
 
             //-------------------------------------------------
             // Rules
@@ -31,7 +31,7 @@ $(document).ready(function () {
 
             rules: {
               
-                "newsletter__subscribe": {
+                "newsletter__subscribe__mail": {
                
                     required: true,
                     regex: /^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/i,
@@ -41,7 +41,7 @@ $(document).ready(function () {
                         data: {
                             mail_subscribed_check: true,
                             mail: function() {
-                                return $("#newsletter__subscribe").val();
+                                return $("#newsletter__subscribe__mail").val();
                             }
                         }
 
@@ -57,7 +57,7 @@ $(document).ready(function () {
 
             messages: {
 
-                "newsletter__subscribe": {
+                "newsletter__subscribe__mail": {
                
                     required: "This field is required, your email address is missing.",
                     regex: "Invalid email address.",
@@ -93,9 +93,9 @@ $(document).ready(function () {
             
             submitHandler: function () {
                
-                var mail = $("#newsletter__subscribe").val();
+                var mail = $("#newsletter__subscribe__mail").val();
                 
-                $(".newsletter__subscribe").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
+                $("#newsletter__subscribe").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
                 
                 // Set timer for the loading image.
                 setTimeout(function () {
@@ -116,14 +116,14 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
                          
-                            $(".newsletter__subscribe").html(data);
+                            $("#newsletter__subscribe").html(data);
                         
                         },
                        
                         // On error output a error message.
                         error: function () {
                       
-                            $(".newsletter__subscribe").html("Sorry, an error has occurred. Please try again.");
+                            $("#newsletter__subscribe").html("Sorry, an error has occurred. Please try again.");
                       
                         }
 
@@ -132,6 +132,7 @@ $(document).ready(function () {
                 }, 500);
 
                 return false;
+                
             }
 
         });
@@ -148,7 +149,7 @@ $(document).ready(function () {
    
     $(document).on("click keyup focus focusin focusout blur", function () {
        
-        $(".newsletter__form__unsubscribe").validate({
+        $("#newsletter__unsubscribe__form").validate({
            
             onkeyup: function (element) {
             
@@ -164,8 +165,8 @@ $(document).ready(function () {
 
             },
 
-            errorClass: "newsletter__error", // Error class
-            validClass: "newsletter__valid", // Valid class
+            errorClass: "error", // Error class
+            validClass: "valid", // Valid class
 
             //-------------------------------------------------
             // Rules
@@ -173,7 +174,7 @@ $(document).ready(function () {
 
             rules: {
               
-                "newsletter__unsubscribe": {
+                "newsletter__unsubscribe__mail": {
                
                     required: true,
                     regex: /^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/i,
@@ -183,7 +184,7 @@ $(document).ready(function () {
                         data: {
                             mail_unsubscribe_check: true,
                             mail: function() {
-                                return $("#newsletter__unsubscribe").val();
+                                return $("#newsletter__unsubscribe__mail").val();
                             }
                         }
 
@@ -199,7 +200,7 @@ $(document).ready(function () {
 
             messages: {
 
-                "newsletter__unsubscribe": {
+                "newsletter__unsubscribe__mail": {
                
                     required: "This field is required, your email address is missing.",
                     regex: "Invalid email address.",
@@ -235,9 +236,9 @@ $(document).ready(function () {
             
             submitHandler: function () {
                
-                var mail = $("#newsletter__unsubscribe").val();
+                var mail = $("#newsletter__unsubscribe__mail").val();
                 
-                $(".newsletter__unsubscribe").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
+                $("#newsletter__unsubscribe").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
                 
                 // Set timer for the loading image.
                 setTimeout(function () {
@@ -258,14 +259,14 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
                          
-                            $(".newsletter__unsubscribe").html(data);
+                            $("#newsletter__unsubscribe").html(data);
                         
                         },
                        
                         // On error output a error message.
                         error: function () {
                       
-                            $(".newsletter__unsubscribe").html("Sorry, an error has occurred. Please try again.");
+                            $("#newsletter__unsubscribe").html("Sorry, an error has occurred. Please try again.");
                       
                         }
 
@@ -274,6 +275,7 @@ $(document).ready(function () {
                 }, 500);
 
                 return false;
+
             }
 
         });
@@ -290,7 +292,7 @@ $(document).ready(function () {
    
     $(document).on("click keyup focus focusin focusout blur", function () {
        
-        $(".newsletter__code__form__unsubscribe").validate({
+        $("#newsletter__verify").validate({
            
             onkeyup: function (element) {
             
@@ -306,8 +308,8 @@ $(document).ready(function () {
 
             },
 
-            errorClass: "newsletter__code__error", // Error class
-            validClass: "newsletter__code__valid", // Valid class
+            errorClass: "error", // Error class
+            validClass: "valid", // Valid class
 
             //-------------------------------------------------
             // Rules
@@ -315,7 +317,7 @@ $(document).ready(function () {
 
             rules: {
               
-                "newsletter__code__unsubscribe__mail": {
+                "newsletter__verify__mail": {
                
                     required: true,
                     regex: /^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/i,
@@ -325,7 +327,7 @@ $(document).ready(function () {
                         data: {
                             mail_unsubscribe_check: true,
                             mail: function() {
-                                return $("#newsletter__code__unsubscribe__mail").val();
+                                return $("#newsletter__verify__mail").val();
                             }
                         }
 
@@ -333,7 +335,7 @@ $(document).ready(function () {
 
                 },
 
-                "newsletter__code__unsubscribe__code": {
+                "newsletter__verify__code": {
                
                     required: true,
                     regex: /^[a-z A-Z 0-9]{6,6}$/,
@@ -343,10 +345,10 @@ $(document).ready(function () {
                         data: {
                             mail_unsubscribe_check_code: true,
                             mail: function() {
-                                return $("#newsletter__code__unsubscribe__mail").val();
+                                return $("#newsletter__verify__mail").val();
                             },
                             code: function() {
-                                return $("#newsletter__code__unsubscribe__code").val();
+                                return $("#newsletter__verify__code").val();
                             }
                         }
 
@@ -362,7 +364,7 @@ $(document).ready(function () {
 
             messages: {
 
-                "newsletter__code__unsubscribe__mail": {
+                "newsletter__verify__mail": {
                
                     required: "This field is required, your email address is missing.",
                     regex: "Invalid email address.",
@@ -370,7 +372,7 @@ $(document).ready(function () {
                
                 },
 
-                "newsletter__code__unsubscribe__code": {
+                "newsletter__verify__code": {
                
                     required: "This field is required, verification code is missing.",
                     regex: "Invalid verification code.",
@@ -406,10 +408,10 @@ $(document).ready(function () {
             
             submitHandler: function () {
                
-                var mail = $("#newsletter__code__unsubscribe__mail").val();
-                var code = $("#newsletter__code__unsubscribe__code").val();
+                var mail = $("#newsletter__verify__mail").val();
+                var code = $("#newsletter__verify__code").val();
                 
-                $(".newsletter__code__unsubscribe").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
+                $("#newsletter__verify").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
                 
                 // Set timer for the loading image.
                 setTimeout(function () {
@@ -431,14 +433,14 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
                          
-                            $(".newsletter__code__unsubscribe").html(data);
+                            $("#newsletter__verify").html(data);
                         
                         },
                        
                         // On error output a error message.
                         error: function () {
                       
-                            $(".newsletter__code__unsubscribe").html("Sorry, an error has occurred. Please try again.");
+                            $("#newsletter__verify").html("Sorry, an error has occurred. Please try again.");
                       
                         }
 
@@ -447,6 +449,7 @@ $(document).ready(function () {
                 }, 500);
 
                 return false;
+
             }
 
         });

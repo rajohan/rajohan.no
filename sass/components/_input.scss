@@ -1,0 +1,146 @@
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 50rem;
+
+    input {
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        background-color: $color-grey-2;
+        border: none;
+        padding: 0.8rem 2rem;
+        border-radius: 10rem;
+        width: 95%;
+        transition: all;
+        transition-duration: 0.2s;
+        margin-right: -3.25rem;
+        padding-right: 4rem;
+        
+    
+        &:focus {
+            outline: none;
+            width: 100%;
+            background-color: $color-grey;
+            max-width: 60rem;
+        }
+    
+        &::-webkit-input-placeholder {
+            font-weight: 100;
+            color: $color-grey-dark;
+        }
+        
+        // Error border
+        &.error {
+            border: 2px solid $red;
+            background-color: $red-light;
+
+            &:focus {
+                background-color: $red-light;
+            }
+        }
+
+        // Valid border
+        &.valid {
+            border: 2px solid $green;
+            background-color: $green-light;
+
+            &:focus {
+                background-color: $green-light;
+            }
+        }
+    
+    }
+}
+
+.input__button {
+    border: none;
+    background-color: rgba(255, 255, 255, .0);
+    transition: all;
+    transition-duration: 0.2s;
+    display: flex;
+    flex-direction: column;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:active {
+        transform: translateY(0.2rem);
+    }
+
+    &__icon {
+        height: 2rem;
+        width: 2rem;
+    }
+}
+
+.wrapper {
+    width: 100vw;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    padding: 2rem;
+    max-width: 100rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.form__box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.input__box {
+    padding: 2rem;
+    padding-left: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.error__box {
+    margin-top: -1.3rem;
+    margin-left: 2.5rem;
+    align-self: flex-start;
+}
+
+// Error message
+[id$="-error"] {
+    background: $red;
+    padding: 1rem 1.5rem;
+    border: 0;
+    color: $color-white;
+    position: relative;
+    font-size: 1.3rem;
+    display: none;
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    border-radius: 50rem;
+  
+    &::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 1rem solid transparent;
+      border-right: 1rem solid transparent;
+      border-bottom: 1rem solid $red;
+      position: absolute;
+      top: -1rem;
+      left: 3rem;
+    }
+}

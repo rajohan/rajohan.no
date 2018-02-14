@@ -259,6 +259,7 @@ $(".comments__pagination a").on("click", function(event) {
 //-------------------------------------------------
 // Hide/show comment answers
 //-------------------------------------------------
+
 var blog_comments_hide_count = 1;
 
 $(".blog__comment__message__hide").on("click", function() { 
@@ -281,6 +282,7 @@ $(".blog__comment__message__hide").on("click", function() {
 //-------------------------------------------------
 // Highlight comment parent 
 //-------------------------------------------------
+
 $(".blog__comment__reply-to__text").on("click", function() { 
     
     var id = $(this).attr("data-reply-id"); // Id to parent message
@@ -336,7 +338,7 @@ $("#blog-navigation__newsletter__button").on("click", function(event) {
         success: function (data) {
             
             $("body").html(data);
-            $("#newsletter__subscribe").val(mail);
+            $("#newsletter__subscribe__mail").val(mail);
             $("#newsletter__subscribe__button").click(); 
 
         }
