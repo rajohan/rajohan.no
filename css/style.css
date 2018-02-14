@@ -1226,7 +1226,8 @@ fieldset {
   display: none;
   margin-top: -0.5rem;
   margin-bottom: 0.5rem;
-  text-align: left; }
+  text-align: left;
+  border-radius: 0; }
   [id^="contact-me__"][id$="-error"]::before {
     content: '';
     width: 0;
