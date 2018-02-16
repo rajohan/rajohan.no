@@ -242,8 +242,8 @@ $(document).ready(function () {
                         url: "classes/register.php",
                         type: "post",
                         data: {
-                            verify_email_check: true,
-                            mail: function() {
+                            verify_check_mail: true,
+                            verify_mail: function() {
                                 return $("#verify__mail__mail").val();
                             }
                         }
@@ -261,10 +261,10 @@ $(document).ready(function () {
                         type: "post",
                         data: {
                             verify_check_code: true,
-                            mail: function() {
+                            verify_mail: function() {
                                 return $("#verify__mail__mail").val();
                             },
-                            code: function() {
+                            verify_code: function() {
                                 return $("#verify__mail__code").val();
                             }
                         }
@@ -285,7 +285,7 @@ $(document).ready(function () {
                
                     required: "This field is required, your email address is missing.",
                     regex: "Invalid email address.",
-                    remote: "The email address you entered is not in the subscription list."
+                    remote: "The email address you entered is not registered or already verified."
                
                 },
 
@@ -338,8 +338,8 @@ $(document).ready(function () {
                        
                         data: {
                           
-                            mail: mail,
-                            code: code,
+                            verify_mail: mail,
+                            verify_code: code,
                             verify_email: "true",
                        
                         },
@@ -349,8 +349,16 @@ $(document).ready(function () {
                        
                         // On success output the requested site.
                         success: function (data) {
-                         
-                            $("#verify__mail__form").html(data);
+                            
+                            if($(".form__box").length > 0) {
+
+                                $(".form__box").html(data);
+                    
+                            } else {
+
+                                $("#verify__mail__form").html(data);
+
+                            }
                         
                         },
                        

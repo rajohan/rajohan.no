@@ -95,10 +95,10 @@
         }
 
         //-------------------------------------------------
-        // Unsubscribe code validator
+        // Token code validator
         //-------------------------------------------------
 
-        function validate_unsubscribe_code($data) {
+        function validate_token_code($data) {
 
             $pattern = '/^[a-z A-Z 0-9]{6,6}$/';
             return preg_match($pattern, $data);

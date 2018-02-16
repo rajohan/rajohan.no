@@ -223,9 +223,11 @@
                     $function = "unsubscribe";
                     $user = "1";
 
+                    // Update email row with code
                     $db_conn = new Database;
                     $db_conn->db_update("NEWSLETTER", "CODE", "EMAIL", "ss", array($code, $mail));
 
+                    // Log to verification log
                     $db_conn = new Database;
                     $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
 
@@ -279,7 +281,7 @@
                 }
                 
                 // Check if the code is equal to 6 chars 
-                else if (!$validator->validate_unsubscribe_code($code)) {
+                else if (!$validator->validate_token_code($code)) {
 
                     echo "The verification code you entered is invalid.";
 
@@ -292,6 +294,7 @@
                 
                 } else { // Insert to database
 
+                    // Delete email from newsletter table
                     $db_conn = new Database;
                     $db_conn->db_delete("NEWSLETTER", "EMAIL", "s", $mail);
 
@@ -299,6 +302,7 @@
                     $function = "unsubscribe";
                     $user = "1";
 
+                    // Log to verification log
                     $db_conn = new Database;
                     $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
                     

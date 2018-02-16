@@ -22,13 +22,13 @@
 
     }
 
-    // Check for ajax calls to check if email is already registered
+    // Check for ajax calls to check if email is already registered (when registering)
     else if((isset($_POST['register_mail_check'])) && ($_POST['register_mail_check'] === "true") && (isset($_POST['register_mail']))) {
         
         $register = new Register;
         $register->require_files();
 
-        if($register->email_check($_POST['register_mail']) > 0) {
+        if($register->mail_check($_POST['register_mail']) > 0) {
                 
             echo "false";
         
@@ -39,8 +39,54 @@
         }
 
     }
+
+    // Check for ajax calls to check if email is registered and not verified (when verifying)
+    else if((isset($_POST['verify_check_mail'])) && ($_POST['verify_check_mail'] === "true") && (isset($_POST['verify_mail']))) {
+        
+        $register = new Register;
+        $register->require_files();
+
+        if($register->check_mail_verified($_POST['verify_mail']) < 1) {
+                
+            echo "false";
+        
+        } else {
+
+            echo "true";
+
+        }
+
+    }
+
+    // Check for ajax calls to check if code matches the assigned code to mail
+    else if((isset($_POST['verify_check_code'])) && ($_POST['verify_check_code'] === "true") && (isset($_POST['verify_mail'])) && (isset($_POST['verify_code']))) {
+        
+        $register = new Register;
+        $register->require_files();
+
+        if($register->check_code($_POST['verify_mail'], $_POST['verify_code']) < 1) {
+                
+            echo "false";
+        
+        } else {
+
+            echo "true";
+
+        }
+
+    }
+
+    // Check for ajax calls to verify email
+    else if ((isset($_POST['verify_email'])) && ($_POST['verify_email'] === "true") && (isset($_POST['verify_mail'])) && (isset($_POST['verify_code']))) {
+
+        $register = new Register;
+        $register->require_files();
+
+        $register->verify_user($_POST['verify_mail'], $_POST['verify_code']);
+
+    }
     
-    // Check for ajax calls to check if email is already registered
+    // Check for ajax calls to register user
     else if((isset($_POST['register'])) && ($_POST['register'] === "true") && (isset($_POST['register_username'])) && (isset($_POST['register_mail'])) && (isset($_POST['register_password'])) && (isset($_POST['register_password_repeat']))) {
         
         $register = new Register;
@@ -63,6 +109,18 @@
     //-------------------------------------------------
 
     class Register {
+
+        private $ip;
+
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
+
+        function __construct() {
+
+            $this->ip = $_SERVER['REMOTE_ADDR'];;
+            
+        }
 
         //-------------------------------------------------
         // Method to require the files needed for ajax calls
@@ -99,13 +157,46 @@
         // Method to check if email is already registered
         //-------------------------------------------------
 
-        function email_check($mail) {
+        function mail_check($mail) {
 
             $db_conn = new Database;
             $filter = new Filter;
             $mail = $filter->sanitize($mail);
 
             $count = $db_conn->count("USERS", "WHERE EMAIL = '".$mail."'");
+
+            return $count;
+
+        }
+
+        //-------------------------------------------------
+        // Method to check if email/username not are verified
+        //-------------------------------------------------
+
+        function check_mail_verified($mail) {
+
+            $filter = new Filter;
+            $mail = $filter->sanitize($mail);
+            
+            $db_conn = new Database;
+            $count = $db_conn->count("USERS", "WHERE EMAIL = '".$mail."' AND EMAIL_VERIFIED < 1");
+
+            return $count;
+
+        }
+
+        //-------------------------------------------------
+        // Method to check if code matches the assigned code to email/username
+        //-------------------------------------------------
+
+        function check_code($mail, $code) {
+
+            $filter = new Filter;
+            $mail = $filter->sanitize($mail);
+            $code = $filter->sanitize($code);
+            
+            $db_conn = new Database;
+            $count = $db_conn->count("USERS", "WHERE EMAIL = '".$mail."' AND CODE = '".$code."'");
 
             return $count;
 
@@ -134,58 +225,131 @@
             }
 
             // Invalid email
-            elseif(!$validator->validate_mail($mail)) {
+            else if(!$validator->validate_mail($mail)) {
 
                 echo "Invalid email address.";
 
             }
 
             // Username taken
-            elseif($this->username_check($username) > 0) {
+            else if($this->username_check($username) > 0) {
 
                 echo "Username is already taken.";
 
             }
 
             // Email already registered
-            elseif($this->email_check($mail) > 0) {
+            else if($this->mail_check($mail) > 0) {
 
                 echo "The email address you entered is already registered.";
 
             }
 
             // Password fields does not match
-            elseif($password !== $password_repeat) {
+            else if($password !== $password_repeat) {
 
                 echo "The password fields does not match.";
 
             }
 
             // Invalid password
-            elseif(!$validator->validate_password($password)) {
+            else if(!$validator->validate_password($password)) {
 
                 echo "Invalid password. Minimum 6 characters.";
 
             } else { // Register user
 
-                $ip = $_SERVER['REMOTE_ADDR'];
                 $code = substr(md5(uniqid(rand(), true)), 6, 6); // Generate 6 char long verification code
                 $password = password_hash($password, PASSWORD_DEFAULT); // Encrypt the password
 
+                // Create user
                 $db_conn = new Database;
-                $db_conn->db_insert("USERS", "USERNAME, PASSWORD, EMAIL, CODE, IP", "sssss", array($username, $password, $mail, $code, $ip));
+                $db_conn->db_insert("USERS", "USERNAME, PASSWORD, EMAIL, CODE, IP", "sssss", array($username, $password, $mail, $code, $this->ip));
+
+                
+                $action = "create";
+                $function = "verify email";
+                $user = "1";
+
+                // Log to verification log
+                $db_conn = new Database;
+                $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
 
                 $from = "webmaster@rajohan.no";
                 $from_name = "Rajohan.no";
                 $reply_to = "mail@rajohan.no";
                 $subject = "Email verification code";
 
-                $body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code."<br><br>Your verification code: ".$code."<br><br>If this registration was not made by you this email can be ignored.<br><br>The registration was made from IP ".$ip.".";
-                $alt_body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code."\r\n\r\nYour verification code: ".$code."\r\n\r\nIf this registration was not made by you this email can be ignored.\r\n\r\nThe registration was made from IP ".$ip.".";
+                $body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code."<br><br>Your verification code: ".$code."<br><br>If this registration was not made by you this email can be ignored.<br><br>The registration was made from IP ".$this->ip.".";
+                $alt_body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code."\r\n\r\nYour verification code: ".$code."\r\n\r\nIf this registration was not made by you this email can be ignored.\r\n\r\nThe registration was made from IP ".$this->ip.".";
                 
                 $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
 
                 echo "Almost done! To confirm your email address a verification code is sent to the email address you entered. Input the verification code in the field underneath or click on the link provided in the email.";
+                
+                require_once("../modules/verify.php");
+
+            }
+
+        }
+
+        //-------------------------------------------------
+        // Method to verify the user
+        //-------------------------------------------------
+        
+        function verify_user($mail, $code) {
+
+            $filter = new Filter;
+            $validator = new Validator;
+            $send_mail = new Mail;
+
+            $mail = $filter->sanitize($mail);
+            $code = $filter->sanitize($code);
+
+            if(!$validator->validate_mail($mail)) {
+
+                echo "Invalid email.";
+
+            }
+
+            else if($this->mail_check($mail) < 1) {
+
+                echo "The email address you entered is not registered";
+
+            }
+
+            else if($this->check_mail_verified($mail) < 1) {
+
+                echo "The email address you entered is already verified";
+
+            }
+
+            else if(!$validator->validate_token_code($code)) {
+
+                echo "The verification code you entered is invalid.";
+
+            }
+
+            else if($this->check_code($mail, $code) < 1) {
+
+                echo "The verification code you entered is incorrect."; 
+
+            } else {
+
+                // Set user to verified and insert a row to the verification_log
+                $action = "use";
+                $function = "verify email";
+                $user = "1";
+
+                // Set user to verified
+                $db_conn = new Database;
+                $db_conn->db_update("USERS", "EMAIL_VERIFIED", "EMAIL", "is", array(1, $mail));
+
+                // Log to verification log
+                $db_conn = new Database;
+                $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
+
+                echo "Thanks for registering! You can now proceed to login.";
 
             }
 
