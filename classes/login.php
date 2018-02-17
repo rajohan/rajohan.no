@@ -92,7 +92,7 @@
             $value = $selector_array[1]."|".$token_array[1];
 
             $db_conn = new Database;
-            $db_conn->db_insert("AUTH_TOKENS", "SELECTOR, USER, TOKEN, 	EXPIRES, IP", "sssss", array($selector_array[0], $user_id_encoded, $token_array[0], $expire_array[0], $this->ip));
+            $db_conn->db_insert("AUTH_TOKENS", "SELECTOR, USER, TOKEN, EXPIRES, IP", "sssss", array($selector_array[0], $user_id_encoded, $token_array[0], $expire_array[0], $this->ip));
 
             setcookie('REMEMBER_ME_TOKEN', $value, $expire_array[1], '/', $_SERVER['SERVER_NAME'], true, true);
 
@@ -133,6 +133,11 @@
 
                 $this->remember($user_id); // Create new token
                 $this->create_sessions($user_id); // Create sessions
+
+                // Log to auth log
+                $db_conn = new Database;
+                $db_conn->db_insert("AUTH_LOG", " USER, TOKEN, IP", "iis", array($user_id, 1, $this->ip));
+
             }
 
             return $verify;
@@ -208,6 +213,12 @@
                 if($remember === "1") {
                     
                     $this->remember($user_id);
+
+                } else {
+
+                    // Log to auth log
+                    $db_conn = new Database;
+                    $db_conn->db_insert("AUTH_LOG", " USER, IP", "is", array($user_id, $this->ip));
 
                 }
                     

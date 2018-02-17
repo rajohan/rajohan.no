@@ -55,7 +55,7 @@
     $page = new Page_handler;
     $login = new Login;
 
-    if((isset($_COOKIE['REMEMBER_ME_TOKEN'])) && (!isset($_SESSION['logged_in']))) {
+    if((isset($_COOKIE['REMEMBER_ME_TOKEN'])) && (!isset($_SESSION['LOGGED_IN']))) {
         
         $login->check_remember(); // Try to login with cookie
         
