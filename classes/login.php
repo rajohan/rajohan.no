@@ -131,12 +131,16 @@
 
             if($verify) {
 
+                $user_id_encoded = base64_encode($user_id);
+                $db_conn = new Database;
+                $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded); // Delete old token
+
                 $this->remember($user_id); // Create new token
                 $this->create_sessions($user_id); // Create sessions
 
                 // Log to auth log
                 $db_conn = new Database;
-                $db_conn->db_insert("AUTH_LOG", "USER, TOKEN, SUCCESS, IP", "iis", array($user_id, 1, 1, $this->ip));
+                $db_conn->db_insert("AUTH_LOG", "USER, TOKEN, SUCCESS, IP", "iiis", array($user_id, 1, 1, $this->ip));
 
             }
 
@@ -218,15 +222,17 @@
                 // Check if remember me is checked
                 if($remember === "1") {
                     
+                    $user_id_encoded = base64_encode($user_id);
+                    $db_conn = new Database;
+                    $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded); // Delete old token
+
                     $this->remember($user_id);
 
-                } else {
-
-                    // Log to auth log
-                    $db_conn = new Database;
-                    $db_conn->db_insert("AUTH_LOG", "USER, SUCCESS, IP", "iis", array($user_id, 1, $this->ip));
-
                 }
+
+                // Log to auth log
+                $db_conn = new Database;
+                $db_conn->db_insert("AUTH_LOG", "USER, SUCCESS, IP", "iis", array($user_id, 1, $this->ip));
                     
                 $this->create_sessions($user_id); // Create sessions
 
