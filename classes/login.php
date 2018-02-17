@@ -136,7 +136,7 @@
 
                 // Log to auth log
                 $db_conn = new Database;
-                $db_conn->db_insert("AUTH_LOG", " USER, TOKEN, IP", "iis", array($user_id, 1, $this->ip));
+                $db_conn->db_insert("AUTH_LOG", "USER, TOKEN, SUCCESS, IP", "iis", array($user_id, 1, 1, $this->ip));
 
             }
 
@@ -202,6 +202,12 @@
 
                 echo "The password you entered is incorrect.";
 
+                $user_id = $user->get_user_id($username); // Get user id from username
+                
+                // Log to auth log
+                $db_conn = new Database;
+                $db_conn->db_insert("AUTH_LOG", "USER, IP", "is", array($user_id, $this->ip));
+
             }
 
             // Login
@@ -218,7 +224,7 @@
 
                     // Log to auth log
                     $db_conn = new Database;
-                    $db_conn->db_insert("AUTH_LOG", " USER, IP", "is", array($user_id, $this->ip));
+                    $db_conn->db_insert("AUTH_LOG", "USER, SUCCESS, IP", "iis", array($user_id, 1, $this->ip));
 
                 }
                     
