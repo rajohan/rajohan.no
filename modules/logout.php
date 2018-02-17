@@ -15,15 +15,10 @@
 <!-- SECTION LOGOUT START -->
 <div class="container">
     <?php
-        if (isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+        if (isset($_SESSION['LOGGED_IN'])) {
 
-            $user_id = $_SESSION['USER']['ID'];
-
-            session_destroy();
-
-            $user_id_encoded = base64_encode($user_id);
-            $db_conn = new Database;
-            $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded); // Delete token
+            $login = new Login;
+            $login->logout();
 
             echo "You are now logged out.";
 

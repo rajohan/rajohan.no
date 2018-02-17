@@ -127,6 +127,11 @@
 
             $db_conn->free_close($result, $stmt);
 
+            // If cookie exists but token dont exist in db
+            if(!isset($db_token)) {
+                return false;
+            }
+
             $verify = password_verify($token, $db_token); // Verify token
 
             if($verify) {
@@ -163,6 +168,31 @@
             $_SESSION['USER']['ID'] = $user_id;
             $_SESSION['USER']['USERNAME'] = $user->get_username($user_id);
             $_SESSION['USER']['ACCESS_LEVEL'] = $user->get_admin_level($user_id);
+
+        }
+
+        //-------------------------------------------------
+        // Method to logout user
+        //-------------------------------------------------
+
+        function logout() {
+
+            $user_id = $_SESSION['USER']['ID'];
+
+            session_destroy();
+
+            // Delete token if it exists
+            $user_id_encoded = base64_encode($user_id);
+            $db_conn = new Database;
+            $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded);
+
+            // Delete cookie if it exists
+            if (isset($_COOKIE['REMEMBER_ME_TOKEN'])) {
+
+                unset($_COOKIE['REMEMBER_ME_TOKEN']);
+                setcookie('REMEMBER_ME_TOKEN', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], true, true); // empty value and old timestamp
+            
+            }
 
         }
 
@@ -205,6 +235,7 @@
             elseif(!$user->verify_password($username, $password)) {
 
                 echo "The password you entered is incorrect.";
+                require_once('../modules/login.php');
 
                 $user_id = $user->get_user_id($username); // Get user id from username
                 
