@@ -10,7 +10,9 @@
         $register = new Register;
         $register->require_files();
 
-        if($register->username_check($_POST['register_username']) > 0) {
+        $user = new Users;
+
+        if($user->username_check($_POST['register_username']) > 0) {
                 
             echo "false";
         
@@ -118,7 +120,7 @@
 
         function __construct() {
 
-            $this->ip = $_SERVER['REMOTE_ADDR'];;
+            $this->ip = $_SERVER['REMOTE_ADDR'];
             
         }
 
@@ -134,22 +136,8 @@
             require_once('filter.php'); // Filter
             require_once('validator.php'); // Validator
             require_once('mail.php'); // Mail
-
-        }
-
-        //-------------------------------------------------
-        // Method to check if username is taken
-        //-------------------------------------------------
-
-        function username_check($username) {
-
-            $db_conn = new Database;
-            $filter = new Filter;
-            $username = $filter->sanitize($username);
-
-            $count = $db_conn->count("USERS", "WHERE USERNAME = '".$username."'");
-
-            return $count;
+            require_once('users.php'); // Users
+            require_once('tokens.php'); // Tokens
 
         }
 
@@ -211,6 +199,8 @@
             $filter = new Filter;
             $validator = new Validator;
             $send_mail = new Mail;
+            $user = new Users;
+            $token = new Tokens;
 
             $username = $filter->sanitize($username);
             $mail = $filter->sanitize($mail);
@@ -232,7 +222,7 @@
             }
 
             // Username taken
-            else if($this->username_check($username) > 0) {
+            else if($user->username_check($username) > 0) {
 
                 echo "Username is already taken.";
 
@@ -259,14 +249,13 @@
 
             } else { // Register user
 
-                $code = substr(md5(uniqid(rand(), true)), 6, 6); // Generate 6 char long verification code
+                $code = $token->generate_token_code(6); // Generate 6 char long verification code
                 $password = password_hash($password, PASSWORD_DEFAULT); // Encrypt the password
 
                 // Create user
                 $db_conn = new Database;
                 $db_conn->db_insert("USERS", "USERNAME, PASSWORD, EMAIL, CODE, IP", "sssss", array($username, $password, $mail, $code, $this->ip));
 
-                
                 $action = "create";
                 $function = "verify email";
                 $user = "1";
@@ -301,7 +290,6 @@
 
             $filter = new Filter;
             $validator = new Validator;
-            $send_mail = new Mail;
 
             $mail = $filter->sanitize($mail);
             $code = $filter->sanitize($code);

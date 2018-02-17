@@ -44,6 +44,7 @@
     require_once('classes/newsletter.php');        // NEWSLETTER
     require_once('classes/mail.php');              // MAIL
     require_once('classes/register.php');          // REGISTER
+    require_once('classes/tokens.php');            // TOKENS
     require_once('classes/ssl_seal.php');          // SSL SEAL
 
     //-------------------------------------------------
@@ -88,6 +89,7 @@
         <script src="js/contact_me.js"></script>
         <script src="js/newsletter.js"></script>
         <script src="js/register.js"></script>
+        <script src="js/login.js"></script>
     </body>
   </head>
 </html>

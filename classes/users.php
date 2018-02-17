@@ -16,12 +16,82 @@
 
     class Users {
 
+        private $filter;
+
+        function __construct() {
+
+            $this->filter = new Filter;
+            
+        }
+
+        //-------------------------------------------------
+        // Method to check if username is taken
+        //-------------------------------------------------
+
+        function username_check($username) {
+            
+            $username = $this->filter->sanitize($username);
+
+            $db_conn = new Database;
+            $count = $db_conn->count("USERS", "WHERE USERNAME = '".$username."'");
+
+            return $count;
+
+        }
+
+        //-------------------------------------------------
+        // Method to verify username's password and rehash password if needed
+        //-------------------------------------------------
+
+        function verify_password($username, $password) {
+            
+            $filter = new Filter;
+
+            $username = $filter->sanitize($username);
+            $password = $filter->sanitize($password);
+
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT `PASSWORD` FROM `USERS` WHERE `USERNAME` = ?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+
+                $db_password = $filter->sanitize($row['PASSWORD']);    
+
+            }
+
+            $db_conn->free_close($result, $stmt);
+
+            $verify = password_verify($password, $db_password);
+
+            if($verify) {
+
+                if(password_needs_rehash($db_password, PASSWORD_DEFAULT)) {
+
+                    $new_hash = password_hash($password, PASSWORD_DEFAULT);
+
+                    // Update password with new hash
+                    $db_conn = new Database;
+                    $db_conn->db_update("USERS", "PASSWORD", "USERNAME", "ss", array($new_hash, $username));
+
+                }
+
+            }
+
+            return $verify;
+
+        }
+
         //-------------------------------------------------
         //  Get username from id
         //-------------------------------------------------
 
         function get_username($id) {
 
+            $id = $this->filter->sanitize($id);
+            
             $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT `USERNAME` FROM `USERS` WHERE `ID`=?");
             $stmt->bind_param("i", $id);
@@ -30,13 +100,39 @@
             
             while ($row = $result->fetch_assoc()) {
 
-                $username = $row['USERNAME'];    
+                $username = $this->filter->sanitize($row['USERNAME']);    
 
             }
 
             $db_conn->free_close($result, $stmt);   
 
             return $username;
+
+        }
+
+        //-------------------------------------------------
+        //  Get user id from username
+        //-------------------------------------------------
+
+        function get_user_id($username) {
+
+            $username = $this->filter->sanitize($username);
+            
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT `ID` FROM `USERS` WHERE `USERNAME`=?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+
+                $user_id = $this->filter->sanitize($row['ID']);    
+
+            }
+
+            $db_conn->free_close($result, $stmt);   
+
+            return $user_id;
 
         }
 
@@ -46,6 +142,8 @@
 
         function get_reg_date($id) {
 
+            $id = $this->filter->sanitize($id);
+
             $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT `REG_DATE` FROM `USERS` WHERE `ID`=?");
             $stmt->bind_param("i", $id);
@@ -54,13 +152,13 @@
             
             while ($row = $result->fetch_assoc()) {
 
-                $username = $row['REG_DATE'];    
+                $reg_date = $this->filter->sanitize($row['REG_DATE']);    
 
             }
 
             $db_conn->free_close($result, $stmt);   
 
-            return $username;
+            return $reg_date;
 
         }
 
@@ -70,6 +168,8 @@
 
         function get_admin_level($id) {
 
+            $id = $this->filter->sanitize($id);
+
             $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT `ADMIN` FROM `USERS` WHERE `ID`=?");
             $stmt->bind_param("i", $id);
@@ -78,7 +178,7 @@
             
             while ($row = $result->fetch_assoc()) {
 
-                $admin = $row['ADMIN'];    
+                $admin = $this->filter->sanitize($row['ADMIN']);    
 
             }
 

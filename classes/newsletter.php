@@ -126,6 +126,7 @@
             require_once('filter.php'); // Filter
             require_once('validator.php'); // Validator
             require_once('mail.php'); // Mail
+            require_once('tokens.php'); // Tokens
 
         }
 
@@ -205,6 +206,7 @@
             $filter = new Filter;
             $validator = new Validator;
             $send_mail = new Mail;
+            $token = new Tokens;
 
             $mail = $filter->sanitize($mail);
 
@@ -218,7 +220,7 @@
 
                 } else { // Insert to database
 
-                    $code = substr(md5(uniqid(rand(), true)), 6, 6); // Generate 6 char long verification code
+                    $code = $token->generate_token_code(6); // Generate 6 char long verification code
                     $action = "create";
                     $function = "unsubscribe";
                     $user = "1";

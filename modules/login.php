@@ -23,9 +23,14 @@
         </div>
         <div class="error__box"></div>
         <div class="input__box">    
-            <input type="text" id="login__password" name="login__password" placeholder="Password...">
+            <input type="password" id="login__password" name="login__password" placeholder="Password...">
         </div>
-        <div class="error__box u-margin-bottom-small"></div>
+        <div class="error__box"></div>
+        <div class="checkbox__box u-margin-top-small u-margin-bottom-small">    
+            <input type="checkbox" id="login__remember" value="1" name="login__remember">
+            <label for="login__remember">I trust this device. Keep me logged in.</label>
+        </div>
+        <div class="error__box"></div>
         <button type="submit" class="btn btn--primary btn--white u-margin-top-small">
             Sign in
         </button>

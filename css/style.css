@@ -414,6 +414,34 @@ form {
   justify-content: center;
   width: 100%; }
 
+.checkbox__box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center; }
+  .checkbox__box input {
+    width: auto;
+    margin-right: 1rem;
+    background-color: #e8e8e8;
+    position: relative; }
+    .checkbox__box input:focus {
+      width: auto; }
+    .checkbox__box input::before {
+      content: '';
+      background: #e8e8e8;
+      border: 1px solid #c5c5c5;
+      position: absolute;
+      width: 1.5rem;
+      height: 1.5rem;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      transition: all;
+      transition-duration: 0.2s; }
+    .checkbox__box input:checked::before {
+      background: #77ABB7;
+      border: 1px solid #254B62; }
+
 .error__box {
   margin-top: -1.3rem;
   margin-left: 2.5rem;

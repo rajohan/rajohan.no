@@ -54,6 +54,7 @@ form {
         }
     
     }
+
 }
 
 .input__button {
@@ -110,6 +111,43 @@ form {
     align-items: center;
     justify-content: center;
     width: 100%;
+}
+
+.checkbox__box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    
+    justify-content: center;
+
+    input {
+        width: auto;
+        margin-right: 1rem;
+        background-color: $color-grey-2;
+        position: relative;
+        
+        &:focus {
+            width: auto;
+        }
+
+        &::before {
+            content: '';
+            background: $color-grey-2;
+            border: 1px solid $color-grey;
+            position: absolute;
+            width: 1.5rem;
+            height: 1.5rem;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: all;
+            transition-duration: 0.2s;
+        }
+        &:checked::before {
+            background: $color-primary-lightest;
+            border: 1px solid $color-primary;
+        }
+    }
 }
 
 .error__box {
