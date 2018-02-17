@@ -45,6 +45,7 @@
     require_once('classes/mail.php');              // MAIL
     require_once('classes/register.php');          // REGISTER
     require_once('classes/tokens.php');            // TOKENS
+    require_once('classes/login.php');             // LOGIN
     require_once('classes/ssl_seal.php');          // SSL SEAL
 
     //-------------------------------------------------
@@ -52,7 +53,14 @@
     //-------------------------------------------------
     
     $page = new Page_handler;
-    
+    $login = new Login;
+
+    if((isset($_COOKIE['REMEMBER_ME_TOKEN'])) && (!isset($_SESSION['logged_in']))) {
+        
+        $login->check_remember(); // Try to login with cookie
+        
+    }
+
 ?>
 
 <!DOCTYPE html>

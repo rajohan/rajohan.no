@@ -14,6 +14,13 @@
 
 <!-- SECTION LOGIN START -->
 <div class="container">
+    <?php
+        if (isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+
+            echo "Already logged in.";
+
+        } else {
+    ?>
     <h1 class="heading-secondary letter-spacing-medium u-center-text">
         &nbsp;Sign in
     </h1>
@@ -35,5 +42,8 @@
             Sign in
         </button>
     </form>
+    <?php
+        }
+    ?>
 </div>
 <!-- SECTION LOGIN END -->

@@ -65,6 +65,7 @@
 
         function require_files() {
 
+            session_start();
             define('INCLUDE','true'); // Define INCLUDE to get access to the files needed
             require_once('../configs/db.php'); // Get database username, password etc
             require_once('database_handler.php'); // Database handler
@@ -94,6 +95,65 @@
             $db_conn->db_insert("AUTH_TOKENS", "SELECTOR, USER, TOKEN, 	EXPIRES, IP", "sssss", array($selector_array[0], $user_id_encoded, $token_array[0], $expire_array[0], $this->ip));
 
             setcookie('REMEMBER_ME_TOKEN', $value, $expire_array[1], '/', $_SERVER['SERVER_NAME'], true, true);
+
+        }
+
+        //-------------------------------------------------
+        // Method to check remember cookie
+        //-------------------------------------------------
+
+        function check_remember() {
+            
+            $filter = new Filter;
+            $cookie = $filter->sanitize($_COOKIE['REMEMBER_ME_TOKEN']);
+            $tokens = explode('|', $cookie); // Split remember me cookie
+
+            $selector = base64_encode($tokens[0]); // Encode selector
+            $token = $tokens[1];
+
+            // Get token and user id
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT `TOKEN`, `USER` FROM `AUTH_TOKENS` WHERE `SELECTOR` = ? LIMIT 1");
+            $stmt->bind_param("s", $selector);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+
+                $db_token = $filter->sanitize($row['TOKEN']);
+                $user_id = base64_decode($filter->sanitize($row['USER']));
+
+            }
+
+            $db_conn->free_close($result, $stmt);
+
+            $verify = password_verify($token, $db_token); // Verify token
+
+            if($verify) {
+
+                $this->remember($user_id); // Create new token
+                $this->create_sessions($user_id); // Create sessions
+            }
+
+            return $verify;
+
+        }
+
+        //-------------------------------------------------
+        // Method to create sessions
+        //-------------------------------------------------
+
+        function create_sessions($user_id) {
+
+            $user = new Users;
+            $filter = new Filter;
+
+            $user_id = $filter->sanitize($user_id);
+
+            $_SESSION['LOGGED_IN'] = true;
+            $_SESSION['USER']['ID'] = $user_id;
+            $_SESSION['USER']['USERNAME'] = $user->get_username($user_id);
+            $_SESSION['USER']['ACCESS_LEVEL'] = $user->get_admin_level($user_id);
 
         }
 
@@ -142,7 +202,7 @@
             // Login
             else {
 
-                $user_id = $user->get_user_id($username);
+                $user_id = $user->get_user_id($username); // Get user id from username
 
                 // Check if remember me is checked
                 if($remember === "1") {
@@ -151,10 +211,7 @@
 
                 }
                     
-                $_SESSION['LOGGED_IN'] = true;
-                $_SESSION['USER']['ID'] = $user_id;
-                $_SESSION['USER']['USERNAME'] = $username;
-                $_SESSION['USER']['ACCESS_LEVEL'] = $user->get_admin_level($user_id);
+                $this->create_sessions($user_id); // Create sessions
 
                 echo "Logged in";
 
