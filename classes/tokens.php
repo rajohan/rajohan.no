@@ -53,12 +53,16 @@
 
             // Make sure selector is unique
             if($count > 0) {
-                $this->generate_selector($length);
-            }
 
-            $selector = base64_decode($selector_encoded);
-            
-            return array($selector_encoded, $selector);
+                $this->generate_selector($length);
+
+            } else {
+
+                $selector = base64_decode($selector_encoded);
+                
+                return array($selector_encoded, $selector);
+
+            }
 
         }
         
