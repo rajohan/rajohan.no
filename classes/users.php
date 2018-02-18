@@ -130,6 +130,44 @@
 
             }
 
+            if(!isset($user_id)) {
+
+                $user_id = 0;
+
+            }
+
+            $db_conn->free_close($result, $stmt);   
+
+            return $user_id;
+
+        }
+
+        //-------------------------------------------------
+        //  Get user id from email
+        //-------------------------------------------------
+
+        function get_user_id_email($mail) {
+
+            $mail = $this->filter->sanitize($mail);
+            
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT `ID` FROM `USERS` WHERE `EMAIL`=?");
+            $stmt->bind_param("s", $mail);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+
+                $user_id = $this->filter->sanitize($row['ID']);    
+
+            }
+
+            if(!isset($user_id)) {
+
+                $user_id = 0;
+
+            }
+
             $db_conn->free_close($result, $stmt);   
 
             return $user_id;

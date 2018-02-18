@@ -87,24 +87,6 @@
 
     }
 
-    // Check for ajax calls to check if code matches the assigned code to mail
-    else if((isset($_POST['verify_check_code'])) && ($_POST['verify_check_code'] === "true") && (isset($_POST['verify_mail'])) && (isset($_POST['verify_code']))) {
-        
-        $register = new Register;
-        $register->require_files();
-
-        if($register->check_code($_POST['verify_mail'], $_POST['verify_code']) < 1) {
-                
-            echo "false";
-        
-        } else {
-
-            echo "true";
-
-        }
-
-    }
-
     // Check for ajax calls to verify email
     else if ((isset($_POST['verify_email'])) && ($_POST['verify_email'] === "true") && (isset($_POST['verify_mail'])) && (isset($_POST['verify_code']))) {
 
@@ -209,11 +191,33 @@
             $filter = new Filter;
             $mail = $filter->sanitize($mail);
             $code = $filter->sanitize($code);
-            
-            $db_conn = new Database;
-            $count = $db_conn->count("USERS", "WHERE EMAIL = '".$mail."' AND CODE = '".$code."'");
 
-            return $count;
+            // Get token
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT `CODE` FROM `USERS` WHERE `EMAIL` = ? LIMIT 1");
+            $stmt->bind_param("s", $mail);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+
+                $db_code = $filter->sanitize($row['CODE']);
+
+            }
+
+            $db_conn->free_close($result, $stmt);
+
+            if(!isset($db_code)) {
+
+                return false;
+
+            } else {
+
+                $verify = password_verify($code, $db_code); // Verify token
+
+                return $verify;
+
+            }
 
         }
 
@@ -276,28 +280,28 @@
 
             } else { // Register user
 
-                $code = $token->generate_token_code(6); // Generate 6 char long verification code
+                $code = $token->generate_token(3); // Generate 6 char long verification code
                 $password = password_hash($password, PASSWORD_DEFAULT); // Encrypt the password
 
                 // Create user
                 $db_conn = new Database;
-                $db_conn->db_insert("USERS", "USERNAME, PASSWORD, EMAIL, CODE, IP", "sssss", array($username, $password, $mail, $code, $this->ip));
+                $db_conn->db_insert("USERS", "USERNAME, PASSWORD, EMAIL, CODE, IP", "sssss", array($username, $password, $mail, $code[0], $this->ip));
 
                 $action = "create";
                 $function = "verify email";
-                $user = "1";
+                $user_id = $user->get_user_id_email($mail);
 
                 // Log to verification log
                 $db_conn = new Database;
-                $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
+                $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 1, $user_id, $this->ip));
 
                 $from = "webmaster@rajohan.no";
                 $from_name = "Rajohan.no";
                 $reply_to = "mail@rajohan.no";
                 $subject = "Email verification code";
 
-                $body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code."<br><br>Your verification code: ".$code."<br><br>If this registration was not made by you this email can be ignored.<br><br>The registration was made from IP ".$this->ip.".";
-                $alt_body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code."\r\n\r\nYour verification code: ".$code."\r\n\r\nIf this registration was not made by you this email can be ignored.\r\n\r\nThe registration was made from IP ".$this->ip.".";
+                $body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code[1]."<br><br>Your verification code: ".$code[1]."<br><br>If this registration was not made by you this email can be ignored.<br><br>The registration was made from IP ".$this->ip.".";
+                $alt_body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code[1]."\r\n\r\nYour verification code: ".$code[1]."\r\n\r\nIf this registration was not made by you this email can be ignored.\r\n\r\nThe registration was made from IP ".$this->ip.".";
                 
                 $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
 
@@ -341,27 +345,27 @@
 
             } else {
                 
-                $code = $token->generate_token_code(6); // Generate 6 char long verification code                
+                $code = $token->generate_token(3); // Generate 6 char long verification code                
 
                 $action = "create";
                 $function = "verify email resend";
-                $user = "1";
+                $user_id = $user->get_user_id_email($mail);
 
                 // Log to verification log
                 $db_conn = new Database;
-                $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
+                $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 1, $user_id, $this->ip));
 
                 // Update verification code
                 $db_conn = new Database;
-                $db_conn->db_update("USERS", "CODE", "EMAIL", "ss", array($code, $mail));
+                $db_conn->db_update("USERS", "CODE", "EMAIL", "ss", array($code[0], $mail));
 
                 $from = "webmaster@rajohan.no";
                 $from_name = "Rajohan.no";
                 $reply_to = "mail@rajohan.no";
                 $subject = "Email verification code";
 
-                $body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code."<br><br>Your verification code: ".$code."<br><br>If this registration was not made by you this email can be ignored.<br><br>The registration was made from IP ".$this->ip.".";
-                $alt_body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code."\r\n\r\nYour verification code: ".$code."\r\n\r\nIf this registration was not made by you this email can be ignored.\r\n\r\nThe registration was made from IP ".$this->ip.".";
+                $body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code[1]."<br><br>Your verification code: ".$code[1]."<br><br>If this registration was not made by you this email can be ignored.<br><br>The registration was made from IP ".$this->ip.".";
+                $alt_body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code[1]."\r\n\r\nYour verification code: ".$code[1]."\r\n\r\nIf this registration was not made by you this email can be ignored.\r\n\r\nThe registration was made from IP ".$this->ip.".";
                 
                 $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
 
@@ -382,9 +386,14 @@
 
             $filter = new Filter;
             $validator = new Validator;
+            $user = new Users;
 
             $mail = $filter->sanitize($mail);
             $code = $filter->sanitize($code);
+
+            $action = "use";
+            $function = "verify email";
+            $user_id = $user->get_user_id_email($mail);
 
             if(!$validator->validate_mail($mail)) {
 
@@ -410,16 +419,17 @@
 
             }
 
-            else if($this->check_code($mail, $code) < 1) {
+            else if(!$this->check_code($mail, $code)) {
+
+                // Log to verification log
+                $db_conn = new Database;
+                $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 0, $user_id, $this->ip));
 
                 echo "The verification code you entered is incorrect."; 
 
-            } else {
+                require_once('../modules/verify.php');
 
-                // Set user to verified and insert a row to the verification_log
-                $action = "use";
-                $function = "verify email";
-                $user = "1";
+            } else {
 
                 // Set user to verified
                 $db_conn = new Database;
@@ -427,7 +437,7 @@
 
                 // Log to verification log
                 $db_conn = new Database;
-                $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
+                $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 1, $user_id, $this->ip));
 
                 echo "Thanks for registering! You can now proceed to sign in.";
 

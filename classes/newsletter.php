@@ -68,24 +68,6 @@
 
         }
 
-    } 
-    
-    // Check for ajax calls to check if code is correct
-    else if ((isset($_POST['mail_unsubscribe_check_code'])) && ($_POST['mail_unsubscribe_check_code'] === "true") && (isset($_POST['mail'])) && (isset($_POST['code']))) {
-        
-        $newsletter = new Newsletter;
-        $newsletter->require_files();
-        
-        if($newsletter->check_code($_POST['mail'], $_POST['code']) < 1) {
-                
-            echo "false";
-        
-        } else {
-
-            echo "true";
-
-        }
-
     } else {
 
         if(!defined('INCLUDE')) {
@@ -127,6 +109,7 @@
             require_once('validator.php'); // Validator
             require_once('mail.php'); // Mail
             require_once('tokens.php'); // Tokens
+            require_once('users.php'); // Users
 
         }
 
@@ -151,14 +134,37 @@
         //-------------------------------------------------
 
         function check_code($mail, $code) {
-            
+
             $filter = new Filter;
             $mail = $filter->sanitize($mail);
             $code = $filter->sanitize($code);
 
+            // Get token
             $db_conn = new Database;
-            $count = $db_conn->count("NEWSLETTER", "WHERE EMAIL = '".$mail."' AND CODE = '".$code."'");
-            return  $count;
+            $stmt = $db_conn->connect->prepare("SELECT `CODE` FROM `NEWSLETTER` WHERE `EMAIL` = ? LIMIT 1");
+            $stmt->bind_param("s", $mail);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+
+                $db_code = $filter->sanitize($row['CODE']);
+
+            }
+
+            $db_conn->free_close($result, $stmt);
+
+            if(!isset($db_code)) {
+
+                return false;
+
+            } else {
+
+                $verify = password_verify($code, $db_code); // Verify token
+
+                return $verify;
+
+            }
 
         }
 
@@ -170,6 +176,7 @@
 
             $filter = new Filter;
             $validator = new Validator;
+            $user = new Users;
 
             $mail = $filter->sanitize($mail);
 
@@ -183,8 +190,10 @@
 
                 } else { // Insert to database
 
+                    $user_id = $user->get_user_id_email($mail);
+
                     $db_conn = new Database;
-                    $db_conn->db_insert("NEWSLETTER", "EMAIL, IP", "ss", array($mail, $this->ip));
+                    $db_conn->db_insert("NEWSLETTER", "EMAIL, USER, IP", "sis", array($mail, $user_id, $this->ip));
                     echo "Thanks! You are now subscribed to my newsletters.";
 
                 }
@@ -207,6 +216,7 @@
             $validator = new Validator;
             $send_mail = new Mail;
             $token = new Tokens;
+            $user = new Users;
 
             $mail = $filter->sanitize($mail);
 
@@ -220,27 +230,27 @@
 
                 } else { // Insert to database
 
-                    $code = $token->generate_token_code(6); // Generate 6 char long verification code
+                    $code = $token->generate_token(3); // Generate 6 char long verification code
                     $action = "create";
                     $function = "unsubscribe";
-                    $user = "1";
+                    $user_id = $user->get_user_id_email($mail);
 
                     // Update email row with code
                     $db_conn = new Database;
-                    $db_conn->db_update("NEWSLETTER", "CODE", "EMAIL", "ss", array($code, $mail));
+                    $db_conn->db_update("NEWSLETTER", "CODE", "EMAIL", "ss", array($code[0], $mail));
 
                     // Log to verification log
                     $db_conn = new Database;
-                    $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
+                    $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 1, $user_id, $this->ip));
 
                     $from = "webmaster@rajohan.no";
                     $from_name = "Rajohan.no";
                     $reply_to = "mail@rajohan.no";
                     $subject = "Newsletter unsubscription verification code";
 
-                    $body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$this->ip.".<br><br>To confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code."<br><br>Your verification code: ".$code."<br><br>If this unsubscription was not requested by you this email can be ignored.";
+                    $body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$this->ip.".<br><br>To confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code[1]."<br><br>Your verification code: ".$code[1]."<br><br>If this unsubscription was not requested by you this email can be ignored.";
                     
-                    $alt_body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$this->ip.".\r\n\r\nTo confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code."\r\n\r\nYour verification code: ".$code."\r\n\r\nIf this unsubscription was not requested by you this email can be ignored.";
+                    $alt_body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$this->ip.".\r\n\r\nTo confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code[1]."\r\n\r\nYour verification code: ".$code[1]."\r\n\r\nIf this unsubscription was not requested by you this email can be ignored.";
                     
                     $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
 
@@ -265,9 +275,14 @@
             
             $filter = new Filter;
             $validator = new Validator;
+            $user = new Users;
 
             $mail = $filter->sanitize($mail);
             $code = $filter->sanitize($code);
+
+            $action = "use";
+            $function = "unsubscribe";
+            $user_id = $user->get_user_id_email($mail);
 
             // Validate email
             if($validator->validate_mail($mail)) {
@@ -290,9 +305,15 @@
                 }
 
                 // Check if the code is correct
-                else if ($this->check_code($mail, $code) < 1) {
+                else if (!$this->check_code($mail, $code)) {
+
+                    // Log to verification log
+                    $db_conn = new Database;
+                    $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 0, $user_id, $this->ip));
 
                     echo "The verification code you entered is incorrect.";
+
+                    require_once('../modules/newsletter_unsubscribe.php');
                 
                 } else { // Insert to database
 
@@ -300,13 +321,9 @@
                     $db_conn = new Database;
                     $db_conn->db_delete("NEWSLETTER", "EMAIL", "s", $mail);
 
-                    $action = "use";
-                    $function = "unsubscribe";
-                    $user = "1";
-
                     // Log to verification log
                     $db_conn = new Database;
-                    $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
+                    $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 1, $user_id, $this->ip));
                     
                     echo "You are now unsubscribed from my newsletters.";
 

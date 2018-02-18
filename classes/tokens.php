@@ -17,17 +17,6 @@
     class Tokens {
 
         //-------------------------------------------------
-        // Method to generate verification codes
-        //-------------------------------------------------
-
-        function generate_token_code($length) {
-
-            $code = substr(md5(uniqid(rand(), true)), $length, $length);
-            return $code;
-
-        }
-
-        //-------------------------------------------------
         // Method to generate tokens
         //-------------------------------------------------
 

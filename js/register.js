@@ -256,20 +256,6 @@ $(document).ready(function () {
                
                     required: true,
                     regex: /^[a-z A-Z 0-9]{6,6}$/,
-                    remote: {
-                        url: "classes/register.php",
-                        type: "post",
-                        data: {
-                            verify_check_code: true,
-                            verify_mail: function() {
-                                return $("#verify__mail__mail").val();
-                            },
-                            verify_code: function() {
-                                return $("#verify__mail__code").val();
-                            }
-                        }
-
-                    }
                
                 },
 
@@ -293,7 +279,6 @@ $(document).ready(function () {
                
                     required: "This field is required, verification code is missing.",
                     regex: "Invalid verification code.",
-                    remote: "The verification code you entered is incorrect."
                     
                 },
 

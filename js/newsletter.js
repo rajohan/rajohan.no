@@ -339,20 +339,6 @@ $(document).ready(function () {
                
                     required: true,
                     regex: /^[a-z A-Z 0-9]{6,6}$/,
-                    remote: {
-                        url: "classes/newsletter.php",
-                        type: "post",
-                        data: {
-                            mail_unsubscribe_check_code: true,
-                            mail: function() {
-                                return $("#newsletter__verify__mail").val();
-                            },
-                            code: function() {
-                                return $("#newsletter__verify__code").val();
-                            }
-                        }
-
-                    }
                
                 },
 
@@ -376,7 +362,6 @@ $(document).ready(function () {
                
                     required: "This field is required, verification code is missing.",
                     regex: "Invalid verification code.",
-                    remote: "The verification code you entered is incorrect."
                     
                 },
 
