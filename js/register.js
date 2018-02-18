@@ -486,7 +486,7 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
 
-                            $("#resend__form").html(data);
+                            $("#resend").html(data);
 
                         },
                        
