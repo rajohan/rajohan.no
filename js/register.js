@@ -501,7 +501,7 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
 
-                            $(".container").html(data);
+                            $("#resend__form").html(data);
 
                         },
                        
