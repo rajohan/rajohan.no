@@ -47,6 +47,15 @@
         function generate_selector($length) {
 
             $selector_encoded = base64_encode(bin2hex(random_bytes($length)));
+
+            $db_conn = new Database;
+            $count = $db_conn->count("AUTH_TOKENS", "WHERE SELECTOR = '".$selector_encoded."'");
+
+            // Make sure selector is unique
+            if($count > 0) {
+                $this->generate_selector($length);
+            }
+
             $selector = base64_decode($selector_encoded);
             
             return array($selector_encoded, $selector);
