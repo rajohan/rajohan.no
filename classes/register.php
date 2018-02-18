@@ -60,6 +60,33 @@
 
     }
 
+    // Check for ajax calls to check if email is registered and not verified (when resending verification code)
+    else if((isset($_POST['resend_check_mail'])) && ($_POST['resend_check_mail'] === "true") && (isset($_POST['resend_mail']))) {
+        
+        $register = new Register;
+        $register->require_files();
+
+        if($register->check_mail_verified($_POST['resend_mail']) < 1) {
+                
+            echo "false";
+        
+        } else {
+
+            echo "true";
+
+        }
+
+    }
+
+    // Check for ajax calls to resend verification code
+    else if((isset($_POST['resend_code'])) && ($_POST['resend_code'] === "true") && (isset($_POST['resend_mail']))) {
+
+        $register = new Register;
+        $register->require_files();
+        $register->resend_code($_POST['resend_mail']);
+
+    }
+
     // Check for ajax calls to check if code matches the assigned code to mail
     else if((isset($_POST['verify_check_code'])) && ($_POST['verify_check_code'] === "true") && (isset($_POST['verify_mail'])) && (isset($_POST['verify_code']))) {
         
@@ -281,6 +308,71 @@
             }
 
         }
+
+        //-------------------------------------------------
+        // Method to resend email verification code
+        //-------------------------------------------------
+
+        function resend_code($mail) {
+
+            $filter = new Filter;
+            $validator = new Validator;
+            $send_mail = new Mail;
+            $user = new Users;
+            $token = new Tokens;
+            
+            $mail = $filter->sanitize($mail);
+
+            if(!$validator->validate_mail($mail)) {
+
+                echo "Invalid email.";
+
+            }
+
+            else if($this->mail_check($mail) < 1) {
+
+                echo "The email address you entered is not registered";
+
+            }
+
+            else if($this->check_mail_verified($mail) < 1) {
+
+                echo "The email address you entered is already verified";
+
+            } else {
+                
+                $code = $token->generate_token_code(6); // Generate 6 char long verification code                
+
+                $action = "create";
+                $function = "verify email resend";
+                $user = "1";
+
+                // Log to verification log
+                $db_conn = new Database;
+                $db_conn->db_insert("VERIFICATION_LOG", "CODE, ACTION, FUNCTION, EMAIL, USER, IP", "ssssis", array($code, $action, $function, $mail, $user, $this->ip));
+
+                // Update verification code
+                $db_conn = new Database;
+                $db_conn->db_update("USERS", "CODE", "EMAIL", "ss", array($code, $mail));
+
+                $from = "webmaster@rajohan.no";
+                $from_name = "Rajohan.no";
+                $reply_to = "mail@rajohan.no";
+                $subject = "Email verification code";
+
+                $body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code."<br><br>Your verification code: ".$code."<br><br>If this registration was not made by you this email can be ignored.<br><br>The registration was made from IP ".$this->ip.".";
+                $alt_body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code."\r\n\r\nYour verification code: ".$code."\r\n\r\nIf this registration was not made by you this email can be ignored.\r\n\r\nThe registration was made from IP ".$this->ip.".";
+                
+                $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
+
+                echo "Almost done! To confirm your email address a verification code is sent to the email address you entered. Input the verification code in the field underneath or click on the link provided in the email.";
+                
+                require_once("../modules/verify.php");
+
+            }
+
+        }
+
 
         //-------------------------------------------------
         // Method to verify the user

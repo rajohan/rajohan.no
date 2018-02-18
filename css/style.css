@@ -420,12 +420,11 @@ form {
   width: 100%;
   justify-content: center; }
   .checkbox__box input {
-    width: auto;
+    width: 1rem;
     margin-right: 1rem;
-    background-color: #e8e8e8;
     position: relative; }
     .checkbox__box input:focus {
-      width: auto; }
+      width: 1rem; }
     .checkbox__box input::before {
       content: '';
       background: #e8e8e8;

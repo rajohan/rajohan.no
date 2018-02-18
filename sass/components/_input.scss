@@ -117,18 +117,17 @@ form {
     display: flex;
     align-items: center;
     width: 100%;
-    
     justify-content: center;
 
     input {
-        width: auto;
+        width: 1rem;
         margin-right: 1rem;
-        background-color: $color-grey-2;
         position: relative;
         
         &:focus {
-            width: auto;
+            width: 1rem;
         }
+
 
         &::before {
             content: '';
@@ -143,6 +142,7 @@ form {
             transition: all;
             transition-duration: 0.2s;
         }
+
         &:checked::before {
             background: $color-primary-lightest;
             border: 1px solid $color-primary;

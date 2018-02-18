@@ -188,7 +188,9 @@
 
         function logout() {
 
-            $user_id = $_SESSION['USER']['ID'];
+            $filter = new Filter;
+
+            $user_id = $filter->sanitize($_SESSION['USER']['ID']);
 
             session_destroy();
 
