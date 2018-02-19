@@ -43,6 +43,7 @@
     //-------------------------------------------------
     //  Get the blog posts
     //-------------------------------------------------
+    
     $db_conn = new Database;
     $stmt = $db_conn->connect->prepare("SELECT `ID`, `IMAGE`, `TITLE`, `PUBLISH_DATE`, `PUBLISHED_BY_USER`, `UPDATE_DATE`, `UPDATED_BY_USER`, `SHORT_BLOG` FROM `BLOG` $sort ORDER BY `ID` DESC $limit");
     $stmt->execute();
@@ -58,8 +59,7 @@
         if(isset($_GET['search'])) {
 
             $db_conn2 = new Database;
-            if($db_conn2->count('BLOG', $sort = $sort) < 1) {
-
+            if($db_conn2->count("BLOG", "WHERE (`TITLE` LIKE ?) OR (`SHORT_BLOG` LIKE ?) OR (`BLOG` LIKE ?)" , "sss", array('%'.$search.'%', '%'.$search.'%', '%'.$search.'%')) < 1) {
                 echo 
                 '<div class="blog-short__box u-center-text u-margin-top-medium">
                     Sorry, but nothing matched your search terms. Please try again with some different keywords.

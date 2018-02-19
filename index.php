@@ -98,6 +98,7 @@
         <script src="js/newsletter.js"></script>
         <script src="js/register.js"></script>
         <script src="js/login.js"></script>
+        <script src="js/forgot.js"></script>
     </body>
   </head>
 </html>

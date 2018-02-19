@@ -80,7 +80,7 @@
 
                                 $db_conn = new Database;
                                 
-                                $count = $db_conn->count('BLOG', $sort = 'WHERE `ID` = "'.$params[$base_param_num+2].'"');
+                                $count = $db_conn->count('BLOG', 'WHERE `ID` = ?', 'i', array($params[$base_param_num+2]));
 
                                 // Check that the blog post exist
                                 if($count > 0) {
@@ -176,14 +176,15 @@
 
                     $db_conn = new Database;
 
-                    $count = $db_conn->count('BLOG', $sort = 'WHERE `ID` = "'.$this->blog_id.'"');
+                    $count = $db_conn->count('BLOG', 'WHERE `ID` = ?', 'i', array($this->blog_id));
 
                     // Check that the blog post exist
                     if($count > 0) {
 
                         $db_conn = new Database;
 
-                        $stmt = $db_conn->connect->prepare('SELECT `TITLE` FROM `BLOG` WHERE `ID` = "'.$this->blog_id.'"'); // prepare statement
+                        $stmt = $db_conn->connect->prepare('SELECT `TITLE` FROM `BLOG` WHERE `ID` = ?'); // prepare statement
+                        $stmt->bind_param("i", $this->blog_id);
                         $stmt->execute(); // select from database
                         $result = $stmt->get_result(); // Get the result
 

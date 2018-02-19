@@ -96,6 +96,16 @@
         $register->verify_user($_POST['verify_mail'], $_POST['verify_code']);
 
     }
+
+    // Check for ajax calls to generate token for forgot password
+    else if ((isset($_POST['forgot_password'])) && ($_POST['forgot_password'] === "true") && (isset($_POST['username'])) && (isset($_POST['mail']))) {
+
+        $register = new Register;
+        $register->require_files();
+
+        $register->forgot_password($_POST['username'], $_POST['mail']);
+
+    }
     
     // Check for ajax calls to register user
     else if((isset($_POST['register'])) && ($_POST['register'] === "true") && (isset($_POST['register_username'])) && (isset($_POST['register_mail'])) && (isset($_POST['register_password'])) && (isset($_POST['register_password_repeat']))) {
@@ -160,7 +170,25 @@
             $filter = new Filter;
             $mail = $filter->sanitize($mail);
 
-            $count = $db_conn->count("USERS", "WHERE EMAIL = '".$mail."'");
+            $count = $db_conn->count("USERS", "WHERE EMAIL = ?", "s", array($mail));
+
+            return $count;
+
+        }
+
+        //-------------------------------------------------
+        // Method to check if email is equal to registered username's email
+        //-------------------------------------------------
+
+        function username_mail_check($username, $mail) {
+
+            $db_conn = new Database;
+            $filter = new Filter;
+
+            $username = $filter->sanitize($username);
+            $mail = $filter->sanitize($mail);
+
+            $count = $db_conn->count("USERS", "WHERE USERNAME = ? AND EMAIL = ?", "ss", array($username, $mail));
 
             return $count;
 
@@ -176,7 +204,7 @@
             $mail = $filter->sanitize($mail);
             
             $db_conn = new Database;
-            $count = $db_conn->count("USERS", "WHERE EMAIL = '".$mail."' AND EMAIL_VERIFIED < 1");
+            $count = $db_conn->count("USERS", "WHERE EMAIL = ? AND EMAIL_VERIFIED < 1", "s", array($mail));
 
             return $count;
 
@@ -377,7 +405,6 @@
 
         }
 
-
         //-------------------------------------------------
         // Method to verify the user
         //-------------------------------------------------
@@ -442,6 +469,48 @@
                 echo "Thanks for registering! You can now proceed to sign in.";
 
                 require_once("../modules/login.php");
+
+            }
+
+        }
+
+        //-------------------------------------------------
+        // Method to create verification code for forgot password
+        //-------------------------------------------------
+        
+        function forgot_password($username, $mail) {
+
+            $filter = new Filter;
+            $validator = new Validator;
+            $send_mail = new Mail;
+            $user = new Users;
+            $token = new Tokens;
+            
+            $username = $filter->sanitize($username);
+            $mail = $filter->sanitize($mail);
+
+            // Invalid username
+            if(!$validator->validate_username($username)) {
+
+                echo "Invalid username. Minimum 5 and max 15 characters. Only letters and numbers are allowed.";
+
+            }
+
+            // Invalid email
+            else if(!$validator->validate_mail($mail)) {
+
+                echo "Invalid email address.";
+
+            }
+
+            // Check that email entered equals username's registered email
+            else if($this->username_mail_check($username, $mail) < 1) {
+
+                echo "Username does not exist or the email address entered is not the same as the one registered with the username entered.";
+
+            } else {
+
+                echo "hurra";
 
             }
 

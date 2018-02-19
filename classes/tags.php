@@ -29,8 +29,7 @@
 
                 $db_conn = new Database;
 
-                $sort = 'WHERE TAG_ID="'.$key.'"';
-                $count = $db_conn->count("TAGS_LINK_BLOG", $sort);
+                $count = $db_conn->count("TAGS_LINK_BLOG", "WHERE TAG_ID= ?", "s", array($key));
                 $tags_count[$value] = $count;
                 
             }
@@ -88,7 +87,8 @@
             
             $db_conn = new Database;
             
-            $stmt = $db_conn->connect->prepare("SELECT `TAG_ID` FROM `TAGS_LINK_BLOG` WHERE `BLOG_ID` = $id"); // prepare statement
+            $stmt = $db_conn->connect->prepare("SELECT `TAG_ID` FROM `TAGS_LINK_BLOG` WHERE `BLOG_ID` = ?"); // prepare statement
+            $stmt->bind_param("i", $id);
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
             $tag_id = [];
@@ -109,7 +109,8 @@
 
                 $db_conn = new Database;
                 
-                $stmt = $db_conn->connect->prepare("SELECT `TAG` FROM `TAGS` WHERE `ID` = $tags"); // prepare statement
+                $stmt = $db_conn->connect->prepare("SELECT `TAG` FROM `TAGS` WHERE `ID` = ?"); // prepare statement
+                $stmt->bind_param("i", $tags);
                 $stmt->execute(); // select from database
                 $result = $stmt->get_result(); // Get the result
                 

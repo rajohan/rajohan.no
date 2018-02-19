@@ -123,7 +123,7 @@
             $mail = $filter->sanitize($mail);
             
             $db_conn = new Database;
-            $count = $db_conn->count("NEWSLETTER", "WHERE EMAIL = '".$mail."'");
+            $count = $db_conn->count("NEWSLETTER", "WHERE EMAIL = ?", "s", array($mail));
 
             return $count;
 
@@ -288,7 +288,7 @@
             if($validator->validate_mail($mail)) {
 
                 $db_conn = new Database;
-                $count_with_code = $db_conn->count("NEWSLETTER", "WHERE EMAIL = '".$mail."' AND CODE = '".$code."'");
+                $count_with_code = $db_conn->count("NEWSLETTER", "WHERE EMAIL = ? AND CODE = ?", "ss", array($mail, $code));
 
                 // Check if the email is subscribed
                 if($this->check_email($mail) < 1) {

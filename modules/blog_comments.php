@@ -57,6 +57,14 @@
             $_SESSION['order'] = "`ID` ASC";
             $_SESSION['comment_sort'] = "oldest";
 
+        } 
+
+        if($_SESSION['comment_sort'] === "best") {
+
+            $comment_id = $sort_data->comment_sort($blog_id);
+            $_SESSION['order'] = 'FIELD (ID, '.$comment_id.')';
+            $_SESSION['comment_sort'] = "best";
+
         }
 
     }
@@ -121,14 +129,14 @@
 
         // Comment count for user
         $db_conn = new Database;
-        $comment_count = $db_conn->count('COMMENTS', $sort = 'WHERE POSTED_BY_USER = "'.$posted_by.'"');
+        $comment_count = $db_conn->count('COMMENTS', 'WHERE POSTED_BY_USER = ?', 's', array($posted_by));
 
         // Comment votes
         $db_conn = new Database;
-        $comment_votes_like = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE ITEM_ID = "'.$id.'" AND VOTE = 1');
+        $comment_votes_like = $db_conn->count('COMMENT_VOTES', 'WHERE ITEM_ID = ? AND VOTE = 1', 'i', array($id));
     
         $db_conn = new Database;
-        $comment_votes_dislike = $db_conn->count('COMMENT_VOTES', $sort = 'WHERE ITEM_ID = "'.$id.'" AND VOTE = 0');
+        $comment_votes_dislike = $db_conn->count('COMMENT_VOTES', 'WHERE ITEM_ID = ? AND VOTE = 0', 'i', array($id));
 
         // Username from id
         $posted_by = $users->get_username($posted_by);

@@ -42,24 +42,24 @@
     //-------------------------------------------------
 
     $db_conn = new Database;
-    $view_count = $db_conn->count('BLOG_VIEWS', $sort = 'WHERE BLOG_ID = "'.$blog_id.'"');
+    $view_count = $db_conn->count('BLOG_VIEWS', 'WHERE BLOG_ID = ?', 'i', array($blog_id));
 
     //-------------------------------------------------
     //  Get blog vote count
     //-------------------------------------------------
 
     $db_conn = new Database;
-    $blog_votes_like = $db_conn->count('BLOG_VOTES', $sort = 'WHERE ITEM_ID = "'.$blog_id.'" AND VOTE = 1');
+    $blog_votes_like = $db_conn->count('BLOG_VOTES', 'WHERE ITEM_ID = ? AND VOTE = 1', 'i', array($blog_id));
 
     $db_conn = new Database;
-    $blog_votes_dislike = $db_conn->count('BLOG_VOTES', $sort = 'WHERE ITEM_ID = "'.$blog_id.'" AND VOTE = 0');
+    $blog_votes_dislike = $db_conn->count('BLOG_VOTES', 'WHERE ITEM_ID = ? AND VOTE = 0', 'i', array($blog_id));
 
     //-------------------------------------------------
     //  Get comment count
     //-------------------------------------------------
 
     $db_conn = new Database;
-    $comment_count = $db_conn->count('COMMENTS', $sort = 'WHERE BLOG_ID = "'.$blog_id.'"');
+    $comment_count = $db_conn->count('COMMENTS', 'WHERE BLOG_ID = ?', 'i', array($blog_id));
 
     //-------------------------------------------------
     //  Get the blog post

@@ -43,7 +43,7 @@
         private function count_table_rows($table, $sort = '') {
 
             $db_conn = new Database;
-            return $db_conn->count($table, $sort); // return count value
+            return $db_conn->count2($table, $sort); // return count value
             
         }
 

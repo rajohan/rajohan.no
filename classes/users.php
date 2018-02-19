@@ -33,7 +33,7 @@
             $username = $this->filter->sanitize($username);
 
             $db_conn = new Database;
-            $count = $db_conn->count("USERS", "WHERE USERNAME = '".$username."'");
+            $count = $db_conn->count("USERS", "WHERE USERNAME = ?", "s", array($username));
 
             return $count;
 

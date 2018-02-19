@@ -92,7 +92,7 @@
         function count_replys($id) {
 
             $db_conn2 = new Database;
-            $reply_count = $db_conn2->count('COMMENTS', $sort = 'WHERE `REPLY_TO` = "'.$id.'"');
+            $reply_count = $db_conn2->count('COMMENTS', 'WHERE `REPLY_TO` = ?', 'i', array($id));
 
             return $reply_count;
 

@@ -38,7 +38,7 @@
             $selector_encoded = base64_encode(bin2hex(random_bytes($length)));
 
             $db_conn = new Database;
-            $count = $db_conn->count("AUTH_TOKENS", "WHERE SELECTOR = '".$selector_encoded."'");
+            $count = $db_conn->count("AUTH_TOKENS", "WHERE SELECTOR = ?", "s", array($selector_encoded));
 
             // Make sure selector is unique
             if($count > 0) {

@@ -90,7 +90,24 @@
         // Method to count rows in table
         //-------------------------------------------------
 
-        function count($table, $sort = '') {
+        function count($db_table, $db_columns, $identifiers, $variables) {
+
+            // $db_table = database table | $db_columns = columns in database table separated by ',' | 
+            // $identifiers = variable identifiers | $variables = variables passed in as an array
+            // EX: count('users', 'WHERE USERNAME = ? AND EMAIL = ?', 'ss', $variables)
+
+            $stmt = $this->connect->prepare("SELECT COUNT(`ID`) FROM $db_table $db_columns"); // prepare statement
+            $stmt->bind_param($identifiers, ...$variables); // bind parameters 
+            $stmt->execute(); // select from database
+            $result = $stmt->get_result(); // Get the result
+            $number_of_rows = $result->fetch_row(); // Get the result
+            $this->free_close($result, $stmt); // free result and close db connection
+
+            return $number_of_rows[0]; // Return number of rows
+
+        }
+
+        function count2($table, $sort = '') {
 
             $stmt = $this->connect->prepare("SELECT COUNT(`ID`) FROM $table $sort"); // prepare statement
             $stmt->execute(); // select from database

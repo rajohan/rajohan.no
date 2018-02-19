@@ -23,7 +23,7 @@
     //  Set offset value 
     //-------------------------------------------------
 
-    $offset = ($pagination->valid_page_number($pagination->get_page_number(), "BLOG") - 1) * 1; // Set the page number to generate offset (* + number of items per site)
+    $offset = ($pagination->valid_page_number($pagination->get_page_number(), "PROJECTS") - 1) * 1; // Set the page number to generate offset (* + number of items per site)
 
     //-------------------------------------------------
     //  Get the projects
@@ -78,7 +78,7 @@
             //-------------------------------------------------
 
             echo '<div class="pagination u-margin-top-medium u-margin-bottom-medium">';
-            $pagination->output_pagination(1, "BLOG"); // Output the pagination
+            $pagination->output_pagination(1, "PROJECTS"); // Output the pagination
             echo '</div>';
         ?>
     </div>

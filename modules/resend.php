@@ -21,6 +21,7 @@
     &nbsp;&nbsp;&nbsp;Email verification code
     </h1>
     <div id="resend" class="form__box">
+        Input your email address in the field underneath to get a new verification code
         <form method="post" id="resend__form" class="u-margin-top-small">
             <div class="input__box">
                 <input type="text" id="resend__mail" name="resend__mail" placeholder="Your email address...">

@@ -34,11 +34,11 @@
 
         // Get new likes count
         $db_conn = new Database;
-        $votes_like = $db_conn->count($table, $sort = 'WHERE ITEM_ID = "'.$id.'" AND VOTE = 1');
+        $votes_like = $db_conn->count($table, 'WHERE ITEM_ID = ? AND VOTE = 1', "i", array($id));
         
         // Get new dislike count
         $db_conn = new Database;
-        $votes_dislike = $db_conn->count($table, $sort = 'WHERE ITEM_ID = "'.$id.'" AND VOTE = 0');
+        $votes_dislike = $db_conn->count($table, 'WHERE ITEM_ID = ? AND VOTE = 0', "i", array($id));
 
         // Crate like/dislike arrays
         $vote_array['like'] = $votes_like;
@@ -81,8 +81,7 @@
         private function check_old_votes($table, $id_col_name, $item_id, $user) {
             
             $db_conn = new Database;
-            $sort = 'WHERE '.$id_col_name.' = "'.$item_id.'" AND (`VOTE_BY_IP` = "'.$this->ip.'" OR (`VOTE_BY_USER` = "'.$user.'" AND `VOTE_BY_USER` != "0"))'; // What to search for
-            $count = $db_conn->count($table, $sort); // Count row's in db
+            $count = $db_conn->count($table, 'WHERE '.$id_col_name.' = ? AND (`VOTE_BY_IP` = ? OR (`VOTE_BY_USER` = ? AND `VOTE_BY_USER` != "0"))', "isi", array($item_id, $this->ip, $user));
             return $count;
 
         }
@@ -94,8 +93,7 @@
         private function check_vote_value($table, $id_col_name, $item_id, $vote, $user) {
 
             $db_conn = new Database;
-            $sort = 'WHERE '.$id_col_name.' = "'.$item_id.'" AND `VOTE` = "'.$vote.'" AND (`VOTE_BY_IP` = "'.$this->ip.'" OR (`VOTE_BY_USER` = "'.$user.'" AND `VOTE_BY_USER` != "0"))'; // What to search for
-            $count = $db_conn->count($table, $sort); // Count row's in db
+            $count = $db_conn->count($table, 'WHERE '.$id_col_name.' = ? AND `VOTE` = ? AND (`VOTE_BY_IP` = ? OR (`VOTE_BY_USER` = ? AND `VOTE_BY_USER` != "0"))', "iisi", array($item_id, $vote, $this->ip, $user));
             return $count;
 
         }

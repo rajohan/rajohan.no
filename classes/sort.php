@@ -44,7 +44,8 @@
 
             $db_conn = new Database;
             
-            $stmt = $db_conn->connect->prepare('SELECT `ID` FROM `TAGS` WHERE `TAG` = "'.$tag.'" LIMIT 1'); // prepare statement
+            $stmt = $db_conn->connect->prepare('SELECT `ID` FROM `TAGS` WHERE `TAG` = ? LIMIT 1'); // prepare statement
+            $stmt->bind_param("s", $tag);
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
 
@@ -67,7 +68,8 @@
 
             $db_conn = new Database;
             
-            $stmt = $db_conn->connect->prepare('SELECT `BLOG_ID` FROM `TAGS_LINK_BLOG` WHERE `TAG_ID` = "'.$tag_id.'"'); // prepare statement
+            $stmt = $db_conn->connect->prepare('SELECT `BLOG_ID` FROM `TAGS_LINK_BLOG` WHERE `TAG_ID` = ?'); // prepare statement
+            $stmt->bind_param("i", $tag_id);
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
             $blog_id = [];
@@ -114,12 +116,11 @@
                             if(!preg_match('[a-z0-9.\-_#@!+?]', $this->params[$this->params_count-1])) {
 
                                 $tag = $this->filter->sanitize(strtolower($this->params[$this->params_count-1]));
-                                $sort = 'WHERE TAG = "'.$tag.'"';
 
                                 $db_conn = new Database;
 
                                 // Check that tag exists in the database
-                                if($db_conn->count("TAGS", $sort) > 0) {
+                                if($db_conn->count("TAGS", "WHERE TAG = ?", "s", array($tag)) > 0) {
 
                                     $tag_id = $this->get_tag_id($tag);
                                     $sort = $this->get_blog_id($tag_id);
@@ -218,6 +219,12 @@
             // Get comment count for each root comment
             $db_conn = new Database;
             
+            if(empty($comment_ids)) {
+
+                $comment_ids = 0;
+
+            }
+
             $stmt = $db_conn->connect->prepare("SELECT `ITEM_ID` FROM `COMMENT_VOTES` WHERE VOTE > 0 AND `ITEM_ID` IN ($comment_ids)");
             $stmt->execute();
             $result = $stmt->get_result();
@@ -255,6 +262,12 @@
 
             // Make a string from array to use in mysqli query
             $output = implode(",",$comment_vote_id);
+
+            if(empty($output)) {
+
+                $output = 0;
+                
+            }
 
             return $output;
 

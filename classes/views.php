@@ -35,8 +35,7 @@
         private function check_views($table, $id_col_name, $item_id, $user) {
             
             $db_conn = new Database;
-            $sort = 'WHERE '.$id_col_name.' = "'.$item_id.'" AND (`VIEW_BY_IP` = "'.$this->ip.'" OR (`VIEW_BY_USER` = "'.$user.'" AND `VIEW_BY_USER` != "0"))'; // What to search for
-            $count = $db_conn->count($table, $sort); // Count row's in db
+            $count = $db_conn->count($table, 'WHERE '.$id_col_name.' = ? AND (`VIEW_BY_IP` = ? OR (`VIEW_BY_USER` = ? AND `VIEW_BY_USER` != "0"))', "isi", array($item_id, $this->ip, $user));
             return $count;
 
         }
