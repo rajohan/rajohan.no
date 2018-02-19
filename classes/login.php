@@ -134,6 +134,8 @@
                 $db_conn = new Database;
                 $db_conn->db_insert("AUTH_LOG", "USER, TOKEN, SUCCESS, IP", "iiis", array(0, 1, 0, $this->ip));
 
+                setcookie('REMEMBER_ME_TOKEN', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], true, true); // empty value and old timestamp
+
                 return false;
             }
 
