@@ -105,6 +105,17 @@
 
         }
 
+        //-------------------------------------------------
+        // Forgot password token code validator
+        //-------------------------------------------------
+
+        function validate_forgot_password_code($data) {
+
+            $pattern = '/^[a-z A-Z 0-9]{8,8}$/';
+            return preg_match($pattern, $data);
+
+        }
+
     }
 
   ?>

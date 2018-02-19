@@ -42,6 +42,11 @@
             Sign in
         </button>
     </form>
+    <div class="u-margin-top-small">
+        <a href="forgot/">Forgot password</a>
+        -
+        <a href="resend/">Resend email verification code</a>
+    </div>
     <?php
         }
     ?>

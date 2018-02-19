@@ -175,6 +175,32 @@
         }
 
         //-------------------------------------------------
+        //  Get email from user id
+        //-------------------------------------------------
+
+        function get_mail($id) {
+
+            $id = $this->filter->sanitize($id);
+            
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT `EMAIL` FROM `USERS` WHERE `ID`=?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+
+                $mail = $this->filter->sanitize($row['EMAIL']);    
+
+            }
+
+            $db_conn->free_close($result, $stmt);   
+
+            return $mail;
+
+        }
+
+        //-------------------------------------------------
         //  Get reg date from id
         //-------------------------------------------------
 

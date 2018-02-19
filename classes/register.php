@@ -106,6 +106,16 @@
         $register->forgot_password($_POST['username'], $_POST['mail']);
 
     }
+
+    // Check for ajax calls toreset password for forgot password
+    else if ((isset($_POST['forgot_password_verify'])) && ($_POST['forgot_password_verify'] === "true") && (isset($_POST['username'])) && (isset($_POST['code'])) && (isset($_POST['password'])) && (isset($_POST['password_repeat']))) {
+
+        $register = new Register;
+        $register->require_files();
+
+        $register->forgot_password_verify($_POST['username'], $_POST['code'], $_POST['password'], $_POST['password_repeat']);
+
+    }
     
     // Check for ajax calls to register user
     else if((isset($_POST['register'])) && ($_POST['register'] === "true") && (isset($_POST['register_username'])) && (isset($_POST['register_mail'])) && (isset($_POST['register_password'])) && (isset($_POST['register_password_repeat']))) {
@@ -195,7 +205,7 @@
         }
 
         //-------------------------------------------------
-        // Method to check if email/username not are verified
+        // Method to check if email not are verified
         //-------------------------------------------------
 
         function check_mail_verified($mail) {
@@ -211,7 +221,7 @@
         }
 
         //-------------------------------------------------
-        // Method to check if code matches the assigned code to email/username
+        // Method to check if code matches the assigned code to email
         //-------------------------------------------------
 
         function check_code($mail, $code) {
@@ -230,6 +240,45 @@
             while ($row = $result->fetch_assoc()) {
 
                 $db_code = $filter->sanitize($row['CODE']);
+
+            }
+
+            $db_conn->free_close($result, $stmt);
+
+            if(!isset($db_code)) {
+
+                return false;
+
+            } else {
+
+                $verify = password_verify($code, $db_code); // Verify token
+
+                return $verify;
+
+            }
+
+        }
+
+        //-------------------------------------------------
+        // Method to check if code matches the assigned code to email
+        //-------------------------------------------------
+
+        function forgot_password_verify_code($user_id, $code) {
+
+            $filter = new Filter;
+            $user_id = $filter->sanitize($user_id);
+            $code = $filter->sanitize($code);
+
+            // Get token
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT `PASSWORD_CODE` FROM `USERS` WHERE `ID` = ? LIMIT 1");
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+
+                $db_code = $filter->sanitize($row['PASSWORD_CODE']);
 
             }
 
@@ -488,6 +537,10 @@
             
             $username = $filter->sanitize($username);
             $mail = $filter->sanitize($mail);
+            $user_id = $user->get_user_id($username);
+
+            $action = "request code";
+            $function = "forgot password";
 
             // Invalid username
             if(!$validator->validate_username($username)) {
@@ -506,11 +559,120 @@
             // Check that email entered equals username's registered email
             else if($this->username_mail_check($username, $mail) < 1) {
 
+                // Log to verification log
+                $db_conn = new Database;
+                $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 0, $user_id, $this->ip));
+
                 echo "Username does not exist or the email address entered is not the same as the one registered with the username entered.";
 
             } else {
 
-                echo "hurra";
+                $code = $token->generate_token(4); // Generate 8 char long verification code
+                $mail = $user->get_mail($user_id);
+
+                // Update email row with code
+                $db_conn = new Database;
+                $db_conn->db_update("USERS", "PASSWORD_CODE", "USERNAME", "ss", array($code[0], $username));
+
+                // Log to verification log
+                $db_conn = new Database;
+                $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 1, $user_id, $this->ip));
+
+                $from = "webmaster@rajohan.no";
+                $from_name = "Rajohan.no";
+                $reply_to = "mail@rajohan.no";
+                $subject = "Password reset verification code";
+
+                $body = "A request to reset your user accounts password on rajohan.no was made from IP ".$this->ip.".<br><br>To reset your password please type in the verification code underneath on the page you requested the password reset on or click on this link https://rajohan.no/forgot_verify/?user=".$username."&code=".$code[1]."<br><br>Your verification code: ".$code[1]."<br><br>If this password reset was not requested by you this email can be ignored.";
+                
+                $alt_body = "A request to reset your user accounts password on rajohan.no was made from IP ".$this->ip.".\r\n\r\nTo reset your password please type in the verification code underneath on the page you requested the password reset on or click on this link https://rajohan.no/forgot_verify/?user=".$username."&code=".$code[1]."\r\n\r\nYour verification code: ".$code[1]."\r\n\r\nIf this password reset was not requested by you this email can be ignored.";
+                
+                $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
+
+                echo "To confirm your password reset a email with a verification code is sent to the entered user accounts email address. Input the verification code in the field underneath or click on the link provided in the email and choose a new password.";
+                require_once('../modules/forgot_verify.php');
+
+            }
+
+        }
+
+        //-------------------------------------------------
+        // Method to reset user password
+        //-------------------------------------------------
+        
+        function forgot_password_verify($username, $code, $password, $password_repeat) {
+
+            $filter = new Filter;
+            $validator = new Validator;
+            $send_mail = new Mail;
+            $user = new Users;
+            $token = new Tokens;
+            
+            $username = $filter->sanitize($username);
+            $code = $filter->sanitize($code);
+            $password = $filter->sanitize($password);
+            $password_repeat = $filter->sanitize($password_repeat);
+
+            $user_id = $user->get_user_id($username);
+            $mail = $user->get_user_id($user_id);
+
+            $action = "reset password";
+            $function = "forgot password";
+
+            // Invalid username
+            if(!$validator->validate_username($username)) {
+
+                echo "Invalid username. Minimum 5 and max 15 characters. Only letters and numbers are allowed.";
+
+            }
+
+            // Invalid email
+            else if(!$validator->validate_forgot_password_code($code)) {
+
+                echo "Invalid verification code.";
+
+            }
+
+            // Check that code entered equals username's verification code
+            else if(!$this->forgot_password_verify_code($user_id, $code)) {
+
+                // Log to verification log
+                $db_conn = new Database;
+                $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 0, $user_id, $this->ip));
+
+                echo "Username does not exist or the code you entered is incorrect.";
+
+            } 
+            
+            // Password fields does not match
+            else if($password !== $password_repeat) {
+
+                echo "The password fields does not match.";
+
+            }
+
+            // Invalid password
+            else if(!$validator->validate_password($password)) {
+
+                echo "Invalid password. Minimum 6 characters.";
+
+            } else {
+
+                $code = "";
+                $mail = $user->get_mail($user_id);
+                $password = password_hash($password, PASSWORD_DEFAULT); // Encrypt the password
+
+                // Update email row with code
+                $db_conn = new Database;
+                $db_conn->db_update("USERS", "PASSWORD, PASSWORD_CODE", "USER_ID", "ssi", array($password, $code, $user_id));
+
+                // Log to verification log
+                $db_conn = new Database;
+                $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 1, $user_id, $this->ip));
+
+                echo "Your password have been successfully changed. You can now proceed to login";
+
+                require_once('../modules/login.php');
 
             }
 
