@@ -297,7 +297,7 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
 
-                            $("#forgot__password__verify").html(data);
+                            $(".container").html(data);
 
                         },
                        

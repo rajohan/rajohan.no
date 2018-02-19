@@ -614,7 +614,7 @@
             $password_repeat = $filter->sanitize($password_repeat);
 
             $user_id = $user->get_user_id($username);
-            $mail = $user->get_user_id($user_id);
+            $mail = $user->get_mail($user_id);
 
             $action = "reset password";
             $function = "forgot password";
@@ -642,6 +642,8 @@
 
                 echo "Username does not exist or the code you entered is incorrect.";
 
+                require_once('../modules/forgot_verify.php');
+                
             } 
             
             // Password fields does not match
@@ -659,12 +661,11 @@
             } else {
 
                 $code = "";
-                $mail = $user->get_mail($user_id);
                 $password = password_hash($password, PASSWORD_DEFAULT); // Encrypt the password
 
                 // Update email row with code
                 $db_conn = new Database;
-                $db_conn->db_update("USERS", "PASSWORD, PASSWORD_CODE", "USER_ID", "ssi", array($password, $code, $user_id));
+                $db_conn->db_update("USERS", "PASSWORD, PASSWORD_CODE", "ID", "ssi", array($password, $code, $user_id));
 
                 // Log to verification log
                 $db_conn = new Database;
