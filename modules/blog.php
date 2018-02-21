@@ -20,7 +20,7 @@
     $tag = new Tags;
     $converter = new Converter;
     $sort_data = new Sort;
-    $users = new Users;
+    $user = new Users;
 
     //-------------------------------------------------
     //  Set offset and sort values
@@ -80,10 +80,10 @@
             $updated_by = $filter->sanitize($row['UPDATED_BY_USER']);
             $short_blog = $bbcode->replace($filter->sanitize($row['SHORT_BLOG']));
 
-            $published_by = $users->get_username($published_by);
+            $published_by = $user->get_user("ID", $published_by)['USERNAME'];
 
             if(!empty($updated_by)) {
-                $updated_by = $users->get_username($updated_by);
+                $updated_by = $user->get_user("ID", $updated_by)['USERNAME'];
             }
 
             $publish_date = $converter->date($publish_date);

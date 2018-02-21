@@ -87,170 +87,39 @@
         }
 
         //-------------------------------------------------
-        //  Get username from id
+        //  Method to get user data from id/username/mail
         //-------------------------------------------------
+        function get_user($identifier, $user) {
 
-        function get_username($id) {
+            $user = $this->filter->sanitize($user);
 
-            $id = $this->filter->sanitize($id);
-            
             $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT `USERNAME` FROM `USERS` WHERE `ID`=?");
-            $stmt->bind_param("i", $id);
+            $stmt = $db_conn->connect->prepare("SELECT * FROM `USERS` WHERE $identifier=?");
+            $stmt->bind_param("s", $user);
             $stmt->execute();
             $result = $stmt->get_result();
             
+            $user_data = [];
+
             while ($row = $result->fetch_assoc()) {
 
-                $username = $this->filter->sanitize($row['USERNAME']);    
+                foreach($row as $key => $value) {
+
+                    $user_data[$key] = $value;
+    
+                }
 
             }
 
             $db_conn->free_close($result, $stmt);   
 
-            return $username;
+            if(empty($user_data['ID'])) {
 
-        }
-
-        //-------------------------------------------------
-        //  Get user id from username
-        //-------------------------------------------------
-
-        function get_user_id($username) {
-
-            $username = $this->filter->sanitize($username);
-            
-            $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT `ID` FROM `USERS` WHERE `USERNAME`=?");
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            
-            while ($row = $result->fetch_assoc()) {
-
-                $user_id = $this->filter->sanitize($row['ID']);    
-
+                $user_data['ID'] = 0;
+                
             }
 
-            if(!isset($user_id)) {
-
-                $user_id = 0;
-
-            }
-
-            $db_conn->free_close($result, $stmt);   
-
-            return $user_id;
-
-        }
-
-        //-------------------------------------------------
-        //  Get user id from email
-        //-------------------------------------------------
-
-        function get_user_id_email($mail) {
-
-            $mail = $this->filter->sanitize($mail);
-            
-            $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT `ID` FROM `USERS` WHERE `EMAIL`=?");
-            $stmt->bind_param("s", $mail);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            
-            while ($row = $result->fetch_assoc()) {
-
-                $user_id = $this->filter->sanitize($row['ID']);    
-
-            }
-
-            if(!isset($user_id)) {
-
-                $user_id = 0;
-
-            }
-
-            $db_conn->free_close($result, $stmt);   
-
-            return $user_id;
-
-        }
-
-        //-------------------------------------------------
-        //  Get email from user id
-        //-------------------------------------------------
-
-        function get_mail($id) {
-
-            $id = $this->filter->sanitize($id);
-            
-            $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT `EMAIL` FROM `USERS` WHERE `ID`=?");
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            
-            while ($row = $result->fetch_assoc()) {
-
-                $mail = $this->filter->sanitize($row['EMAIL']);    
-
-            }
-
-            $db_conn->free_close($result, $stmt);   
-
-            return $mail;
-
-        }
-
-        //-------------------------------------------------
-        //  Get reg date from id
-        //-------------------------------------------------
-
-        function get_reg_date($id) {
-
-            $id = $this->filter->sanitize($id);
-
-            $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT `REG_DATE` FROM `USERS` WHERE `ID`=?");
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            
-            while ($row = $result->fetch_assoc()) {
-
-                $reg_date = $this->filter->sanitize($row['REG_DATE']);    
-
-            }
-
-            $db_conn->free_close($result, $stmt);   
-
-            return $reg_date;
-
-        }
-
-        //-------------------------------------------------
-        //  Get admin level from id
-        //-------------------------------------------------
-
-        function get_admin_level($id) {
-
-            $id = $this->filter->sanitize($id);
-
-            $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT `ADMIN` FROM `USERS` WHERE `ID`=?");
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            
-            while ($row = $result->fetch_assoc()) {
-
-                $admin = $this->filter->sanitize($row['ADMIN']);    
-
-            }
-
-            $db_conn->free_close($result, $stmt);   
-
-            return $admin;
+            return $user_data;
 
         }
 

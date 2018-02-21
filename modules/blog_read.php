@@ -21,7 +21,7 @@
     $view = new Views;
     $page = new Page_handler;
     $comments = new Comments;
-    $users = new Users;
+    $user = new Users;
     $pagination = new Pagination;
     $sort_data = new Sort;
 
@@ -89,10 +89,10 @@
             $update_date = $converter->date($update_date);   
         }
 
-        $published_by = $users->get_username($published_by);
+        $published_by = $user->get_user("ID", $published_by)['USERNAME'];
 
         if(!empty($updated_by)) {
-            $updated_by = $users->get_username($updated_by);
+            $updated_by = $user->get_user("ID", $updated_by)['USERNAME'];
         }
 
     }
@@ -177,12 +177,16 @@
             ?> 
             
         </div>
-        <fieldset>
-            <textarea placeholder="Your comment..." class="blog__comment__textarea" tabindex="1"></textarea>
-        </fieldset>
-        <fieldset>
-            <button name="submit" type="submit" class="blog__comment__submit">Send comment</button>
-        </fieldset>
+        <form method="post" id="blog__add-comment__form">
+            <div class="toolbox">
+                Toolbar
+            </div>
+            <textarea placeholder="Your comment..." id="blog__add-comment__comment" name="blog__add-comment__comment" tabindex="1"></textarea>
+            <div class="blog__comment__status u-margin-bottom-small">
+                Reply to: none 
+            </div>
+            <button type="submit" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-small">Send comment</button>
+        </form>
     </div>
 </div>
 <!-- SECTION BLOG READ END -->

@@ -6,17 +6,15 @@
 
     if(!empty($_POST['blog_nav_sort']) && $_POST['blog_nav_sort'] === "true") {
 
-        define('INCLUDE','true'); // Define INCLUDE to get access to the files needed 
-        require_once('../configs/db.php'); // Get database username, password etc
-        include_once('../classes/database_handler.php'); // Database handler
-        include_once('../classes/filter.php'); // Filter
-        include_once('../classes/users.php'); // Users
-        include_once('../classes/converter.php'); // Converter
-        include_once('../classes/sort.php'); // Sort
-        include_once('../classes/page_handler.php'); // Page handler
+        session_start();
+        define('INCLUDE','true'); // Define INCLUDE to get access to the files needed
+
+        require_once('../configs/db.php');           // Get database username, password etc
+        require_once('../classes/autoloader.php');   // Autoload classes needed
+        require_once('../configs/config.php');       // Config
 
         $filter = new Filter;
-        $users = new Users;
+        $user = new Users;
         $converter = new Converter;
         $sort_data = new Sort;
 
@@ -79,6 +77,11 @@
 
     }
 
+    $filter = new Filter;
+    $user = new Users;
+    $converter = new Converter;
+    $sort_data = new Sort;
+    
     $db_conn = new Database;
     $stmt = $db_conn->connect->prepare("SELECT `ID`, `IMAGE`, `TITLE`, `PUBLISH_DATE`, `PUBLISHED_BY_USER` FROM `BLOG` $sort ORDER BY $order LIMIT 3");
 
@@ -93,7 +96,7 @@
         $publish_date = $filter->sanitize($row['PUBLISH_DATE']);
         $published_by = $filter->sanitize($row['PUBLISHED_BY_USER']);
 
-        $published_by = $users->get_username($published_by);
+        $published_by = $user->get_user("ID", $published_by)['USERNAME'];
         $publish_date = $converter->date($publish_date);
         
         echo

@@ -91,7 +91,7 @@
 
             if($verify) {
 
-                $user_id_encoded = $this->user->encode_data($user_id);
+                $user_id_encoded = $this->token->encode_data($user_id);
                 $db_conn = new Database;
                 $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded); // Delete old token
 
@@ -124,8 +124,8 @@
 
             $_SESSION['LOGGED_IN'] = true;
             $_SESSION['USER']['ID'] = $user_id;
-            $_SESSION['USER']['USERNAME'] = $this->user->get_username($user_id);
-            $_SESSION['USER']['ACCESS_LEVEL'] = $this->user->get_admin_level($user_id);
+            $_SESSION['USER']['USERNAME'] = $this->user->get_user("ID", $user_id)['USERNAME'];
+            $_SESSION['USER']['ACCESS_LEVEL'] = $this->user->get_user("ID", $user_id)['ADMIN'];
 
         }
 
@@ -140,7 +140,7 @@
             session_destroy();
 
             // Delete token if it exists
-            $user_id_encoded = $this->user->encode_data($user_id);
+            $user_id_encoded = $this->token->encode_data($user_id);
             $db_conn = new Database;
             $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded);
 
@@ -191,7 +191,7 @@
                 echo "The password you entered is incorrect.";
                 require_once('../modules/login.php');
 
-                $user_id = $this->user->get_user_id($username); // Get user id from username
+                $user_id = $this->user->get_user("USERNAME", $username)['ID']; // Get user id from username
                 
                 // Log to auth log
                 $db_conn = new Database;
@@ -202,12 +202,12 @@
             // Login
             else {
 
-                $user_id = $this->user->get_user_id($username); // Get user id from username
+                $user_id = $this->user->get_user("USERNAME", $username)['ID']; // Get user id from username
 
                 // Check if remember me is checked
                 if($remember === "1") {
                     
-                    $user_id_encoded = $this->user->encode_data($user_id);
+                    $user_id_encoded = $this->token->encode_data($user_id);
                     $db_conn = new Database;
                     $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded); // Delete old token
 

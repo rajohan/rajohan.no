@@ -337,7 +337,7 @@ form {
   flex-direction: column;
   width: 100%;
   max-width: 50rem; }
-  form input {
+  form input, form textarea {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
@@ -350,23 +350,23 @@ form {
     transition-duration: 0.2s;
     margin-right: -3.25rem;
     padding-right: 4rem; }
-    form input:focus {
+    form input:focus, form textarea:focus {
       outline: none;
       width: 100%;
       background-color: #c5c5c5;
       max-width: 60rem; }
-    form input::-webkit-input-placeholder {
+    form input::-webkit-input-placeholder, form textarea::-webkit-input-placeholder {
       font-weight: 100;
       color: #999999; }
-    form input.error {
+    form input.error, form textarea.error {
       border: 2px solid #d25f5e;
       background-color: #fffafa; }
-      form input.error:focus {
+      form input.error:focus, form textarea.error:focus {
         background-color: #fffafa; }
-    form input.valid {
+    form input.valid, form textarea.valid {
       border: 2px solid #9fd164;
       background-color: #f5ffea; }
-      form input.valid:focus {
+      form input.valid:focus, form textarea.valid:focus {
         background-color: #f5ffea; }
 
 .input__button {
@@ -584,6 +584,14 @@ form {
     padding: 0.2rem 0.5rem;
     box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem; }
+
+.toolbox {
+  display: flex;
+  min-width: 100%;
+  background-color: #f7f7f7;
+  border: 1px solid #e8e8e8;
+  padding: 1rem;
+  line-height: 1; }
 
 .blog-navigation {
   max-width: 33rem;
@@ -875,6 +883,22 @@ form {
   .blog__box {
     padding: 2rem;
     max-width: 100rem; }
+    .blog__box form {
+      min-width: 100%;
+      max-width: 100%;
+      margin: 2rem 0; }
+    .blog__box textarea {
+      min-width: 100%;
+      border-radius: 0;
+      min-height: 20rem;
+      max-width: 100%;
+      padding: 2rem 2rem;
+      margin: 0;
+      background-color: #fff;
+      border-left: 1px solid #e8e8e8;
+      border-right: 1px solid #e8e8e8; }
+      .blog__box textarea:focus {
+        background-color: #fff; }
   .blog__img {
     width: 100%; }
     .blog__img img {
@@ -1061,18 +1085,13 @@ form {
         width: 2.5rem;
         height: 2.5rem;
         cursor: pointer; }
-  .blog__comment__textarea {
-    margin-top: 1.5rem;
+  .blog__comment__status {
+    display: flex;
     min-width: 100%;
+    background-color: #f7f7f7;
+    border: 1px solid #e8e8e8;
     padding: 1rem;
-    max-width: 100%;
-    height: 10rem;
-    background: #fff;
-    border: 1px solid #e8e8e8; }
-  .blog__comment__submit {
-    width: 100%;
-    padding: 1rem;
-    border: none; }
+    line-height: 1; }
 
 .blog-short {
   width: 100vw;

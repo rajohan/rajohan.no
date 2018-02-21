@@ -124,8 +124,8 @@
         $update_date = $converter->date_time($update_date);
 
         // User admin level
-        $admin = $users->get_admin_level($posted_by);
-        $reg_date = $converter->date($users->get_reg_date($posted_by));
+        $admin = $user->get_user("ID", $posted_by)['ADMIN'];
+        $reg_date = $converter->date($user->get_user("ID", $posted_by)['REG_DATE']);
 
         // Comment count for user
         $db_conn = new Database;
@@ -139,8 +139,8 @@
         $comment_votes_dislike = $db_conn->count('COMMENT_VOTES', 'WHERE ITEM_ID = ? AND VOTE = 0', 'i', array($id));
 
         // Username from id
-        $posted_by = $users->get_username($posted_by);
-        $updated_by = $users->get_username($updated_by);
+        $posted_by = $user->get_user("ID", $posted_by)['USERNAME'];
+        $updated_by = $user->get_user("ID", $updated_by)['USERNAME'];
         
         
         //-------------------------------------------------
@@ -206,7 +206,7 @@
 
         if(($reply_to > 0) && (!empty($root_id)) && ($root_id !== $reply_to)) {
 
-            $reply_author_name = $users->get_username($comments->get_author($reply_to));
+            $reply_author_name = $user->get_user("ID", $comments->get_author($reply_to))['USERNAME'];
             echo "<span id='message_top_id_".$id."' class='blog__comment__reply-to'><span data-reply-id='".$reply_to."' class='blog__comment__reply-to__text'><span class='blog__comment__reply-to__arrow'>&ltrif;</span> In reply to ".ucfirst($reply_author_name)."</span></span>";
 
         }

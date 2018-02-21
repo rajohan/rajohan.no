@@ -150,6 +150,22 @@
         
         }
 
+        //-------------------------------------------------
+        //  Add new comment
+        //-------------------------------------------------
+
+        function add_comment($blog_id, $user_id, $reply_to, $comment) {
+
+            // Check that user is logged in
+
+            // Check that comment field not is empty
+            
+                // Check if comment is a reply
+
+                // Insert comment
+
+        }
+
     }
 
 ?>

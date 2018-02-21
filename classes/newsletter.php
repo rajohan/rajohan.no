@@ -110,7 +110,7 @@
 
                 } else { // Insert to database
 
-                    $user_id = $this->user->get_user_id_email($mail);
+                    $user_id = $this->user->get_user("EMAIL", $mail)['ID'];
 
                     $db_conn = new Database;
                     $db_conn->db_insert("NEWSLETTER", "EMAIL, USER, IP", "sis", array($mail, $user_id, $this->ip));
@@ -147,7 +147,7 @@
                     $code = $this->token->generate_token(3); // Generate 6 char long verification code
                     $action = "create";
                     $function = "unsubscribe";
-                    $user_id = $this->user->get_user_id_email($mail);
+                    $user_id = $this->user->get_user("EMAIL", $mail)['ID'];
 
                     // Update email row with code
                     $db_conn = new Database;
@@ -192,7 +192,7 @@
 
             $action = "use";
             $function = "unsubscribe";
-            $user_id = $this->user->get_user_id_email($mail);
+            $user_id = $this->user->get_user("EMAIL", $mail)['ID'];
 
             // Validate email
             if($this->validator->validate_mail($mail)) {

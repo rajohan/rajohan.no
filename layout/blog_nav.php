@@ -14,11 +14,8 @@
     // Initialize classes
     //-------------------------------------------------
 
-    $filter = new Filter;
-    $pagination = new Pagination;
     $tag = new Tags;
-    $converter = new Converter;
-    $users = new Users;
+    $sort_data = new Sort;
 
 ?>
 <!-- SECTION BLOG SHORT START -->
@@ -37,6 +34,7 @@
                 //-------------------------------------------------
 
                 require_once('modules/blog_nav_sort.php');
+                
             ?>
         </div>
     </div>

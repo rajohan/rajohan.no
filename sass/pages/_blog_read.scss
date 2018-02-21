@@ -17,6 +17,28 @@
     &__box {
         padding: 2rem;
         max-width: 100rem;
+
+        form {
+            min-width: 100%;
+            max-width:100%;
+            margin: 2rem 0;
+        }
+
+        textarea {
+            min-width: 100%;
+            border-radius: 0;
+            min-height: 20rem;
+            max-width:100%;
+            padding: 2rem 2rem;
+            margin: 0;
+            background-color: $color-white;
+            border-left: 1px solid $color-grey-2;
+            border-right: 1px solid $color-grey-2;
+
+            &:focus {
+                background-color: $color-white;
+            }
+        }
     }
 
     &__img {
@@ -298,27 +320,16 @@
                     height: 2.5rem;
                     cursor: pointer;
                 }
-
             }
-        }
-
-        &__textarea {
-            margin-top: 1.5rem; 
-            min-width: 100%; 
-            padding:1rem; 
-            max-width: 100%; 
-            height:10rem; 
-            background:$color-white; 
+        }  
+        
+        &__status {
+            display: flex;
+            min-width: 100%;
+            background-color: $color-grey-light;
             border: 1px solid $color-grey-2;
-        
+            padding: 1rem;
+            line-height: 1;
         }
-
-        &__submit {
-            width:100%; 
-            padding: 1rem; 
-            border:none;
-        
-        }
-        
     }
 }

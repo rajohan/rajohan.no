@@ -14,14 +14,15 @@
     // Initialize classes
     //-------------------------------------------------
  
-    $db_conn = new Database;
+    
     $filter = new Filter;
-    $active = new Page_handler;
+    $page = new Page_handler;
     
     //-------------------------------------------------
     // Get the navigation
     //-------------------------------------------------
 
+    $db_conn = new Database;
     $stmt = $db_conn->connect->prepare("SELECT `NAME`, `URL` FROM `NAVIGATION` ORDER BY `ID` ASC");
     $stmt->execute();
     $result = $stmt->get_result();
@@ -40,13 +41,14 @@
                 $url = $filter->sanitize($row['URL']);
 
                 echo '<li class="navigation__item">';
-                echo '<a href="'.$url.'/" class="navigation__link '.$active->set_active($url).'">';
+                echo '<a href="'.$url.'/" class="navigation__link '.$page->set_active($url).'">';
                 echo $name;
                 echo '</a>';
 
             }
 
             $db_conn->free_close($result, $stmt);
+            
         ?>
     </ul>
     <div class="navigation__hamburger-menu">

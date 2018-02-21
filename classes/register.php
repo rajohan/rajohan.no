@@ -222,7 +222,7 @@
 
                 $action = "create";
                 $function = "verify email";
-                $user_id = $this->user->get_user_id_email($mail);
+                $user_id = $this->user->get_user("EMAIL", $mail)['ID'];
 
                 // Log to verification log
                 $db_conn = new Database;
@@ -276,7 +276,7 @@
 
                 $action = "create";
                 $function = "verify email resend";
-                $user_id = $this->user->get_user_id_email($mail);
+                $user_id = $this->user->get_user("EMAIL", $mail)['ID'];
 
                 // Log to verification log
                 $db_conn = new Database;
@@ -315,7 +315,7 @@
 
             $action = "use";
             $function = "verify email";
-            $user_id = $this->user->get_user_id_email($mail);
+            $user_id = $this->user->get_user("EMAIL", $mail)['ID'];
 
             if(!$this->validator->validate_mail($mail)) {
 
@@ -377,7 +377,7 @@
             
             $username = $this->filter->sanitize($username);
             $mail = $this->filter->sanitize($mail);
-            $user_id = $this->user->get_user_id($username);
+            $user_id = $this->user->get_user("USERNAME", $username)['ID'];
 
             $action = "request code";
             $function = "forgot password";
@@ -408,7 +408,7 @@
             } else {
 
                 $code = $this->token->generate_token(4); // Generate 8 char long verification code
-                $mail = $this->user->get_mail($user_id);
+                $mail = $this->user->get_user("ID", $user_id)['EMAIL'];
 
                 // Update email row with code
                 $db_conn = new Database;
@@ -447,8 +447,9 @@
             $password = $this->filter->sanitize($password);
             $password_repeat = $this->filter->sanitize($password_repeat);
 
-            $user_id = $this->user->get_user_id($username);
-            $mail = $this->user->get_mail($user_id);
+            $user_data = $this->user->get_user("USERNAME", $username);
+            $user_id = $user_data['ID'];
+            $mail = $user_data['EMAIL'];
 
             $action = "reset password";
             $function = "forgot password";

@@ -18,7 +18,7 @@
     $filter = new Filter;
     $bbcode = new Bbcode;
     $converter = new Converter;
-    $users = new Users;
+    $user = new Users;
 
 ?>
 <!-- SECTION LEGAL START -->
@@ -53,10 +53,10 @@
                 $privacy_part2 = $bbcode->replace($filter->sanitize($row['PRIVACY_PART2']));
                 $refund = $bbcode->replace($filter->sanitize($row['REFUND']));
                 $tos = $bbcode->replace($filter->sanitize($row['TOS']));
-                $user = $filter->sanitize($row['CREATED_BY_USER']);
+                $user_id = $filter->sanitize($row['CREATED_BY_USER']);
                 $date = $filter->sanitize($row['CREATED_DATE']);
 
-                $user = $users->get_username($user);
+                $username = $user->get_user("ID", $user_id)['USERNAME'];
 
             }
             
@@ -70,7 +70,7 @@
             echo '<div id="legal__privacy-target">'.$privacy_part2.'</div>';
             echo '<div id="legal__refund-target">'.$refund.'</div>';
             echo '<div id="legal__tos-target">'.$tos.'</div>';
-            echo "<h6 class='legal__update'>This legal policies was last updated ".$date." by ".ucfirst($user)."</h6></div>";
+            echo "<h6 class='legal__update'>This legal policies was last updated ".$date." by ".ucfirst($username)."</h6></div>";
 
         ?>
         
