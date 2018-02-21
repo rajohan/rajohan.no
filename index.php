@@ -27,26 +27,9 @@
     //-------------------------------------------------
 
     require_once('configs/db.php');                // Get database username, password etc
-    require_once('classes/database_handler.php');  // DATABASE HANDLER
-    require_once('classes/filter.php');            // FILTER
-    require_once('classes/bbcode.php');            // BBCODE
-    require_once('configs/config.php');            // CONFIG
-    require_once('classes/page_handler.php');      // PAGE HANDLER
-    require_once('classes/pagination.php');        // PAGINATION
-    require_once('classes/tags.php');              // TAGS
-    require_once('classes/converter.php');         // CONVERTER
-    require_once('classes/sort.php');              // SORTER
-    require_once('classes/vote.php');              // VOTE
-    require_once('classes/views.php');             // VIEWS
-    require_once('classes/comments.php');          // COMMENTS
-    require_once('classes/users.php');             // USERS
-    require_once('classes/validator.php');         // VALIDATOR
-    require_once('classes/newsletter.php');        // NEWSLETTER
-    require_once('classes/mail.php');              // MAIL
-    require_once('classes/register.php');          // REGISTER
-    require_once('classes/tokens.php');            // TOKENS
-    require_once('classes/login.php');             // LOGIN
-    require_once('classes/ssl_seal.php');          // SSL SEAL
+    require_once('classes/autoloader.php');        // Autoload classes needed
+    require_once('configs/config.php');            // Config
+    
 
     //-------------------------------------------------
     // Initialize classes

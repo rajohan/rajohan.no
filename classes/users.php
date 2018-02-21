@@ -18,6 +18,10 @@
 
         private $filter;
 
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
+        
         function __construct() {
 
             $this->filter = new Filter;
@@ -44,11 +48,9 @@
         //-------------------------------------------------
 
         function verify_password($username, $password) {
-            
-            $filter = new Filter;
 
-            $username = $filter->sanitize($username);
-            $password = $filter->sanitize($password);
+            $username = $this->filter->sanitize($username);
+            $password = $this->filter->sanitize($password);
 
             $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT `PASSWORD` FROM `USERS` WHERE `USERNAME` = ?");
@@ -58,7 +60,7 @@
             
             while ($row = $result->fetch_assoc()) {
 
-                $db_password = $filter->sanitize($row['PASSWORD']);    
+                $db_password = $this->filter->sanitize($row['PASSWORD']);    
 
             }
 

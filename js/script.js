@@ -160,7 +160,7 @@ function add_vote(id, type, vote) {
     
     $.ajax({
             
-        url: "classes/vote.php",
+        url: "classes/ajax.php",
         type: "post",
         data: {add_vote: "true", type: type, vote: vote, id: id},
         dataType: "json",
@@ -230,7 +230,7 @@ function sort_comments(blog_id, order) {
 }
 
 //-------------------------------------------------
-// Take user Back to top
+// Reload comments when pagination is clicked
 //-------------------------------------------------
 
 $(".comments__pagination a").on("click", function(event) {

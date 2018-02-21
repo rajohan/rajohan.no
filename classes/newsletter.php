@@ -1,82 +1,15 @@
 <?php
 
     //-------------------------------------------------
-    // Check for ajax calls / direct access check
+    // Direct access check
     //-------------------------------------------------
 
-    // Check for ajax calls to add new email to subscription list
-    if((isset($_POST['subscribe'])) && ($_POST['subscribe'] === "true") && (isset($_POST['mail']))) {
-       
-        $newsletter = new Newsletter;
+    if(!defined('INCLUDE')) {
 
-        $newsletter->require_files();
-        $newsletter->subscribe($_POST['mail']);
-
+        die('Direct access is not permitted.');
+        
     }
 
-    // Check for ajax calls to generate validation code
-    else if((isset($_POST['unsubscribe'])) && ($_POST['unsubscribe'] === "true") && (isset($_POST['mail']))) {
-
-        $newsletter = new Newsletter;
-
-        $newsletter->require_files();
-        $newsletter->unsubscribe_code($_POST['mail']);
-
-    } 
-    
-    // Check for ajax calls to unsubscribe with validation code
-    else if((isset($_POST['unsubscribe_code'])) && ($_POST['unsubscribe_code'] === "true") && (isset($_POST['mail'])) && (isset($_POST['code']))) {
-       
-        $newsletter = new Newsletter;
-        
-        $newsletter->require_files();
-        $newsletter->unsubscribe($_POST['mail'], $_POST['code']);
-
-    }
-
-    // Check for ajax calls to check if mail address is already subscribed
-    else if ((isset($_POST['mail_subscribed_check'])) && ($_POST['mail_subscribed_check'] === "true") && (isset($_POST['mail']))) {
-        
-        $newsletter = new Newsletter;
-        $newsletter->require_files();
-        
-        if($newsletter->check_email($_POST['mail']) > 0) {
-                
-            echo "false";
-        
-        } else {
-
-            echo "true";
-
-        }
-
-    } 
-
-    // Check for ajax calls to check if mail address entered dont exist in the subscription list
-    else if ((isset($_POST['mail_unsubscribe_check'])) && ($_POST['mail_unsubscribe_check'] === "true") && (isset($_POST['mail']))) {
-        
-        $newsletter = new Newsletter;
-        $newsletter->require_files();
-        
-        if($newsletter->check_email($_POST['mail']) < 1) {
-                
-            echo "false";
-        
-        } else {
-
-            echo "true";
-
-        }
-
-    } else {
-
-        if(!defined('INCLUDE')) {
-
-            die('Direct access is not permitted.');
-            
-        }
-
-    }
 
     //-------------------------------------------------
     // Newsletter
@@ -85,7 +18,12 @@
     class Newsletter {
 
         private $ip;
-        
+        private $filter;
+        private $validator;
+        private $user;
+        private $token;
+        private $send_mail;
+
         //-------------------------------------------------
         // Construct
         //-------------------------------------------------
@@ -93,23 +31,11 @@
         function __construct() {
 
             $this->ip = $_SERVER['REMOTE_ADDR'];;
-            
-        }
-
-        //-------------------------------------------------
-        // Method to require the files needed for ajax calls
-        //-------------------------------------------------
-
-        function require_files() {
-
-            define('INCLUDE','true'); // Define INCLUDE to get access to the files needed
-            require_once('../configs/db.php'); // Get database username, password etc
-            require_once('database_handler.php'); // Database handler
-            require_once('filter.php'); // Filter
-            require_once('validator.php'); // Validator
-            require_once('mail.php'); // Mail
-            require_once('tokens.php'); // Tokens
-            require_once('users.php'); // Users
+            $this->filter = new Filter;
+            $this->validator = new Validator;
+            $this->user = new Users;
+            $this->token = new Tokens;
+            $this->send_mail = new Mail;
 
         }
 
@@ -119,8 +45,7 @@
 
         function check_email($mail) {
 
-            $filter = new Filter;
-            $mail = $filter->sanitize($mail);
+            $mail = $this->filter->sanitize($mail);
             
             $db_conn = new Database;
             $count = $db_conn->count("NEWSLETTER", "WHERE EMAIL = ?", "s", array($mail));
@@ -135,9 +60,8 @@
 
         function check_code($mail, $code) {
 
-            $filter = new Filter;
-            $mail = $filter->sanitize($mail);
-            $code = $filter->sanitize($code);
+            $mail = $this->filter->sanitize($mail);
+            $code = $this->filter->sanitize($code);
 
             // Get token
             $db_conn = new Database;
@@ -148,7 +72,7 @@
             
             while ($row = $result->fetch_assoc()) {
 
-                $db_code = $filter->sanitize($row['CODE']);
+                $db_code = $this->filter->sanitize($row['CODE']);
 
             }
 
@@ -174,14 +98,10 @@
 
         function subscribe($mail) {
 
-            $filter = new Filter;
-            $validator = new Validator;
-            $user = new Users;
-
-            $mail = $filter->sanitize($mail);
+            $mail = $this->filter->sanitize($mail);
 
             // Validate email
-            if($validator->validate_mail($mail)) {
+            if($this->validator->validate_mail($mail)) {
 
                 // Check if the email is already subscribed
                 if($this->check_email($mail) > 0) {
@@ -190,7 +110,7 @@
 
                 } else { // Insert to database
 
-                    $user_id = $user->get_user_id_email($mail);
+                    $user_id = $this->user->get_user_id_email($mail);
 
                     $db_conn = new Database;
                     $db_conn->db_insert("NEWSLETTER", "EMAIL, USER, IP", "sis", array($mail, $user_id, $this->ip));
@@ -211,17 +131,11 @@
         //-------------------------------------------------
 
         function unsubscribe_code($mail) {
-            
-            $filter = new Filter;
-            $validator = new Validator;
-            $send_mail = new Mail;
-            $token = new Tokens;
-            $user = new Users;
 
-            $mail = $filter->sanitize($mail);
+            $mail = $this->filter->sanitize($mail);
 
             // Validate email
-            if($validator->validate_mail($mail)) {
+            if($this->validator->validate_mail($mail)) {
 
                 // Check if the email is subscribed
                 if($this->check_email($mail) < 1) {
@@ -230,10 +144,10 @@
 
                 } else { // Insert to database
 
-                    $code = $token->generate_token(3); // Generate 6 char long verification code
+                    $code = $this->token->generate_token(3); // Generate 6 char long verification code
                     $action = "create";
                     $function = "unsubscribe";
-                    $user_id = $user->get_user_id_email($mail);
+                    $user_id = $this->user->get_user_id_email($mail);
 
                     // Update email row with code
                     $db_conn = new Database;
@@ -252,7 +166,7 @@
                     
                     $alt_body = "A request to unsubscribe from rajohan.no's newsletters was made from IP ".$this->ip.".\r\n\r\nTo confirm your unsubscription please type in the verification code underneath on the page you requested the unsubscription on or click on this link https://rajohan.no/unsubscribe/?email=".$mail."&code=".$code[1]."\r\n\r\nYour verification code: ".$code[1]."\r\n\r\nIf this unsubscription was not requested by you this email can be ignored.";
                     
-                    $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
+                    $this->send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
 
                     echo "To confirm your unsubscription an email with a verification code is sent to the email address you entered. Input the verification code in the field underneath or click on the link provided in the email.";
                     require_once('../modules/newsletter_unsubscribe.php');
@@ -272,20 +186,16 @@
         //-------------------------------------------------
 
         function unsubscribe($mail, $code) {
-            
-            $filter = new Filter;
-            $validator = new Validator;
-            $user = new Users;
 
-            $mail = $filter->sanitize($mail);
-            $code = $filter->sanitize($code);
+            $mail = $this->filter->sanitize($mail);
+            $code = $this->filter->sanitize($code);
 
             $action = "use";
             $function = "unsubscribe";
-            $user_id = $user->get_user_id_email($mail);
+            $user_id = $this->user->get_user_id_email($mail);
 
             // Validate email
-            if($validator->validate_mail($mail)) {
+            if($this->validator->validate_mail($mail)) {
 
                 $db_conn = new Database;
                 $count_with_code = $db_conn->count("NEWSLETTER", "WHERE EMAIL = ? AND CODE = ?", "ss", array($mail, $code));
@@ -298,7 +208,7 @@
                 }
                 
                 // Check if the code is equal to 6 chars 
-                else if (!$validator->validate_token_code($code)) {
+                else if (!$this->validator->validate_token_code($code)) {
 
                     echo "The verification code you entered is invalid.";
 

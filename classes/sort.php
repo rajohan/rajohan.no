@@ -43,7 +43,6 @@
         private function get_tag_id($tag) {
 
             $db_conn = new Database;
-            
             $stmt = $db_conn->connect->prepare('SELECT `ID` FROM `TAGS` WHERE `TAG` = ? LIMIT 1'); // prepare statement
             $stmt->bind_param("s", $tag);
             $stmt->execute(); // select from database
@@ -67,11 +66,11 @@
         private function get_blog_id($tag_id) {
 
             $db_conn = new Database;
-            
             $stmt = $db_conn->connect->prepare('SELECT `BLOG_ID` FROM `TAGS_LINK_BLOG` WHERE `TAG_ID` = ?'); // prepare statement
             $stmt->bind_param("i", $tag_id);
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
+
             $blog_id = [];
 
             while ($row = $result->fetch_assoc()) {
@@ -117,9 +116,8 @@
 
                                 $tag = $this->filter->sanitize(strtolower($this->params[$this->params_count-1]));
 
-                                $db_conn = new Database;
-
                                 // Check that tag exists in the database
+                                $db_conn = new Database;
                                 if($db_conn->count("TAGS", "WHERE TAG = ?", "s", array($tag)) > 0) {
 
                                     $tag_id = $this->get_tag_id($tag);
@@ -147,10 +145,8 @@
 
         function blog_sort($id_row_name, $table) {
 
-            $db_conn = new Database;
-            $filter = new Filter;
-
             // Select BLOG_ID from BLOG_VIEWS
+            $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT $id_row_name FROM $table");
             $stmt->execute();
             $result = $stmt->get_result();
@@ -160,7 +156,7 @@
             // Crate array with blog ids
             while ($row = $result->fetch_assoc()) {
 
-                $blog_id = $filter->sanitize($row[$id_row_name]);
+                $blog_id = $this->filter->sanitize($row[$id_row_name]);
                 array_push($blog_sort_count, $blog_id);
                 
             }
@@ -192,10 +188,8 @@
 
         function comment_sort($blog_id) {
 
-            $db_conn = new Database;
-            $filter = new Filter;
-
             // Get all root comments
+            $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT ID FROM `COMMENTS` WHERE `BLOG_ID`=?  AND `REPLY_TO` < 1");
             $stmt->bind_param("i", $blog_id);
             $stmt->execute();
@@ -206,7 +200,7 @@
             // Crate array with root comments
             while ($row = $result->fetch_assoc()) {
 
-                $comment_ids = $filter->sanitize($row['ID']);
+                $comment_ids = $this->filter->sanitize($row['ID']);
                 array_push($comment_root_id, $comment_ids);
                 
             }
@@ -217,14 +211,13 @@
             $comment_ids = implode(",",$comment_root_id);
 
             // Get comment count for each root comment
-            $db_conn = new Database;
-            
             if(empty($comment_ids)) {
 
                 $comment_ids = 0;
 
             }
 
+            $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT `ITEM_ID` FROM `COMMENT_VOTES` WHERE VOTE > 0 AND `ITEM_ID` IN ($comment_ids)");
             $stmt->execute();
             $result = $stmt->get_result();
@@ -234,7 +227,7 @@
             // Crate array with comment count
             while ($row = $result->fetch_assoc()) {
 
-                $comment_id = $filter->sanitize($row['ITEM_ID']);
+                $comment_id = $this->filter->sanitize($row['ITEM_ID']);
                 array_push($comment_vote_count, $comment_id);
                 
             }

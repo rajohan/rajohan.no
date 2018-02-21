@@ -1,26 +1,12 @@
 <?php
     
     //-------------------------------------------------
-    // Check for ajax calls / direct access check
+    // Direct access check
     //-------------------------------------------------
 
-    if(!empty($_POST['get_headers']) && $_POST['get_headers'] === "true") {
+    if(!defined('INCLUDE')) {
 
-        define('INCLUDE','true'); // Define INCLUDE to get access to the files needed 
-        require_once('../configs/db.php'); // Get database username, password etc
-        require_once('database_handler.php'); // Database handler
-        require_once('filter.php'); // Filter
-
-        $header = new Header;
-        $header->get_header_content(); // Get the headers from the database
-
-    } else { // Else check that the file is included and not accessed directly
-
-        if(!defined('INCLUDE')) {
-
-            die('Direct access is not permitted.');
-            
-        }
+        die('Direct access is not permitted.');
         
     }
 

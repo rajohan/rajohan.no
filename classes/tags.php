@@ -16,6 +16,20 @@
 
     class Tags {
 
+        private $filter;
+        private $page;
+
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
+
+        function __construct() {
+
+            $this->filter = new Filter;
+            $this->page = new Page_handler;
+
+        }
+
         //-------------------------------------------------
         // Method to add count value to the tags
         //-------------------------------------------------
@@ -55,7 +69,6 @@
         function get_all_tags() {
 
             $db_conn = new Database;
-            $filter = new Filter;
 
             $stmt = $db_conn->connect->prepare("SELECT * FROM `TAGS`"); // prepare statement
             $stmt->execute(); // select from database
@@ -66,8 +79,8 @@
             // Get all tag names
             while ($row = $result->fetch_assoc()) {
                 
-                $id = $filter->sanitize($row['ID']);
-                $tags = $filter->sanitize($row['TAG']);
+                $id = $this->filter->sanitize($row['ID']);
+                $tags = $this->filter->sanitize($row['TAG']);
                 $all_tags[$id] = strtoupper($tags);
 
             }
@@ -86,7 +99,6 @@
         function get_blog_tags($id) {
             
             $db_conn = new Database;
-            
             $stmt = $db_conn->connect->prepare("SELECT `TAG_ID` FROM `TAGS_LINK_BLOG` WHERE `BLOG_ID` = ?"); // prepare statement
             $stmt->bind_param("i", $id);
             $stmt->execute(); // select from database
@@ -108,7 +120,6 @@
             foreach($tag_id as $tags) {
 
                 $db_conn = new Database;
-                
                 $stmt = $db_conn->connect->prepare("SELECT `TAG` FROM `TAGS` WHERE `ID` = ?"); // prepare statement
                 $stmt->bind_param("i", $tags);
                 $stmt->execute(); // select from database
@@ -136,8 +147,7 @@
 
         function add_link($tags) {
 
-            $page = new Page_handler;
-            $tag_page = $page->page;
+            $tag_page = $this->page->page;
 
             if($tag_page === "read") {
                 $tag_page = "blog";

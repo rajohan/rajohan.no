@@ -36,7 +36,7 @@ $(document).ready(function () {
                     required: true,
                     regex: /^[\w\-]{5,15}$/,
                     remote: {
-                        url: "classes/login.php",
+                        url: "classes/ajax.php",
                         type: "post",
                         data: {
                             login_check_username: true,
@@ -143,7 +143,7 @@ $(document).ready(function () {
                         },
                        
                         type: "post",
-                        url: "classes/login.php",
+                        url: "classes/ajax.php",
                        
                         // On success output the requested site.
                         success: function (data) {

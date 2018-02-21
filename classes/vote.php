@@ -1,58 +1,12 @@
 <?php
 
     //-------------------------------------------------
-    // Check for ajax calls / direct access check
+    // Direct access check
     //-------------------------------------------------
 
-    if(!empty($_POST['add_vote']) && $_POST['add_vote'] === "true") {
+    if(!defined('INCLUDE')) {
 
-        define('INCLUDE','true'); // Define INCLUDE to get access to the files needed 
-        require_once('../configs/db.php'); // Get database username, password etc
-        include_once('database_handler.php'); // Database handler
-        include_once('filter.php'); // Filter
-
-        $filter = new Filter;
-        $votes = new Vote;
-
-        $vote = $filter->sanitize($_POST['vote']);
-        $id = $filter->sanitize($_POST['id']);
-        $type = $filter->sanitize($_POST['type']);
-        
-        if($type === "blog") {
-            
-            $votes->add_blog_vote($vote, $id);
-            $table = "BLOG_VOTES";
-
-        }
-
-        else if($type === "comment") {
-    
-            $votes->add_comment_vote($vote, $id);
-            $table = "COMMENT_VOTES";
-            
-        }
-
-        // Get new likes count
-        $db_conn = new Database;
-        $votes_like = $db_conn->count($table, 'WHERE ITEM_ID = ? AND VOTE = 1', "i", array($id));
-        
-        // Get new dislike count
-        $db_conn = new Database;
-        $votes_dislike = $db_conn->count($table, 'WHERE ITEM_ID = ? AND VOTE = 0', "i", array($id));
-
-        // Crate like/dislike arrays
-        $vote_array['like'] = $votes_like;
-        $vote_array['dislike'] = $votes_dislike;
-
-        echo json_encode($vote_array);
-     
-    } else { // Else check that the file is included and not accessed directly
-
-        if(!defined('INCLUDE')) {
-
-            die('Direct access is not permitted.');
-            
-        }
+        die('Direct access is not permitted.');
         
     }
     

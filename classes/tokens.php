@@ -69,14 +69,26 @@
         }
 
         //-------------------------------------------------
-        // Method to encode user_id
+        // Method to encode data
         //-------------------------------------------------
 
-        function encode_user_id($user_id) {
+        function encode_data($data) {
 
-            $user_id_encoded = base64_encode($user_id);
+            $data = base64_encode($data);
 
-            return $user_id_encoded;
+            return $data;
+
+        }
+
+        //-------------------------------------------------
+        // Method to decode data
+        //-------------------------------------------------
+
+        function decode_data($data) {
+
+            $data = base64_decode($data);
+
+            return $data;
 
         }
 

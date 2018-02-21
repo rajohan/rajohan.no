@@ -9,7 +9,7 @@ $(document).ready(function() {
     
     $.ajax({
             
-        url: "classes/header.php",
+        url: "classes/ajax.php",
         type: "post",
         dataType: "json",
         data: {get_headers: "true"},

@@ -1,53 +1,16 @@
 <?php
 
     //-------------------------------------------------
-    // Check for ajax calls / direct access check
-    //-------------------------------------------------
-
-    // Check for ajax calls to check if username exist
-    if((isset($_POST['login_check_username'])) && ($_POST['login_check_username'] === "true") && (isset($_POST['login_username']))) {
-       
-        $login = new Login;
-        $login->require_files();
-
-        $user = new Users;
-
-        if($user->username_check($_POST['login_username']) < 1) {
-                
-            echo "false";
-        
-        } else {
-
-            echo "true";
-
-        }
-
-    }
-    
-    // Check for ajax calls to register user
-    else if((isset($_POST['login_user'])) && ($_POST['login_user'] === "true") && (isset($_POST['login_username'])) && (isset($_POST['login_password'])) && (isset($_POST['login_remember']))) {
-        
-        $login = new Login;
-        $login->require_files();
-        $login->login($_POST['login_username'], $_POST['login_password'], $_POST['login_remember']);
-
-    } else {
-
-        if(!defined('INCLUDE')) {
-
-            die('Direct access is not permitted.');
-            
-        }
-
-    }
-
-    //-------------------------------------------------
     // Login
     //-------------------------------------------------
 
     class Login {
 
         private $ip;
+        private $token;
+        private $filter;
+        private $user;
+        private $validator;
 
         //-------------------------------------------------
         // Construct
@@ -56,23 +19,10 @@
         function __construct() {
 
             $this->ip = $_SERVER['REMOTE_ADDR'];;
-            
-        }
-
-        //-------------------------------------------------
-        // Method to require the files needed for ajax calls
-        //-------------------------------------------------
-
-        function require_files() {
-
-            session_start();
-            define('INCLUDE','true'); // Define INCLUDE to get access to the files needed
-            require_once('../configs/db.php'); // Get database username, password etc
-            require_once('database_handler.php'); // Database handler
-            require_once('filter.php'); // Filter
-            require_once('validator.php'); // Validator
-            require_once('users.php'); // Users
-            require_once('tokens.php'); // Tokens
+            $this->token = new Tokens;
+            $this->filter = new Filter;
+            $this->user = new Users;
+            $this->validator = new Validator;
 
         }
 
@@ -82,12 +32,10 @@
 
         function remember($user_id) {
 
-            $token = new Tokens;
-
-            $token_array = $token->generate_token(32);
-            $selector_array =  $token->generate_selector(16);
-            $expire_array = $token->generate_expire_time(30); // 30 days
-            $user_id_encoded = $token->encode_user_id($user_id);
+            $token_array = $this->token->generate_token(32);
+            $selector_array =  $this->token->generate_selector(16);
+            $expire_array = $this->token->generate_expire_time(30); // 30 days
+            $user_id_encoded = $this->token->encode_data($user_id);
 
             $value = $selector_array[1]."|".$token_array[1];
 
@@ -104,11 +52,10 @@
 
         function check_remember() {
             
-            $filter = new Filter;
-            $cookie = $filter->sanitize($_COOKIE['REMEMBER_ME_TOKEN']);
+            $cookie = $this->filter->sanitize($_COOKIE['REMEMBER_ME_TOKEN']);
             $tokens = explode('|', $cookie); // Split remember me cookie
 
-            $selector = base64_encode($tokens[0]); // Encode selector
+            $selector = $this->token->encode_data($tokens[0]); // Encode selector
             $token = $tokens[1];
 
             // Get token and user id
@@ -120,8 +67,8 @@
             
             while ($row = $result->fetch_assoc()) {
 
-                $db_token = $filter->sanitize($row['TOKEN']);
-                $user_id = base64_decode($filter->sanitize($row['USER']));
+                $db_token = $this->filter->sanitize($row['TOKEN']);
+                $user_id = $this->token->decode_data($this->filter->sanitize($row['USER']));
 
             }
 
@@ -137,13 +84,14 @@
                 setcookie('REMEMBER_ME_TOKEN', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], true, true); // empty value and old timestamp
 
                 return false;
+                
             }
 
             $verify = password_verify($token, $db_token); // Verify token
 
             if($verify) {
 
-                $user_id_encoded = base64_encode($user_id);
+                $user_id_encoded = $this->user->encode_data($user_id);
                 $db_conn = new Database;
                 $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded); // Delete old token
 
@@ -172,15 +120,12 @@
 
         function create_sessions($user_id) {
 
-            $user = new Users;
-            $filter = new Filter;
-
-            $user_id = $filter->sanitize($user_id);
+            $user_id = $this->filter->sanitize($user_id);
 
             $_SESSION['LOGGED_IN'] = true;
             $_SESSION['USER']['ID'] = $user_id;
-            $_SESSION['USER']['USERNAME'] = $user->get_username($user_id);
-            $_SESSION['USER']['ACCESS_LEVEL'] = $user->get_admin_level($user_id);
+            $_SESSION['USER']['USERNAME'] = $this->user->get_username($user_id);
+            $_SESSION['USER']['ACCESS_LEVEL'] = $this->user->get_admin_level($user_id);
 
         }
 
@@ -190,14 +135,12 @@
 
         function logout() {
 
-            $filter = new Filter;
-
-            $user_id = $filter->sanitize($_SESSION['USER']['ID']);
+            $user_id = $this->filter->sanitize($_SESSION['USER']['ID']);
 
             session_destroy();
 
             // Delete token if it exists
-            $user_id_encoded = base64_encode($user_id);
+            $user_id_encoded = $this->user->encode_data($user_id);
             $db_conn = new Database;
             $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded);
 
@@ -217,42 +160,38 @@
 
         function login($username, $password, $remember) {
 
-            $filter = new Filter;
-            $validator = new Validator;
-            $user = new Users;
-
-            $username = $filter->sanitize($username);
-            $password = $filter->sanitize($password);
-            $remember = $filter->sanitize($remember);
+            $username = $this->filter->sanitize($username);
+            $password = $this->filter->sanitize($password);
+            $remember = $this->filter->sanitize($remember);
 
             // Check that username is valid
-            if (!$validator->validate_username($username)) {
+            if (!$this->validator->validate_username($username)) {
 
                 echo "Invalid username.";
 
             }
 
             // Check that username exist
-            else if($user->username_check($_POST['login_username']) < 1) {
+            else if($this->user->username_check($_POST['login_username']) < 1) {
 
                 echo "The username you entered does not exist.";
 
             }
 
             // Check that password is valid
-            else if(!$validator->validate_password($password)) {
+            else if(!$this->validator->validate_password($password)) {
 
                 echo "Invalid password.";
 
             }
 
             // Check that password equals username password
-            elseif(!$user->verify_password($username, $password)) {
+            elseif(!$this->user->verify_password($username, $password)) {
 
                 echo "The password you entered is incorrect.";
                 require_once('../modules/login.php');
 
-                $user_id = $user->get_user_id($username); // Get user id from username
+                $user_id = $this->user->get_user_id($username); // Get user id from username
                 
                 // Log to auth log
                 $db_conn = new Database;
@@ -263,12 +202,12 @@
             // Login
             else {
 
-                $user_id = $user->get_user_id($username); // Get user id from username
+                $user_id = $this->user->get_user_id($username); // Get user id from username
 
                 // Check if remember me is checked
                 if($remember === "1") {
                     
-                    $user_id_encoded = base64_encode($user_id);
+                    $user_id_encoded = $this->user->encode_data($user_id);
                     $db_conn = new Database;
                     $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded); // Delete old token
 

@@ -4,135 +4,10 @@
     // Check for ajax calls / direct access check
     //-------------------------------------------------
 
-    // Check for ajax calls to check if username is taken
-    if((isset($_POST['register_username_check'])) && ($_POST['register_username_check'] === "true") && (isset($_POST['register_username']))) {
-       
-        $register = new Register;
-        $register->require_files();
+    if(!defined('INCLUDE')) {
 
-        $user = new Users;
-
-        if($user->username_check($_POST['register_username']) > 0) {
-                
-            echo "false";
-        
-        } else {
-
-            echo "true";
-
-        }
-
-    }
-
-    // Check for ajax calls to check if email is already registered (when registering)
-    else if((isset($_POST['register_mail_check'])) && ($_POST['register_mail_check'] === "true") && (isset($_POST['register_mail']))) {
-        
-        $register = new Register;
-        $register->require_files();
-
-        if($register->mail_check($_POST['register_mail']) > 0) {
-                
-            echo "false";
-        
-        } else {
-
-            echo "true";
-
-        }
-
-    }
-
-    // Check for ajax calls to check if email is registered and not verified (when verifying)
-    else if((isset($_POST['verify_check_mail'])) && ($_POST['verify_check_mail'] === "true") && (isset($_POST['verify_mail']))) {
-        
-        $register = new Register;
-        $register->require_files();
-
-        if($register->check_mail_verified($_POST['verify_mail']) < 1) {
-                
-            echo "false";
-        
-        } else {
-
-            echo "true";
-
-        }
-
-    }
-
-    // Check for ajax calls to check if email is registered and not verified (when resending verification code)
-    else if((isset($_POST['resend_check_mail'])) && ($_POST['resend_check_mail'] === "true") && (isset($_POST['resend_mail']))) {
-        
-        $register = new Register;
-        $register->require_files();
-
-        if($register->check_mail_verified($_POST['resend_mail']) < 1) {
-                
-            echo "false";
-        
-        } else {
-
-            echo "true";
-
-        }
-
-    }
-
-    // Check for ajax calls to resend verification code
-    else if((isset($_POST['resend_code'])) && ($_POST['resend_code'] === "true") && (isset($_POST['resend_mail']))) {
-
-        $register = new Register;
-        $register->require_files();
-        $register->resend_code($_POST['resend_mail']);
-
-    }
-
-    // Check for ajax calls to verify email
-    else if ((isset($_POST['verify_email'])) && ($_POST['verify_email'] === "true") && (isset($_POST['verify_mail'])) && (isset($_POST['verify_code']))) {
-
-        $register = new Register;
-        $register->require_files();
-
-        $register->verify_user($_POST['verify_mail'], $_POST['verify_code']);
-
-    }
-
-    // Check for ajax calls to generate token for forgot password
-    else if ((isset($_POST['forgot_password'])) && ($_POST['forgot_password'] === "true") && (isset($_POST['username'])) && (isset($_POST['mail']))) {
-
-        $register = new Register;
-        $register->require_files();
-
-        $register->forgot_password($_POST['username'], $_POST['mail']);
-
-    }
-
-    // Check for ajax calls toreset password for forgot password
-    else if ((isset($_POST['forgot_password_verify'])) && ($_POST['forgot_password_verify'] === "true") && (isset($_POST['username'])) && (isset($_POST['code'])) && (isset($_POST['password'])) && (isset($_POST['password_repeat']))) {
-
-        $register = new Register;
-        $register->require_files();
-
-        $register->forgot_password_verify($_POST['username'], $_POST['code'], $_POST['password'], $_POST['password_repeat']);
-
-    }
-    
-    // Check for ajax calls to register user
-    else if((isset($_POST['register'])) && ($_POST['register'] === "true") && (isset($_POST['register_username'])) && (isset($_POST['register_mail'])) && (isset($_POST['register_password'])) && (isset($_POST['register_password_repeat']))) {
-        
-        $register = new Register;
-        $register->require_files();
-
-        $register->register_user($_POST['register_username'], $_POST['register_mail'], $_POST['register_password'], $_POST['register_password_repeat']);
-
-    } else {
-
-        if(!defined('INCLUDE')) {
-
-            die('Direct access is not permitted.');
+        die('Direct access is not permitted.');
             
-        }
-
     }
 
     //-------------------------------------------------
@@ -142,6 +17,11 @@
     class Register {
 
         private $ip;
+        private $filter;
+        private $validator;
+        private $send_mail;
+        private $user;
+        private $tokens;
 
         //-------------------------------------------------
         // Construct
@@ -150,23 +30,11 @@
         function __construct() {
 
             $this->ip = $_SERVER['REMOTE_ADDR'];
-            
-        }
-
-        //-------------------------------------------------
-        // Method to require the files needed for ajax calls
-        //-------------------------------------------------
-
-        function require_files() {
-
-            define('INCLUDE','true'); // Define INCLUDE to get access to the files needed
-            require_once('../configs/db.php'); // Get database username, password etc
-            require_once('database_handler.php'); // Database handler
-            require_once('filter.php'); // Filter
-            require_once('validator.php'); // Validator
-            require_once('mail.php'); // Mail
-            require_once('users.php'); // Users
-            require_once('tokens.php'); // Tokens
+            $this->filter = new Filter;
+            $this->validator = new Validator;
+            $this->send_mail = new Mail;
+            $this->user = new Users;
+            $this->token = new Tokens;
 
         }
 
@@ -175,11 +43,10 @@
         //-------------------------------------------------
 
         function mail_check($mail) {
+            
+            $mail = $this->filter->sanitize($mail);
 
             $db_conn = new Database;
-            $filter = new Filter;
-            $mail = $filter->sanitize($mail);
-
             $count = $db_conn->count("USERS", "WHERE EMAIL = ?", "s", array($mail));
 
             return $count;
@@ -192,12 +59,10 @@
 
         function username_mail_check($username, $mail) {
 
+            $username = $this->filter->sanitize($username);
+            $mail = $this->filter->sanitize($mail);
+
             $db_conn = new Database;
-            $filter = new Filter;
-
-            $username = $filter->sanitize($username);
-            $mail = $filter->sanitize($mail);
-
             $count = $db_conn->count("USERS", "WHERE USERNAME = ? AND EMAIL = ?", "ss", array($username, $mail));
 
             return $count;
@@ -210,8 +75,7 @@
 
         function check_mail_verified($mail) {
 
-            $filter = new Filter;
-            $mail = $filter->sanitize($mail);
+            $mail = $this->filter->sanitize($mail);
             
             $db_conn = new Database;
             $count = $db_conn->count("USERS", "WHERE EMAIL = ? AND EMAIL_VERIFIED < 1", "s", array($mail));
@@ -226,9 +90,8 @@
 
         function check_code($mail, $code) {
 
-            $filter = new Filter;
-            $mail = $filter->sanitize($mail);
-            $code = $filter->sanitize($code);
+            $mail = $this->filter->sanitize($mail);
+            $code = $this->filter->sanitize($code);
 
             // Get token
             $db_conn = new Database;
@@ -239,7 +102,7 @@
             
             while ($row = $result->fetch_assoc()) {
 
-                $db_code = $filter->sanitize($row['CODE']);
+                $db_code = $this->filter->sanitize($row['CODE']);
 
             }
 
@@ -265,9 +128,8 @@
 
         function forgot_password_verify_code($user_id, $code) {
 
-            $filter = new Filter;
-            $user_id = $filter->sanitize($user_id);
-            $code = $filter->sanitize($code);
+            $user_id = $this->filter->sanitize($user_id);
+            $code = $this->filter->sanitize($code);
 
             // Get token
             $db_conn = new Database;
@@ -278,7 +140,7 @@
             
             while ($row = $result->fetch_assoc()) {
 
-                $db_code = $filter->sanitize($row['PASSWORD_CODE']);
+                $db_code = $this->filter->sanitize($row['PASSWORD_CODE']);
 
             }
 
@@ -304,33 +166,27 @@
 
         function register_user($username, $mail, $password, $password_repeat) {
 
-            $filter = new Filter;
-            $validator = new Validator;
-            $send_mail = new Mail;
-            $user = new Users;
-            $token = new Tokens;
-
-            $username = $filter->sanitize($username);
-            $mail = $filter->sanitize($mail);
-            $password = $filter->sanitize($password);
-            $password_repeat = $filter->sanitize($password_repeat);
+            $username = $this->filter->sanitize($username);
+            $mail = $this->filter->sanitize($mail);
+            $password = $this->filter->sanitize($password);
+            $password_repeat = $this->filter->sanitize($password_repeat);
             
             // Invalid username
-            if(!$validator->validate_username($username)) {
+            if(!$this->validator->validate_username($username)) {
 
                 echo "Invalid username. Minimum 5 and max 15 characters. Only letters and numbers are allowed.";
 
             }
 
             // Invalid email
-            else if(!$validator->validate_mail($mail)) {
+            else if(!$this->validator->validate_mail($mail)) {
 
                 echo "Invalid email address.";
 
             }
 
             // Username taken
-            else if($user->username_check($username) > 0) {
+            else if($this->user->username_check($username) > 0) {
 
                 echo "Username is already taken.";
 
@@ -351,13 +207,13 @@
             }
 
             // Invalid password
-            else if(!$validator->validate_password($password)) {
+            else if(!$this->validator->validate_password($password)) {
 
                 echo "Invalid password. Minimum 6 characters.";
 
             } else { // Register user
 
-                $code = $token->generate_token(3); // Generate 6 char long verification code
+                $code = $this->token->generate_token(3); // Generate 6 char long verification code
                 $password = password_hash($password, PASSWORD_DEFAULT); // Encrypt the password
 
                 // Create user
@@ -366,7 +222,7 @@
 
                 $action = "create";
                 $function = "verify email";
-                $user_id = $user->get_user_id_email($mail);
+                $user_id = $this->user->get_user_id_email($mail);
 
                 // Log to verification log
                 $db_conn = new Database;
@@ -380,7 +236,7 @@
                 $body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code[1]."<br><br>Your verification code: ".$code[1]."<br><br>If this registration was not made by you this email can be ignored.<br><br>The registration was made from IP ".$this->ip.".";
                 $alt_body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code[1]."\r\n\r\nYour verification code: ".$code[1]."\r\n\r\nIf this registration was not made by you this email can be ignored.\r\n\r\nThe registration was made from IP ".$this->ip.".";
                 
-                $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
+                $this->send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
 
                 echo "Almost done! To confirm your email address a verification code is sent to the email address you entered. Input the verification code in the field underneath or click on the link provided in the email.";
                 
@@ -395,16 +251,10 @@
         //-------------------------------------------------
 
         function resend_code($mail) {
-
-            $filter = new Filter;
-            $validator = new Validator;
-            $send_mail = new Mail;
-            $user = new Users;
-            $token = new Tokens;
             
-            $mail = $filter->sanitize($mail);
+            $mail = $this->filter->sanitize($mail);
 
-            if(!$validator->validate_mail($mail)) {
+            if(!$this->validator->validate_mail($mail)) {
 
                 echo "Invalid email.";
 
@@ -422,11 +272,11 @@
 
             } else {
                 
-                $code = $token->generate_token(3); // Generate 6 char long verification code                
+                $code = $this->token->generate_token(3); // Generate 6 char long verification code                
 
                 $action = "create";
                 $function = "verify email resend";
-                $user_id = $user->get_user_id_email($mail);
+                $user_id = $this->user->get_user_id_email($mail);
 
                 // Log to verification log
                 $db_conn = new Database;
@@ -444,7 +294,7 @@
                 $body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code[1]."<br><br>Your verification code: ".$code[1]."<br><br>If this registration was not made by you this email can be ignored.<br><br>The registration was made from IP ".$this->ip.".";
                 $alt_body = "To complete your registration on rajohan.no please confirm your email address by typing in the verification code underneath on the registration page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code[1]."\r\n\r\nYour verification code: ".$code[1]."\r\n\r\nIf this registration was not made by you this email can be ignored.\r\n\r\nThe registration was made from IP ".$this->ip.".";
                 
-                $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
+                $this->send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
 
                 echo "Almost done! To confirm your email address a verification code is sent to the email address you entered. Input the verification code in the field underneath or click on the link provided in the email.";
                 
@@ -460,18 +310,14 @@
         
         function verify_user($mail, $code) {
 
-            $filter = new Filter;
-            $validator = new Validator;
-            $user = new Users;
-
-            $mail = $filter->sanitize($mail);
-            $code = $filter->sanitize($code);
+            $mail = $this->filter->sanitize($mail);
+            $code = $this->filter->sanitize($code);
 
             $action = "use";
             $function = "verify email";
-            $user_id = $user->get_user_id_email($mail);
+            $user_id = $this->user->get_user_id_email($mail);
 
-            if(!$validator->validate_mail($mail)) {
+            if(!$this->validator->validate_mail($mail)) {
 
                 echo "Invalid email.";
 
@@ -489,7 +335,7 @@
 
             }
 
-            else if(!$validator->validate_token_code($code)) {
+            else if(!$this->validator->validate_token_code($code)) {
 
                 echo "The verification code you entered is invalid.";
 
@@ -528,29 +374,23 @@
         //-------------------------------------------------
         
         function forgot_password($username, $mail) {
-
-            $filter = new Filter;
-            $validator = new Validator;
-            $send_mail = new Mail;
-            $user = new Users;
-            $token = new Tokens;
             
-            $username = $filter->sanitize($username);
-            $mail = $filter->sanitize($mail);
-            $user_id = $user->get_user_id($username);
+            $username = $this->filter->sanitize($username);
+            $mail = $this->filter->sanitize($mail);
+            $user_id = $this->user->get_user_id($username);
 
             $action = "request code";
             $function = "forgot password";
 
             // Invalid username
-            if(!$validator->validate_username($username)) {
+            if(!$this->validator->validate_username($username)) {
 
                 echo "Invalid username. Minimum 5 and max 15 characters. Only letters and numbers are allowed.";
 
             }
 
             // Invalid email
-            else if(!$validator->validate_mail($mail)) {
+            else if(!$this->validator->validate_mail($mail)) {
 
                 echo "Invalid email address.";
 
@@ -567,8 +407,8 @@
 
             } else {
 
-                $code = $token->generate_token(4); // Generate 8 char long verification code
-                $mail = $user->get_mail($user_id);
+                $code = $this->token->generate_token(4); // Generate 8 char long verification code
+                $mail = $this->user->get_mail($user_id);
 
                 // Update email row with code
                 $db_conn = new Database;
@@ -587,7 +427,7 @@
                 
                 $alt_body = "A request to reset your user accounts password on rajohan.no was made from IP ".$this->ip.".\r\n\r\nTo reset your password please type in the verification code underneath on the page you requested the password reset on or click on this link https://rajohan.no/forgot_verify/?user=".$username."&code=".$code[1]."\r\n\r\nYour verification code: ".$code[1]."\r\n\r\nIf this password reset was not requested by you this email can be ignored.";
                 
-                $send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
+                $this->send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
 
                 echo "To confirm your password reset a email with a verification code is sent to the entered user accounts email address. Input the verification code in the field underneath or click on the link provided in the email and choose a new password.";
                 require_once('../modules/forgot_verify.php');
@@ -601,33 +441,27 @@
         //-------------------------------------------------
         
         function forgot_password_verify($username, $code, $password, $password_repeat) {
-
-            $filter = new Filter;
-            $validator = new Validator;
-            $send_mail = new Mail;
-            $user = new Users;
-            $token = new Tokens;
             
-            $username = $filter->sanitize($username);
-            $code = $filter->sanitize($code);
-            $password = $filter->sanitize($password);
-            $password_repeat = $filter->sanitize($password_repeat);
+            $username = $this->filter->sanitize($username);
+            $code = $this->filter->sanitize($code);
+            $password = $this->filter->sanitize($password);
+            $password_repeat = $this->filter->sanitize($password_repeat);
 
-            $user_id = $user->get_user_id($username);
-            $mail = $user->get_mail($user_id);
+            $user_id = $this->user->get_user_id($username);
+            $mail = $this->user->get_mail($user_id);
 
             $action = "reset password";
             $function = "forgot password";
 
             // Invalid username
-            if(!$validator->validate_username($username)) {
+            if(!$this->validator->validate_username($username)) {
 
                 echo "Invalid username. Minimum 5 and max 15 characters. Only letters and numbers are allowed.";
 
             }
 
             // Invalid email
-            else if(!$validator->validate_forgot_password_code($code)) {
+            else if(!$this->validator->validate_forgot_password_code($code)) {
 
                 echo "Invalid verification code.";
 
@@ -654,7 +488,7 @@
             }
 
             // Invalid password
-            else if(!$validator->validate_password($password)) {
+            else if(!$this->validator->validate_password($password)) {
 
                 echo "Invalid password. Minimum 6 characters.";
 
