@@ -105,7 +105,7 @@
 
                 foreach($row as $key => $value) {
 
-                    $user_data[$key] = $value;
+                    $user_data[$key] = $this->filter->sanitize($value);
     
                 }
 

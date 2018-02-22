@@ -179,7 +179,22 @@
         </div>
         <form method="post" id="blog__add-comment__form">
             <div class="toolbox">
-                Toolbar
+                <img src="img/icons/bold.svg" alt="bold" id="toolbox__bold" class="toolbox__icon">
+                <img src="img/icons/italic.svg" alt="italic" id="toolbox__italic" class="toolbox__icon">
+                <img src="img/icons/underline.svg" alt="underline" id="toolbox__underline" class="toolbox__icon">
+                <img src="img/icons/strikethrough.svg" alt="strikethrough" id="toolbox__strikethrough" class="toolbox__icon">
+                <div class="toolbox__separator"></div>
+                <img src="img/icons/list.svg" alt="list" id="toolbox__list" class="toolbox__icon">
+                <img src="img/icons/list2.svg" alt="list2" id="toolbox__list2" class="toolbox__icon">
+                <img src="img/icons/list-numbered.svg" alt="list-numbered" id="toolbox__list-numbered" class="toolbox__icon">
+                <div class="toolbox__separator"></div>
+                <img src="img/icons/link.svg" alt="link" id="toolbox__link" class="toolbox__icon">
+                <img src="img/icons/envelop.svg" alt="envelop" id="toolbox__envelop" class="toolbox__icon">
+                <img src="img/icons/image.svg" alt="image" id="toolbox__image" class="toolbox__icon">
+                <div class="toolbox__separator"></div>
+                <img src="img/icons/quotes-right.svg" alt="quotes-right" id="toolbox__quotes-right" class="toolbox__icon">
+                <img src="img/icons/embed2.svg" alt="embed2" id="toolbox__embed2" class="toolbox__icon">
+                <img src="img/icons/smile.svg" alt="smile" id="toolbox__smile" class="toolbox__icon">
             </div>
             <textarea placeholder="Your comment..." id="blog__add-comment__comment" name="blog__add-comment__comment" tabindex="1"></textarea>
             <div class="blog__comment__status u-margin-bottom-small">
