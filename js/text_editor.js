@@ -101,9 +101,10 @@ function execCmd(command, input) {
 
     }
 
+    // insert emoticon
     else if(command === "insertEmoticon") {
 
-        document.execCommand("insertTEXT", false, input);
+        document.execCommand("insertHTML", false, "<img src='"+input+"' class='emoticon' alt='"+input+"' style='margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;'>");
         $("#toolbox__emoticons__box").hide();
 
     }
@@ -157,10 +158,9 @@ function createMail(selection) {
 function insertImg() {
 
     var url = prompt("Enter Image URL:", "http://");
-
     if ((url != null) && (url != "")) {
 
-        document.execCommand("insertImage", false, url);
+        document.execCommand("insertHTML", false, "<div class='text-editor__image__box'><img src='"+url+"' alt='"+url+"'></div>");
 
     }
 

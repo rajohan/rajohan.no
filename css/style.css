@@ -633,6 +633,7 @@ form {
     cursor: pointer; }
   .text-editor__box {
     min-width: 100%;
+    max-width: 100%;
     min-height: 20rem;
     background-color: #fff;
     border-left: 1px solid #e8e8e8;
@@ -644,6 +645,19 @@ form {
     .text-editor__box:empty::before {
       content: attr(data-placeholder);
       display: block; }
+  .text-editor__image__box {
+    max-width: 50%;
+    height: 100%;
+    padding: 0.7rem;
+    background-color: #e8e8e8;
+    cursor: default;
+    resize: both;
+    overflow: hidden;
+    float: left;
+    margin-right: 2rem; }
+    .text-editor__image__box img {
+      height: 100%;
+      width: 100%; }
   .text-editor__code-heading {
     display: flex;
     min-width: 100%;
