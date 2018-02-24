@@ -63,8 +63,8 @@ $("#toolbox__emoticons__box__close").click(function(){
 //-------------------------------------------------
 function execCmd(command, input) {
 
-    $("#text-editor__box").focus(); // Focus the text editor box
     var selection = document.getSelection(); // Get selected element
+    $("#text-editor__box").focus(); // Focus the text editor box
 
     // run create url function
     if(command === "createLink") {
@@ -90,14 +90,26 @@ function execCmd(command, input) {
     // insert quote
     else if(command === "insertQuote") {
 
-        document.execCommand("insertHTML", false, "<span class='quote'>"+document.getSelection()+"</span>");
+        if((selection == null) || (selection == "")) {
+
+            selection = "Your quote";
+
+        }
+
+        document.execCommand("insertHTML", false, "<span class='quote'>"+selection+"</span>");
 
     }
 
     // insert code
     else if(command === "insertCode") {
 
-        document.execCommand("insertHTML", false, "<span class='code'>"+document.getSelection()+"</span>");
+        if((selection == null) || (selection == "")) {
+
+            selection = "Your code";
+
+        }
+
+        document.execCommand("insertHTML", false, "<span class='code'>"+selection+"</span>");
 
     }
 
@@ -127,8 +139,11 @@ function createUrl(selection) {
 
     if ((url != null) && (url != "")) {
 
-        document.execCommand("createLink", false, url);
-        selection.anchorNode.parentElement.target = "_blank";
+        if((selection == null) || (selection == "")) {
+            selection = url;
+        }
+
+        document.execCommand("insertHTML", false, "<a href='"+url+"' target='_blank'>"+selection+"</a>");
 
     }
 
@@ -144,8 +159,13 @@ function createMail(selection) {
 
     if ((mail != null) && (mail != "")) {
 
-        document.execCommand("createLink", false, "mailto:"+mail);
-        selection.anchorNode.parentElement.target = "_blank";
+        if((selection == null) || (selection == "")) {
+
+            selection = mail;
+
+        }
+
+        document.execCommand("insertHTML", false, "<a href='mailto: "+mail+"' target='_blank'>"+selection+"</a>");
 
     }
 
@@ -195,23 +215,23 @@ $(document).ready(function() {
         { "code" : /:\)|:-\)/ , "img" : "smile.svg" },
         { "code" : /;\)|;-\)/ , "img" : "wink.svg" },
         { "code" : /:\*|:-\*/ , "img" : "kiss.svg" },
-        { "code" : /(?<!http|https|mailto):\/|:-\// , "img" : "unsure.svg" },
+        { "code" : /:-\// , "img" : "unsure.svg" },
         { "code" : /:'\(|:'-\(/ , "img" : "cry.svg" },
-        { "code" : /(?<!http|https|mailto):p|:-p|(?<!http|https|mailto):P|:-p/ , "img" : "tongue.svg" },
-        { "code" : /(?<!http|https|mailto):D|:-D|(?<!http|https|mailto):d|:-d/ , "img" : "grin.svg" },
+        { "code" : /:p|:-p|:P|:-p/ , "img" : "tongue.svg" },
+        { "code" : /:D|:-D|:d|:-d/ , "img" : "grin.svg" },
         { "code" : /&gt;:\(|&gt;:-\(/ , "img" : "grumpy.svg" },
-        { "code" : /(?<!http|https|mailto):o|:-o/ , "img" : "astonished.svg" },
-        { "code" : /(?<!http|https|mailto):O|:-O/ , "img" : "afraid.svg" },
+        { "code" : /:o|:-o/ , "img" : "astonished.svg" },
+        { "code" : /:O|:-O/ , "img" : "afraid.svg" },
         { "code" : /8-\)/ , "img" : "nerd.svg" },
         { "code" : /8\)/ , "img" : "sunglasses" },
         { "code" : /:@|:-@/ , "img" : "angry.svg" },
         { "code" : /:\(|:-\(/ , "img" : "frowny.svg" },
         { "code" : /&lt;3\)|&lt;3-\)/ , "img" : "love.svg" },
-        { "code" : /(?<!http|https|mailto):s|:-s|(?<!http|https|mailto):S|:-S/ , "img" : "confused.svg" },
+        { "code" : /:s|:-s|:S|:-S/ , "img" : "confused.svg" },
         { "code" : /-_-/ , "img" : "dejected.svg" },
         { "code" : /\^\^/ , "img" : "laugh.svg" },
         { "code" : /:\||:-\|/ , "img" : "big_eyes.svg" },
-        { "code" : /(?<!http|https|mailto):x|(?<!http|https|mailto):X|:-x|:-X/  , "img" : "silent.svg" }
+        { "code" : /:x|:X|:-x|:-X/  , "img" : "silent.svg" }
         
     ];
 
