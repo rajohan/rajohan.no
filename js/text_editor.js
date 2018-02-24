@@ -166,27 +166,94 @@ function insertImg() {
 
 }
 
-/*
+//-------------------------------------------------
+// Set cursor to the end of text editor box
+//-------------------------------------------------
 
-smile.svg - :)
-wink.svg - ;)
-kiss.svg - :*
-unsure.svg - :/
-cry.svg - :'(
-tongue.svg - :p
-grin.svg - :D
-grumpy.svg - >:(
-astonished.svg - :o
-afraid.svg - :O
-nerd.svg - 8-)
-sunglasses - 8)
-angry.svg - :@
-frowny.svg - :(
-love.svg - <3)
-confused.svg - :s
-dejected.svg - -_-
-laugh.svg - ^^
-big_eyes.svg - :|
-silent.svg - :x
+function setEndOfContenteditable(contentEditableElement) {
 
-*/
+    var range,selection;
+
+    range = document.createRange(); // Create a range
+    range.selectNodeContents(contentEditableElement); // Select the entire contents of the element with the range
+    range.collapse(false); // Collapse the range to the end point. false means collapse to end rather than the start
+    selection = window.getSelection(); // Get the selection object
+    selection.removeAllRanges(); // Remove any selections already made
+    selection.addRange(range); // Make the range visible
+
+}
+
+//-------------------------------------------------
+// Replace emoticons with images
+//-------------------------------------------------
+
+$(document).ready(function() {
+
+    // Object with emoticons
+    var emoticons = [
+
+        { "code" : /:\)|:-\)/ , "img" : "smile.svg" },
+        { "code" : /;\)|;-\)/ , "img" : "wink.svg" },
+        { "code" : /:\*|:-\*/ , "img" : "kiss.svg" },
+        { "code" : /(?<!http|https|mailto):\/|:-\// , "img" : "unsure.svg" },
+        { "code" : /:'\(|:'-\(/ , "img" : "cry.svg" },
+        { "code" : /(?<!http|https|mailto):p|:-p|(?<!http|https|mailto):P|:-p/ , "img" : "tongue.svg" },
+        { "code" : /(?<!http|https|mailto):D|:-D|(?<!http|https|mailto):d|:-d/ , "img" : "grin.svg" },
+        { "code" : /&gt;:\(|&gt;:-\(/ , "img" : "grumpy.svg" },
+        { "code" : /(?<!http|https|mailto):o|:-o/ , "img" : "astonished.svg" },
+        { "code" : /(?<!http|https|mailto):O|:-O/ , "img" : "afraid.svg" },
+        { "code" : /8-\)/ , "img" : "nerd.svg" },
+        { "code" : /8\)/ , "img" : "sunglasses" },
+        { "code" : /:@|:-@/ , "img" : "angry.svg" },
+        { "code" : /:\(|:-\(/ , "img" : "frowny.svg" },
+        { "code" : /&lt;3\)|&lt;3-\)/ , "img" : "love.svg" },
+        { "code" : /(?<!http|https|mailto):s|:-s|(?<!http|https|mailto):S|:-S/ , "img" : "confused.svg" },
+        { "code" : /-_-/ , "img" : "dejected.svg" },
+        { "code" : /\^\^/ , "img" : "laugh.svg" },
+        { "code" : /:\||:-\|/ , "img" : "big_eyes.svg" },
+        { "code" : /(?<!http|https|mailto):x|(?<!http|https|mailto):X|:-x|:-X/  , "img" : "silent.svg" }
+        
+    ];
+
+    $("#text-editor__box").on("click keyup focus focusin focusout blur", function () {
+
+        var element = document.getElementById("text-editor__box");
+        var content = $("#text-editor__box")[0].innerHTML;
+        var changed = false;
+
+        // Check for emoticon matches
+        for (var i = 0; i < emoticons.length; i++) {
+            
+            if(content.match(emoticons[i]["code"])) {
+
+                changed = true;
+                content = content.replace(emoticons[i]["code"], "<img src='img/icons/emoticons/"+emoticons[i]["img"]+"' alt='img/icons/emoticons/"+emoticons[i]["img"]+"' style='margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;'>");
+                
+            }
+
+        }
+
+        // Change content if content have changed
+        if (changed) {
+
+            $("#text-editor__box")[0].innerHTML = content;
+            setEndOfContenteditable(element);
+            $("#text-editor__box").focus(); // Focus the text editor box
+
+        }
+
+    });
+
+});
+
+//-------------------------------------------------
+// User paste handler
+//-------------------------------------------------
+
+$(document).on("paste",$("#text-editor__box"),function(event) {
+
+    event.preventDefault();
+    var text = (event.originalEvent || event).clipboardData.getData("text/plain"); // get pasted text
+    document.execCommand("insertText", false, text); // Insert data
+
+});
