@@ -92,11 +92,11 @@ function execCmd(command, input) {
 
         if((selection == null) || (selection == "")) {
 
-            selection = "Your quote";
+            selection = "Your quote goes inside these";
 
         }
 
-        document.execCommand("insertHTML", false, "<span class='quote'>"+selection+"</span>");
+        document.execCommand("insertHTML", false, "[QUOTE]"+selection+"[/QUOTE]");
 
     }
 
@@ -105,11 +105,11 @@ function execCmd(command, input) {
 
         if((selection == null) || (selection == "")) {
 
-            selection = "Your code";
+            selection = "Your code goes inside these";
 
         }
 
-        document.execCommand("insertHTML", false, "<span class='code'>"+selection+"</span>");
+        document.execCommand("insertHTML", false, "[CODE]"+selection+"[/CODE]");
 
     }
 

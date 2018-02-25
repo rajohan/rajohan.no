@@ -1,0 +1,46 @@
+// Syntax highlighting
+pre {
+    display: flex;
+    min-width: 90%;
+    max-width: 90%;
+    align-self: center;
+    margin-top: 2rem;
+}
+code {
+    display: block;
+    background-color: #363636;
+    padding: 2rem;
+    min-width: 100%;
+    max-width: 100%;
+    overflow-x: scroll;
+    overflow-y: visible;
+    color: #FFFFFF;
+}
+pre code .string {
+    color:#A1E46D;
+}
+pre code .special {
+    color:#D6665D;
+}
+pre code .special-js {
+    color:#6DE4D1;
+}
+pre code .special-js-glob {
+    color:#A1E46D;
+    font-weight:bold;
+}
+pre code .special-comment{
+    color:#AAAAAA;
+}
+pre code .special-js-meth {
+    color:#E46D8A;
+}
+pre code .special-html {
+    color:#E4D95F;
+}
+pre code .special-sql {
+    color:#1D968C;
+}
+pre code .special-php{
+    color:#597EA7;
+}
