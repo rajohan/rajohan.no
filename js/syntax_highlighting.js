@@ -5,6 +5,9 @@ var strReg1 = /"(.*?)"/g,
     specialJsReg = /\b(getElementsBy(TagName|ClassName|Name)|getElementById|typeof|instanceof)(?=[^\w])/g,
     specialMethReg = /\b(indexOf|match|replace|toString|length)(?=[^\w])/g,
     specialPhpReg  = /\b(define|echo|print_r|var_dump)(?=[^\w])/g,
+    functionMethod = /([A-z0-9\-]{1,}\(.*\))/g,
+    variables = /((\$)[A-z0-9-]{1,})/g,
+    wrappers_dot = /([(){}.;)])/g,
     specialCommentReg  = /(\/\*.*\*\/)/g,
     inlineCommentReg = /(\/\/.*)/g;
 
@@ -26,6 +29,9 @@ codeElements.each(function (){
     parsed = parsed.replace(htmlTagReg,"<span class=\"special-html\">$1</span>");
     parsed = parsed.replace(sqlReg,"<span class=\"special-sql\">$1</span>");
     parsed = parsed.replace(specialPhpReg,"<span class=\"special-php\">$1</span>");
+    parsed = parsed.replace(functionMethod,"<span class=\"function-method\">$1</span>");
+    parsed = parsed.replace(variables, "<span class=\"variables\">$1</span>");
+    parsed = parsed.replace(wrappers_dot, "<span class=\"wrappers_dot\">$1</span>");
     parsed = parsed.replace(specialCommentReg,"<span class=\"special-comment\">$1</span>");
     parsed = parsed.replace(inlineCommentReg,"<span class=\"special-comment\">$1</span>");
 

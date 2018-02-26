@@ -18,7 +18,7 @@
 
         function __construct() {
 
-            $this->ip = $_SERVER['REMOTE_ADDR'];;
+            $this->ip = $_SERVER['REMOTE_ADDR'];
             $this->token = new Tokens;
             $this->filter = new Filter;
             $this->user = new Users;
