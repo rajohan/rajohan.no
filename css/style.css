@@ -65,7 +65,7 @@ pre {
   padding: 2rem;
   overflow: auto;
   color: #bababa;
-  counter-reset: line -1; }
+  counter-reset: line; }
 
 code {
   display: block;
