@@ -154,15 +154,36 @@
         //  Add new comment
         //-------------------------------------------------
 
-        function add_comment($blog_id, $user_id, $reply_to, $comment) {
-
-            // Check that user is logged in
-
-            // Check that comment field not is empty
+        function add_comment($blog_id, $reply_to, $comment) {
             
-                // Check if comment is a reply
+            // Check that user is logged in
+            if(!isset($_SESSION['LOGGED_IN'])) {
 
-                // Insert comment
+                echo "You have to be logged in to post a comment.";
+                
+            }
+            // Check that comment field not is empty
+            else if(empty($comment)) {
+
+                echo "The comment field can not be empty";
+
+            } else {
+
+                $filter = new Filter;
+
+                $blog_id = $filter->sanitize($blog_id);
+                $reply_to = $filter->sanitize($reply_to);
+                $user_id = $filter->sanitize($_SESSION['USER']['ID']);
+
+                // Check if comment is a reply
+                if(empty($reply_to)) {
+                    $reply_to = 0;
+                }
+
+                $db_conn = new Database;
+                $db_conn->db_insert("COMMENTS", "COMMENT, BLOG_ID, REPLY_TO, POSTED_BY_USER", "siii", array($comment, $blog_id, $reply_to, $user_id));
+                
+            }
 
         }
 

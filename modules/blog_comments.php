@@ -112,7 +112,7 @@
     for($i = 0; $i < count($comment); $i++) {
         
         $id = $filter->sanitize($comment[$i]['ID']);
-        $message = $bbcode->replace($filter->sanitize($comment[$i]['COMMENT']));
+        $message = $bbcode->replace($filter->sanitize_code($comment[$i]['COMMENT']));
         $reply_to = $filter->sanitize($comment[$i]['REPLY_TO']);
         $posted_date = $filter->sanitize($comment[$i]['POSTED_BY_DATE']);
         $posted_by = $filter->sanitize($comment[$i]['POSTED_BY_USER']);

@@ -231,7 +231,8 @@
             <div class="text-editor__status u-margin-bottom-small">
                 Reply to: none 
             </div>
-            <button type="submit" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-small">Send comment</button>
+            <div class="error__box"></div>
+            <button type="submit" id="post__comment" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-small">Send comment</button>
         </div>
     </div>
 </div>

@@ -84,6 +84,7 @@
         <script src="js/forgot.js"></script>
         <script src="js/text_editor.js"></script>
         <script src="js/syntax_highlighting.js"></script>
+        <script src="js/comment.js"></script>
     </body>
   </head>
 </html>

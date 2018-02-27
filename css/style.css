@@ -77,10 +77,10 @@ code {
   code::before {
     content: counter(line, decimal-leading-zero);
     -webkit-user-select: none;
-    padding-right: 1rem;
     margin-right: 2rem;
     border-right: 1px solid #bababa;
-    display: inline-block; }
+    display: inline-block;
+    width: 3rem; }
 
 pre code .string {
   color: #A1E46D; }

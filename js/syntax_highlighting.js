@@ -4,8 +4,8 @@
 
 var strReg1 = /"(.*?)"/g,
     strReg2 = /'(.*?)'/g,
-    variablesReg = /([>]{1,1})([A-z0-9\-]{1,})/g,
-    arrowReg = /([-]{1,1}[>]{1,1})/g,
+    variablesReg = /(&gt;{1,1})([A-z0-9\-]{1,})/g,
+    arrowReg = /([-]{1,1}&gt;{1,1})/g,
     classReg = /(class[ ])([A-z0-9\-]{1,})|(new[ ])([A-z0-9\-]{1,})/g,
     specialReg = /\b(new|var|if|do|private|function|return|while|switch|for|foreach|in|continue|break)(?=[^\w])/g,
     specialJsGlobReg = /\b(document|window|Array|String|Object|Number|\$)(?=[^\w])/g,
@@ -14,7 +14,7 @@ var strReg1 = /"(.*?)"/g,
     specialPhpReg  = /\b(define|echo|print_r|var_dump)(?=[^\w])/g,
     functionMethodReg = /([A-z0-9\-]{1,}\()/g,
     variables2Reg = /((\$)[A-z0-9\-]{1,})/g,
-    wrappersDotReg = /([\[\](){}.,;)])/g,
+    wrappersDotReg = /([\[\](){}.,)])/g,
     specialCommentReg  = /(\/\*[\s\S]*?\*\/)/g,
     inlineCommentReg = /(\/\/.*)/g;
 
@@ -26,8 +26,8 @@ var codeElements = $("pre");
 
 codeElements.each(function (){
 
-    var string = $(this).text(),
-        parsed = string.replace(strReg1,"<span class=\"string\">\"$1\"</span>");
+    var string = $(this)[0].innerHTML,
+        parsed = string.replace(strReg2,"<span class=\"string\">\"$1\"</span>");
     parsed = parsed.replace(strReg2,"<span class=\"string\">'$1'</span>");
     parsed = parsed.replace(variablesReg, "$1<span class=\"variables\">$2</span>");
     parsed = parsed.replace(arrowReg, "<span class=\"wrappers_dot\">$1</span>");
