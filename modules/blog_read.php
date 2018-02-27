@@ -177,7 +177,11 @@
             ?> 
             
         </div>
+        <?php
+            if(isset($_SESSION['LOGGED_IN'])) {
+        ?>
         <div class="text-editor u-margin-top-small">
+            <div class="text-editor__message"></div>
             <div class="text-editor__toolbox u-margin-top-small">
                 <img src="img/icons/bold.svg" alt="bold" id="toolbox__bold" class="text-editor__toolbox__icon" onClick="execCmd('bold');">
                 <img src="img/icons/italic.svg" alt="italic" id="toolbox__italic" class="text-editor__toolbox__icon" onClick="execCmd('italic');">
@@ -231,9 +235,17 @@
             <div class="text-editor__status u-margin-bottom-small">
                 Reply to: none 
             </div>
-            <div class="error__box"></div>
             <button type="submit" id="post__comment" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-small">Send comment</button>
         </div>
+        <?php
+            } else {
+        ?>
+        <div class="not__logged-in__error u-margin-top-medium">
+            <span>You have to be signed in to post a comment. <a href="register/">Register</a> or <a href="login/">sign in</a>.</span>
+        </div>
+        <?php
+            }
+        ?>
     </div>
 </div>
 <!-- SECTION BLOG READ END -->

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 0px - 600px:         Phone
 600px - 900px:       Tablet portrait
@@ -538,6 +539,16 @@ form {
     top: -1rem;
     left: 3rem; }
 
+.no__comment {
+  display: flex;
+  min-width: 100%;
+  justify-content: center; }
+
+.not__logged-in__error {
+  display: flex;
+  min-width: 100%;
+  justify-content: center; }
+
 .pagination {
   display: flex;
   justify-content: center; }
@@ -660,6 +671,10 @@ form {
   min-width: 100%;
   align-items: center;
   position: relative; }
+  .text-editor__message  {
+    display: flex;
+    min-width: 100%;
+    justify-content: center; }
   .text-editor__toolbox {
     display: flex;
     min-width: 100%;

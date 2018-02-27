@@ -6,6 +6,7 @@
     $ajax->newsletter();
     $ajax->register();
     $ajax->vote();
+    $ajax->add_comment();
 
     //-------------------------------------------------
     // Direct access check
@@ -13,6 +14,7 @@
 
     if(!defined('INCLUDE')) {
 
+        echo $_POST['blog_id'].$_POST['reply_to'].$_POST['comment'];
         die('Direct access is not permitted.');
         
     }
@@ -30,6 +32,7 @@
         private $register;
         private $filter;
         private $votes;
+        private $comment;
 
         //-------------------------------------------------
         // Require files
@@ -59,6 +62,7 @@
             $this->register = new Register;
             $this->filter = new Filter;
             $this->votes = new Vote;
+            $this->comment = new Comments;
 
         }
 
@@ -307,6 +311,22 @@
 
                 echo json_encode($vote_array);
             
+            }
+
+        }
+
+        //-------------------------------------------------
+        // Add comment
+        //-------------------------------------------------
+
+        function add_comment() {
+        
+            if((isset($_POST['post_comment'])) && ($_POST['post_comment'] === "true") && (isset($_POST['blog_id'])) && (isset($_POST['reply_to'])) && (isset($_POST['comment']))) {
+
+                $this->require_files();
+                $this->init();
+                $this->comment->add_comment($_POST['blog_id'], $_POST['reply_to'], $_POST['comment']);
+
             }
 
         }

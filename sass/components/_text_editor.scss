@@ -6,6 +6,12 @@
     align-items: center;
     position: relative;
 
+    &__message {
+        display: flex;
+        min-width: 100%;
+        justify-content: center;
+    }
+
     &__toolbox {
         display: flex;
         min-width: 100%;

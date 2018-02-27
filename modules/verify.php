@@ -36,6 +36,9 @@
         <button type="submit" class="btn btn--primary btn--white u-margin-top-small">
             Verify email
         </button>
+        <div class="u-margin-top-small">
+        <a href="resend/">Resend email verification code</a>
+    </div>
     </form>
 </div>
 <!-- SECTION EMAIL VERIFY END -->

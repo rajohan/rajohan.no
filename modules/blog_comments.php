@@ -108,6 +108,12 @@
 
     $offset = ($pagination->valid_page_number($pagination->get_page_number(), "COMMENTS") - 1) * $max; // Set the page number to generate offset (* + number of items per site)
     $comment = $comments->get_comments($blog_id, $_SESSION['order'], $offset, $max);
+    
+    if(count($comment) < 1) {
+
+        echo "<div class='no__comment u-margin-top-small'>No comments yet. Be the first to comment!</div>";
+
+    }
 
     for($i = 0; $i < count($comment); $i++) {
         
@@ -140,8 +146,12 @@
 
         // Username from id
         $posted_by = $user->get_user("ID", $posted_by)['USERNAME'];
-        $updated_by = $user->get_user("ID", $updated_by)['USERNAME'];
-        
+
+        if(!empty($updated_by)) {
+
+            $updated_by = $user->get_user("ID", $updated_by)['USERNAME'];
+            
+        }
         
         //-------------------------------------------------
         // Create a comment container

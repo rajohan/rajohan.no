@@ -165,7 +165,7 @@
             // Check that comment field not is empty
             else if(empty($comment)) {
 
-                echo "The comment field can not be empty";
+                echo "The comment field can not be empty.";
 
             } else {
 
@@ -177,12 +177,16 @@
 
                 // Check if comment is a reply
                 if(empty($reply_to)) {
+
                     $reply_to = 0;
+
                 }
 
                 $db_conn = new Database;
                 $db_conn->db_insert("COMMENTS", "COMMENT, BLOG_ID, REPLY_TO, POSTED_BY_USER", "siii", array($comment, $blog_id, $reply_to, $user_id));
                 
+                echo "comment added";
+
             }
 
         }

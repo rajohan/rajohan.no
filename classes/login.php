@@ -11,6 +11,7 @@
         private $filter;
         private $user;
         private $validator;
+        private $register;
 
         //-------------------------------------------------
         // Construct
@@ -23,6 +24,7 @@
             $this->filter = new Filter;
             $this->user = new Users;
             $this->validator = new Validator;
+            $this->register = new Register;
 
         }
 
@@ -163,6 +165,7 @@
             $username = $this->filter->sanitize($username);
             $password = $this->filter->sanitize($password);
             $remember = $this->filter->sanitize($remember);
+            $mail = $this->filter->sanitize($this->user->get_user("USERNAME", $username)['EMAIL']); // Get mail from username
 
             // Check that username is valid
             if (!$this->validator->validate_username($username)) {
@@ -186,7 +189,7 @@
             }
 
             // Check that password equals username password
-            elseif(!$this->user->verify_password($username, $password)) {
+            else if(!$this->user->verify_password($username, $password)) {
 
                 echo "The password you entered is incorrect.";
                 require_once('../modules/login.php');
@@ -196,6 +199,13 @@
                 // Log to auth log
                 $db_conn = new Database;
                 $db_conn->db_insert("AUTH_LOG", "USER, IP", "is", array($user_id, $this->ip));
+
+            }
+
+            // Check that user's email address is verified
+            else if($this->register->check_mail_verified($mail) > 0) {
+
+                echo "<span>Your email address have to be verified to sign in. Click <a href='verify/?email=".$mail."'>here</a> to verify your email.</span>";
 
             }
 

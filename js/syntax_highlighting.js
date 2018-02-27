@@ -27,7 +27,7 @@ var codeElements = $("pre");
 codeElements.each(function (){
 
     var string = $(this)[0].innerHTML,
-        parsed = string.replace(strReg2,"<span class=\"string\">\"$1\"</span>");
+        parsed = string.replace(strReg1,"<span class=\"string\">\"$1\"</span>");
     parsed = parsed.replace(strReg2,"<span class=\"string\">'$1'</span>");
     parsed = parsed.replace(variablesReg, "$1<span class=\"variables\">$2</span>");
     parsed = parsed.replace(arrowReg, "<span class=\"wrappers_dot\">$1</span>");
