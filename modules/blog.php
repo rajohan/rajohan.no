@@ -101,14 +101,14 @@
                 '.ucfirst($title).'
             </div>
             <div class="blog-short__by">
-                <img src="img/icons/write.svg" alt="posted" class="blog-short__by__img"> '.$publish_date.'  <img src="img/icons/user.svg" alt="user" class="blog-short__by__img">'.ucfirst($published_by).'
+                <img src="img/icons/write.svg" alt="posted" class="blog-short__by__img"> '.$publish_date.'  <img src="img/icons/user.svg" alt="user" class="blog-short__by__img">'.$published_by.'
             </div>';
             
             if(!empty($update_date) && !empty($updated_by)) {
 
                 echo
                 '<div class="blog-short__updated-by">
-                    <img src="img/icons/refresh.svg" alt="updated" class="blog-short__by__img"> '.$update_date.' <img src="img/icons/user.svg" alt="user" class="blog-short__updated-by__img">'.ucfirst($updated_by).'
+                    <img src="img/icons/refresh.svg" alt="updated" class="blog-short__by__img"> '.$update_date.' <img src="img/icons/user.svg" alt="user" class="blog-short__updated-by__img">'.$updated_by.'
                 </div>';
 
             }

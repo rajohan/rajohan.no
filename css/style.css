@@ -60,14 +60,15 @@ pre {
   min-width: 95%;
   max-width: 95%;
   max-height: 80rem;
-  align-self: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
   background-color: #2c3037;
   padding: 2rem;
   overflow: auto;
   color: #bababa;
   counter-reset: line;
-  font-size: 1.4rem; }
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  margin-left: 2.5%; }
 
 code {
   display: block;
@@ -400,6 +401,11 @@ a.whitelink:hover {
   .back-to-top:hover {
     background-color: #77ABB7; }
 
+.emoticons {
+  margin-bottom: -0.3rem;
+  width: 1.7rem;
+  height: 1.7rem; }
+
 form {
   display: flex;
   align-items: center;
@@ -626,6 +632,11 @@ form {
       border-top-right-radius: 0.5rem;
       border-bottom-right-radius: 0.5rem; }
 
+.quote {
+  display: block;
+  width: 100%;
+  margin: 1rem 0rem; }
+
 .services__cta {
   display: flex;
   width: 100vw;
@@ -730,17 +741,18 @@ form {
       content: attr(data-placeholder);
       display: block; }
   .text-editor__image__box {
-    max-width: 50%;
     height: 100%;
+    max-width: 50%;
     padding: 0.7rem;
     background-color: #e8e8e8;
     cursor: default;
     resize: both;
     overflow: hidden;
-    margin-right: 2rem; }
+    margin-right: 2rem;
+    float: left; }
     .text-editor__image__box img {
-      height: 100%;
-      width: 100%; }
+      max-width: 100%;
+      height: 100%; }
   .text-editor__code-heading {
     display: flex;
     min-width: 100%;
@@ -1249,7 +1261,6 @@ form {
       font-size: 1.4rem; }
   .blog__comment__message {
     display: flex;
-    flex-direction: column;
     padding: 1rem;
     border-left: 1px solid #e8e8e8;
     border-right: 1px solid #e8e8e8;

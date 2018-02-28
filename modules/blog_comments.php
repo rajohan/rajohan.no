@@ -192,7 +192,7 @@
         echo
         '<div class="blog__comment__user">
             <div class="blog__comment__user__box">
-                <span class="blog__comment__user__name">'.ucfirst($posted_by).'</span>';
+                <span class="blog__comment__user__name">'.$posted_by.'</span>';
                 
                 if($admin === 1) {
 
@@ -224,7 +224,7 @@
         echo 
 
         '<div id="message_id_'.$id.'" class="blog__comment__message">
-        '.$message.'
+            <div class="blog__comment__message__content">'.$message.'</div>
         </div>
         <div class="blog__comment__message__stats">
             <div class="blog__comment__message__vote">

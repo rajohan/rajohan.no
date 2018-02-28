@@ -116,7 +116,7 @@ function execCmd(command, input) {
     // insert emoticon
     else if(command === "insertEmoticon") {
 
-        document.execCommand("insertHTML", false, "<img src='"+input+"' class='emoticon' alt='"+input+"' style='margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;'>");
+        document.execCommand("insertHTML", false, "<img src='img/icons/emoticons/"+input+"' class='emoticon' style='margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;'>");
         $("#toolbox__emoticons__box").hide();
 
     }
@@ -180,7 +180,7 @@ function insertImg() {
     var url = prompt("Enter Image URL:", "http://");
     if ((url != null) && (url != "")) {
 
-        document.execCommand("insertHTML", false, "<div class='text-editor__image__box'><img src='"+url+"' alt='"+url+"'></div>");
+        document.execCommand("insertHTML", false, "<div class='text-editor__image__box'><img src='"+url+"'></div>");
 
     }
 
@@ -223,7 +223,7 @@ $(document).ready(function() {
         { "code" : /:o|:-o/ , "img" : "astonished.svg" },
         { "code" : /:O|:-O/ , "img" : "afraid.svg" },
         { "code" : /8-\)/ , "img" : "nerd.svg" },
-        { "code" : /8\)/ , "img" : "sunglasses" },
+        { "code" : /8\)/ , "img" : "sunglasses.svg" },
         { "code" : /:@|:-@/ , "img" : "angry.svg" },
         { "code" : /:\(|:-\(/ , "img" : "frowny.svg" },
         { "code" : /&lt;3\)|&lt;3-\)/ , "img" : "love.svg" },
@@ -247,7 +247,7 @@ $(document).ready(function() {
             if(content.match(emoticons[i]["code"])) {
 
                 changed = true;
-                content = content.replace(emoticons[i]["code"], "<img src='img/icons/emoticons/"+emoticons[i]["img"]+"' alt='img/icons/emoticons/"+emoticons[i]["img"]+"' style='margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;'>");
+                content = content.replace(emoticons[i]["code"], "<img src='img/icons/emoticons/"+emoticons[i]["img"]+"' style='margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;'>");
                 
             }
 

@@ -111,13 +111,13 @@
             <?php echo ucfirst($title); ?>
         </div>
         <div class="blog__by">
-            <?php echo "<img src='img/icons/write.svg' alt='posted' class='blog__by__img'> ".$publish_date."  <img src='img/icons/user.svg' alt='user' class='blog__by__img'> ".ucfirst($published_by); ?>
+            <?php echo "<img src='img/icons/write.svg' alt='posted' class='blog__by__img'> ".$publish_date."  <img src='img/icons/user.svg' alt='user' class='blog__by__img'> ".$published_by; ?>
         </div>
         <?php 
             if(!empty($update_date) && !empty($updated_by)) {
         ?>
         <div class="blog__updated-by">
-            <?php echo "<img src='img/icons/refresh.svg' alt='updated' class='blog__by__img'> ".$update_date." <img src='img/icons/user.svg' alt='user' class='blog__updated-by__img'> ".ucfirst($updated_by); ?>
+            <?php echo "<img src='img/icons/refresh.svg' alt='updated' class='blog__by__img'> ".$update_date." <img src='img/icons/user.svg' alt='user' class='blog__updated-by__img'> ".$updated_by; ?>
         </div>
         <?php
             }
@@ -202,26 +202,26 @@
                     <div id="toolbox__emoticons__box__close" class="text-editor__toolbox__emoticons__box__close">
                         x
                     </div>
-                    <img src="img/icons/emoticons/smile.svg" alt="bold" id="emoticon__smile" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/smile.svg');">
-                    <img src="img/icons/emoticons/wink.svg" alt="wink" id="emoticon__wink" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/wink.svg');">
-                    <img src="img/icons/emoticons/tongue.svg" alt="tongue" id="emoticon__tongue" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/tongue.svg');">
-                    <img src="img/icons/emoticons/grin.svg" alt="grin" id="emoticon__grin" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/grin.svg');">
-                    <img src="img/icons/emoticons/laugh.svg" alt="laugh" id="emoticon__laugh" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/laugh.svg');">
-                    <img src="img/icons/emoticons/frowny.svg" alt="frowny" id="emoticon__frowny" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/frowny.svg');">
-                    <img src="img/icons/emoticons/unsure.svg" alt="unsure" id="emoticon__unsure" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/unsure.svg');">
-                    <img src="img/icons/emoticons/cry.svg" alt="cry" id="emoticon__cry" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/cry.svg');">
-                    <img src="img/icons/emoticons/grumpy.svg" alt="grumpy" id="emoticon__grumpy" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/grumpy.svg');">
-                    <img src="img/icons/emoticons/angry.svg" alt="angry" id="emoticon__angry" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/angry.svg');">
-                    <img src="img/icons/emoticons/astonished.svg" alt="astonished" id="emoticon__astonished" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/astonished.svg');">
-                    <img src="img/icons/emoticons/afraid.svg" alt="afraid" id="emoticon__afraid" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/afraid.svg');">
-                    <img src="img/icons/emoticons/nerd.svg" alt="nerd" id="emoticon__nerd" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/nerd.svg');">
-                    <img src="img/icons/emoticons/dejected.svg" alt="dejected" id="emoticon__dejected" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/dejected.svg');">
-                    <img src="img/icons/emoticons/big_eyes.svg" alt="big_eyes" id="emoticon__big_eyes" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/big_eyes.svg');">
-                    <img src="img/icons/emoticons/sunglasses.svg" alt="sunglasses" id="emoticon__sunglasses" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/sunglasses.svg');">
-                    <img src="img/icons/emoticons/confused.svg" alt="confused" id="emoticon__confused" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/confused.svg');">
-                    <img src="img/icons/emoticons/silent.svg" alt="silent" id="emoticon__silent" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/silent.svg');">
-                    <img src="img/icons/emoticons/love.svg" alt="love" id="emoticon__love" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/love.svg');">
-                    <img src="img/icons/emoticons/kiss.svg" alt="kiss" id="emoticon__kiss" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'img/icons/emoticons/kiss.svg');">
+                    <img src="img/icons/emoticons/smile.svg" alt="bold" id="emoticon__smile" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'smile.svg');">
+                    <img src="img/icons/emoticons/wink.svg" alt="wink" id="emoticon__wink" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'wink.svg');">
+                    <img src="img/icons/emoticons/tongue.svg" alt="tongue" id="emoticon__tongue" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'tongue.svg');">
+                    <img src="img/icons/emoticons/grin.svg" alt="grin" id="emoticon__grin" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'grin.svg');">
+                    <img src="img/icons/emoticons/laugh.svg" alt="laugh" id="emoticon__laugh" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'laugh.svg');">
+                    <img src="img/icons/emoticons/frowny.svg" alt="frowny" id="emoticon__frowny" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'frowny.svg');">
+                    <img src="img/icons/emoticons/unsure.svg" alt="unsure" id="emoticon__unsure" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'unsure.svg');">
+                    <img src="img/icons/emoticons/cry.svg" alt="cry" id="emoticon__cry" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'cry.svg');">
+                    <img src="img/icons/emoticons/grumpy.svg" alt="grumpy" id="emoticon__grumpy" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'grumpy.svg');">
+                    <img src="img/icons/emoticons/angry.svg" alt="angry" id="emoticon__angry" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'angry.svg');">
+                    <img src="img/icons/emoticons/astonished.svg" alt="astonished" id="emoticon__astonished" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'astonished.svg');">
+                    <img src="img/icons/emoticons/afraid.svg" alt="afraid" id="emoticon__afraid" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'afraid.svg');">
+                    <img src="img/icons/emoticons/nerd.svg" alt="nerd" id="emoticon__nerd" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'nerd.svg');">
+                    <img src="img/icons/emoticons/dejected.svg" alt="dejected" id="emoticon__dejected" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'dejected.svg');">
+                    <img src="img/icons/emoticons/big_eyes.svg" alt="big_eyes" id="emoticon__big_eyes" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'big_eyes.svg');">
+                    <img src="img/icons/emoticons/sunglasses.svg" alt="sunglasses" id="emoticon__sunglasses" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'sunglasses.svg');">
+                    <img src="img/icons/emoticons/confused.svg" alt="confused" id="emoticon__confused" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'confused.svg');">
+                    <img src="img/icons/emoticons/silent.svg" alt="silent" id="emoticon__silent" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'silent.svg');">
+                    <img src="img/icons/emoticons/love.svg" alt="love" id="emoticon__love" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'love.svg');">
+                    <img src="img/icons/emoticons/kiss.svg" alt="kiss" id="emoticon__kiss" class="text-editor__emoticons__icon" onClick="execCmd('insertEmoticon', 'kiss.svg');">
                 </div>
                 <div class="text-editor__toolbox__separator"></div>
                 <img src="img/icons/embed.svg" alt="embed" id="toolbox__embed" class="text-editor__toolbox__icon">
