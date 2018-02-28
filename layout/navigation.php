@@ -55,5 +55,9 @@
         <button class="navigation__button">
         </button>
     </div>
+    <div class ="navigation__user-menu">
+        <a href="login/"><img src="img/icons/login.svg">Sign in</a>
+        <a href="register/"><img src="img/icons/register.svg">Register</a>
+    </div>
 </nav>
 <!-- NAVIGATION END -->

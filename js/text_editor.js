@@ -143,7 +143,7 @@ function createUrl(selection) {
             selection = url;
         }
 
-        document.execCommand("insertHTML", false, "<a href='"+url+"' target='_blank'>"+selection+"</a>");
+        document.execCommand("insertHTML", false, "<a href='"+url+"'>"+selection+"</a>");
 
     }
 
@@ -165,7 +165,7 @@ function createMail(selection) {
 
         }
 
-        document.execCommand("insertHTML", false, "<a href='mailto: "+mail+"' target='_blank'>"+selection+"</a>");
+        document.execCommand("insertHTML", false, "<a href='mailto: "+mail+"'>"+selection+"</a>");
 
     }
 

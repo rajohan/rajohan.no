@@ -59,6 +59,7 @@
         
         function sanitize_code($data) {
 
+            $bbcode = new Bbcode;
             $data = preg_split('/(\[code\])|(\[\/code\])/i', $data, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY); // Split comment
    
             foreach($data as $key => $value) {
@@ -79,7 +80,7 @@
 
                 if(!preg_match("/\[code\][\s\S]*?\[\/code\]/i", $value)) {
 
-                    $data[$key] = $this->sanitize($value); // Sanitize everything outside [code] tags
+                    $data[$key] = $bbcode->replace($this->sanitize($bbcode->html_to_bbcode($value))); // Sanitize everything outside [code] tags
 
                 }
 

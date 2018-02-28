@@ -20,38 +20,38 @@
         // Method to replace html with bbcodes
         //-------------------------------------------------
 
-        function html_to_bbcode() {
+        function html_to_bbcode($data) {
 
             $find = array(
-
-                    '~\<b\>~i',
+                    '~&nbsp;~i',
+                    '~\<b\>|\<b [ A-z0-9=":;.\-]{0,}\>~i',
                     '~\<\/b\>~i',
-                    '~\<li\>~i',
+                    '~\<li\>|\<li [ A-z0-9=":;.\-]{0,}\>~i',
                     '~\<\/li\>~i',
-                    '~\<br\>~i',
-                    '~\<ul\>~i',
+                    '~\<br\>|\<br [ A-z0-9=":;.\-]{0,}\>~i',
+                    '~\<ul\>|\<ul [ A-z0-9=":;.\-]{0,}\>~i',
                     '~\<\/ul\>~i',
-                    '~\<ol\>~i',
+                    '~\<ol\>|\<ol [ A-z0-9=":;.\-]{0,}\>~i',
                     '~\<\/ol\>~i',
-                    '~\<p\>~i',
+                    '~\<p\>|\<p [ A-z0-9=":;.\-]{0,}\>~i',
                     '~\<\/p\>~i',
-                    '~\<i\>~i',
+                    '~\<i\>|\<i [ A-z0-9=":;.\-]{0,}\>~i',
                     '~\<\/i\>~i',
-                    '~\<u\>~i',
+                    '~\<u\>|\<u [ A-z0-9=":;.\-]{0,}\>~i',
                     '~\<\/u\>~i',
-                    '~\<div\>~i',
+                    '~\<div\>|\<div [ A-z0-9=":;.\-]{0,}\>~i',
                     '~\<\/div\>~i',
-                    '~\<strike\>~i',
+                    '~\<strike\>|\<strike [ A-z0-9=":;.\-]{0,}\>~i',
                     '~\<\/strike\>~i',
-                    '~\<a href="((?:ftp|http|https?)://.*?)"\>.*?\<\/a\>~i',
-                    '~\<a href="((?:ftp|http|https?)://.*?)"\>.*?\<\/a\>~i',
+                    '~\<a .*href="((?:ftp|http|https?):\/\/[A-z0-9.\-]{1,})"[ A-z0-9=":;.\-]{0,}\>(.*?)\<\/a\>~i',
+                    '~\<a .*href="((?:mailto?):[ A-z0-9.\-@]{1,})"[ A-z0-9=":;.\-]{0,}\>(.*?)\<\/a\>~i',
                     '~\<img src="((?:http|https?)://.*?\.(?:jpg|jpeg|gif|png|bmp|svg))" alt=".*?"\>~i',
                     '~\<img src="((?:http|https?)://.*?\.(?:jpg|jpeg|gif|png|bmp|svg))" class="emoticon" alt=".*?" style="margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;"\>~i'
 
                 );
     
                 $replace = array(
-
+                    ' ',
                     '[b]',
                     '[/b]',
                     '[li]',
@@ -71,7 +71,7 @@
                     '',
                     '[strike]',
                     '[/strike]',
-                    '[url]$1[/url]',
+                    '[url=$1]$2[/url]',
                     '[url=$1]$2[/url]',
                     '[img]$1[/img]',
                     '[emoticon]$1[/emoticon]'
@@ -105,6 +105,8 @@
                 '~\[/i\]~i',
                 '~\[u\]~i',
                 '~\[/u\]~i',
+                '~\[strike\]~i',
+                '~\[/strike\]~i',
                 '~\[table\]~i',
                 '~\[/table\]~i',
                 '~\[tr\]~i',
@@ -119,8 +121,9 @@
                 '~\[/size\]~i',
                 '~\[color=((?:[a-zA-Z]|#[a-fA-F0-9]{3,6})+)\]~i',
                 '~\[/color\]~i',
-                '~\[url\]((?:ftp|https?)://.*?)\[/url\]~i',
-                '~\[url=((?:ftp|https?)://.*?)\](.*?)\[/url\]~i',
+                '~\[url\]((?:ftp|http|https?)://.*?)\[/url\]~i',
+                '~\[url=((?:ftp|http|https?)://.*?)\](.*?)\[/url\]~i',
+                '~\[url=((?:mailto?):.*?)\](.*?)\[/url\]~i',
                 '~\[img\](https?://.*?\.(?:jpg|jpeg|gif|png|bmp))\[/img\]~i'
 
             );
@@ -142,6 +145,8 @@
                 '</i>',
                 '<u>',
                 '</u>',
+                '<strike>',
+                '</strike>',
                 '<table>',
                 '</table>',
                 '<tr>',
@@ -157,6 +162,7 @@
                 '<span style="color:$1;">',
                 '</span>',
                 '<a href="$1">$1</a>',
+                '<a href="$1">$2</a>',
                 '<a href="$1">$2</a>',
                 '<img src="$1" alt="" />'
             

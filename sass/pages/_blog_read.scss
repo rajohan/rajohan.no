@@ -267,6 +267,14 @@
             transition: background-color;
             transition-duration: 2s;
 
+            li {
+                margin-left: 2rem;
+            }
+
+            img {
+                max-width: 50%;
+            }
+
             &__stats {
                 display: flex;
                 min-width: 100%;
