@@ -346,3 +346,42 @@ $("#blog-navigation__newsletter__button").on("click", function(event) {
     });
 
 });
+
+//-------------------------------------------------
+// Comment reply button click
+//-------------------------------------------------
+
+$(".blog__comment__date-reply__img").on("click", function() { 
+
+    // If user is logged in
+    if($(".text-editor").length) {
+
+        var reply_to = $(this).attr("data-id");
+        var reply_to_user = $(this).attr("data-user");
+
+        $("#text-editor__status").attr("data-reply-to", reply_to);
+        $("#text-editor__reply-to").text(reply_to_user);
+        $(".text-editor__status__cancel").css("display", "flex");
+
+        scroll($(".text-editor"), 0); // Scroll text editor
+
+    } else { // User not logged in
+
+        scroll($(".not__logged-in__error"), 0); // Scroll text editor
+
+    }
+
+
+});
+
+//-------------------------------------------------
+// Texteditor status cancel button
+//-------------------------------------------------
+
+$(".text-editor__status__cancel").on("click", function() { 
+
+    $("#text-editor__reply-to").text("none");
+    $("#text-editor__status").attr("data-reply-to", "0");
+    $(".text-editor__status__cancel").css("display", "none");
+
+});

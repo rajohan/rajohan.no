@@ -210,7 +210,7 @@
             '</div>
             <div id="'.$id.'" class="blog__comment__date-reply">
                 '.$posted_date.'
-                <img src="img/icons/reply.svg" alt="reddit" class="blog__comment__date-reply__img">
+                <img src="img/icons/reply.svg" alt="reply" data-id="'.$id.'" data-user="'.$posted_by.'" class="blog__comment__date-reply__img">
             </div>
         </div>';
 

@@ -232,8 +232,8 @@
             </div>
             <div id="text-editor__code" class="text-editor__code">
             </div>
-            <div class="text-editor__status u-margin-bottom-small">
-                Reply to: none 
+            <div id="text-editor__status" data-reply-to="0" data-blog-id="<?php echo $blog_id; ?>" class="text-editor__status u-margin-bottom-small">
+                Reply to:&nbsp;<span id="text-editor__reply-to">none</span><span class="text-editor__status__cancel"><img class="text-editor__status__cancel__img" src="img/icons/cancel.svg" alt="cancel"></span>
             </div>
             <button type="submit" id="post__comment" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-small">Send comment</button>
         </div>

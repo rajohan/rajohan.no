@@ -129,5 +129,19 @@
         background-color: $color-grey-light;
         border: 1px solid $color-grey-2;
         padding: 1rem;
+        align-items: center;
+
+        &__cancel {
+            
+            align-items: center;
+            display: none;
+
+            &__img {
+                width: 2rem;
+                height: 2rem;
+                display: block;
+                cursor: pointer;
+            }
+        }
     }
 }

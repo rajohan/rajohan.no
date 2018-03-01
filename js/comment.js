@@ -7,8 +7,12 @@ $(document).ready(function () {
     $("#post__comment").on("click", function () {
         
         var comment = $("#text-editor__box")[0].innerHTML;
-        var reply_to = "0";
-        var blog_id = "3";
+        var reply_to = $("#text-editor__status").attr("data-reply-to");
+        var blog_id = $("#text-editor__status").attr("data-blog-id");
+
+        if((reply_to == null) || (reply_to == "")) {
+            reply_to = "0";
+        }
 
         if((comment == null) || (comment == "") || (comment == "Your comment...")) {
 

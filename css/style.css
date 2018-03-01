@@ -773,7 +773,16 @@ form {
     min-width: 100%;
     background-color: #f7f7f7;
     border: 1px solid #e8e8e8;
-    padding: 1rem; }
+    padding: 1rem;
+    align-items: center; }
+    .text-editor__status__cancel {
+      align-items: center;
+      display: none; }
+      .text-editor__status__cancel__img {
+        width: 2rem;
+        height: 2rem;
+        display: block;
+        cursor: pointer; }
 
 .blog-navigation {
   max-width: 33rem;
@@ -1241,7 +1250,8 @@ form {
     .blog__comment__date-reply__img {
       margin-left: 0.5rem;
       width: 2.5rem;
-      height: 2.5rem; }
+      height: 2.5rem;
+      cursor: pointer; }
   .blog__comment__reply {
     padding-left: 10rem; }
   .blog__comment__reply-to {
@@ -1265,11 +1275,16 @@ form {
     border-left: 1px solid #e8e8e8;
     border-right: 1px solid #e8e8e8;
     transition: background-color;
-    transition-duration: 2s; }
+    transition-duration: 2s;
+    width: 100%;
+    max-width: 100%; }
     .blog__comment__message li {
       margin-left: 2rem; }
     .blog__comment__message img {
       max-width: 50%; }
+    .blog__comment__message__content {
+      width: 100%;
+      max-width: 100%; }
     .blog__comment__message__stats {
       display: flex;
       min-width: 100%;
