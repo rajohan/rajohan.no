@@ -40,10 +40,27 @@ $(document).ready(function () {
                     type: "post",
                     url: "classes/ajax.php",
                        
-                    // On success output the requested site.
-                    success: function (data) {
+                    // On success reload comments
+                    success: function () {
 
-                        $(".text-editor__message").html(data);
+                        $.ajax({
+        
+                            url: "blog/read/"+blog_id+"/1/",
+                            type: "post",
+                            data: {sort_comments: "true", blog_id: blog_id, order: "newest"},
+                        
+                            // On success output comments
+                            success: function (data) {
+                    
+                                $("body").html(data);
+                    
+                                $(".blog__comment__sort__by__link").removeClass("blog__comment__sort__by__link__active");
+                                $("#blog__comment__sort__by__newest").addClass("blog__comment__sort__by__link__active");
+                                scroll($(".blog__comment"), 0); // Scroll text editor
+
+                            }
+                    
+                        });
 
                     },
                        
