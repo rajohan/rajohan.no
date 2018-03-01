@@ -398,11 +398,12 @@ $(".navigation__user-menu__nav__user").on("click", function() {
 
         scroll($(".navigation"), 0);
         scrollUserNav = 0;
+        $(".navigation__user-menu__nav__user__arrow").html("&utrif;");
 
     } else {
 
         scrollUserNav = 1;
-
+        $(".navigation__user-menu__nav__user__arrow").html("&dtrif;");
     }
 
 });

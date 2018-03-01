@@ -1074,7 +1074,7 @@ form {
         align-items: center;
         cursor: pointer; }
         .navigation__user-menu__nav__user__arrow {
-          padding-bottom: 0.4rem; }
+          margin-left: 0.1rem; }
       .navigation__user-menu__nav__items {
         list-style: none;
         position: absolute;
