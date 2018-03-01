@@ -2002,7 +2002,9 @@ fieldset {
     background-color: #476D7C;
     width: 100%;
     padding: 2rem;
-    color: #fff; }
+    color: #fff;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem; }
     .user__header__details {
       display: flex;
       align-items: center;

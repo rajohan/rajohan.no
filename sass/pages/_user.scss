@@ -9,6 +9,8 @@
         width: 100%;
         padding: 2rem;
         color: $color-white;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
 
         &__details {
             display: flex;
