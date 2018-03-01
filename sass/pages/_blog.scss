@@ -22,6 +22,7 @@
 
     &__img {
         width: 100%;
+        user-select: none;
 
         img {
             width: 100%;
@@ -44,6 +45,7 @@
         font-size: 1.3rem;
         margin-top: 1rem;
         display: flex;
+        user-select: none;
 
         &__img {
             width: 1.7rem;
@@ -56,6 +58,7 @@
         width: 100%;
         font-size: 1.3rem;
         display: flex;
+        user-select: none;
 
         &__img {
             width: 1.7rem;
@@ -67,6 +70,7 @@
     &__tags {
         width: 100%;
         margin-top: 1rem;
+        user-select: none;
     }
 
     &__story {
@@ -77,7 +81,8 @@
     }
 
     &__read {   
-
+        user-select: none;
+        
         a {
 
             &:link,

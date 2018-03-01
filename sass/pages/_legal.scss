@@ -3,6 +3,7 @@
     max-width: 100%;
     display: flex;
     justify-content: center;
+    user-select: none;
 
     &__box {
         max-width: 100rem;

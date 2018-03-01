@@ -21,7 +21,8 @@
 
     &__img {
         width: 100%;
-
+        user-select: none;
+        
         img {
             width: 100%;
             max-height: 40rem;
@@ -43,6 +44,7 @@
         font-size: 1.3rem;
         margin-top: 1rem;
         display: flex;
+        user-select: none;
    
 
         &__img {
@@ -56,6 +58,7 @@
         width: 100%;
         font-size: 1.3rem;
         display: flex;
+        user-select: none;
 
 
         &__img {
@@ -68,6 +71,7 @@
     &__tags {
         width: 100%;
         margin-top: 1rem;
+        user-select: none;
     }
 
     &__stats {
@@ -76,6 +80,7 @@
         font-size: 1.7rem;
         margin-top: 1rem;
         align-items: center;
+        user-select: none;
 
         &__img {
             width: 2.5rem;
@@ -114,6 +119,7 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid $color-grey-2;
+            user-select: none;
 
             &__count {
                 display: flex;
@@ -167,6 +173,7 @@
             justify-content: space-between;
             padding-bottom: 1rem;
             border-bottom: 1px solid $color-grey-2;
+            user-select: none;
 
             &__by {
             
@@ -190,6 +197,7 @@
             border: 1px solid $color-grey-2;
             padding: 1rem;
             line-height: 1;
+            user-select: none;
             
             &__box {
                 display: flex;
@@ -228,6 +236,7 @@
                 width: 2.5rem;
                 height: 2.5rem;
                 cursor: pointer;
+                user-select: none;
             }            
         }
 
@@ -245,6 +254,7 @@
             display: block;
             transition: background-color;
             transition-duration: 2s;
+            user-select: none;
             
             &__text {
                 cursor: pointer;
@@ -292,6 +302,7 @@
                 background-color: $color-grey-light;
                 padding: 1rem;
                 font-size: 1.3rem;
+                user-select: none;
                 
             }
 

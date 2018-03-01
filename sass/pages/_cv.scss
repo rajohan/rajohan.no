@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   background-color: $color-grey-light;
-
+  user-select: none;
 
   &__box {
     width: 100%;

@@ -60,7 +60,7 @@
             if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {            
         ?>
         <div class="navigation__user-menu__nav">
-            <img src="img/icons/user2.svg" alt="User photo" class="navigation__user-menu__nav__img"> 
+            <img src="img/me.jpg" alt="User photo" class="navigation__user-menu__nav__img"> 
             <div class="navigation__user-menu__nav__user">
                 <?php echo $filter->cut_string($_SESSION['USER']['USERNAME'], 7); ?>&nbsp;<span class="navigation__user-menu__nav__user__arrow">&dtrif;</span>
             </div>

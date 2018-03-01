@@ -20,10 +20,10 @@
 @import "components/social_media";
 @import "components/tags";
 @import "components/text_editor";
+@import "components/wrapper_container";
 // Layout
 @import "layout/blog_nav";
 @import "layout/footer";
-@import "layout/grid";
 @import "layout/header";
 @import "layout/navigation";
 // Pages
@@ -40,4 +40,5 @@
 @import "pages/register";
 @import "pages/services_extended";
 @import "pages/services";
+@import "pages/user";
 @import "pages/why_me";

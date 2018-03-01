@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   padding-bottom: 6rem;
+  user-select: none;
 
   &__bg-color-primary {
     background-color: $color-primary;

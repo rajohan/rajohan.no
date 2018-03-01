@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    user-select: none;
 
     &__box {
         display: flex;

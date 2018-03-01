@@ -15,6 +15,7 @@
     text-shadow: 0 0 1px rgba($color-black, 0.2), 0 1px 0 rgba($color-black, 0.2);
     transition: all 0.75s ease;
     cursor: pointer; 
+    user-select: none;
 
     &:hover {
       color: $color-white;
@@ -49,6 +50,7 @@
   }
 
   &--primary {
+    
     &:link,
     &:visited {
       color: $color-white;
@@ -79,9 +81,11 @@
     background-color: $color-primary;
     color: $color-grey;
     border: 2px solid $color-grey;
+
     &:hover {
       color: $color-black;
     }
+
     &:after {
       background: $color-grey;
       opacity: 0.5;
@@ -112,6 +116,7 @@
   display: none;
   transition: all;
   transition-duration: 0.4s;
+  user-select: none;
 
   @include respond(tab-port) { // width < 900px?
       bottom: 3rem;
