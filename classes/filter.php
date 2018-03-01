@@ -92,6 +92,22 @@
 
         }
 
+        //-------------------------------------------------
+        // Method to cut string that is to long
+        //-------------------------------------------------
+
+        function cut_string($string, $length) {
+
+            if(strlen($string) > ($length+2)) {
+
+                $string = substr($string, 0, $length).'...';
+                
+            }
+
+            return $string;
+
+        }
+
     }
 
 ?>

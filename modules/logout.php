@@ -10,23 +10,17 @@
         
     }
 
+    if (isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+
+        $login = new Login;
+        $login->logout();
+
+        header('Location: /home/');
+
+    } else {
+
+        header('Location: /home/');
+
+    }
+
 ?>
-
-<!-- SECTION LOGOUT START -->
-<div class="container">
-    <?php
-        if (isset($_SESSION['LOGGED_IN'])) {
-
-            $login = new Login;
-            $login->logout();
-
-            echo "You are now logged out.";
-
-        } else {
-
-            echo "You are already logged out";
-
-        }
-    ?>
-</div>
-<!-- SECTION LOGOUT END -->

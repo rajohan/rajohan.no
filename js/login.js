@@ -148,7 +148,15 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
 
-                            $(".container").html(data);
+                            if(data === "Logged in") {
+
+                                window.location.replace("/user/");
+
+                            } else {
+
+                                $(".container").html(data);
+
+                            }
                         
                         },
                        

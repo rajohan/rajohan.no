@@ -178,7 +178,7 @@
             
         </div>
         <?php
-            if(isset($_SESSION['LOGGED_IN'])) {
+            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
         ?>
         <div class="text-editor u-margin-top-small">
             <div class="text-editor__message"></div>

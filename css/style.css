@@ -1055,7 +1055,50 @@ form {
     display: flex;
     flex-direction: column;
     margin-left: 2rem;
-    margin-right: 4rem; }
+    margin-right: 4rem;
+    color: #fff; }
+    .navigation__user-menu__nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      line-height: 1;
+      justify-content: center; }
+      .navigation__user-menu__nav__img {
+        height: 3.75rem;
+        border-radius: 3.75rem;
+        opacity: 0.6;
+        margin-right: 1rem; }
+      .navigation__user-menu__nav__user {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer; }
+        .navigation__user-menu__nav__user__arrow {
+          padding-bottom: 0.4rem; }
+      .navigation__user-menu__nav__items {
+        list-style: none;
+        position: absolute;
+        top: calc(10vh - 3px);
+        right: 0;
+        background-color: #254B62;
+        padding-right: auto;
+        width: 20rem;
+        display: none; }
+        .navigation__user-menu__nav__items li {
+          padding: 1rem;
+          border-bottom: 1px solid #476D7C;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          min-width: 100%; }
+          .navigation__user-menu__nav__items li img {
+            width: 2rem;
+            height: 2rem;
+            margin-right: 1rem; }
+          .navigation__user-menu__nav__items li a {
+            font-size: 1.6rem;
+            display: flex;
+            min-width: 100%; }
     .navigation__user-menu a {
       display: flex;
       transition: all;

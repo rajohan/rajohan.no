@@ -385,3 +385,24 @@ $(".text-editor__status__cancel").on("click", function() {
     $(".text-editor__status__cancel").css("display", "none");
 
 });
+
+//-------------------------------------------------
+// User menu drop down hide/show
+//-------------------------------------------------
+var scrollUserNav = 1;
+$(".navigation__user-menu__nav__user").on("click", function() {
+   
+    $(".navigation__user-menu__nav__items").toggle();
+
+    if(scrollUserNav === 1) {
+
+        scroll($(".navigation"), 0);
+        scrollUserNav = 0;
+
+    } else {
+
+        scrollUserNav = 1;
+
+    }
+
+});

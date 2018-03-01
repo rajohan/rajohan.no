@@ -101,6 +101,67 @@
         flex-direction: column;
         margin-left: 2rem;
         margin-right: 4rem;
+        color: $color-white;
+
+        &__nav {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            line-height: 1;
+            justify-content: center;
+
+            &__img {
+                height: 3.75rem;
+                border-radius: 3.75rem;
+                opacity: 0.6;
+                margin-right: 1rem;
+            }
+
+            &__user {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                cursor: pointer;
+
+                &__arrow {
+                    padding-bottom: 0.4rem;
+                }
+            }
+
+            &__items {
+                list-style: none;
+                position: absolute;
+                top: calc(10vh - 3px);
+                right: 0;
+                background-color: $color-primary;
+                padding-right: auto;
+                width: 20rem;
+                display: none;
+                
+                li {
+                    padding: 1rem;
+                    border-bottom: 1px solid $color-primary-light;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    min-width: 100%;
+
+                    img {
+                        width: 2rem;
+                        height: 2rem;
+                        margin-right: 1rem;
+                    }
+
+                    a {
+                        font-size: $default-font-size;
+                        display: flex;
+                        min-width: 100%;
+                    }
+                }
+
+            }
+
+        }
 
         a { 
 

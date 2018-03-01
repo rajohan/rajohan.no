@@ -17,7 +17,7 @@
     
     $filter = new Filter;
     $page = new Page_handler;
-    
+
     //-------------------------------------------------
     // Get the navigation
     //-------------------------------------------------
@@ -56,8 +56,43 @@
         </button>
     </div>
     <div class ="navigation__user-menu">
+        <?php
+            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {            
+        ?>
+        <div class="navigation__user-menu__nav">
+            <img src="img/icons/user2.svg" alt="User photo" class="navigation__user-menu__nav__img"> 
+            <div class="navigation__user-menu__nav__user">
+                <?php echo $filter->cut_string($_SESSION['USER']['USERNAME'], 7); ?>&nbsp;<span class="navigation__user-menu__nav__user__arrow">&dtrif;</span>
+            </div>
+            <ul class="navigation__user-menu__nav__items">
+                <li>
+                    <a href="user/">
+                        <img src="img/icons/user2.svg" alt="profile">
+                        Profile
+                    </a>
+                </li>
+                <li>
+                    <a href="settings/">
+                        <img src="img/icons/settings.svg" alt="profile">
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="logout/">
+                        <img src="img/icons/logout.svg" alt="profile">
+                        Sign out
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <?php
+            } else {
+        ?>
         <a href="login/"><img src="img/icons/login.svg">Sign in</a>
         <a href="register/"><img src="img/icons/register.svg">Register</a>
+        <?php
+            }
+        ?>
     </div>
 </nav>
 <!-- NAVIGATION END -->
