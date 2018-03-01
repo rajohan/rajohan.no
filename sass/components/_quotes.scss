@@ -1,5 +1,32 @@
 .quote {
-    display: block;
-    width: 100%;
-    margin: 1rem 0rem;
+
+    display: inline-block;
+    margin: 1rem 2.5%;
+    padding: 1.5rem 3rem;
+    background-color: $color-grey-light;
+    position: relative;
+    border-radius: 1rem;
+    color: $color-grey-dark;
+
+    &::before {
+        content: '\0201C';
+        font-size: 4rem;
+        position: absolute;
+        top: 0.5rem;
+        left: 1rem;
+        line-height: 1;
+        color: $color-grey-dark;
+        font-style: italic;
+    }
+
+    &::after {
+        content: '\0201D';
+        font-size: 4rem;
+        position: absolute;
+        bottom: -1rem;
+        right: 1rem;
+        line-height: 1;
+        color: $color-grey-dark;
+        font-style: italic;
+    }
 }

@@ -68,7 +68,8 @@ pre {
   counter-reset: line;
   font-size: 1.4rem;
   margin-bottom: 1rem;
-  margin-left: 2.5%; }
+  margin-left: 2.5%;
+  margin-right: 2.5%; }
 
 code {
   display: block;
@@ -633,9 +634,31 @@ form {
       border-bottom-right-radius: 0.5rem; }
 
 .quote {
-  display: block;
-  width: 100%;
-  margin: 1rem 0rem; }
+  display: inline-block;
+  margin: 1rem 2.5%;
+  padding: 1.5rem 3rem;
+  background-color: #f7f7f7;
+  position: relative;
+  border-radius: 1rem;
+  color: #999999; }
+  .quote::before {
+    content: '\0201C';
+    font-size: 4rem;
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    line-height: 1;
+    color: #999999;
+    font-style: italic; }
+  .quote::after {
+    content: '\0201D';
+    font-size: 4rem;
+    position: absolute;
+    bottom: -1rem;
+    right: 1rem;
+    line-height: 1;
+    color: #999999;
+    font-style: italic; }
 
 .services__cta {
   display: flex;
