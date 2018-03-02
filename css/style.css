@@ -2020,6 +2020,9 @@ fieldset {
       align-items: center;
       padding-bottom: 2rem;
       min-width: 40rem; }
+      @media only screen and (max-width: 37.5em) {
+        .user__header__details {
+          min-width: 0; } }
       .user__header__details__img {
         height: 15rem;
         width: 15rem;

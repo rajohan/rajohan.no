@@ -24,6 +24,10 @@
             padding-bottom: 2rem;
             min-width: 40rem;
 
+            @include respond(phone) { // width < 600px?
+                min-width: 0;
+            }
+
             &__img {
                 height: 15rem;
                 width: 15rem;
