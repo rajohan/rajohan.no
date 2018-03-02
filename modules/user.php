@@ -17,36 +17,93 @@
     $filter = new Filter;
     $converter = new Converter;
     $user = new Users;
-    //$user_data = $user->get_user("ID", $_SESSION['USER']['ID']);
-?>
+    $page = new Page_handler;
 
+    $profile = $page->get_user(); // Set user equal to last url parameter. 0 if last url parameter is invalid or empty.
+
+    if($profile !== 0) {
+
+        $user_data = $user->get_user("ID", $profile);
+
+        if((empty($user_data)) || ($user_data['ID'] === 0)) {
+
+            $user_data = $user->get_user("USERNAME", $profile);
+
+        }
+
+    }
+    else if(($profile === 0) && (isset($_SESSION['LOGGED_IN'])) && ($_SESSION['LOGGED_IN'] === true)) {
+
+        $user_data = $user->get_user("ID", $_SESSION['USER']['ID']);
+
+    }
+
+?>
 <!-- SECTION USER START -->
 <div class="container u-margin-bottom-medium">
+    <?php
+
+        if(empty($user_data)) {
+
+            echo "The user profile you are trying to view does not exist";
+            
+        } else {
+
+    ?>
     <div class="user">
         <div class="user__header">
             <div class="user__header__details">
                 <div class="user__header__details__top">
-                    <img src="img/me.jpg" alt="User photo" class="user__header__details__img">
+                    <?php
+                        if(empty($user_data['IMG'])) {
+                            $user_data['IMG'] = "img/icons/user2.svg";
+                        }
+                    ?>
+                    <img src="<?php echo $user_data['IMG']; ?>" alt="User photo" class="user__header__details__img">
+                    
                     <div class="user__header__details__info">
                         <div class="user__header__details__info__name">
-                            <?php //echo $user_data['NAME']; ?>Raymond Johannessen
+                            <?php 
+
+                                if(empty($user_data['NAME'])) {
+                                    $user_data['NAME'] = "N/A";
+                                }
+
+                                echo $user_data['NAME']; 
+                            
+                            ?>
                         </div>
                         <div class="user__header__details__info__username">
-                            @<?php //echo $user_data['USERNAME']; ?>Rajohan
+                            @<?php echo $user_data['USERNAME']; ?>
                         </div>
                     </div>
                 </div>
                 <div class="user__header__details__social-media">
-                    <img src="img/icons/facebook.svg" alt="Facebook" class="user__header__details__social-media__img">
-                    <img src="img/icons/twitter.svg" alt="Twitter" class="user__header__details__social-media__img">
-                    <img src="img/icons/linkedin.svg" alt="LinkedIn" class="user__header__details__social-media__img">
-                    <img src="img/icons/github.svg" alt="Github" class="user__header__details__social-media__img">
+                    <a href="">
+                        <img src="img/icons/facebook.svg" alt="Facebook" class="user__header__details__social-media__img">
+                    </a>
+                    <a href="">
+                        <img src="img/icons/twitter.svg" alt="Twitter" class="user__header__details__social-media__img">
+                    </a>
+                    <a href="">
+                        <img src="img/icons/linkedin.svg" alt="LinkedIn" class="user__header__details__social-media__img">
+                    </a>
+                    <a href="">
+                        <img src="img/icons/github.svg" alt="Github" class="user__header__details__social-media__img">
+                    </a>
                 </div> 
             </div>
             <div class="user__header__stats">
                 <div class="user__header__stats__comments">
                     <div class="user__header__stats__count">
-                        154
+                        <?php 
+
+                            $db_conn = new Database;
+                            $comments =  $db_conn->count('COMMENTS', 'WHERE `POSTED_BY_USER` = ?', 'i', array($user_data['ID']));
+
+                            echo $comments;
+
+                        ?>
                     </div>
                     <div class="user__header__stats__text">
                         Comments
@@ -54,7 +111,7 @@
                 </div>
                 <div class="user__header__stats__rating">
                     <div class="user__header__stats__count">
-                        10.0
+                        <?php echo $user->rating($user_data['ID']); ?>
                     </div>
                     <div class="user__header__stats__text">
                         Rating
@@ -75,62 +132,166 @@
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Email address:
+                        <a href="mailto: <?php echo $user_data['EMAIL']; ?>"><?php echo $user_data['EMAIL']; ?></a>
                     </span>
-                    rajohan1@gmail.com
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Age:
                     </span>
-                    28 (29.03.1989)
+                    <?php 
+                        
+                        if(empty($user_data['BORN'])) {
+
+                            echo "N/A";
+
+                        } else {
+
+                            $age = $converter->age($user_data['BORN']);
+                            $born = $converter->date($user_data['BORN']);
+                            echo $age." (".$born.")"; 
+
+                        }
+
+                    ?>
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Phone:
                     </span>
-                    +47 99591387
+                    <?php 
+
+                        if(empty($user_data['BORN'])) {
+
+                            $user_data['PHONE'] = "N/A";
+
+                        }
+
+                        echo $user_data['PHONE']; 
+                    
+                    ?>
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Address:
                     </span>
-                    Steinhuggerveien 35, 1820 Spydeberg
+                    <?php 
+
+                        if(empty($user_data['ADDRESS'])) {
+
+                            $user_data['ADDRESS'] = "N/A";
+
+                        }
+
+                        echo $user_data['ADDRESS']; 
+
+                    ?>
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Country:
                     </span>
-                    Norway
+                    <?php 
+
+                        if(empty($user_data['COUNTRY'])) {
+
+                            $user_data['COUNTRY'] = "N/A";
+
+                        }
+
+                        echo $user_data['COUNTRY']; 
+
+                    ?>
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Webpage:
-                        <a href="https://rajohan.no">rajohan.no</a>
-                    </span>
+                        <?php
+
+                            if(empty($user_data['WEBPAGE'])) {
+
+                                echo "</span> N/A";
+
+                            } else {
+
+                                echo "<a href='".$user_data['WEBPAGE']."'>".$user_data['WEBPAGE']."</a></span>";
+
+                            }
+
+                        ?>
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Company:
                     </span>
-                    Raymond Johannessen Webutvikling
+                    <?php 
+
+                        if(empty($user_data['FIRMNAME'])) {
+
+                            $user_data['FIRMNAME'] = "N/A";
+
+                        }
+
+                        echo $user_data['FIRMNAME']; 
+                    
+                    ?>
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Company role:
                     </span>
-                    Web developer
+                    <?php 
+
+                        if(empty($user_data['FIRM_ROLE'])) {
+
+                            $user_data['FIRM_ROLE'] = "N/A";
+
+                        }
+
+                        echo $user_data['FIRM_ROLE']; 
+                    
+                    ?>
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Reg date:
                     </span>
-                    01.03.2018
+                    <?php 
+                        $reg_date = $converter->date($user_data['REG_DATE']);
+                        echo $reg_date; 
+                    ?>
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Access level:
                     </span>
-                    Site owner
+                    <?php 
+                        
+                        $admin = $user_data['ADMIN'];
+
+                        if($admin === "1") {
+
+                            echo 'Guest blogger';
+
+                        }
+
+                        else if($admin === "2") {
+
+                            echo 'Moderator';
+
+                        }
+
+                        else if($admin === "3") {
+
+                            echo 'Site owner';
+
+                        } else {
+
+                            echo "Member"; 
+
+                        }
+                    
+                    ?>
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
@@ -143,9 +304,22 @@
                 <span class="user__info__bio__title">
                     User biography
                 </span>
-                Hello! My name is Raymond, and I'm a Norwegian-based web developer.  I am 100% self-taught in programming and have an education as an electrician. I have been very interested in data and electronics ever since I was a young kid. We got the first computer at home when I was around 10-11 years old and I bought my first own computer when I was 13. Ever since then I have spent a lot of time on my pc. I started with programming around 2004 and have coded on and off since then.
+                <?php 
+
+                    if(empty($user_data['BIO'])) {
+
+                        $user_data['BIO'] = "N/A";
+
+                    }
+
+                    echo $user_data['BIO']; 
+
+                ?>
             </div>
         </div>
     </div>
+    <?php
+        }
+    ?>
 </div>
 <!-- SECTION USER END -->

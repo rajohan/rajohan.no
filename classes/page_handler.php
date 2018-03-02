@@ -38,7 +38,7 @@
             $this->filter = new Filter;
             $this->converter = new Converter;
 
-            $base_param_num = 1; // What parameter number website base is on
+            $this->base_param_num = 1; // What parameter number website base is on
 
             $stmt = $db_conn->connect->prepare("SELECT `PAGE`, `URL` FROM `PAGES` ORDER BY `ID` DESC"); // prepare statement
             $stmt->execute(); // select from database
@@ -61,55 +61,56 @@
             $params_count = count($params); // Count parameters
 
             // Set the $page variable
-            if(!empty($params[$base_param_num])) {
+            if(!empty($params[$this->base_param_num])) {
+
                 // Only allow word characters (a-z, A-Z, 0-9 and _.)
-                if (preg_match('~\W~', $params[$base_param_num])) {
+                if (preg_match('~\W~', $params[$this->base_param_num])) {
 
                     $this->page = 'home'; // Value in url parameter is invalid. Setting $page to home
 
                 } else {
                     
                     // Check if the first paramater is blog and that second parameter is set
-                    if(($params[$base_param_num] === "blog") && (!empty($params[$base_param_num+1]))) {
+                    if(($params[$this->base_param_num] === "blog") && (!empty($params[$this->base_param_num+1]))) {
 
                         // Check if parameter 2 is set and is valid
-                        if((($params[$base_param_num+1]) === "read") && (!preg_match('~\W~', $params[$base_param_num+1]))) {
+                        if((($params[$this->base_param_num+1]) === "read") && (!preg_match('~\W~', $params[$this->base_param_num+1]))) {
 
                             // Check if parameter 3 is set and is valid
-                            if((!empty($params[$base_param_num+2])) && preg_match('/^[1-9][0-9]*$/', $params[$base_param_num+2])) {
+                            if((!empty($params[$this->base_param_num+2])) && preg_match('/^[1-9][0-9]*$/', $params[$this->base_param_num+2])) {
 
                                 $db_conn = new Database;
                                 
-                                $count = $db_conn->count('BLOG', 'WHERE `ID` = ?', 'i', array($params[$base_param_num+2]));
+                                $count = $db_conn->count('BLOG', 'WHERE `ID` = ?', 'i', array($params[$this->base_param_num+2]));
 
                                 // Check that the blog post exist
                                 if($count > 0) {
 
-                                    $this->blog_id = $params[$base_param_num+2]; // Set blog id
-                                    $this->page = $params[$base_param_num+1]; // Value in url parameter 2 is valid. Setting $page equal to url parameter 2
+                                    $this->blog_id = $params[$this->base_param_num+2]; // Set blog id
+                                    $this->page = $params[$this->base_param_num+1]; // Value in url parameter 2 is valid. Setting $page equal to url parameter 2
 
                                 } else {
 
-                                    $this->page = $params[$base_param_num]; // Blog post does not exist. Setting $page equal to first url parameter
+                                    $this->page = $params[$this->base_param_num]; // Blog post does not exist. Setting $page equal to first url parameter
 
                                 }
 
                             } else {
 
-                                $this->page = $params[$base_param_num]; // Value in second url parameter is invalid. Setting $page equal to first url parameter
+                                $this->page = $params[$this->base_param_num]; // Value in second url parameter is invalid. Setting $page equal to first url parameter
 
                             }
 
                         
                         } else {
 
-                            $this->page = $params[$base_param_num]; // Value in second url parameter is invalid. Setting $page equal to first url parameter
+                            $this->page = $params[$this->base_param_num]; // Value in second url parameter is invalid. Setting $page equal to first url parameter
 
                         }
 
                     } else {
 
-                        $this->page = $params[$base_param_num]; // Value in url parameter is valid. Settting $page equal to url parameter
+                        $this->page = $params[$this->base_param_num]; // Value in url parameter is valid. Settting $page equal to url parameter
 
                     }
 
@@ -257,13 +258,84 @@
 
                 } else {
 
-                    return (int)$last_param; // Value in url parameter is valid. Settting $last_param equal to url parameter
+                    return (int)$last_param; // Value in url parameter is valid. Setting $last_param equal to url parameter
 
                 }
 
             } else {
 
                 return 1; // Last parameter is empty. Returning 1 as page.
+
+            }
+
+        }
+
+        //-----------------------------------------------
+        // Method to get user id/username from url
+        //-----------------------------------------------
+        
+        function get_user() {
+
+            $params = $this->split_url(); // Split the url at each '/' 
+            $last_param = $params[count($params)-1]; // Select the last parameter
+            
+            if(!empty($params[$this->base_param_num])) {
+
+                // Only allow word characters (a-z, A-Z, 0-9 and _.)
+                if (preg_match('~\W~', $params[$this->base_param_num])) {
+
+                  return 0; // Value in url parameter is invalid. Setting user to 0
+
+                } else {
+                    
+                    // Check if the first paramater is user
+                    if(($params[$this->base_param_num] === "user")) {
+
+                        // Set the $page variable
+                        if(!empty($last_param)) {
+
+                            // Only allow valid username/ids
+                            if (!preg_match('/^[\w\-]{1,15}$/', $last_param)) {
+
+                                return 0; // Value in url parameter is invalid. Returning 0 as user.
+
+                            } else {
+
+                                $db_conn = new Database;
+                                $count = $db_conn->count('USERS', 'WHERE `ID` = ?', 'i', array($last_param));
+                                $db_conn = new Database;
+                                $count = $count + $db_conn->count('USERS', 'WHERE `USERNAME` = ?', 's', array($last_param));
+
+                                // Check that the user exist
+                                if($count > 0) {
+
+                                    return $last_param; // Value in url parameter is valid. Setting $last_param equal to url parameter
+                                    
+                                } else {
+
+                                    return 0; // User do not exist. Setting user to 0
+
+                                } 
+
+                            }
+
+                        } else {
+
+                            return 0; // Last parameter is empty. Returning 0 as user.
+
+                        }
+
+                    } else {
+
+                        return 0; // Page is not equal to user
+
+                    }
+
+                }
+
+            } else {
+
+                return 0; // Parameter is empty. Returning 0 as user.
 
             }
 

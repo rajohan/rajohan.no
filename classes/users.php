@@ -89,6 +89,7 @@
         //-------------------------------------------------
         //  Method to get user data from id/username/mail
         //-------------------------------------------------
+
         function get_user($identifier, $user) {
 
             $user = $this->filter->sanitize($user);
@@ -123,6 +124,64 @@
 
         }
 
+        //-------------------------------------------------
+        //  Method to calculate user rating based on votes
+        //-------------------------------------------------
+
+        function rating($user) {
+
+            $user = $this->filter->sanitize($user);
+
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT ID FROM `COMMENTS` WHERE `POSTED_BY_USER` = ?");
+            $stmt->bind_param("i", $user);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            $comments = [];
+
+            while ($row = $result->fetch_assoc()) { 
+
+                $comment_id = $this->filter->sanitize($row['ID']);
+                array_push($comments, $comment_id);
+
+            }
+
+            $db_conn->free_close($result, $stmt);
+
+            $comments = implode(",",$comments);
+
+            if(empty($comments)) {
+
+                $comments = 0;
+
+            }
+
+            // Get up votes
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM `COMMENT_VOTES` WHERE VOTE > 0 AND `ITEM_ID` IN ($comments)");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $upvotes = $result->fetch_row();
+            $db_conn->free_close($result, $stmt);
+
+            // Get down votes
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM `COMMENT_VOTES` WHERE VOTE < 1 AND `ITEM_ID` IN ($comments)");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $downvotes = $result->fetch_row(); // Get the result
+            $db_conn->free_close($result, $stmt); // free result and close db connection
+
+            $total_votes = $upvotes[0] + $downvotes[0];
+
+            $rating = number_format((($upvotes[0] * 10) / $total_votes), 1);
+
+            return $rating;
+
+        }
+
     }
 
 ?>
+

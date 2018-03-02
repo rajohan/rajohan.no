@@ -183,7 +183,7 @@
         }
 
         //-------------------------------------------------
-        // Method to sort blog by views/votes
+        // Method to sort comments based on votes
         //-------------------------------------------------
 
         function comment_sort($blog_id) {
@@ -218,7 +218,7 @@
             }
 
             $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT `ITEM_ID` FROM `COMMENT_VOTES` WHERE VOTE > 0 AND `ITEM_ID` IN ($comment_ids)");
+            $stmt = $db_conn->connect->prepare("SELECT `ITEM_ID` FROM `COMMENT_VOTES` WHERE `VOTE` > 0 AND `ITEM_ID` IN ($comment_ids)");
             $stmt->execute();
             $result = $stmt->get_result();
             

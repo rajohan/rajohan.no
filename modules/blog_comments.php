@@ -194,13 +194,19 @@
             <div class="blog__comment__user__box">
                 <span class="blog__comment__user__name">'.$posted_by.'</span>';
                 
-                if($admin === 1) {
+                if($admin === "1") {
 
-                echo '<span class="blog__comment__user__admin">Moderator</span>';
+                    echo '<span class="blog__comment__user__admin">Guest blogger</span>';
 
                 }
 
-                elseif($admin ===2) {
+                else if($admin === "2") {
+
+                    echo '<span class="blog__comment__user__admin">Moderator</span>';
+
+                }
+
+                else if($admin === "3") {
 
                     echo '<span class="blog__comment__user__admin">Site owner</span>';
 
