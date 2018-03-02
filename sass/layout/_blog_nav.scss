@@ -6,6 +6,9 @@
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
     user-select: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
     @include respond(small-tab) { // width < 800px?
         display: none;

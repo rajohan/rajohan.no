@@ -25,14 +25,22 @@
     <div class="user">
         <div class="user__header">
             <div class="user__header__details">
-                <img src="img/me.jpg" alt="User photo" class="user__header__details__img">
-                <div class="user__header__details__info">
-                    <div class="user__header__details__info__name">
-                        <?php //echo $user_data['NAME']; ?>Raymond Johannessen
+                <div class="user__header__details__top">
+                    <img src="img/me.jpg" alt="User photo" class="user__header__details__img">
+                    <div class="user__header__details__info">
+                        <div class="user__header__details__info__name">
+                            <?php //echo $user_data['NAME']; ?>Raymond Johannessen
+                        </div>
+                        <div class="user__header__details__info__username">
+                            @<?php //echo $user_data['USERNAME']; ?>Rajohan
+                        </div>
                     </div>
-                    <div class="user__header__details__info__username">
-                        @<?php //echo $user_data['USERNAME']; ?>Rajohan
-                    </div>
+                </div>
+                <div class="user__header__details__social-media">
+                    <img src="img/icons/facebook.svg" alt="Facebook" class="user__header__details__social-media__img">
+                    <img src="img/icons/twitter.svg" alt="Twitter" class="user__header__details__social-media__img">
+                    <img src="img/icons/linkedin.svg" alt="LinkedIn" class="user__header__details__social-media__img">
+                    <img src="img/icons/github.svg" alt="Github" class="user__header__details__social-media__img">
                 </div> 
             </div>
             <div class="user__header__stats">
@@ -86,7 +94,13 @@
                     <span class="user__info__details__item__title">
                         Address:
                     </span>
-                    Steinhuggerveien 35, 1820 Spydeberg, Norway
+                    Steinhuggerveien 35, 1820 Spydeberg
+                </span>
+                <span class="user__info__details__item">
+                    <span class="user__info__details__item__title">
+                        Country:
+                    </span>
+                    Norway
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
@@ -126,7 +140,9 @@
                 </span>
             </div>
             <div class="user__info__bio">
-                <span class="user__info__bio__title">User biography</span>
+                <span class="user__info__bio__title">
+                    User biography
+                </span>
                 Hello! My name is Raymond, and I'm a Norwegian-based web developer.  I am 100% self-taught in programming and have an education as an electrician. I have been very interested in data and electronics ever since I was a young kid. We got the first computer at home when I was around 10-11 years old and I bought my first own computer when I was 13. Ever since then I have spent a lot of time on my pc. I started with programming around 2004 and have coded on and off since then.
             </div>
         </div>

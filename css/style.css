@@ -664,7 +664,8 @@ form {
     width: 4rem;
     margin: 1rem;
     transition: all;
-    transition-duration: 0.3s; }
+    transition-duration: 0.3s;
+    cursor: pointer; }
     .social-media__img:hover {
       opacity: 0.7; }
 
@@ -823,7 +824,10 @@ form {
   background-color: #f7f7f7;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
-  user-select: none; }
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%; }
   @media only screen and (max-width: 50em) {
     .blog-navigation {
       display: none; } }
@@ -1994,7 +1998,11 @@ fieldset {
         margin-bottom: 2rem; } }
 
 .user {
-  width: 100%; }
+  width: 100%;
+  max-width: 100rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
   .user__header {
     display: flex;
     flex-direction: column;
@@ -2007,9 +2015,13 @@ fieldset {
     border-top-right-radius: 1rem; }
     .user__header__details {
       display: flex;
-      align-items: center;
-      border-bottom: 1px solid #fff;
-      padding-bottom: 2rem; }
+      flex-direction: column;
+      border-bottom: 1px solid #fff; }
+      .user__header__details__top {
+        display: flex;
+        align-items: center;
+        padding-bottom: 2rem;
+        text-align: left; }
       .user__header__details__img {
         height: 15rem;
         width: 15rem;
@@ -2024,6 +2036,25 @@ fieldset {
         .user__header__details__info__name {
           font-weight: 700;
           font-size: 2rem; }
+      .user__header__details__social-media {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: -5rem;
+        margin-bottom: 2rem;
+        margin-right: 4rem; }
+        @media only screen and (max-width: 37.5em) {
+          .user__header__details__social-media {
+            margin-right: 0; } }
+        .user__header__details__social-media :not(:last-child) {
+          margin-right: 1rem; }
+        .user__header__details__social-media__img {
+          width: 4rem;
+          height: 4rem;
+          cursor: pointer;
+          transition: all;
+          transition-duration: 0.3s; }
+          .user__header__details__social-media__img:hover {
+            opacity: 0.5; }
     .user__header__stats {
       display: flex; }
       .user__header__stats__comments, .user__header__stats__rating, .user__header__stats__views {
@@ -2031,20 +2062,36 @@ fieldset {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-top: 2rem; }
+        margin-top: 2rem;
+        border-radius: 50%;
+        border: 0.3rem solid #fff;
+        width: 9rem;
+        height: 9rem;
+        font-size: 1.3rem;
+        line-height: 1.3; }
+      .user__header__stats__count {
+        font-weight: 700; }
       .user__header__stats__comments, .user__header__stats__rating {
-        margin-right: 4rem; }
+        margin-right: 2rem; }
   .user__info {
     display: flex;
     background-color: #f7f7f7;
     padding: 2rem;
     width: 100%; }
+    @media only screen and (max-width: 37.5em) {
+      .user__info {
+        flex-direction: column; } }
     .user__info__details {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       width: 50%;
-      padding-right: 2rem; }
+      padding-right: 2rem;
+      text-align: left; }
+      @media only screen and (max-width: 37.5em) {
+        .user__info__details {
+          width: 100%;
+          padding-right: 0; } }
       .user__info__details :not(:first-child) {
         padding-top: 1rem; }
       .user__info__details :not(:last-child) {
@@ -2053,7 +2100,12 @@ fieldset {
       .user__info__details__item {
         display: flex;
         padding-right: 2rem;
-        width: 100%; }
+        width: 100%;
+        text-align: left; }
+        @media only screen and (max-width: 37.5em) {
+          .user__info__details__item {
+            border-bottom: 1px solid #c5c5c5;
+            padding-bottom: 1rem; } }
         .user__info__details__item__title {
           font-weight: 700;
           margin-right: 0.5rem; }
@@ -2066,6 +2118,12 @@ fieldset {
       text-align: left;
       border-left: 1px solid #c5c5c5;
       padding-left: 2rem; }
+      @media only screen and (max-width: 37.5em) {
+        .user__info__bio {
+          width: 100%;
+          border-left: 0;
+          margin-top: 1rem;
+          padding-left: 0; } }
       .user__info__bio__title {
         font-weight: 700;
         width: 100%;

@@ -50,7 +50,7 @@
 <html lang="<?php echo $GLOBALS['language']; ?>">
     <head>
         <meta charset="<?php echo $GLOBALS['charset']; ?>">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta name="robots" content="<?php echo $GLOBALS['bot']; ?>">
         <meta name="description" content="<?php echo $GLOBALS['desc']; ?>">
         <meta name="keywords" content="<?php echo $GLOBALS['keywords']; ?>">
