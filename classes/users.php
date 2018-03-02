@@ -132,6 +132,7 @@
 
             $user = $this->filter->sanitize($user);
 
+            // Get id of comments by user
             $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT ID FROM `COMMENTS` WHERE `POSTED_BY_USER` = ?");
             $stmt->bind_param("i", $user);
@@ -151,31 +152,40 @@
 
             $comments = implode(",",$comments);
 
+            // If 0 comments set comments to 0
             if(empty($comments)) {
 
                 $comments = 0;
 
             }
 
-            // Get up votes
+            // Get comment up votes
             $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM `COMMENT_VOTES` WHERE VOTE > 0 AND `ITEM_ID` IN ($comments)");
             $stmt->execute();
             $result = $stmt->get_result();
-            $upvotes = $result->fetch_row();
+            $comment_upvotes = $result->fetch_row();
             $db_conn->free_close($result, $stmt);
 
-            // Get down votes
+            // Get comment down votes
             $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM `COMMENT_VOTES` WHERE VOTE < 1 AND `ITEM_ID` IN ($comments)");
             $stmt->execute();
             $result = $stmt->get_result();
-            $downvotes = $result->fetch_row(); // Get the result
+            $comment_downvotes = $result->fetch_row(); // Get the result
             $db_conn->free_close($result, $stmt); // free result and close db connection
 
-            $total_votes = $upvotes[0] + $downvotes[0];
+            $total_votes = $comment_upvotes[0] + $comment_downvotes[0];
 
-            $rating = number_format((($upvotes[0] * 10) / $total_votes), 1);
+            // If user have no votes set rating to 0
+            if ($total_votes === 0) {
+                $rating = "0.0";
+
+            } else {
+
+                $rating = number_format((($comment_upvotes[0] * 10) / $total_votes), 1);
+
+            }
 
             return $rating;
 
@@ -184,4 +194,3 @@
     }
 
 ?>
-

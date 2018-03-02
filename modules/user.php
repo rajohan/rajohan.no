@@ -53,45 +53,43 @@
     <div class="user">
         <div class="user__header">
             <div class="user__header__details">
-                <div class="user__header__details__top">
-                    <?php
-                        if(empty($user_data['IMG'])) {
-                            $user_data['IMG'] = "img/icons/user2.svg";
-                        }
-                    ?>
-                    <img src="<?php echo $user_data['IMG']; ?>" alt="User photo" class="user__header__details__img">
-                    
-                    <div class="user__header__details__info">
-                        <div class="user__header__details__info__name">
-                            <?php 
+                <?php
+                    if(empty($user_data['IMG'])) {
+                        $user_data['IMG'] = "img/icons/user2.svg";
+                    }
+                ?>
+                <img src="<?php echo $user_data['IMG']; ?>" alt="User photo" class="user__header__details__img">
+                
+                <div class="user__header__details__info">
+                    <div class="user__header__details__info__name">
+                        <?php 
 
-                                if(empty($user_data['NAME'])) {
-                                    $user_data['NAME'] = "N/A";
-                                }
+                            if(empty($user_data['NAME'])) {
+                                $user_data['NAME'] = "N/A";
+                            }
 
-                                echo $user_data['NAME']; 
-                            
-                            ?>
-                        </div>
-                        <div class="user__header__details__info__username">
-                            @<?php echo $user_data['USERNAME']; ?>
-                        </div>
+                            echo $user_data['NAME']; 
+                        
+                        ?>
                     </div>
-                </div>
-                <div class="user__header__details__social-media">
-                    <a href="">
-                        <img src="img/icons/facebook.svg" alt="Facebook" class="user__header__details__social-media__img">
-                    </a>
-                    <a href="">
-                        <img src="img/icons/twitter.svg" alt="Twitter" class="user__header__details__social-media__img">
-                    </a>
-                    <a href="">
-                        <img src="img/icons/linkedin.svg" alt="LinkedIn" class="user__header__details__social-media__img">
-                    </a>
-                    <a href="">
-                        <img src="img/icons/github.svg" alt="Github" class="user__header__details__social-media__img">
-                    </a>
-                </div> 
+                    <div class="user__header__details__info__username">
+                        @<?php echo $user_data['USERNAME']; ?>
+                    </div>
+                    <div class="user__header__details__info__social-media">
+                        <a href="">
+                            <img src="img/icons/facebook.svg" alt="Facebook" class="user__header__details__info__social-media__img">
+                        </a>
+                        <a href="">
+                            <img src="img/icons/twitter.svg" alt="Twitter" class="user__header__details__info__social-media__img">
+                        </a>
+                        <a href="">
+                            <img src="img/icons/linkedin.svg" alt="LinkedIn" class="user__header__details__info__social-media__img">
+                        </a>
+                        <a href="">
+                            <img src="img/icons/github.svg" alt="Github" class="user__header__details__info__social-media__img">
+                        </a>
+                    </div> 
+                </div>    
             </div>
             <div class="user__header__stats">
                 <div class="user__header__stats__comments">

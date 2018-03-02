@@ -2015,13 +2015,11 @@ fieldset {
     border-top-right-radius: 1rem; }
     .user__header__details {
       display: flex;
-      flex-direction: column;
-      border-bottom: 1px solid #fff; }
-      .user__header__details__top {
-        display: flex;
-        align-items: center;
-        padding-bottom: 2rem;
-        text-align: left; }
+      border-bottom: 1px solid #fff;
+      display: flex;
+      align-items: center;
+      padding-bottom: 2rem;
+      min-width: 40rem; }
       .user__header__details__img {
         height: 15rem;
         width: 15rem;
@@ -2032,29 +2030,26 @@ fieldset {
       .user__header__details__info {
         display: flex;
         flex-direction: column;
-        align-items: flex-start; }
+        align-items: flex-start;
+        justify-content: center; }
         .user__header__details__info__name {
           font-weight: 700;
           font-size: 2rem; }
-      .user__header__details__social-media {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: -5rem;
-        margin-bottom: 2rem;
-        margin-right: 4rem; }
-        @media only screen and (max-width: 37.5em) {
-          .user__header__details__social-media {
-            margin-right: 0; } }
-        .user__header__details__social-media :not(:last-child) {
-          margin-right: 1rem; }
-        .user__header__details__social-media__img {
-          width: 4rem;
-          height: 4rem;
-          cursor: pointer;
-          transition: all;
-          transition-duration: 0.3s; }
-          .user__header__details__social-media__img:hover {
-            opacity: 0.5; }
+        .user__header__details__info__social-media {
+          display: flex;
+          margin-top: 1rem;
+          margin-bottom: -6rem;
+          margin-left: -1rem; }
+          .user__header__details__info__social-media :not(:last-child) {
+            margin-right: 1rem; }
+          .user__header__details__info__social-media__img {
+            width: 4rem;
+            height: 4rem;
+            cursor: pointer;
+            transition: all;
+            transition-duration: 0.3s; }
+            .user__header__details__info__social-media__img:hover {
+              opacity: 0.5; }
     .user__header__stats {
       display: flex; }
       .user__header__stats__comments, .user__header__stats__rating, .user__header__stats__views {
