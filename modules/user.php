@@ -19,6 +19,10 @@
     $user = new Users;
     $page = new Page_handler;
 
+    //-------------------------------------------------
+    // Get user data
+    //-------------------------------------------------
+    
     $profile = $page->get_user(); // Set user equal to last url parameter. 0 if last url parameter is invalid or empty.
 
     if($profile !== 0) {
@@ -75,19 +79,27 @@
                     <div class="user__header__details__info__username">
                         @<?php echo $user_data['USERNAME']; ?>
                     </div>
-                    <div class="user__header__details__info__social-media">
-                        <a href="">
-                            <img src="img/icons/facebook.svg" alt="Facebook" class="user__header__details__info__social-media__img">
-                        </a>
-                        <a href="">
-                            <img src="img/icons/twitter.svg" alt="Twitter" class="user__header__details__info__social-media__img">
-                        </a>
-                        <a href="">
-                            <img src="img/icons/linkedin.svg" alt="LinkedIn" class="user__header__details__info__social-media__img">
-                        </a>
-                        <a href="">
-                            <img src="img/icons/github.svg" alt="Github" class="user__header__details__info__social-media__img">
-                        </a>
+                    <div class="user__header__details__info__social-media" <?php if((empty($user_data['FACEBOOK'])) && (empty($user_data['TWITTER'])) && (empty($user_data['LINKEDIN'])) && (empty($user_data['GITHUB']))) { echo 'style="display: none;"'; } ?>>
+                        <?php if(!empty($user_data['FACEBOOK'])) { ?>
+                            <a href="<?php echo $user_data['FACEBOOK']; ?>">
+                                <img src="img/icons/facebook.svg" alt="Facebook" class="user__header__details__info__social-media__img">
+                            </a>
+                        <?php } ?>
+                        <?php if(!empty($user_data['TWITTER'])) { ?>
+                            <a href="<?php echo $user_data['TWITTER']; ?>">
+                                <img src="img/icons/twitter.svg" alt="Twitter" class="user__header__details__info__social-media__img">
+                            </a>
+                        <?php } ?>
+                        <?php if(!empty($user_data['LINKEDIN'])) { ?>
+                            <a href="<?php echo $user_data['LINKEDIN']; ?>">
+                                <img src="img/icons/linkedin.svg" alt="LinkedIn" class="user__header__details__info__social-media__img">
+                            </a>
+                        <?php } ?>
+                        <?php if(!empty($user_data['GITHUB'])) { ?>
+                            <a href="<?php echo $user_data['GITHUB'] ?>">
+                                <img src="img/icons/github.svg" alt="Github" class="user__header__details__info__social-media__img">
+                            </a>
+                        <?php } ?>
                     </div> 
                 </div>    
             </div>

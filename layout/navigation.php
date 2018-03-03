@@ -17,7 +17,8 @@
     
     $filter = new Filter;
     $page = new Page_handler;
-
+    $user = new Users;
+    
     //-------------------------------------------------
     // Get the navigation
     //-------------------------------------------------
@@ -27,12 +28,23 @@
     $stmt->execute();
     $result = $stmt->get_result();
 
+    //-------------------------------------------------
+    // Get user data
+    //-------------------------------------------------
+
+    if ((isset($_SESSION['LOGGED_IN'])) && ($_SESSION['LOGGED_IN'] === true)) {
+
+        $user_data = $user->get_user("ID", $_SESSION['USER']['ID']);
+
+    }
+
 ?>
 
 <!-- NAVIGATION START -->
 <nav class="navigation">
     <a href="home/"><img src="img/logo_white.png" alt="Logo" class="navigation__logo"></a>
     <ul class="navigation__list">
+
         <?php
         
             while ($row = $result->fetch_assoc()) {
@@ -44,12 +56,14 @@
                 echo '<a href="'.$url.'/" class="navigation__link '.$page->set_active($url).'">';
                 echo $name;
                 echo '</a>';
+                echo '</li>';
 
             }
 
             $db_conn->free_close($result, $stmt);
             
         ?>
+
     </ul>
     <div class="navigation__hamburger-menu">
         <button class="navigation__button">
@@ -57,12 +71,24 @@
     </div>
     <div class ="navigation__user-menu">
         <?php
-            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {            
+
+            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {       
+
         ?>
         <div class="navigation__user-menu__nav">
-            <img src="img/me.jpg" alt="User photo" class="navigation__user-menu__nav__img"> 
+            <?php 
+            
+                if(empty($user_data['IMG'])) {
+
+                    $user_data['IMG'] = "img/icons/user2.svg";
+                    
+                }
+            
+            ?>
+
+            <img src="<?php  echo $user_data['IMG']; ?>" alt="User photo" class="navigation__user-menu__nav__img"> 
             <div class="navigation__user-menu__nav__user">
-                <?php echo $filter->cut_string($_SESSION['USER']['USERNAME'], 7); ?>&nbsp;<span class="navigation__user-menu__nav__user__arrow">&dtrif;</span>
+                <?php echo $filter->cut_string($filter->sanitize($_SESSION['USER']['USERNAME']), 7); ?>&nbsp;<span class="navigation__user-menu__nav__user__arrow">&dtrif;</span>
             </div>
             <ul class="navigation__user-menu__nav__items">
                 <li>

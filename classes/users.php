@@ -93,6 +93,7 @@
         function get_user($identifier, $user) {
 
             $user = $this->filter->sanitize($user);
+            $identifier = $this->filter->sanitize($identifier);
 
             $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT * FROM `USERS` WHERE $identifier=?");
@@ -125,57 +126,131 @@
         }
 
         //-------------------------------------------------
+        //  Method to get comment votes for user
+        //-------------------------------------------------
+
+        function comment_votes($user) {
+             
+            $user = $this->filter->sanitize($user);
+
+            // Get id of comments by user
+             $db_conn = new Database;
+             $stmt = $db_conn->connect->prepare("SELECT ID FROM `COMMENTS` WHERE `POSTED_BY_USER` = ?");
+             $stmt->bind_param("i", $user);
+             $stmt->execute();
+             $result = $stmt->get_result();
+ 
+             $comments = [];
+ 
+             while ($row = $result->fetch_assoc()) { 
+ 
+                 $comment_id = $this->filter->sanitize($row['ID']);
+                 array_push($comments, $comment_id);
+ 
+             }
+ 
+             $db_conn->free_close($result, $stmt);
+ 
+             $comments = implode(",",$comments);
+ 
+             // If 0 comments set comments to 0
+             if(empty($comments)) {
+ 
+                 $comments = 0;
+ 
+             }
+ 
+             // Get comment up votes
+             $db_conn = new Database;
+             $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM `COMMENT_VOTES` WHERE VOTE > 0 AND `ITEM_ID` IN ($comments)");
+             $stmt->execute();
+             $result = $stmt->get_result();
+             $upvotes = $result->fetch_row();
+             $db_conn->free_close($result, $stmt);
+ 
+             // Get comment down votes
+             $db_conn = new Database;
+             $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM `COMMENT_VOTES` WHERE VOTE < 1 AND `ITEM_ID` IN ($comments)");
+             $stmt->execute();
+             $result = $stmt->get_result();
+             $downvotes = $result->fetch_row(); // Get the result
+             $db_conn->free_close($result, $stmt); // free result and close db connection
+
+             $votes['upvotes'] = $upvotes[0];
+             $votes['downvotes'] = $downvotes[0];
+             
+             return $votes;
+             
+        }
+
+        //-------------------------------------------------
+        //  Method to get blog votes for user
+        //-------------------------------------------------
+
+        function blog_votes($user) {
+             
+            $user = $this->filter->sanitize($user);
+
+            // Get id of comments by user
+             $db_conn = new Database;
+             $stmt = $db_conn->connect->prepare("SELECT ID FROM `BLOG` WHERE `PUBLISHED_BY_USER` = ?");
+             $stmt->bind_param("i", $user);
+             $stmt->execute();
+             $result = $stmt->get_result();
+ 
+             $blogs = [];
+ 
+             while ($row = $result->fetch_assoc()) { 
+ 
+                 $blog_id = $this->filter->sanitize($row['ID']);
+                 array_push($blogs, $blog_id);
+ 
+             }
+ 
+             $db_conn->free_close($result, $stmt);
+ 
+             $blogs = implode(",",$blogs);
+ 
+             // If 0 comments set comments to 0
+             if(empty($blogs)) {
+ 
+                 $blogs = 0;
+ 
+             }
+ 
+             // Get comment up votes
+             $db_conn = new Database;
+             $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM `BLOG_VOTES` WHERE VOTE > 0 AND `ITEM_ID` IN ($blogs)");
+             $stmt->execute();
+             $result = $stmt->get_result();
+             $upvotes = $result->fetch_row();
+             $db_conn->free_close($result, $stmt);
+ 
+             // Get comment down votes
+             $db_conn = new Database;
+             $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM `BLOG_VOTES` WHERE VOTE < 1 AND `ITEM_ID` IN ($blogs)");
+             $stmt->execute();
+             $result = $stmt->get_result();
+             $downvotes = $result->fetch_row(); // Get the result
+             $db_conn->free_close($result, $stmt); // free result and close db connection
+
+             $votes['upvotes'] = $upvotes[0];
+             $votes['downvotes'] = $downvotes[0];
+             
+             return $votes;
+
+        }
+
+        //-------------------------------------------------
         //  Method to calculate user rating based on votes
         //-------------------------------------------------
 
         function rating($user) {
 
-            $user = $this->filter->sanitize($user);
+            $votes['comment'] = $this->comment_votes($user);
+            $votes['blog'] = $this->blog_votes($user);
 
-            // Get id of comments by user
-            $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT ID FROM `COMMENTS` WHERE `POSTED_BY_USER` = ?");
-            $stmt->bind_param("i", $user);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            $comments = [];
-
-            while ($row = $result->fetch_assoc()) { 
-
-                $comment_id = $this->filter->sanitize($row['ID']);
-                array_push($comments, $comment_id);
-
-            }
-
-            $db_conn->free_close($result, $stmt);
-
-            $comments = implode(",",$comments);
-
-            // If 0 comments set comments to 0
-            if(empty($comments)) {
-
-                $comments = 0;
-
-            }
-
-            // Get comment up votes
-            $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM `COMMENT_VOTES` WHERE VOTE > 0 AND `ITEM_ID` IN ($comments)");
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $comment_upvotes = $result->fetch_row();
-            $db_conn->free_close($result, $stmt);
-
-            // Get comment down votes
-            $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT COUNT(ID) FROM `COMMENT_VOTES` WHERE VOTE < 1 AND `ITEM_ID` IN ($comments)");
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $comment_downvotes = $result->fetch_row(); // Get the result
-            $db_conn->free_close($result, $stmt); // free result and close db connection
-
-            $total_votes = $comment_upvotes[0] + $comment_downvotes[0];
+            $total_votes = $votes['comment']['upvotes'] + $votes['comment']['downvotes'] + $votes['blog']['upvotes'] + $votes['blog']['downvotes'];
 
             // If user have no votes set rating to 0
             if ($total_votes === 0) {
@@ -183,7 +258,7 @@
 
             } else {
 
-                $rating = number_format((($comment_upvotes[0] * 10) / $total_votes), 1);
+                $rating = number_format(((($votes['comment']['upvotes'] + $votes['blog']['upvotes']) * 10) / $total_votes), 1);
 
             }
 
