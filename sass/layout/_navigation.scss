@@ -112,11 +112,12 @@
             justify-content: center;
 
             &__img {
-                height: 3.75rem;
-                width: 3.75rem;
-                border-radius: 3.75rem;
+                height: 3.95rem;
+                width: 3.95rem;
+                border-radius: 3.95rem;
                 opacity: 0.6;
                 margin-right: 1rem;
+                border: 0.2rem solid $color-white;
             }
 
             &__user {

@@ -108,7 +108,16 @@
 
                 // Log to auth log
                 $db_conn = new Database;
-                $db_conn->db_insert("AUTH_LOG", "USER, TOKEN, SUCCESS, IP", "iiis", array(0, 1, 0, $this->ip));
+
+                if(!isset($user_id)) {
+
+                    $db_conn->db_insert("AUTH_LOG", "USER, TOKEN, SUCCESS, IP", "iiis", array(0, 1, 0, $this->ip));
+
+                } else {
+
+                    $db_conn->db_insert("AUTH_LOG", "USER, TOKEN, SUCCESS, IP", "iiis", array($user_id, 1, 0, $this->ip));
+
+                }
 
             }
 

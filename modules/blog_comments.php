@@ -192,7 +192,7 @@
         echo
         '<div class="blog__comment__user">
             <div class="blog__comment__user__box">
-                <span class="blog__comment__user__name">'.$posted_by.'</span>';
+                <span class="blog__comment__user__name"><a href="user/'.$posted_by.'">'.$posted_by.'</a></span>';
                 
                 if($admin === "1") {
 

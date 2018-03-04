@@ -111,13 +111,13 @@
             <?php echo ucfirst($title); ?>
         </div>
         <div class="blog__by">
-            <?php echo "<img src='img/icons/write.svg' alt='posted' class='blog__by__img'> ".$publish_date."  <img src='img/icons/user.svg' alt='user' class='blog__by__img'> ".$published_by; ?>
+            <?php echo "<img src='img/icons/write.svg' alt='posted' class='blog__by__img'> ".$publish_date."  <img src='img/icons/user.svg' alt='user' class='blog__by__img'> <a href='user/".$published_by."'>".$published_by."</a>"; ?>
         </div>
         <?php 
             if(!empty($update_date) && !empty($updated_by)) {
         ?>
         <div class="blog__updated-by">
-            <?php echo "<img src='img/icons/refresh.svg' alt='updated' class='blog__by__img'> ".$update_date." <img src='img/icons/user.svg' alt='user' class='blog__updated-by__img'> ".$updated_by; ?>
+            <?php echo "<img src='img/icons/refresh.svg' alt='updated' class='blog__by__img'> ".$update_date." <img src='img/icons/user.svg' alt='user' class='blog__updated-by__img'> <a href='user/".$updated_by."'>".$updated_by."</a>"; ?>
         </div>
         <?php
             }

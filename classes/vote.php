@@ -82,7 +82,17 @@
         // Method to add blog votes
         //-------------------------------------------------
 
-        function add_blog_vote($vote, $blog_id, $user=0) {
+        function add_blog_vote($vote, $blog_id) {
+
+            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+
+                $user = $_SESSION['USER']['ID'];
+
+            } else {
+            
+                $user = 0;
+
+            }
 
             $count = $this->check_old_votes("BLOG_VOTES", "ITEM_ID", $blog_id, $user); // Check for old votes on item by user
 
@@ -116,8 +126,18 @@
         //-------------------------------------------------
         // Method to add comment votes
         //-------------------------------------------------
-        
-        function add_comment_vote($vote, $comment_id, $user=0) {
+
+        function add_comment_vote($vote, $comment_id) {
+
+            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+
+                $user = $_SESSION['USER']['ID'];
+
+            } else {
+            
+                $user = 0;
+
+            }
 
             $count = $this->check_old_votes("COMMENT_VOTES", "ITEM_ID", $comment_id, $user); // Check for old votes on item by user
 

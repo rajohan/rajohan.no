@@ -111,7 +111,7 @@
                     <img src="img/icons/write.svg" alt="posted" class="blog-navigation__sort__content__text__img">
                     '.$publish_date.'
                     <img src="img/icons/user.svg" alt="user" class="blog-navigation__sort__content__text__img">
-                    '.$published_by.'
+                    <a href="user/'.$published_by.'">'.$published_by.'</a>
                 </span>
             </div>
         </div>';

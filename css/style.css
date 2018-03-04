@@ -967,14 +967,16 @@ form {
   .header__img-switcher--prev {
     position: absolute;
     top: calc(50% - 2rem);
-    left: 4rem; }
+    left: 4rem;
+    cursor: pointer; }
     @media only screen and (max-width: 37.5em) {
       .header__img-switcher--prev {
         top: calc(100% - 6rem); } }
   .header__img-switcher--next {
     position: absolute;
     top: calc(50% - 2rem);
-    right: 4rem; }
+    right: 4rem;
+    cursor: pointer; }
     @media only screen and (max-width: 37.5em) {
       .header__img-switcher--next {
         top: calc(100% - 6rem); } }
@@ -1081,11 +1083,12 @@ form {
       line-height: 1;
       justify-content: center; }
       .navigation__user-menu__nav__img {
-        height: 3.75rem;
-        width: 3.75rem;
-        border-radius: 3.75rem;
+        height: 3.95rem;
+        width: 3.95rem;
+        border-radius: 3.95rem;
         opacity: 0.6;
-        margin-right: 1rem; }
+        margin-right: 1rem;
+        border: 0.2rem solid #fff; }
       .navigation__user-menu__nav__user {
         display: flex;
         flex-direction: row;

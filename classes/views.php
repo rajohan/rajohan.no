@@ -55,7 +55,17 @@
         // Method to add blog views
         //-------------------------------------------------
         
-        function add_blog_view($blog_id, $user = 0) {
+        function add_blog_view($blog_id) {
+            
+            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+
+                $user = $_SESSION['USER']['ID'];
+
+            } else {
+            
+                $user = 0;
+
+            }
 
             $count = $this->check_views("BLOG_VIEWS", "BLOG_ID", $blog_id, $user); // Check for old view on item by user
 

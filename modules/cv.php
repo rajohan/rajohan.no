@@ -74,7 +74,7 @@
                 <br>
                 <b>E-mail: </b><a href="mailto:<?php echo $mail; ?>"><?php echo $mail; ?></a>
                 <br>
-                <b>Homepage: </b><a href="home/"><?php echo $homepage; ?></a>
+                <b>Homepage: </b><a href="home/" target="_blank"><?php echo $homepage; ?></a>
             </div>
         </div>
         <div class="cv__bottom">

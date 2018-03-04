@@ -81,22 +81,22 @@
                     </div>
                     <div class="user__header__details__info__social-media" <?php if((empty($user_data['FACEBOOK'])) && (empty($user_data['TWITTER'])) && (empty($user_data['LINKEDIN'])) && (empty($user_data['GITHUB']))) { echo 'style="display: none;"'; } ?>>
                         <?php if(!empty($user_data['FACEBOOK'])) { ?>
-                            <a href="<?php echo $user_data['FACEBOOK']; ?>">
+                            <a href="<?php echo $user_data['FACEBOOK']; ?>" target="_blank">
                                 <img src="img/icons/facebook.svg" alt="Facebook" class="user__header__details__info__social-media__img">
                             </a>
                         <?php } ?>
                         <?php if(!empty($user_data['TWITTER'])) { ?>
-                            <a href="<?php echo $user_data['TWITTER']; ?>">
+                            <a href="<?php echo $user_data['TWITTER']; ?>" target="_blank">
                                 <img src="img/icons/twitter.svg" alt="Twitter" class="user__header__details__info__social-media__img">
                             </a>
                         <?php } ?>
                         <?php if(!empty($user_data['LINKEDIN'])) { ?>
-                            <a href="<?php echo $user_data['LINKEDIN']; ?>">
+                            <a href="<?php echo $user_data['LINKEDIN']; ?>" target="_blank">
                                 <img src="img/icons/linkedin.svg" alt="LinkedIn" class="user__header__details__info__social-media__img">
                             </a>
                         <?php } ?>
                         <?php if(!empty($user_data['GITHUB'])) { ?>
-                            <a href="<?php echo $user_data['GITHUB'] ?>">
+                            <a href="<?php echo $user_data['GITHUB'] ?>" target="_blank">
                                 <img src="img/icons/github.svg" alt="Github" class="user__header__details__info__social-media__img">
                             </a>
                         <?php } ?>
@@ -224,7 +224,7 @@
 
                             } else {
 
-                                echo "<a href='".$user_data['WEBPAGE']."'>".$user_data['WEBPAGE']."</a></span>";
+                                echo "<a href='".$user_data['WEBPAGE']."' target='_blank'>".$user_data['WEBPAGE']."</a></span>";
 
                             }
 

@@ -54,6 +54,7 @@
         position: absolute;
         top: calc(50% - 2rem);
         left: 4rem;
+        cursor: pointer;
         
         @include respond(phone) { // width < 600px?
             top: calc(100% - 6rem);
@@ -64,6 +65,7 @@
         position: absolute;
         top: calc(50% - 2rem);
         right: 4rem;
+        cursor: pointer;
         
         @include respond(phone) { // width < 600px?
             top: calc(100% - 6rem);
