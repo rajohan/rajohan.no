@@ -37,6 +37,17 @@
     
     $page = new Page_handler;
     $login = new Login;
+    $traffic = new Traffic;
+
+    //-------------------------------------------------
+    // Add traffic to db
+    //-------------------------------------------------
+
+    $traffic->add_traffic();
+
+    //-------------------------------------------------
+    // Login user if cookie is set and valid
+    //-------------------------------------------------
 
     if((isset($_COOKIE['REMEMBER_ME_TOKEN'])) && (!isset($_SESSION['LOGGED_IN']))) {
         

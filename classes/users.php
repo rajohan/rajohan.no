@@ -266,6 +266,36 @@
 
         }
 
+        //-------------------------------------------------
+        //  Method to get users last seen date
+        //-------------------------------------------------
+
+        function last_seen($user) {
+        
+            $user = $this->filter->sanitize($user);
+
+             $db_conn = new Database;
+             $stmt = $db_conn->connect->prepare("SELECT `DATE` FROM `TRAFFIC_LOG` WHERE `USER` = ? ORDER BY `ID` DESC LIMIT 1");
+             $stmt->bind_param("i", $user);
+             $stmt->execute();
+             $result = $stmt->get_result();
+ 
+            while ($row = $result->fetch_assoc()) { 
+ 
+                $date = $this->filter->sanitize($row['DATE']);
+ 
+            }
+            
+            if(!isset($date)) {
+
+                $date = "N/A";
+                
+            }
+
+            return $date;
+
+        }
+
     }
 
 ?>

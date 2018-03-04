@@ -19,7 +19,7 @@
     $user = new Users;
     $page = new Page_handler;
     $view = new Views;
-
+    
     //-------------------------------------------------
     // Get user data
     //-------------------------------------------------
@@ -333,7 +333,19 @@
                     <span class="user__info__details__item__title">
                         Last seen:
                     </span>
-                    01.03.2018 - 22:15
+                    <?php
+                    
+                        $last_seen = $user->last_seen($user_data['ID']);
+
+                        if($last_seen !== "N/A") {
+
+                            $last_seen = $converter->date_time($last_seen);
+
+                        }
+                        
+                        echo $last_seen;
+
+                    ?>
                 </span>
             </div>
             <div class="user__info__bio">
