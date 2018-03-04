@@ -77,6 +77,33 @@
 
         }
 
+        //-------------------------------------------------
+        // Method to add user profile views
+        //-------------------------------------------------
+        
+        function add_user_profile_view($user_id) {
+            
+            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+
+                $user = $_SESSION['USER']['ID'];
+
+            } else {
+            
+                $user = 0;
+
+            }
+
+            $count = $this->check_views("USER_PROFILE_VIEWS", "USER_ID", $user_id, $user); // Check for old view on item by user
+
+            if($count <= 0) {
+
+                $this->add_view("USER_PROFILE_VIEWS", "USER_ID", $user_id, $user); // Add view to db
+
+            }
+
+        }
+
+
     }
 
 ?>

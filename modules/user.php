@@ -18,6 +18,7 @@
     $converter = new Converter;
     $user = new Users;
     $page = new Page_handler;
+    $view = new Views;
 
     //-------------------------------------------------
     // Get user data
@@ -52,6 +53,19 @@
             echo "The user profile you are trying to view does not exist";
             
         } else {
+        
+            //-------------------------------------------------
+            // Add profile view to db to db if its a new user
+            //-------------------------------------------------
+
+            $view->add_user_profile_view($user_data['ID']);
+
+            //-------------------------------------------------
+            //  Get views count
+            //-------------------------------------------------
+
+            $db_conn = new Database;
+            $view_count = $db_conn->count('USER_PROFILE_VIEWS', 'WHERE USER_ID = ?', 'i', array($user_data['ID']));
 
     ?>
     <div class="user">
@@ -129,10 +143,22 @@
                 </div>
                 <div class="user__header__stats__views">
                     <div class="user__header__stats__count">
-                        215
+                        <?php echo $view_count; ?>
                     </div>
                     <div class="user__header__stats__text">
-                        Views
+                    <?php 
+                    
+                    if($view_count === 1) { 
+
+                        echo "View";
+
+                    } else {
+
+                        echo "Views";
+
+                    }
+
+                    ?>
                     </div>
                 </div>
             </div>
