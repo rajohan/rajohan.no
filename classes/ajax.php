@@ -14,7 +14,6 @@
 
     if(!defined('INCLUDE')) {
 
-        echo $_POST['blog_id'].$_POST['reply_to'].$_POST['comment'];
         die('Direct access is not permitted.');
         
     }
