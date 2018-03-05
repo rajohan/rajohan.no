@@ -33,8 +33,8 @@
         </div>
         <div class="error__box"></div>
         <div class="checkbox__box u-margin-top-small u-margin-bottom-small">    
-            <input type="checkbox" id="login__remember" value="1" name="login__remember">
-            <label for="login__remember">I trust this device. Keep me logged in.</label>
+            <input type="checkbox" class="checkbox" id="login__remember" value="1" name="login__remember">
+            <label class="checkbox__overlay" for="login__remember"></label> I trust this device. Keep me logged in.
         </div>
         <div class="error__box"></div>
         <button type="submit" class="btn btn--primary btn--white u-margin-top-small">

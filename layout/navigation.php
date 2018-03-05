@@ -65,11 +65,8 @@
         ?>
 
     </ul>
-    <div class="navigation__hamburger-menu">
-        <button class="navigation__button">
-        </button>
-    </div>
-    <div class ="navigation__user-menu">
+    <div class="navigation__center"></div>
+    <div class="navigation__user-menu">
         <?php
 
             if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {       
@@ -119,6 +116,10 @@
         <?php
             }
         ?>
+    </div>
+    <div class="navigation__hamburger-menu">
+        <button class="navigation__button navigation__button__closed">
+        </button>
     </div>
 </nav>
 <!-- NAVIGATION END -->

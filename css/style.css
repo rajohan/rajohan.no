@@ -252,7 +252,7 @@ a.whitelink:hover {
   margin-bottom: 1.5rem; }
   @media only screen and (max-width: 56.25em) {
     .u-margin-bottom-small {
-      margin-bottom: 0.75rem; } }
+      margin-bottom: 1.5rem; } }
 
 .u-margin-bottom-medium {
   margin-bottom: 5rem; }
@@ -270,7 +270,7 @@ a.whitelink:hover {
   margin-top: 1.5rem; }
   @media only screen and (max-width: 56.25em) {
     .u-margin-top-small {
-      margin-top: 0.75rem; } }
+      margin-top: 1.5rem; } }
 
 .u-margin-top-medium {
   margin-top: 5rem; }
@@ -478,32 +478,37 @@ form {
   justify-content: center;
   width: 100%; }
 
-.checkbox__box {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: center; }
-  .checkbox__box input {
-    width: 1rem;
-    margin-right: 1rem;
+.checkbox {
+  display: none; }
+  .checkbox__box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center; }
+  .checkbox__overlay {
+    background: #e8e8e8;
+    border: 1px solid #c5c5c5;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+    transition: all;
+    transition-duration: 0.2s;
+    cursor: pointer;
     position: relative; }
-    .checkbox__box input:focus {
-      width: 1rem; }
-    .checkbox__box input::before {
-      content: '';
-      background: #e8e8e8;
-      border: 1px solid #c5c5c5;
+  .checkbox:checked ~ .checkbox__overlay {
+    background: #77ABB7;
+    border: 1px solid #254B62; }
+    .checkbox:checked ~ .checkbox__overlay::before, .checkbox:checked ~ .checkbox__overlay::after {
+      content: "";
+      background-color: #254B62;
       position: absolute;
-      width: 1.5rem;
-      height: 1.5rem;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      transition: all;
-      transition-duration: 0.2s; }
-    .checkbox__box input:checked::before {
-      background: #77ABB7;
-      border: 1px solid #254B62; }
+      height: 100%;
+      width: 1px;
+      left: calc(50% - 1px); }
+    .checkbox:checked ~ .checkbox__overlay::before {
+      transform: rotate(135deg); }
+    .checkbox:checked ~ .checkbox__overlay::after {
+      transform: rotate(-135deg); }
 
 .error__box {
   margin-top: -1.3rem;
@@ -1070,12 +1075,18 @@ form {
       @media only screen and (max-width: 56.25em) {
         .navigation__link:hover {
           border-bottom: 1px solid #77ABB7; } }
+  @media only screen and (max-width: 56.25em) {
+    .navigation__center {
+      width: 100%; } }
   .navigation__user-menu {
     display: flex;
     flex-direction: column;
     margin-left: 2rem;
     margin-right: 4rem;
     color: #fff; }
+    @media only screen and (max-width: 56.25em) {
+      .navigation__user-menu {
+        margin-right: 3rem; } }
     .navigation__user-menu__nav {
       display: flex;
       flex-direction: row;
@@ -1105,6 +1116,9 @@ form {
         padding-right: auto;
         width: 20rem;
         display: none; }
+        @media only screen and (max-width: 56.25em) {
+          .navigation__user-menu__nav__items {
+            width: 25rem; } }
         .navigation__user-menu__nav__items li {
           padding: 1rem;
           border-bottom: 1px solid #476D7C;
@@ -1155,25 +1169,38 @@ form {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        width: 100%;
+        width: 4.5rem;
         margin-right: 1rem; } }
   .navigation__button {
     border: none;
     border-radius: 0;
     background-color: #fff;
-    height: 2px;
     width: 4.5rem;
-    cursor: pointer; }
+    cursor: pointer;
+    position: relative; }
     .navigation__button::before, .navigation__button::after {
       content: "";
       background-color: #fff;
       height: 2px;
       width: 4.5rem;
-      display: block; }
-    .navigation__button::before {
-      transform: translateY(-1.5rem); }
-    .navigation__button::after {
-      transform: translateY(1.3rem); }
+      display: block;
+      transition-property: transform;
+      transition-duration: 0.3s; }
+    .navigation__button__closed {
+      height: 2px; }
+      .navigation__button__closed::before {
+        transform: translateY(-1.5rem); }
+      .navigation__button__closed::after {
+        transform: translateY(1.3rem); }
+    .navigation__button__open {
+      height: 0; }
+      .navigation__button__open::before, .navigation__button__open::after {
+        position: absolute;
+        top: 0; }
+      .navigation__button__open::before {
+        transform: rotate(135deg); }
+      .navigation__button__open::after {
+        transform: rotate(-135deg); }
 
 .about {
   background-color: #fff;

@@ -96,41 +96,53 @@ form {
     width: 100%;
 }
 
-.checkbox__box {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
+.checkbox {
 
-    input {
-        width: 1rem;
-        margin-right: 1rem;
+    display: none;
+
+    &__box {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+    }
+
+    &__overlay {
+        background: $color-grey-2;
+        border: 1px solid $color-grey;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.5rem;
+        transition: all;
+        transition-duration: 0.2s;
+        cursor: pointer;
         position: relative;
-        
-        &:focus {
-            width: 1rem;
-        }
 
+    }
+
+    &:checked ~ &__overlay{
+        background: $color-primary-lightest;
+        border: 1px solid $color-primary;
+
+        &::before,
+        &::after {
+            content: "";
+            background-color: $color-primary;
+            position: absolute;
+            height: 100%;
+            width: 1px;
+            left: calc(50% - 1px);
+        }
 
         &::before {
-            content: '';
-            background: $color-grey-2;
-            border: 1px solid $color-grey;
-            position: absolute;
-            width: 1.5rem;
-            height: 1.5rem;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            transition: all;
-            transition-duration: 0.2s;
+            transform: rotate(135deg);
         }
 
-        &:checked::before {
-            background: $color-primary-lightest;
-            border: 1px solid $color-primary;
+        &::after {
+            transform: rotate(-135deg);
         }
     }
+
 }
 
 .error__box {
