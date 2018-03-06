@@ -44,7 +44,7 @@
         <div class="text-editor__toolbox__separator"></div>
         <img src="img/icons/embed.svg" alt="embed" id="toolbox__embed" class="text-editor__toolbox__icon">
     </div>
-    <div id="text-editor__box" class="text-editor__box" data-placeholder="<?php if(isset($placeholder)) { echo $placeholder; } ?>" contenteditable="true"></div>
+    <div id="text-editor__box" class="text-editor__box" data-placeholder="<?php if(isset($placeholder)) { echo $placeholder; } ?>" contenteditable="true"><?php if(isset($content)) { echo $content; } ?></div>
     <div id="text-editor__code-heading" class="text-editor__code-heading">
         Source code
     </div>

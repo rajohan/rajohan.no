@@ -12,6 +12,19 @@
 
     if (isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
 
+        //-------------------------------------------------
+        // Initialize classes
+        //-------------------------------------------------
+        
+        $filter = new Filter;
+        $converter = new Converter;
+        $user = new Users;
+
+        //-------------------------------------------------
+        // Get user data
+        //-------------------------------------------------
+
+        $user_data = $user->get_user("ID", $_SESSION['USER']['ID']);
 ?>
 <!-- SECTION SETTINGS START -->
 <div class="container">
@@ -26,37 +39,54 @@
         <img src="img/icons/user.svg" alt="User photo" class="settings__img">
             <div class="settings__input__box">    
                 <label class="settings__label" for="settings__username">Username</label>
-                <input type="text" id="settings__username" name="settings__username" placeholder="">
+                <input type="text" id="settings__username" name="settings__username" value="<?php echo $user_data['USERNAME']; ?>">
             </div>
             <div class="settings__input__box">    
                 <div class="settings__checkbox"> 
                     First name
                     <div class="settings__checkbox__box">
-                        <input type="checkbox" class="checkbox" id="settings__first-name__hide" value="1" name="settings__first-name__hide">
+                        <input type="checkbox" class="checkbox" id="settings__first-name__hide" value="1" name="settings__first-name__hide" <?php if($user_data['HIDE_FIRST_NAME'] === '1') { echo 'checked'; } ?>>
                         <label class="checkbox__overlay" for="settings__first-name__hide"></label>
                         Hide
                     </div>
                 </div>
-                <input type="text" id="settings__first-name" name="settings__first-name" placeholder="">
+                <input type="text" id="settings__first-name" name="settings__first-name" value="<?php echo $user_data['FIRST_NAME']; ?>">
             </div>
             <div class="settings__input__box">
                 <div class="settings__checkbox"> 
                     Last name
                     <div class="settings__checkbox__box">
-                        <input type="checkbox" class="checkbox" id="settings__last-name__hide" value="1" name="settings__last-name__hide">
+                        <input type="checkbox" class="checkbox" id="settings__last-name__hide" value="1" name="settings__last-name__hide" <?php if($user_data['HIDE_LAST_NAME'] === '1') { echo 'checked'; } ?>>
                         <label class="checkbox__overlay" for="settings__last-name__hide"></label>
                         Hide
                     </div>
                 </div>
-                <input type="text" id="settings__last-name" name="settings__last-name" placeholder="">
+                <input type="text" id="settings__last-name" name="settings__last-name" value="<?php echo $user_data['LAST_NAME']; ?>">
             </div>
             <div class="settings__input__box__multiple">
                 <div class="select__div" style="margin-right: 1rem;"> 
                     <div class="settings__checkbox"> 
                         Birth date
-                    </div> 
+                    </div>
+                    <?php
+
+                        if(!empty($user_data['BORN'])) {
+
+                            $born = preg_split("/-/", $user_data['BORN']);
+
+                            if((isset($born[2])) && (isset($born[2])) && (isset($born[2]))) {
+
+                                $day = $born[2];
+                                $month = $born[1];
+                                $year = $born[0];
+
+                            }
+                            
+                        }
+
+                    ?> 
                     <select id="birth__day">
-                        <option value="" selected>Day</option>
+                        <option value="<?php if(isset($day)) { echo $day; } ?>" selected><?php if(isset($day)) { echo $day; } else { echo 'Day'; } ?></option>
                         <?php 
                             for($i = 1; $i < 32; $i++) {
                                 echo '<option value="'.str_pad($i, 2, 0, STR_PAD_LEFT).'">'.str_pad($i, 2, 0, STR_PAD_LEFT).'</option>';
@@ -67,7 +97,7 @@
                 <div class="select__div" style="margin-right: 1rem;">
                     &nbsp; 
                     <select id="birth__day">
-                        <option value="" selected>Month</option>
+                        <option value="<?php if(isset($month)) { echo $month; } ?>" selected><?php if(isset($month)) { echo $month; } else { echo 'Month'; } ?></option>
                         <?php 
                             for($i = 1; $i < 13; $i++) {
                                 echo '<option value="'.str_pad($i, 2, 0, STR_PAD_LEFT).'">'.str_pad($i, 2, 0, STR_PAD_LEFT).'</option>';
@@ -78,13 +108,13 @@
                 <div class="select__div"> 
                     <div class="settings__checkbox"> 
                         <div class="settings__checkbox__box" style="justify-content: flex-end; width: 100%;"> 
-                            <input type="checkbox" class="checkbox" id="settings__birth__hide" value="1" name="settings__birth__hide">
+                            <input type="checkbox" class="checkbox" id="settings__birth__hide" value="1" name="settings__birth__hide" <?php if($user_data['HIDE_BORN'] === '1') { echo 'checked'; } ?>>
                             <label class="checkbox__overlay" for="settings__birth__hide"></label>
                             Hide
                         </div>
                     </div> 
                     <select id="birth__day">
-                        <option value="" selected>Year</option>
+                        <option value="<?php if(isset($year)) { echo $year; } ?>" selected><?php if(isset($year)) { echo $year; } else { echo 'Year'; } ?></option>
                         <?php 
                             for($i = date('Y'); $i > (date('Y') - 101); $i--) {
                                 echo '<option value="'.$i.'">'.$i.'</option>';
@@ -95,20 +125,31 @@
             </div>
             <div class="settings__input__box">
                 <div class="settings__checkbox"> 
+                    Phone
+                    <div class="settings__checkbox__box">
+                        <input type="checkbox" class="checkbox" id="settings__phone__hide" value="1" name="settings__phone__hide" <?php if($user_data['HIDE_PHONE'] === '1') { echo 'checked'; } ?>>
+                        <label class="checkbox__overlay" for="settings__phone__hide"></label>
+                        Hide
+                    </div>
+                </div>
+                <input type="text" id="settings__address" name="settings__address" value="<?php echo $user_data['PHONE']; ?>">
+            </div>
+            <div class="settings__input__box">
+                <div class="settings__checkbox"> 
                     Address
                     <div class="settings__checkbox__box">
-                        <input type="checkbox" class="checkbox" id="settings__address__hide" value="1" name="settings__address__hide">
+                        <input type="checkbox" class="checkbox" id="settings__address__hide" value="1" name="settings__address__hide" <?php if($user_data['HIDE_ADDRESS'] === '1') { echo 'checked'; } ?>>
                         <label class="checkbox__overlay" for="settings__address__hide"></label>
                         Hide
                     </div>
                 </div>
-                <input type="text" id="settings__address" name="settings__address" placeholder="">
+                <input type="text" id="settings__address" name="settings__address" value="<?php echo $user_data['ADDRESS']; ?>">
             </div>
             <div class="settings__input__box"> 
                 <div class="select__div"> 
                 <label class="settings__label" for="settings__country">Country</label>  
                     <select id="settings__country">
-                        <option value="" selected></option>
+                        <option value="<?php echo $user_data['COUNTRY']; ?>" selected><?php echo $user_data['COUNTRY']; ?></option>
                         <option value="Afghanistan" title="Afghanistan">Afghanistan</option>
                         <option value="Åland Islands" title="Åland Islands">Åland Islands</option>
                         <option value="Albania" title="Albania">Albania</option>
@@ -363,19 +404,20 @@
             </div>
             <div class="settings__input__box">
                 <label class="settings__label" for="settings__webpage">Webpage</label>    
-                <input type="text" id="settings__webpage" name="settings__webpage" placeholder="">
+                <input type="text" id="settings__webpage" name="settings__webpage" value="<?php echo $user_data['WEBPAGE']; ?>">
             </div>
             <div class="settings__input__box">
                 <label class="settings__label" for="settings__company">Company</label>
-                <input type="text" id="settings__company" name="settings__company" placeholder="">
+                <input type="text" id="settings__company" name="settings__company" value="<?php echo $user_data['FIRMNAME']; ?>">
             </div>
             <div class="settings__input__box">
                 <label class="settings__label" for="settings__company-role">Company role</label>
-                <input type="text" id="settings__company-role" name="settings__company-role" placeholder="">
+                <input type="text" id="settings__company-role" name="settings__company-role" value="<?php echo $user_data['FIRM_ROLE']; ?>">
             </div>
             <div class="settings__input__box">
                 <?php
                     $placeholder = "Your biography...";
+                    $content = $user_data['BIO'];
                     require_once('text_editor.php');
                 ?>
             </div>

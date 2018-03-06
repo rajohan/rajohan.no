@@ -82,11 +82,12 @@
                     <div class="user__header__details__info__name">
                         <?php 
 
-                            if(empty($user_data['NAME'])) {
-                                $user_data['NAME'] = "N/A";
+                            if((empty($user_data['FIRST_NAME'])) && (empty($user_data['LAST_NAME']))) {
+                                $user_data['FIRST_NAME'] = "N/A";
+                                $user_data['LAST_NAME'] = "";
                             }
 
-                            echo $user_data['NAME']; 
+                            echo $user_data['FIRST_NAME']." ".$user_data['LAST_NAME']; 
                         
                         ?>
                     </div>
