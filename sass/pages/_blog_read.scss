@@ -326,6 +326,12 @@
                     cursor: pointer;
                 }
             }
-        }  
+        }
+        
+        &__submit {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
     }
 }

@@ -81,6 +81,7 @@
         outline: none;
         resize: vertical;
         overflow: auto;
+        text-align: left;
 
         &:empty::before {
             content: attr(data-placeholder);

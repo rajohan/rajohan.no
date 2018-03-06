@@ -397,6 +397,7 @@ $(".text-editor__status__cancel").on("click", function() {
 //-------------------------------------------------
 // User menu drop down hide/show
 //-------------------------------------------------
+
 var scrollUserNav = 1;
 $(".navigation__user-menu__nav__user").on("click", function() {
    

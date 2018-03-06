@@ -416,7 +416,7 @@ form {
   flex-direction: column;
   width: 100%;
   max-width: 50rem; }
-  form input, form textarea {
+  form input, form textarea, form select {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
@@ -429,24 +429,47 @@ form {
     transition-duration: 0.2s;
     margin-right: -3.25rem;
     padding-right: 4rem; }
-    form input:focus, form textarea:focus {
+    form input:focus, form textarea:focus, form select:focus {
       outline: none;
       width: 100%;
       background-color: #c5c5c5;
       max-width: 60rem; }
-    form input::-webkit-input-placeholder, form textarea::-webkit-input-placeholder {
+    form input::-webkit-input-placeholder, form textarea::-webkit-input-placeholder, form select::-webkit-input-placeholder {
       font-weight: 100;
       color: #999999; }
-    form input.error, form textarea.error {
+    form input.error, form textarea.error, form select.error {
       border: 2px solid #d25f5e;
       background-color: #fffafa; }
-      form input.error:focus, form textarea.error:focus {
+      form input.error:focus, form textarea.error:focus, form select.error:focus {
         background-color: #fffafa; }
-    form input.valid, form textarea.valid {
+    form input.valid, form textarea.valid, form select.valid {
       border: 2px solid #9fd164;
       background-color: #f5ffea; }
-      form input.valid:focus, form textarea.valid:focus {
+      form input.valid:focus, form textarea.valid:focus, form select.valid:focus {
         background-color: #f5ffea; }
+  form select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; }
+    form select::-ms-expand {
+      display: none; }
+    form select:focus {
+      background-color: #e8e8e8; }
+
+.select__div {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column; }
+  .select__div::after {
+    content: '\25bc';
+    color: #999999;
+    right: 1rem;
+    top: 50%;
+    padding-left: 0.5rem;
+    border-left: 1px solid #999999;
+    position: absolute;
+    pointer-events: none; }
 
 .input__button {
   border: none;
@@ -504,7 +527,7 @@ form {
       position: absolute;
       height: 100%;
       width: 1px;
-      left: calc(50% - 1px); }
+      left: calc(50% - 0.5px); }
     .checkbox:checked ~ .checkbox__overlay::before {
       transform: rotate(135deg); }
     .checkbox:checked ~ .checkbox__overlay::after {
@@ -756,7 +779,8 @@ form {
     padding: 2rem 2rem;
     outline: none;
     resize: vertical;
-    overflow: auto; }
+    overflow: auto;
+    text-align: left; }
     .text-editor__box:empty::before {
       content: attr(data-placeholder);
       display: block; }
@@ -1434,6 +1458,10 @@ form {
         width: 2.5rem;
         height: 2.5rem;
         cursor: pointer; }
+  .blog__comment__submit {
+    display: flex;
+    width: 100%;
+    justify-content: center; }
 
 .blog-short {
   width: 100vw;
@@ -2026,6 +2054,42 @@ fieldset {
     @media only screen and (max-width: 56.25em) {
       .services__text {
         margin-bottom: 2rem; } }
+
+.settings {
+  display: flex;
+  width: 100%;
+  justify-content: center; }
+  .settings input, .settings select {
+    width: 100%; }
+  .settings__checkbox {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 2rem; }
+    .settings__checkbox__box {
+      display: flex;
+      align-items: center;
+      margin-right: 4rem; }
+  .settings__img {
+    height: 15rem;
+    width: 15rem;
+    border-radius: 100rem;
+    display: block;
+    border: 0.3rem solid #e8e8e8;
+    margin-bottom: 2rem; }
+  .settings__input__box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem; }
+    .settings__input__box__multiple {
+      display: flex;
+      width: 100%;
+      margin-bottom: 1.5rem; }
+  .settings__label {
+    width: 100%;
+    text-align: left;
+    margin-left: 2rem; }
 
 .user {
   width: 100%;
