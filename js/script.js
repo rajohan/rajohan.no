@@ -416,3 +416,26 @@ $(".navigation__user-menu__nav__user").on("click", function() {
     }
 
 });
+
+//-------------------------------------------------
+// Settings navigation
+//-------------------------------------------------
+
+function settingsNav(page) {
+    
+    $.ajax({
+            
+        url: "classes/ajax.php",
+        type: "post",
+        data: {settings_nav: "true", settings_page: page},
+
+        // On success output the requested site.
+        success: function () {
+            
+            location.reload();
+
+        }
+
+    });
+
+}

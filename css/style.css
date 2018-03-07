@@ -514,6 +514,7 @@ form {
     width: 1.5rem;
     height: 1.5rem;
     margin-right: 0.5rem;
+    margin-left: 0.5rem;
     transition: all;
     transition-duration: 0.2s;
     cursor: pointer;
@@ -2059,6 +2060,34 @@ fieldset {
   display: flex;
   width: 100%;
   justify-content: center; }
+  .settings__nav {
+    display: flex;
+    width: 100%;
+    justify-content: center; }
+    .settings__nav__item {
+      border: 1px solid #c5c5c5;
+      transition: all;
+      transition-duration: 0.4s;
+      padding: 0.5rem 1rem;
+      cursor: pointer; }
+      .settings__nav__item:not(:first-of-type) {
+        border-left: 0; }
+      .settings__nav__item:hover:not(.active) {
+        background-color: #77ABB7;
+        border: 1px solid #77ABB7;
+        color: #fff; }
+        .settings__nav__item:hover:not(.active):not(:first-of-type) {
+          border-left: 0; }
+      .settings__nav__item.active {
+        background-color: #254B62;
+        color: #fff;
+        border: 1px solid #476D7C; }
+      .settings__nav__item:first-child {
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem; }
+      .settings__nav__item:last-child {
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem; }
   .settings input, .settings select {
     width: 100%; }
   .settings__checkbox {
@@ -2069,7 +2098,8 @@ fieldset {
     .settings__checkbox__box {
       display: flex;
       align-items: center;
-      margin-right: 4rem; }
+      margin-right: 4rem;
+      margin-left: 2rem; }
   .settings__img {
     height: 15rem;
     width: 15rem;

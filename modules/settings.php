@@ -28,6 +28,15 @@
 ?>
 <!-- SECTION SETTINGS START -->
 <div class="container">
+    <div class="settings__nav u-margin-bottom-small">
+        <div class="settings__nav__item <?php if((empty($_SESSION['SETTINGS_PAGE'])) || ($_SESSION['SETTINGS_PAGE'] === "personal")) { echo 'active'; } ?>" onclick="settingsNav('personal');">Personal details</div>
+        <div class="settings__nav__item <?php if($_SESSION['SETTINGS_PAGE'] === "social") { echo 'active'; } ?>" onclick="settingsNav('social');">Social media</div>
+        <div class="settings__nav__item <?php if($_SESSION['SETTINGS_PAGE'] === "mail") { echo 'active'; } ?>" onclick="settingsNav('mail');">Email</div>
+        <div class="settings__nav__item <?php if($_SESSION['SETTINGS_PAGE'] === "password") { echo 'active'; } ?>" onclick="settingsNav('password');">Password</div>
+    </div>
+    <?php 
+        if((empty($_SESSION['SETTINGS_PAGE'])) || ($_SESSION['SETTINGS_PAGE'] === "personal")) {
+    ?>
     <h1 class="heading-secondary letter-spacing-medium u-center-text">
         &nbsp;Settings
     </h1>
@@ -426,6 +435,107 @@
             </button>
         </form>
     </div>
+    <?php 
+        }
+
+        else if($_SESSION['SETTINGS_PAGE'] === "social") {
+    ?>
+    <h1 class="heading-secondary letter-spacing-medium u-center-text">
+        &nbsp;Settings
+    </h1>
+    <h1 class="heading-tertiary u-center-text letter-spacing-small u-margin-bottom-small">
+        &nbsp;Social media
+    </h1>
+    <div class="settings u-margin-top-small">
+        <form method="post" id="settings__social__form">
+            <div class="settings__input__box">
+                <label class="settings__label" for="settings__facebook">Facebook</label>    
+                <input type="text" id="settings__facebook" name="settings__facebook" value="<?php echo $user_data['FACEBOOK']; ?>">
+            </div>
+            <div class="settings__input__box">
+                <label class="settings__label" for="settings__twitter">Twitter</label>
+                <input type="text" id="settings__twitter" name="settings__twitter" value="<?php echo $user_data['TWITTER']; ?>">
+            </div>
+            <div class="settings__input__box">
+                <label class="settings__label" for="settings__linkedin">LinkedIn</label>
+                <input type="text" id="settings__linkedin" name="settings__linkedin" value="<?php echo $user_data['LINKEDIN']; ?>">
+            </div>
+            <div class="settings__input__box">
+                <label class="settings__label" for="settings__github">Github</label>
+                <input type="text" id="settings__github" name="settings__github" value="<?php echo $user_data['GITHUB']; ?>">
+            </div>
+            <button type="submit" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-medium">
+                Save social media
+            </button>
+        </form>
+    </div>
+    <?php 
+        }
+
+        else if($_SESSION['SETTINGS_PAGE'] === "mail") {
+    ?>
+    <h1 class="heading-secondary letter-spacing-medium u-center-text">
+        &nbsp;Settings
+    </h1>
+    <h1 class="heading-tertiary u-center-text letter-spacing-small u-margin-bottom-small">
+        &nbsp;Email settings
+    </h1>
+    <div class="settings u-margin-top-small">    
+        <form method="post" id="settings__password__form">
+            <div class="settings__input__box">
+                <div class="settings__checkbox"> 
+                    Email
+                    <div class="settings__checkbox__box">
+                        <input type="checkbox" class="checkbox" id="settings__mail__hide" value="1" name="settings__mail__hide" <?php if($user_data['HIDE_EMAIL'] === '1') { echo 'checked'; } ?>>
+                        <label class="checkbox__overlay" for="settings__mail__hide"></label>
+                        Hide
+                    </div>
+                </div>
+                <input type="text" id="settings__mail" name="settings__mail" value="<?php echo $user_data['EMAIL']; ?>">
+                <div class="settings__checkbox__box u-margin-top-small">
+                    Subscribe to newsletters
+                    <input type="checkbox" class="checkbox" id="settings__newsletters" value="1" name="settings__newsletters" <?php if($user_data['NEWSLETTERS'] === '1') { echo 'checked'; } ?>>
+                    <label class="checkbox__overlay" for="settings__newsletters"></label>
+                </div> 
+            </div>
+            <button type="submit" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-medium">
+                Save email settings
+            </button>
+        </form>
+    </div>
+    <?php 
+        }
+
+        else if($_SESSION['SETTINGS_PAGE'] === "password") {
+    ?>
+    <h1 class="heading-secondary letter-spacing-medium u-center-text">
+        &nbsp;Settings
+    </h1>
+    <h1 class="heading-tertiary u-center-text letter-spacing-small u-margin-bottom-small">
+        &nbsp;Change password
+    </h1>
+    <div class="settings u-margin-top-small">    
+        <form method="post" id="settings__password__form">
+            <div class="settings__input__box">
+                <label class="settings__label" for="settings__password">Current password</label>    
+                <input type="password" id="settings__password" name="settings__password" value="">
+            </div>
+            <div class="settings__input__box">
+                <label class="settings__label" for="settings__new-password">New password</label>
+                <input type="password" id="settings__new-password" name="settings__new-password" value="">
+            </div>
+            <div class="settings__input__box">
+                <label class="settings__label" for="settings__linkedin">Repeat new password</label>
+                <input type="password" id="settings__linkedin" name="settings__linkedin" value="">
+            </div>
+            <button type="submit" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-medium">
+                Save new password
+            </button>
+        </form>
+    </div>
+    <?php
+        }
+    ?>
 </div>
 <!-- SECTION SETTINGS END -->
 

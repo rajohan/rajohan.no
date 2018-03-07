@@ -7,6 +7,7 @@
     $ajax->register();
     $ajax->vote();
     $ajax->add_comment();
+    $ajax->settings_nav();
 
     //-------------------------------------------------
     // Direct access check
@@ -326,6 +327,33 @@
                 $this->init();
                 $this->comment->add_comment($_POST['blog_id'], $_POST['reply_to'], $_POST['comment']);
 
+            }
+
+        }
+
+        //-------------------------------------------------
+        // Settings navigation
+        //-------------------------------------------------
+
+        function settings_nav() {
+
+            if((isset($_POST['settings_nav'])) && ($_POST['settings_nav'] === "true") && (isset($_POST['settings_page']))) {
+
+                $this->require_files();
+                $this->init();
+
+                $page = $this->filter->sanitize($_POST['settings_page']);
+
+                if(($page === "personal") || ($page === "social") || ($page === "mail") || ($page === "password")) {
+
+                    $_SESSION['SETTINGS_PAGE'] = $page;
+
+                } else {
+
+                    $_SESSION['SETTINGS_PAGE'] = $_SESSION['SETTINGS_PAGE'];
+
+                }
+                
             }
 
         }
