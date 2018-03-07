@@ -80,7 +80,7 @@ form {
         content: '\25bc';
         color: $color-grey-dark;
         right: 1rem;
-        top: 50%;
+        top: calc(50% + 0.25rem);
         padding-left: 0.5rem;
         border-left: 1px solid $color-grey-dark;
         position: absolute;

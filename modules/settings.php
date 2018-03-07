@@ -105,7 +105,7 @@
                 </div>
                 <div class="select__div" style="margin-right: 1rem;">
                     &nbsp; 
-                    <select id="birth__day">
+                    <select id="birth__month">
                         <option value="<?php if(isset($month)) { echo $month; } ?>" selected><?php if(isset($month)) { echo $month; } else { echo 'Month'; } ?></option>
                         <?php 
                             for($i = 1; $i < 13; $i++) {
@@ -122,7 +122,7 @@
                             Hide
                         </div>
                     </div> 
-                    <select id="birth__day">
+                    <select id="birth__year">
                         <option value="<?php if(isset($year)) { echo $year; } ?>" selected><?php if(isset($year)) { echo $year; } else { echo 'Year'; } ?></option>
                         <?php 
                             for($i = date('Y'); $i > (date('Y') - 101); $i--) {

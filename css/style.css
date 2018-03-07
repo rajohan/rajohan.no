@@ -465,7 +465,7 @@ form {
     content: '\25bc';
     color: #999999;
     right: 1rem;
-    top: 50%;
+    top: calc(50% + 0.25rem);
     padding-left: 0.5rem;
     border-left: 1px solid #999999;
     position: absolute;
@@ -2089,13 +2089,13 @@ fieldset {
         border-top-right-radius: 0.5rem;
         border-bottom-right-radius: 0.5rem; }
   .settings input, .settings select {
-    width: 100%; }
+    width: 100%;
+    margin-top: 0.5rem; }
   .settings__checkbox {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-left: 2rem;
-    margin-bottom: 0.5rem; }
+    margin-left: 2rem; }
     .settings__checkbox__box {
       display: flex;
       align-items: center;
@@ -2120,8 +2120,7 @@ fieldset {
   .settings__label {
     width: 100%;
     text-align: left;
-    margin-left: 2rem;
-    margin-bottom: 0.5rem; }
+    margin-left: 2rem; }
 
 .user {
   width: 100%;
