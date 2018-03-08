@@ -2060,6 +2060,9 @@ fieldset {
   display: flex;
   width: 100%;
   justify-content: center; }
+  .settings .error__box {
+    margin-top: -0.8rem;
+    margin-bottom: 0.8rem; }
   .settings__nav {
     display: flex;
     width: 100%;

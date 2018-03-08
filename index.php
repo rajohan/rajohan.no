@@ -96,6 +96,7 @@
         <script src="js/text_editor.js"></script>
         <script src="js/syntax_highlighting.js"></script>
         <script src="js/comment.js"></script>
+        <script src="js/settings.js"></script>
     </body>
   </head>
 </html>

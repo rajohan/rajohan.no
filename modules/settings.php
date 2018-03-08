@@ -54,7 +54,7 @@
                 <div class="settings__checkbox"> 
                     First name
                     <div class="settings__checkbox__box">
-                        <input type="checkbox" class="checkbox" id="settings__first-name__hide" value="1" name="settings__first-name__hide" <?php if($user_data['HIDE_FIRST_NAME'] === '1') { echo 'checked'; } ?>>
+                        <input type="checkbox" class="checkbox" id="settings__first-name__hide" name="settings__first-name__hide" <?php if($user_data['HIDE_FIRST_NAME'] === '1') { echo 'checked'; } ?>>
                         <label class="checkbox__overlay" for="settings__first-name__hide"></label>
                         Hide
                     </div>
@@ -65,7 +65,7 @@
                 <div class="settings__checkbox"> 
                     Last name
                     <div class="settings__checkbox__box">
-                        <input type="checkbox" class="checkbox" id="settings__last-name__hide" value="1" name="settings__last-name__hide" <?php if($user_data['HIDE_LAST_NAME'] === '1') { echo 'checked'; } ?>>
+                        <input type="checkbox" class="checkbox" id="settings__last-name__hide" name="settings__last-name__hide" <?php if($user_data['HIDE_LAST_NAME'] === '1') { echo 'checked'; } ?>>
                         <label class="checkbox__overlay" for="settings__last-name__hide"></label>
                         Hide
                     </div>
@@ -117,7 +117,7 @@
                 <div class="select__div"> 
                     <div class="settings__checkbox"> 
                         <div class="settings__checkbox__box" style="justify-content: flex-end; width: 100%;"> 
-                            <input type="checkbox" class="checkbox" id="settings__birth__hide" value="1" name="settings__birth__hide" <?php if($user_data['HIDE_BORN'] === '1') { echo 'checked'; } ?>>
+                            <input type="checkbox" class="checkbox" id="settings__birth__hide" name="settings__birth__hide" <?php if($user_data['HIDE_BORN'] === '1') { echo 'checked'; } ?>>
                             <label class="checkbox__overlay" for="settings__birth__hide"></label>
                             Hide
                         </div>
@@ -136,7 +136,7 @@
                 <div class="settings__checkbox"> 
                     Phone
                     <div class="settings__checkbox__box">
-                        <input type="checkbox" class="checkbox" id="settings__phone__hide" value="1" name="settings__phone__hide" <?php if($user_data['HIDE_PHONE'] === '1') { echo 'checked'; } ?>>
+                        <input type="checkbox" class="checkbox" id="settings__phone__hide" name="settings__phone__hide" <?php if($user_data['HIDE_PHONE'] === '1') { echo 'checked'; } ?>>
                         <label class="checkbox__overlay" for="settings__phone__hide"></label>
                         Hide
                     </div>
@@ -147,7 +147,7 @@
                 <div class="settings__checkbox"> 
                     Address
                     <div class="settings__checkbox__box">
-                        <input type="checkbox" class="checkbox" id="settings__address__hide" value="1" name="settings__address__hide" <?php if($user_data['HIDE_ADDRESS'] === '1') { echo 'checked'; } ?>>
+                        <input type="checkbox" class="checkbox" id="settings__address__hide" name="settings__address__hide" <?php if($user_data['HIDE_ADDRESS'] === '1') { echo 'checked'; } ?>>
                         <label class="checkbox__overlay" for="settings__address__hide"></label>
                         Hide
                     </div>
@@ -452,18 +452,22 @@
                 <label class="settings__label" for="settings__facebook">Facebook</label>    
                 <input type="text" id="settings__facebook" name="settings__facebook" value="<?php echo $user_data['FACEBOOK']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <label class="settings__label" for="settings__twitter">Twitter</label>
                 <input type="text" id="settings__twitter" name="settings__twitter" value="<?php echo $user_data['TWITTER']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <label class="settings__label" for="settings__linkedin">LinkedIn</label>
                 <input type="text" id="settings__linkedin" name="settings__linkedin" value="<?php echo $user_data['LINKEDIN']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <label class="settings__label" for="settings__github">Github</label>
                 <input type="text" id="settings__github" name="settings__github" value="<?php echo $user_data['GITHUB']; ?>">
             </div>
+            <div class="error__box"></div>
             <button type="submit" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-medium">
                 Save social media
             </button>
@@ -481,23 +485,26 @@
         &nbsp;Email settings
     </h1>
     <div class="settings u-margin-top-small">    
-        <form method="post" id="settings__password__form">
+        <form method="post" id="settings__mail__form">
             <div class="settings__input__box">
                 <div class="settings__checkbox"> 
                     Email
                     <div class="settings__checkbox__box">
-                        <input type="checkbox" class="checkbox" id="settings__mail__hide" value="1" name="settings__mail__hide" <?php if($user_data['HIDE_EMAIL'] === '1') { echo 'checked'; } ?>>
+                        <input type="checkbox" class="checkbox" id="settings__mail__hide" name="settings__mail__hide" <?php if($user_data['HIDE_EMAIL'] === '1') { echo 'checked'; } ?>>
                         <label class="checkbox__overlay" for="settings__mail__hide"></label>
                         Hide
                     </div>
                 </div>
                 <input type="text" id="settings__mail" name="settings__mail" value="<?php echo $user_data['EMAIL']; ?>">
-                <div class="settings__checkbox__box u-margin-top-small">
-                    Subscribe to newsletters
-                    <input type="checkbox" class="checkbox" id="settings__newsletters" value="1" name="settings__newsletters" <?php if($user_data['NEWSLETTERS'] === '1') { echo 'checked'; } ?>>
-                    <label class="checkbox__overlay" for="settings__newsletters"></label>
-                </div> 
             </div>
+            <div class="error__box"></div>
+            <div class="settings__input__box">
+                <div class="settings__checkbox__box">
+                    Subscribe to newsletters
+                    <input type="checkbox" class="checkbox" id="settings__newsletters" name="settings__newsletters" <?php if($user_data['NEWSLETTERS'] === '1') { echo 'checked'; } ?>>
+                    <label class="checkbox__overlay" for="settings__newsletters"></label>
+                </div>
+            </div> 
             <button type="submit" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-medium">
                 Save email settings
             </button>
@@ -520,14 +527,17 @@
                 <label class="settings__label" for="settings__password">Current password</label>    
                 <input type="password" id="settings__password" name="settings__password" value="">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <label class="settings__label" for="settings__new-password">New password</label>
                 <input type="password" id="settings__new-password" name="settings__new-password" value="">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
-                <label class="settings__label" for="settings__linkedin">Repeat new password</label>
-                <input type="password" id="settings__linkedin" name="settings__linkedin" value="">
+                <label class="settings__label" for="settings__new-password__repeat">Repeat new password</label>
+                <input type="password" id="settings__new-password__repeat" name="settings__new-password__repeat" value="">
             </div>
+            <div class="error__box"></div>
             <button type="submit" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-medium">
                 Save new password
             </button>
