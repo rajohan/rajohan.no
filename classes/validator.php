@@ -67,7 +67,18 @@
 
         function validate_url($data) {
 
-            $pattern = '/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/m';
+            $pattern = '/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/';
+            return preg_match($pattern, $data);
+
+        }
+
+        //-------------------------------------------------
+        // Spesific page url validator
+        //-------------------------------------------------
+
+        function validate_page_url($data, $page) {
+
+            $pattern = '/^(http:\/\/www\.|www\.|https:\/\/www\.|http:\/\/|https:\/\/)?('.$page.')(\.[a-z]{2,5})(.*)$/';
             return preg_match($pattern, $data);
 
         }

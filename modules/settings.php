@@ -25,6 +25,7 @@
         //-------------------------------------------------
 
         $user_data = $user->get_user("ID", $_SESSION['USER']['ID']);
+        
 ?>
 <!-- SECTION SETTINGS START -->
 <div class="container">
@@ -50,6 +51,7 @@
                 <label class="settings__label" for="settings__username">Username</label>
                 <input type="text" id="settings__username" name="settings__username" value="<?php echo $user_data['USERNAME']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">    
                 <div class="settings__checkbox"> 
                     First name
@@ -61,6 +63,7 @@
                 </div>
                 <input type="text" id="settings__first-name" name="settings__first-name" value="<?php echo $user_data['FIRST_NAME']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <div class="settings__checkbox"> 
                     Last name
@@ -72,6 +75,7 @@
                 </div>
                 <input type="text" id="settings__last-name" name="settings__last-name" value="<?php echo $user_data['LAST_NAME']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box__multiple">
                 <div class="select__div" style="margin-right: 1rem;"> 
                     <div class="settings__checkbox"> 
@@ -94,7 +98,7 @@
                         }
 
                     ?> 
-                    <select id="birth__day">
+                    <select id="settings__birth__day">
                         <option value="<?php if(isset($day)) { echo $day; } ?>" selected><?php if(isset($day)) { echo $day; } else { echo 'Day'; } ?></option>
                         <?php 
                             for($i = 1; $i < 32; $i++) {
@@ -105,7 +109,7 @@
                 </div>
                 <div class="select__div" style="margin-right: 1rem;">
                     &nbsp; 
-                    <select id="birth__month">
+                    <select id="settings__birth__month">
                         <option value="<?php if(isset($month)) { echo $month; } ?>" selected><?php if(isset($month)) { echo $month; } else { echo 'Month'; } ?></option>
                         <?php 
                             for($i = 1; $i < 13; $i++) {
@@ -122,7 +126,7 @@
                             Hide
                         </div>
                     </div> 
-                    <select id="birth__year">
+                    <select id="settings__birth__year">
                         <option value="<?php if(isset($year)) { echo $year; } ?>" selected><?php if(isset($year)) { echo $year; } else { echo 'Year'; } ?></option>
                         <?php 
                             for($i = date('Y'); $i > (date('Y') - 101); $i--) {
@@ -132,6 +136,7 @@
                     </select>
                 </div>
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <div class="settings__checkbox"> 
                     Phone
@@ -141,8 +146,9 @@
                         Hide
                     </div>
                 </div>
-                <input type="text" id="settings__address" name="settings__address" value="<?php echo $user_data['PHONE']; ?>">
+                <input type="text" id="settings__phone" name="settings__phone" value="<?php echo $user_data['PHONE']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <div class="settings__checkbox"> 
                     Address
@@ -154,6 +160,7 @@
                 </div>
                 <input type="text" id="settings__address" name="settings__address" value="<?php echo $user_data['ADDRESS']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box"> 
                 <div class="select__div"> 
                 <label class="settings__label" for="settings__country">Country</label>  
@@ -411,18 +418,22 @@
                     </select>
                 </div>
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <label class="settings__label" for="settings__webpage">Webpage</label>    
                 <input type="text" id="settings__webpage" name="settings__webpage" value="<?php echo $user_data['WEBPAGE']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <label class="settings__label" for="settings__company">Company</label>
                 <input type="text" id="settings__company" name="settings__company" value="<?php echo $user_data['FIRMNAME']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <label class="settings__label" for="settings__company-role">Company role</label>
                 <input type="text" id="settings__company-role" name="settings__company-role" value="<?php echo $user_data['FIRM_ROLE']; ?>">
             </div>
+            <div class="error__box"></div>
             <div class="settings__input__box">
                 <?php
                     $placeholder = "Your biography...";

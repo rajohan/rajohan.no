@@ -8,6 +8,7 @@
     $ajax->vote();
     $ajax->add_comment();
     $ajax->settings_nav();
+    $ajax->settings();
 
     //-------------------------------------------------
     // Direct access check
@@ -33,6 +34,7 @@
         private $filter;
         private $votes;
         private $comment;
+        private $settings;
 
         //-------------------------------------------------
         // Require files
@@ -63,6 +65,7 @@
             $this->filter = new Filter;
             $this->votes = new Vote;
             $this->comment = new Comments;
+            $this->settings = new Settings;
 
         }
 
@@ -354,6 +357,91 @@
 
                 }
                 
+            }
+
+        }
+
+        //-------------------------------------------------
+        // User settings
+        //-------------------------------------------------
+
+        function settings() {
+
+            // Social media settings
+            if((isset($_POST['settings_social'])) && ($_POST['settings_social'] === "true") && (isset($_POST['facebook'])) && (isset($_POST['twitter'])) && (isset($_POST['linkedin'])) && (isset($_POST['github']))) {
+                $this->require_files();
+                $this->init();
+                echo "social";
+
+                // Validate social media links
+
+                // Update users social media links
+
+            }
+
+            // Mail settings
+            else if((isset($_POST['settings_mail'])) && ($_POST['settings_mail'] === "true") && (isset($_POST['mail'])) && (isset($_POST['mail_hide'])) && (isset($_POST['newsletters']))) {
+                $this->require_files();
+                $this->init();
+                echo "mail";
+
+                // Validate mail
+
+                // Check if mail address already exist if its a new mail address
+
+                // Update mail, logout user and require new mail verification when a new mail address is entred
+                
+                // Update newsletter and hide mail options based on user selection
+
+            }
+
+            // Password settings
+            else if((isset($_POST['settings_password'])) && ($_POST['settings_password'] === "true") && (isset($_POST['password'])) && (isset($_POST['new_password'])) && (isset($_POST['new_password_repeat']))) {
+                $this->require_files();
+                $this->init();
+                echo "password";
+
+                // validate passwords
+
+                // check that new password and repeat new passord match
+
+                // verify current password
+
+                // change password
+                
+
+            }
+
+            // Personal details
+            else if((isset($_POST['settings_personal'])) && ($_POST['settings_personal'] === "true") && (isset($_POST['username'])) && (isset($_POST['first_name'])) && (isset($_POST['first_name_hide'])) && (isset($_POST['last_name'])) && (isset($_POST['last_name_hide'])) && (isset($_POST['birth_day'])) && (isset($_POST['birth_month'])) && (isset($_POST['birth_year'])) && (isset($_POST['birth_hide'])) && (isset($_POST['phone'])) && (isset($_POST['phone_hide'])) && (isset($_POST['address'])) && (isset($_POST['address_hide'])) && (isset($_POST['country'])) && (isset($_POST['webpage'])) && (isset($_POST['company'])) && (isset($_POST['company_role'])) && (isset($_POST['bio']))) {
+                $this->require_files();
+                $this->init();
+                echo "personal";
+
+                // Validate user name
+
+                // Check if username already exsist if username is changed
+
+                // Validate first name
+
+                // Validate last name
+
+                // Validate birth date
+
+                // Validate phone number
+
+                // Validate address
+
+                // Validate country
+
+                // Validate webpage
+
+                // Validate company name
+
+                // Validate company role
+
+                // Update user details
+
             }
 
         }

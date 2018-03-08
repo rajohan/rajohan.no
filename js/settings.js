@@ -34,7 +34,7 @@ $(document).ready(function () {
                 "settings__facebook": {
                
                     required: false,
-                    regex: /^(http:\/\/www\.|www\.|https:\/\/www\.|http:\/\/|https:\/\/)?(facebook)(\.[a-z]{2,5})(\/.*)$/,
+                    regex: /^(http:\/\/www\.|www\.|https:\/\/www\.|http:\/\/|https:\/\/)?(facebook)(\.[a-z]{2,5})(.*)$/,
 
                 },
 
@@ -466,6 +466,315 @@ $(document).ready(function () {
                         error: function () {
                       
                             $("#settings__password__form").html("Sorry, an error has occurred. Please try again.");
+                      
+                        }
+
+                    });
+
+                }, 500);
+
+                return false;
+
+            }
+
+        });
+
+    });
+
+});
+
+//-------------------------------------------------
+//  User settings personal details
+//-------------------------------------------------
+
+$(document).ready(function () {
+   
+    $(document).on("click keyup focus focusin focusout blur", function () {
+       
+        $("#settings__form").validate({
+           
+            onkeyup: function (element) {
+            
+                $(element).valid();
+           
+            },
+          
+            errorElement: "div", // Error box element type
+
+            errorPlacement: function(error, element) {
+
+                error.appendTo( element.parent().next() ); // Error box placement
+
+            },
+
+            errorClass: "error", // Error class
+            validClass: "valid", // Valid class
+
+            //-------------------------------------------------
+            // Rules
+            //-------------------------------------------------
+
+            rules: {
+              
+                "settings__username": {
+               
+                    required: true,
+                    regex: /^[\w\-]{5,15}$/,
+
+                },
+
+                "settings__first-name": {
+               
+                    required: false,
+                    regex: /^[a-zæøåA-ZÆØÅ][a-zæøåA-ZÆØÅ '&-]*[a-zæøåA-ZÆØÅ]$/,
+
+                },
+                
+                "settings__last-name": {
+               
+                    required: false,
+                    regex: /^[a-zæøåA-ZÆØÅ][a-zæøåA-ZÆØÅ '&-]*[a-zæøåA-ZÆØÅ]$/,
+
+                },
+
+                "settings__birth__day": {
+               
+                    required: false,
+                    regex: /^[0-9]{2,2}$/,
+
+                },
+
+                "settings__birth__month": {
+               
+                    required: false,
+                    regex: /^[0-9]{2,2}$/,
+
+                },
+
+                "settings__birth__year": {
+               
+                    required: false,
+                    regex: /^[0-9]{4,4}$/,
+
+                },
+
+                "settings__phone": {
+               
+                    required: false,
+                    regex: /^(?:[0-9-+()\s]){0,6}(?:[0-9-+()\s]){0,6}([0-9\s]){4,15}$/,
+
+                },
+
+                "settings__address": {
+               
+                    required: false,
+                    regex: /^(?!\s)(?!.*\s$)(?=.*[a-zæøåA-ZÆØÅ0-9])[a-zæøåA-ZÆØÅ0-9 \' ~ ? ! ~ ` ? ! , ^ * ¨ ; @ = $ % { } [ \] \| \/ . < > # “ " \- ‘]{2,}$/,
+
+                },
+
+                "settings__country": {
+               
+                    required: false,
+                    regex: /^[a-zæøåA-ZÆØÅ][a-zæøåA-ZÆØÅ '&-]*[a-zæøåA-ZÆØÅ]$/,
+
+                },
+
+                "settings__webpage": {
+               
+                    required: false,
+                    regex: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
+
+                },
+
+                "settings__company": {
+               
+                    required: false,
+                    regex: /^(?!\s)(?!.*\s$)(?=.*[a-zæøåA-ZÆØÅ0-9])[a-zæøåA-ZÆØÅ0-9 \' ~ ? ! ~ ` ? ! ^ * ¨ ; @ = $ % { } [ \] \| \/ . < > # “ " \- ‘]{2,}$/,
+
+                },
+
+                "settings__company-role": {
+               
+                    required: false,
+                    regex: /^(?!\s)(?!.*\s$)(?=.*[a-zæøåA-ZÆØÅ0-9])[a-zæøåA-ZÆØÅ0-9 \' ~ ? ! ~ ` ? ! ^ * ¨ ; @ = $ % { } [ \] \| \/ . < > # “ " \- ‘]{2,}$/,
+
+                },
+
+            },
+
+            //-------------------------------------------------
+            // Messages
+            //-------------------------------------------------
+
+            messages: {
+
+                "settings__username": {
+               
+                    required: "This field is required, username is missing.",
+                    regex: "Invalid username. Minimum 5 and max 15 characters. Only letters and numbers are allowed.",
+               
+                },
+
+                "settings__first-name": {
+               
+                    regex: "Invalid first name.",
+               
+                },
+
+                "settings__last-name": {
+               
+                    regex: "Invalid last name.",
+               
+                },
+
+                "settings__birth__day": {
+               
+                    regex: "Invalid birth date.",
+               
+                },
+
+                "settings__birth__month": {
+               
+                    regex: "Invalid birth date.",
+               
+                },
+
+                "settings__birth__year": {
+               
+                    regex: "Invalid birth date.",
+               
+                },
+
+                "settings__phone": {
+               
+                    regex: "Invalid phone number.",
+               
+                },
+
+                "settings__address": {
+               
+                    regex: "Invalid address.",
+               
+                },
+
+                "settings__country": {
+               
+                    regex: "Invalid country.",
+               
+                },
+
+                "settings__webpage": {
+               
+                    regex: "Invalid webpage url.",
+               
+                },
+
+                "settings__company": {
+               
+                    regex: "Invalid company name.",
+               
+                },
+
+                "settings__company-role": {
+               
+                    regex: "Invalid company role.",
+
+                },
+
+            },
+            
+            //-------------------------------------------------
+            // Highlight error
+            //-------------------------------------------------
+
+            highlight: function (element, errorClass, validClass) {
+
+                $(element).addClass(errorClass).removeClass(validClass);
+
+            },
+           
+            //-------------------------------------------------
+            // Unhighlight error
+            //-------------------------------------------------
+
+            unhighlight: function (element, errorClass, validClass) {
+                   
+                $(element).removeClass(errorClass).addClass(validClass);
+
+            },
+
+            //-------------------------------------------------
+            // Submit handler
+            //-------------------------------------------------
+            
+            submitHandler: function () {
+               
+                var username = $("#settings__username").val();
+                var first_name = $("#settings__first-name").val();
+                var first_name_hide = $("#settings__first-name__hide").is(":checked");
+                var last_name = $("#settings__last-name").val();
+                var last_name_hide = $("#settings__last-name__hide").is(":checked");
+                var birth_day = $("#settings__birth__day").val();
+                var birth_month = $("#settings__birth__month").val();
+                var birth_year = $("#settings__birth__year").val();
+                var birth_hide = $("#settings__birth__hide").is(":checked");
+                var phone = $("#settings__phone").val();
+                var phone_hide = $("#settings__phone__hide").is(":checked");
+                var address = $("#settings__address").val();
+                var address_hide = $("#settings__address__hide").is(":checked");
+                var country = $("#settings__country").val();
+                var webpage = $("#settings__webpage").val();
+                var company = $("#settings__company").val();
+                var company_role = $("#settings__company-role").val();
+                var bio = $("#text-editor__box")[0].innerHTML;
+
+                
+                $("#settings__form").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
+                
+                // Set timer for the loading image.
+                setTimeout(function () {
+                    
+                    // Run the ajax request.
+                    $.ajax({
+                       
+                        data: {
+                          
+                            username: username,
+                            first_name: first_name,
+                            first_name_hide: first_name_hide,
+                            last_name: last_name,
+                            last_name_hide: last_name_hide,
+                            birth_day: birth_day,
+                            birth_month: birth_month,
+                            birth_year: birth_year,
+                            birth_hide: birth_hide,
+                            phone: phone,
+                            phone_hide: phone_hide,
+                            address: address,
+                            address_hide: address_hide,
+                            country: country,
+                            webpage: webpage,
+                            company: company,
+                            company_role: company_role,
+                            bio: bio,
+                            settings_personal: "true",
+                       
+                        },
+                       
+                        type: "post",
+                        url: "classes/ajax.php",
+                       
+                        // On success output the requested site.
+                        success: function (data) {
+
+                            $("#settings__form").html(data);
+
+                        },
+                       
+                        // On error output a error message.
+                        error: function () {
+                      
+                            $("#settings__form").html("Sorry, an error has occurred. Please try again.");
                       
                         }
 
