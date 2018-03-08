@@ -19,6 +19,7 @@
         $filter = new Filter;
         $converter = new Converter;
         $user = new Users;
+        $newsletter = new Newsletter;
 
         //-------------------------------------------------
         // Get user data
@@ -512,13 +513,29 @@
             <div class="settings__input__box">
                 <div class="settings__checkbox__box">
                     Subscribe to newsletters
-                    <input type="checkbox" class="checkbox" id="settings__newsletters" name="settings__newsletters" <?php if($user_data['NEWSLETTERS'] === '1') { echo 'checked'; } ?>>
+                    <?php 
+
+                        if($newsletter->check_email($user_data['EMAIL']) > 0) {
+
+                            $newsletters = 1;
+
+                        } else {
+
+                            $newsletters = 0;
+
+                        }
+
+                    ?>
+                    <input type="checkbox" class="checkbox" id="settings__newsletters" name="settings__newsletters" <?php if($newsletters === 1) { echo 'checked'; } ?>>
                     <label class="checkbox__overlay" for="settings__newsletters"></label>
                 </div>
             </div> 
-            <button type="submit" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-medium">
+            <button type="submit" class="btn btn--primary btn--white u-margin-top-small">
                 Save email settings
             </button>
+            <div class="small-bold-text u-margin-top-small u-margin-bottom-medium">
+                If you change your email address you will be signed out and will have to verify your new email address to be able to sign in again.
+            </div>
         </form>
     </div>
     <?php 

@@ -369,29 +369,28 @@
 
             // Social media settings
             if((isset($_POST['settings_social'])) && ($_POST['settings_social'] === "true") && (isset($_POST['facebook'])) && (isset($_POST['twitter'])) && (isset($_POST['linkedin'])) && (isset($_POST['github']))) {
+                
                 $this->require_files();
                 $this->init();
-                echo "social";
+                $this->settings->social_media($_POST['facebook'], $_POST['twitter'], $_POST['linkedin'], $_POST['github']); 
 
-                // Validate social media links
+            }
 
-                // Update users social media links
+            // Check if email is already registered (when changing email)
+            else if((isset($_POST['settings_mail_check'])) && ($_POST['settings_mail_check'] === "true") && (isset($_POST['settings_mail']))) {
+                
+                $this->require_files();
+                $this->init();
+                $this->true_false($this->settings->mail_check($_POST['settings_mail']) > 0);
 
             }
 
             // Mail settings
             else if((isset($_POST['settings_mail'])) && ($_POST['settings_mail'] === "true") && (isset($_POST['mail'])) && (isset($_POST['mail_hide'])) && (isset($_POST['newsletters']))) {
+                
                 $this->require_files();
                 $this->init();
-                echo "mail";
-
-                // Validate mail
-
-                // Check if mail address already exist if its a new mail address
-
-                // Update mail, logout user and require new mail verification when a new mail address is entred
-                
-                // Update newsletter and hide mail options based on user selection
+                $this->settings->change_mail($_POST['mail'], $_POST['mail_hide'], $_POST['newsletters']);
 
             }
 
@@ -406,6 +405,7 @@
 
             // Personal details
             else if((isset($_POST['settings_personal'])) && ($_POST['settings_personal'] === "true") && (isset($_POST['username'])) && (isset($_POST['first_name'])) && (isset($_POST['first_name_hide'])) && (isset($_POST['last_name'])) && (isset($_POST['last_name_hide'])) && (isset($_POST['birth_day'])) && (isset($_POST['birth_month'])) && (isset($_POST['birth_year'])) && (isset($_POST['birth_hide'])) && (isset($_POST['phone'])) && (isset($_POST['phone_hide'])) && (isset($_POST['address'])) && (isset($_POST['address_hide'])) && (isset($_POST['country'])) && (isset($_POST['webpage'])) && (isset($_POST['company'])) && (isset($_POST['company_role'])) && (isset($_POST['bio']))) {
+                
                 $this->require_files();
                 $this->init();
                 echo "personal";
