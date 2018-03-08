@@ -42,7 +42,7 @@
                 Register    
             </button>
         </form>
-        <div class="register__legal u-margin-top-small">
+        <div class="small-bold-text u-margin-top-small">
             By registering, you agree to my <a href="legal/" target="_blank">legal policies</a>.
         </div>
     </div>

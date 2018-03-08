@@ -397,18 +397,10 @@
 
             // Password settings
             else if((isset($_POST['settings_password'])) && ($_POST['settings_password'] === "true") && (isset($_POST['password'])) && (isset($_POST['new_password'])) && (isset($_POST['new_password_repeat']))) {
+                
                 $this->require_files();
                 $this->init();
-                echo "password";
-
-                // validate passwords
-
-                // check that new password and repeat new passord match
-
-                // verify current password
-
-                // change password
-                
+                $this->settings->change_password($_POST['password'], $_POST['new_password'], $_POST['new_password_repeat']); 
 
             }
 

@@ -458,7 +458,15 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
 
-                            $("#settings__password__form").html(data);
+                            if(data === "Password changed") {
+
+                                window.location.replace("/login/");
+
+                            } else {
+
+                                $("#settings__password__form").html(data);
+
+                            }
 
                         },
                        

@@ -549,9 +549,12 @@
                 <input type="password" id="settings__new-password__repeat" name="settings__new-password__repeat" value="">
             </div>
             <div class="error__box"></div>
-            <button type="submit" class="btn btn--primary btn--white u-margin-top-small u-margin-bottom-medium">
+            <button type="submit" class="btn btn--primary btn--white u-margin-top-small">
                 Save new password
             </button>
+            <div class="small-bold-text u-margin-top-small u-margin-bottom-medium">
+                You will be signed out and will have to use your new password to sign in again.
+            </div>
         </form>
     </div>
     <?php

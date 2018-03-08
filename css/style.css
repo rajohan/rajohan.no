@@ -404,6 +404,10 @@ a.whitelink:hover {
   .back-to-top:hover {
     background-color: #77ABB7; }
 
+.small-bold-text {
+  font-size: 1.1rem;
+  font-weight: 700; }
+
 .emoticons {
   margin-bottom: -0.3rem;
   width: 1.7rem;
@@ -2005,10 +2009,6 @@ fieldset {
       padding-left: 0.4rem;
       transition: all;
       transition-duration: 0.2s; }
-
-.register__legal {
-  font-size: 1.1rem;
-  font-weight: 700; }
 
 .services__new-webpage, .services__hosting, .services__backup, .services__seo, .services__price {
   display: flex;
