@@ -174,6 +174,7 @@
                 $blog_id = $filter->sanitize($blog_id);
                 $reply_to = $filter->sanitize($reply_to);
                 $user_id = $filter->sanitize($_SESSION['USER']['ID']);
+                $comment = $filter->strip($comment);
 
                 // Check if comment is a reply
                 if(empty($reply_to)) {

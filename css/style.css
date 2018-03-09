@@ -2257,6 +2257,10 @@ fieldset {
         padding-bottom: 1rem;
         margin-bottom: 1rem;
         text-align: center; }
+      .user__info__bio__text {
+        display: block;
+        width: 100%;
+        max-width: 100%; }
 
 .why-me {
   background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(../img/why_me.jpeg);

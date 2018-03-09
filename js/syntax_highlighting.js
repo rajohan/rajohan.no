@@ -63,7 +63,7 @@ codeElements.each(function (){
 //-------------------------------------------------
 
 $("pre").each( function() {
-    var text = $(this)[0].innerHTML.split("\n");
+    var text = $(this)[0].innerHTML.split(/\n|<br>/);
     $(this).html("");
   
     for(var i = 0; i <  text.length; i++) {

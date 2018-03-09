@@ -88,8 +88,19 @@
             
             $data = implode(" ", $data); // Convert array to string
 
-            return $data;
+            return html_entity_decode($data);
 
+        }
+
+        //-------------------------------------------------
+        // Method to strip tags not allowed
+        //-------------------------------------------------
+        function strip($data) {
+
+            $data = strip_tags($data, "<b><br><li><ul><ol><p><i><u><div><strike><a><img><table><tr><td><span><pre>");
+            
+            return $data;
+            
         }
 
         //-------------------------------------------------

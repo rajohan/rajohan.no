@@ -27,7 +27,7 @@ $(document).ready(function () {
                 "contact-me__name": {
                  
                     required: true,
-                    regex: /^[a-zæøåA-ZÆØÅ][a-zæøåA-ZÆØÅ '&-]*[a-zæøåA-ZÆØÅ]$/
+                    regex: /^[a-zÀ-ʫ\'´`-]+?\.?\s?([a-zÀ-ʫ\'´`-]+\.?\s?)+$/i
               
                 },
                 "contact-me__mail": {
@@ -38,7 +38,7 @@ $(document).ready(function () {
                 },
                 "contact-me__firmname": {
                 
-                    regex: /^(?!\s)(?!.*\s$)(?=.*[a-zæøåA-ZÆØÅ0-9])[a-zæøåA-ZÆØÅ0-9 \' ~ ? ! ~ ` ? ! ^ * ¨ ; @ = $ % { } [ \] \| \/ . < > # “ " \- ‘]{2,}$/
+                    regex: /^[A-å0-9À-ʫ\'\.\-\s\,&@]{2,}$/i
                
                 },
                 "contact-me__tel": {
@@ -48,7 +48,7 @@ $(document).ready(function () {
                 },
                 "contact-me__webpage": {
                
-                    regex: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+                    regex: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i
                
                 },
                 "contact-me__subject": {

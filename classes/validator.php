@@ -56,7 +56,7 @@
 
         function validate_name($data) {
 
-            $pattern = '/^\p{L}[\p{L} \'&-]*[\p{L}]$/u';
+            $pattern = '/^[a-zÀ-ʫ\'´`-]+?\.?\s?([a-zÀ-ʫ\'´`-]+\.?\s?)+$/i';
             return preg_match($pattern, $data);
 
         }
@@ -67,7 +67,7 @@
 
         function validate_url($data) {
 
-            $pattern = '/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/';
+            $pattern = '/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i';
             return preg_match($pattern, $data);
 
         }
@@ -78,7 +78,7 @@
 
         function validate_page_url($data, $page) {
 
-            $pattern = '/^(http:\/\/www\.|www\.|https:\/\/www\.|http:\/\/|https:\/\/)?('.$page.')(\.[a-z]{2,5})(.*)$/';
+            $pattern = '/^(http:\/\/www\.|www\.|https:\/\/www\.|http:\/\/|https:\/\/)?('.$page.')(\.[a-z]{2,5})(.*)$/i';
             return preg_match($pattern, $data);
 
         }
@@ -100,7 +100,28 @@
         
         function validate_firmname($data) {
 
-            $pattern = '/^(?!\s)(?!.*\s$)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 \' ~ ? ! ~ ` ? ! ^ * ¨ ; @ = $ % { } [ \] \| \/ . < > # “ " \- ‘]{2,}$/';
+            $pattern = '/^[A-å0-9À-ʫ\'\.\-\s\,&@]{2,}$/i';
+            return preg_match($pattern, $data);
+        }
+
+        //-------------------------------------------------
+        // Country validator
+        //-------------------------------------------------
+        
+        function validate_country($data) {
+
+            $pattern = '/^[A-åÀ-ʫ ,\.()\'-]{2,}$/i';
+            return preg_match($pattern, $data);
+
+        }
+
+        //-------------------------------------------------
+        // Country validator
+        //-------------------------------------------------
+        
+        function validate_address($data) {
+
+            $pattern = '/^[A-å0-9À-ʫ\'\.\-\s\,&@]{2,}$/i';
             return preg_match($pattern, $data);
 
         }
@@ -111,7 +132,7 @@
 
         function validate_token_code($data) {
 
-            $pattern = '/^[a-z A-Z 0-9]{6,6}$/';
+            $pattern = '/^[A-z0-9]{6,6}$/';
             return preg_match($pattern, $data);
 
         }
@@ -122,7 +143,7 @@
 
         function validate_forgot_password_code($data) {
 
-            $pattern = '/^[a-z A-Z 0-9]{8,8}$/';
+            $pattern = '/^[A-z0-9]{8,8}$/';
             return preg_match($pattern, $data);
 
         }

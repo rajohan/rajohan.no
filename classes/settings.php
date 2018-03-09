@@ -56,6 +56,25 @@
         }
 
         //-------------------------------------------------
+        // Method to set hide to 1 or 0
+        //-------------------------------------------------
+
+        private function hide($data) {
+
+            if($data === "true") {
+
+                $data = 1;
+
+            } else {
+
+                $data = 0;
+            }
+
+            return $data;
+
+        }
+
+        //-------------------------------------------------
         // Method to check if email is already registered
         //-------------------------------------------------
 
@@ -273,6 +292,131 @@
 
             }
             
+        }
+
+        //-------------------------------------------------
+        // Personal details
+        //-------------------------------------------------
+
+        function personal_details($new_username, $firstname, $firstname_hide, $lastname, $lastname_hide, $birth_day, $birth_month, $birth_year, $birth_hide, $phone, $phone_hide, $address, $address_hide, $country, $webpage, $company, $company_role, $bio) {
+            
+            $new_username = $this->filter->sanitize($new_username);
+            $firstname = $this->filter->sanitize($firstname);
+            $firstname_hide = $this->filter->sanitize($firstname_hide);
+            $lastname = $this->filter->sanitize($lastname);
+            $lastname_hide = $this->filter->sanitize($lastname_hide);
+            $birth_day = $this->filter->sanitize($birth_day);
+            $birth_month = $this->filter->sanitize($birth_month);
+            $birth_year = $this->filter->sanitize($birth_year);
+            $birth_hide = $this->filter->sanitize($birth_hide);
+            $phone = $this->filter->sanitize($phone);
+            $phone_hide = $this->filter->sanitize($phone_hide);
+            $address = $this->filter->sanitize($address);
+            $address_hide = $this->filter->sanitize($address_hide);
+            $country = $this->filter->sanitize($country);
+            $webpage = $this->filter->sanitize($webpage);
+            $company = $this->filter->sanitize($company);
+            $company_role = $this->filter->sanitize($company_role);
+            $bio = $this->filter->strip($bio);
+
+            // Validate user name
+            if(!$this->validator->validate_username($new_username)) {
+
+                echo "Invalid username. Minimum 5 and max 15 characters. Only letters and numbers are allowed.";
+
+            }
+
+            // Check if username already exsist if username is changed
+            else if(($new_username !== $this->username) && ($this->user->username_check($new_username))) {
+
+                echo "Username is already taken.";
+
+            }
+
+            // Validate first name
+            else if((!empty($firstname)) && (!$this->validator->validate_name($firstname))) {
+
+                echo "Invalid first name.";
+
+            }
+
+            // Validate last name
+            else if((!empty($lastname)) && (!$this->validator->validate_name($lastname))) {
+
+                echo "Invalid last name.";
+
+            }
+
+            // Validate phone number
+            else if((!empty($phone)) && (!$this->validator->validate_tel($phone))) {
+
+                echo "Invalid phone number.";
+                
+            }
+
+            // Validate address
+            else if((!empty($address)) && (!$this->validator->validate_address($address))) {
+
+                echo "Invalid address.";
+                
+            }
+
+            // Validate country
+            else if((!empty($country)) && (!$this->validator->validate_country($country))) {
+
+                echo "Invalid country.";
+                
+            }
+
+            // Validate webpage
+            else if((!empty($webpage)) && (!$this->validator->validate_url($webpage))) {
+
+                echo "Invalid webpage url.";
+                
+            }
+
+            // Validate company name
+            else if((!empty($company)) && (!$this->validator->validate_firmname($company))) {
+
+                echo "Invalid company name.";
+                
+            }
+
+            // Validate company role
+            else if((!empty($company_role)) && (!$this->validator->validate_firmname($company_role))) {
+
+                echo "Invalid company role.";
+                
+            } else {
+
+                // Validate birth date and put it together
+                if((!empty($birth_month)) && (!empty($birth_day)) && (!empty($birth_year)) && (checkdate($birth_month, $birth_day, $birth_year))) {
+
+                    $birth = $birth_year."-".$birth_month."-".$birth_day;
+
+                } else {
+
+                    $birth = "";
+
+                }
+
+                // Set hide values to 0 and 1 
+                $firstname_hide = $this->hide($firstname_hide);
+                $lastname_hide = $this->hide($lastname_hide);
+                $birth_hide = $this->hide($birth_hide);
+                $phone_hide = $this->hide($phone_hide);
+                $address_hide = $this->hide($address_hide);
+
+                // Update session variable
+                $_SESSION['USER']['USERNAME'] = $new_username;
+
+                // Update email row with code
+                $db_conn = new Database;
+                $db_conn->db_update("USERS", "USERNAME, FIRST_NAME, HIDE_FIRST_NAME, LAST_NAME, HIDE_LAST_NAME, BORN, HIDE_BORN, PHONE, HIDE_PHONE, ADDRESS, HIDE_ADDRESS, COUNTRY, WEBPAGE, FIRMNAME, FIRM_ROLE, BIO", "ID", "ssisisisisisssssi", array($new_username, $firstname, $firstname_hide, $lastname, $lastname_hide, $birth, $birth_hide, $phone, $phone_hide, $address, $address_hide, $country, $webpage, $company, $company_role, $bio, $this->user_id));
+
+                echo "Updated";
+            }
+
         }
     
     }

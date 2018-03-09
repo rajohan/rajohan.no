@@ -21,7 +21,7 @@
         //-------------------------------------------------
 
         function html_to_bbcode($data) {
-
+            
             $find = array(
 
                     '~&nbsp;~i',
@@ -133,7 +133,7 @@
                 '~\[img (.*)\]((?:http|https?):\/\/.*?\.(?:jpg|jpeg|gif|png|bmp|svg))\[\/img\]~i',
                 '~\[emoticon\]([A-z0-9\-\.]{1,})\[\/emoticon\]~i',
             );
-
+            
             $replace = array(
 
                 '<b>',

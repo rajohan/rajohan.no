@@ -530,8 +530,17 @@ $(document).ready(function () {
 
             errorPlacement: function(error, element) {
 
-                error.appendTo( element.parent().next() ); // Error box placement
+                // Error box placement
+                if(element.parent().next().length < 1) {
 
+                    error.appendTo(element.parent().parent().next()); 
+
+                } else {
+
+                    error.appendTo(element.parent().next());
+
+                }
+                
             },
 
             errorClass: "error", // Error class
@@ -553,14 +562,14 @@ $(document).ready(function () {
                 "settings__first-name": {
                
                     required: false,
-                    regex: /^[a-zæøåA-ZÆØÅ][a-zæøåA-ZÆØÅ '&-]*[a-zæøåA-ZÆØÅ]$/,
+                    regex: /^[a-zÀ-ʫ\'´`-]+?\.?\s?([a-zÀ-ʫ\'´`-]+\.?\s?)+$/i,
 
                 },
                 
                 "settings__last-name": {
                
                     required: false,
-                    regex: /^[a-zæøåA-ZÆØÅ][a-zæøåA-ZÆØÅ '&-]*[a-zæøåA-ZÆØÅ]$/,
+                    regex: /^[a-zÀ-ʫ\'´`-]+?\.?\s?([a-zÀ-ʫ\'´`-]+\.?\s?)+$/i,
 
                 },
 
@@ -595,35 +604,35 @@ $(document).ready(function () {
                 "settings__address": {
                
                     required: false,
-                    regex: /^(?!\s)(?!.*\s$)(?=.*[a-zæøåA-ZÆØÅ0-9])[a-zæøåA-ZÆØÅ0-9 \' ~ ? ! ~ ` ? ! , ^ * ¨ ; @ = $ % { } [ \] \| \/ . < > # “ " \- ‘]{2,}$/,
+                    regex: /^[A-å0-9À-ʫ\'\.\-\s\,&@]{2,}$/i,
 
                 },
 
                 "settings__country": {
                
                     required: false,
-                    regex: /^[a-zæøåA-ZÆØÅ][a-zæøåA-ZÆØÅ '&-]*[a-zæøåA-ZÆØÅ]$/,
+                    regex: /^[A-åÀ-ʫ ,\.()\'-]{2,}$/i,
 
                 },
 
                 "settings__webpage": {
                
                     required: false,
-                    regex: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
+                    regex: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i,
 
                 },
 
                 "settings__company": {
                
                     required: false,
-                    regex: /^(?!\s)(?!.*\s$)(?=.*[a-zæøåA-ZÆØÅ0-9])[a-zæøåA-ZÆØÅ0-9 \' ~ ? ! ~ ` ? ! ^ * ¨ ; @ = $ % { } [ \] \| \/ . < > # “ " \- ‘]{2,}$/,
+                    regex: /^[A-å0-9À-ʫ\'\.\-\s\,&@]{2,}$/i,
 
                 },
 
                 "settings__company-role": {
                
                     required: false,
-                    regex: /^(?!\s)(?!.*\s$)(?=.*[a-zæøåA-ZÆØÅ0-9])[a-zæøåA-ZÆØÅ0-9 \' ~ ? ! ~ ` ? ! ^ * ¨ ; @ = $ % { } [ \] \| \/ . < > # “ " \- ‘]{2,}$/,
+                    regex: /^[A-å0-9À-ʫ\'\.\-\s\,&@]{2,}$/i,
 
                 },
 

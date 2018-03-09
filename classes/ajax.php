@@ -408,31 +408,7 @@
                 
                 $this->require_files();
                 $this->init();
-                echo "personal";
-
-                // Validate user name
-
-                // Check if username already exsist if username is changed
-
-                // Validate first name
-
-                // Validate last name
-
-                // Validate birth date
-
-                // Validate phone number
-
-                // Validate address
-
-                // Validate country
-
-                // Validate webpage
-
-                // Validate company name
-
-                // Validate company role
-
-                // Update user details
+                $this->settings->personal_details($_POST['username'], $_POST['first_name'], $_POST['first_name_hide'], $_POST['last_name'], $_POST['last_name_hide'], $_POST['birth_day'], $_POST['birth_month'], $_POST['birth_year'], $_POST['birth_hide'], $_POST['phone'], $_POST['phone_hide'], $_POST['address'], $_POST['address_hide'], $_POST['country'], $_POST['webpage'], $_POST['company'], $_POST['company_role'], $_POST['bio']);
 
             }
 

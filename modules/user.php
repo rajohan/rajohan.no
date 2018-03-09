@@ -19,6 +19,7 @@
     $user = new Users;
     $page = new Page_handler;
     $view = new Views;
+    $bbcode = new Bbcode;
     
     //-------------------------------------------------
     // Get user data
@@ -353,17 +354,33 @@
                 <span class="user__info__bio__title">
                     User biography
                 </span>
-                <?php 
+                <div class="user__info__bio__text">
+                    <?php 
+                        
+                        $db_conn = new Database;
+                        $stmt = $db_conn->connect->prepare("SELECT `BIO` FROM `USERS` WHERE `ID` = ?");
+                        $stmt->bind_param("i", $user_data['ID']);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
-                    if(empty($user_data['BIO'])) {
+                        while ($row = $result->fetch_assoc()) {
 
-                        $user_data['BIO'] = "N/A";
+                            $bio = $row['BIO'];
 
-                    }
+                        }
 
-                    echo $user_data['BIO']; 
+                        $db_conn->free_close($result, $stmt);
 
-                ?>
+                        if(empty($bio)) {
+
+                            $bio = "N/A";
+
+                        }
+
+                        echo $bbcode->replace($filter->sanitize_code($bio)); 
+
+                    ?>
+                </div>
             </div>
         </div>
     </div>
