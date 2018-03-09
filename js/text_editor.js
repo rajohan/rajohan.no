@@ -247,7 +247,7 @@ $(document).ready(function() {
             if(content.match(emoticons[i]["code"])) {
 
                 changed = true;
-                content = content.replace(emoticons[i]["code"], "<img src='img/icons/emoticons/"+emoticons[i]["img"]+"' style='margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;'>");
+                content = content.replace(emoticons[i]["code"], "<img src='img/icons/emoticons/"+emoticons[i]["img"]+"' class='emoticon' style='margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;'>");
                 
             }
 
