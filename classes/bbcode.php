@@ -48,7 +48,7 @@
                     '~\<a .*href="((?:ftp|http|https?):\/\/[A-z0-9.\-]{1,})"[ A-z0-9=":;.\-]{0,}\>(.*?)\<\/a\>~i',
                     '~\<a .*href="((?:mailto?):[ A-z0-9.\-@]{1,})"[ A-z0-9=":;.\-]{0,}\>(.*?)\<\/a\>~i',
                     '~\<img src="((?:http|https?):\/\/.*?\.(?:jpg|jpeg|gif|png|bmp|svg))"\>~i',
-                    '~\<img src="img\/icons\/emoticons\/(smile\.svg|wink\.svg|kiss\.svg|unsure\.svg|cry\.svg|tongue\.svg|grin\.svg|grumpy\.svg|astonished\.svg|afraid\.svg|nerd\.svg|sunglasses\.svg|angry\.svg|frowny\.svg|love\.svg|confused\.svg|dejected\.svg|laugh\.svg|big_eyes\.svg|silent\.svg)" class="emoticon" style="margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;"\>~i'
+                    '~\<img src="img\/icons\/emoticons\/(smile\.svg|wink\.svg|kiss\.svg|unsure\.svg|cry\.svg|tongue\.svg|grin\.svg|grumpy\.svg|astonished\.svg|afraid\.svg|nerd\.svg|sunglasses\.svg|angry\.svg|frowny\.svg|love\.svg|confused\.svg|dejected\.svg|laugh\.svg|big_eyes\.svg|silent\.svg)" class="emoticon" style="[A-z0-9\-: ;\.]{0,}margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;[A-z0-9\-: ;\.]{0,}"\>~i'
                 
                 );
                 
