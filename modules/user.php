@@ -88,7 +88,23 @@
                                 $user_data['LAST_NAME'] = "";
                             }
 
-                            echo $user_data['FIRST_NAME']." ".$user_data['LAST_NAME']; 
+                            if($user_data['HIDE_FIRST_NAME'] === "1") {
+                                $user_data['FIRST_NAME'] = "";
+                            }
+
+                            if($user_data['HIDE_LAST_NAME'] === "1") {
+                                $user_data['LAST_NAME'] = "";
+                            }
+
+                            if(($user_data['HIDE_FIRST_NAME'] === "1") && ($user_data['HIDE_LAST_NAME'] === "1")) {
+
+                                echo "Name hidden";
+
+                            } else {
+
+                                echo $user_data['FIRST_NAME']." ".$user_data['LAST_NAME']; 
+
+                            }
                         
                         ?>
                     </div>
@@ -170,24 +186,44 @@
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Email address:
+                        <?php 
+
+                            if($user_data['HIDE_EMAIL'] === "1") {
+
+                                echo "</span>hidden";
+
+                            } else {
+
+                        ?>
                         <a href="mailto: <?php echo $user_data['EMAIL']; ?>"><?php echo $user_data['EMAIL']; ?></a>
-                    </span>
+                     </span>
+                    <?php
+                        }
+                    ?>
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
                         Age:
                     </span>
                     <?php 
-                        
-                        if(empty($user_data['BORN'])) {
+                        if($user_data['HIDE_BORN'] === "1") {
 
-                            echo "N/A";
+                            echo "hidden";
 
                         } else {
 
-                            $age = $converter->age($user_data['BORN']);
-                            $born = $converter->date($user_data['BORN']);
-                            echo $age." (".$born.")"; 
+                            if(empty($user_data['BORN'])) {
+
+                                echo "N/A";
+
+                            } else {
+
+                                $age = $converter->age($user_data['BORN']);
+                                $born = $converter->date($user_data['BORN']);
+
+                                echo $age." (".$born.")"; 
+
+                            }
 
                         }
 
@@ -199,14 +235,22 @@
                     </span>
                     <?php 
 
-                        if(empty($user_data['BORN'])) {
+                        if($user_data['HIDE_PHONE'] === "1") {
 
-                            $user_data['PHONE'] = "N/A";
+                            echo "hidden";
 
+                        } else {
+
+                            if(empty($user_data['BORN'])) {
+
+                                $user_data['PHONE'] = "N/A";
+
+                            }
+
+                            echo $user_data['PHONE'];
+                            
                         }
-
-                        echo $user_data['PHONE']; 
-                    
+                        
                     ?>
                 </span>
                 <span class="user__info__details__item">
@@ -214,14 +258,22 @@
                         Address:
                     </span>
                     <?php 
+                    
+                        if($user_data['HIDE_ADDRESS'] === "1") {
 
-                        if(empty($user_data['ADDRESS'])) {
+                            echo "hidden";
+                            
+                        } else {
 
-                            $user_data['ADDRESS'] = "N/A";
+                            if(empty($user_data['ADDRESS'])) {
+
+                                $user_data['ADDRESS'] = "N/A";
+
+                            }
+
+                            echo $user_data['ADDRESS']; 
 
                         }
-
-                        echo $user_data['ADDRESS']; 
 
                     ?>
                 </span>

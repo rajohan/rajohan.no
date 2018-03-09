@@ -189,6 +189,14 @@
                 display: block;
                 width: 100%;
                 max-width: 100%;
+
+                li {
+                    margin-left: 2rem;
+                }
+    
+                img {
+                    max-width: 50%;
+                }
             }
         }
     }

@@ -97,6 +97,28 @@
         }
 
         //-------------------------------------------------
+        // Method to check if username is taken
+        //-------------------------------------------------
+
+        function username_check($new_username) {
+
+            if($new_username !== $this->username) {
+
+                $new_username = $this->filter->sanitize($new_username);
+
+                $db_conn = new Database;
+                $count = $db_conn->count("USERS", "WHERE USERNAME = ?", "s", array($new_username));
+                return $count;
+
+            } else {
+
+                return 0;
+
+            }
+
+        }
+
+        //-------------------------------------------------
         // Change password
         //-------------------------------------------------
 
@@ -135,7 +157,7 @@
 
                 $new_password = password_hash($new_password, PASSWORD_DEFAULT); // Encrypt the password
 
-                // Update email row with code
+                // Update password
                 $db_conn = new Database;
                 $db_conn->db_update("USERS", "PASSWORD", "ID", "si", array($new_password, $this->user_id));
 
@@ -285,7 +307,7 @@
 
             } else {
 
-                // Update email row with code
+                // Update users social settings
                 $db_conn = new Database;
                 $db_conn->db_update("USERS", "FACEBOOK, TWITTER, LINKEDIN, GITHUB", "ID", "ssssi", array($facebook, $twitter, $linkedin, $github, $this->user_id));
                 echo "Your social media links have been saved.";
@@ -327,7 +349,7 @@
             }
 
             // Check if username already exsist if username is changed
-            else if(($new_username !== $this->username) && ($this->user->username_check($new_username))) {
+            else if($this->mail_check($new_username) > 0) {
 
                 echo "Username is already taken.";
 
@@ -394,7 +416,7 @@
 
                     $birth = $birth_year."-".$birth_month."-".$birth_day;
 
-                    // Update email row with code
+                    // Update birth date
                     $db_conn = new Database;
                     $db_conn->db_update("USERS", "BORN", "ID", "si", array($birth, $this->user_id));
 
@@ -410,11 +432,11 @@
                 // Update session variable
                 $_SESSION['USER']['USERNAME'] = $new_username;
 
-                // Update email row with code
+                // Update user details
                 $db_conn = new Database;
                 $db_conn->db_update("USERS", "USERNAME, FIRST_NAME, HIDE_FIRST_NAME, LAST_NAME, HIDE_LAST_NAME, HIDE_BORN, PHONE, HIDE_PHONE, ADDRESS, HIDE_ADDRESS, COUNTRY, WEBPAGE, FIRMNAME, FIRM_ROLE, BIO", "ID", "ssisiisisisssssi", array($new_username, $firstname, $firstname_hide, $lastname, $lastname_hide, $birth_hide, $phone, $phone_hide, $address, $address_hide, $country, $webpage, $company, $company_role, $bio, $this->user_id));
 
-                echo "Updated";
+                echo "Personal details updated.";
 
             }
 

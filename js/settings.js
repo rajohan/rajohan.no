@@ -556,6 +556,17 @@ $(document).ready(function () {
                
                     required: true,
                     regex: /^[\w\-]{5,15}$/,
+                    remote: {
+                        url: "classes/ajax.php",
+                        type: "post",
+                        data: {
+                            settings_username_check: true,
+                            settings_username: function() {
+                                return $("#settings__username").val();
+                            }
+                        }
+
+                    } 
 
                 },
 
@@ -648,6 +659,7 @@ $(document).ready(function () {
                
                     required: "This field is required, username is missing.",
                     regex: "Invalid username. Minimum 5 and max 15 characters. Only letters and numbers are allowed.",
+                    remote: "Username is already taken.",
                
                 },
 

@@ -403,6 +403,15 @@
 
             }
 
+            // Check if username is taken (when changing username)
+            else if((isset($_POST['settings_username_check'])) && ($_POST['settings_username_check'] === "true") && (isset($_POST['settings_username']))) {
+                
+                $this->require_files();
+                $this->init();
+                $this->true_false($this->settings->username_check($_POST['settings_username']) > 0);
+
+            }
+
             // Personal details
             else if((isset($_POST['settings_personal'])) && ($_POST['settings_personal'] === "true") && (isset($_POST['username'])) && (isset($_POST['first_name'])) && (isset($_POST['first_name_hide'])) && (isset($_POST['last_name'])) && (isset($_POST['last_name_hide'])) && (isset($_POST['birth_day'])) && (isset($_POST['birth_month'])) && (isset($_POST['birth_year'])) && (isset($_POST['birth_hide'])) && (isset($_POST['phone'])) && (isset($_POST['phone_hide'])) && (isset($_POST['address'])) && (isset($_POST['address_hide'])) && (isset($_POST['country'])) && (isset($_POST['webpage'])) && (isset($_POST['company'])) && (isset($_POST['company_role'])) && (isset($_POST['bio']))) {
                 
