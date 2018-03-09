@@ -394,9 +394,9 @@
 
                     $birth = $birth_year."-".$birth_month."-".$birth_day;
 
-                } else {
-
-                    $birth = "";
+                    // Update email row with code
+                    $db_conn = new Database;
+                    $db_conn->db_update("USERS", "BORN", "ID", "si", array($birth, $this->user_id));
 
                 }
 
@@ -412,9 +412,10 @@
 
                 // Update email row with code
                 $db_conn = new Database;
-                $db_conn->db_update("USERS", "USERNAME, FIRST_NAME, HIDE_FIRST_NAME, LAST_NAME, HIDE_LAST_NAME, BORN, HIDE_BORN, PHONE, HIDE_PHONE, ADDRESS, HIDE_ADDRESS, COUNTRY, WEBPAGE, FIRMNAME, FIRM_ROLE, BIO", "ID", "ssisisisisisssssi", array($new_username, $firstname, $firstname_hide, $lastname, $lastname_hide, $birth, $birth_hide, $phone, $phone_hide, $address, $address_hide, $country, $webpage, $company, $company_role, $bio, $this->user_id));
+                $db_conn->db_update("USERS", "USERNAME, FIRST_NAME, HIDE_FIRST_NAME, LAST_NAME, HIDE_LAST_NAME, HIDE_BORN, PHONE, HIDE_PHONE, ADDRESS, HIDE_ADDRESS, COUNTRY, WEBPAGE, FIRMNAME, FIRM_ROLE, BIO", "ID", "ssisiisisisssssi", array($new_username, $firstname, $firstname_hide, $lastname, $lastname_hide, $birth_hide, $phone, $phone_hide, $address, $address_hide, $country, $webpage, $company, $company_role, $bio, $this->user_id));
 
                 echo "Updated";
+
             }
 
         }
