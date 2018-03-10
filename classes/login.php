@@ -199,14 +199,10 @@
                 if($count > 0) {
                     
                     $token = $this->token->generate_session_token(8);
-
-                    // Delete old session token
-                    $db_conn = new Database;
-                    $db_conn->db_delete("SESSION_TOKENS", "USER", "i", $user_id);
-
+                    $date = date("Y-m-d H:i:s");
                     // Insert new session token
                     $db_conn = new Database;
-                    $db_conn->db_insert("SESSION_TOKENS", "USER, TOKEN, IP", "iss", array($user_id, $token, $this->ip));
+                    $db_conn->db_update("SESSION_TOKENS", "TOKEN, DATE, IP", "USER", "sssi", array($token, $date, $this->ip, $user_id));
 
                     $_SESSION['LOGGED_IN_TOKEN'] = $token;
 
