@@ -365,7 +365,7 @@
                 $db_conn = new Database;
                 $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 1, $user_id, $this->ip));
 
-                echo "Thanks for registering! You can now proceed to sign in.";
+                echo "Thanks! You can now proceed to sign in.";
 
                 require_once("../modules/login.php");
 
