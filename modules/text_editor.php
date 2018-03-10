@@ -1,3 +1,16 @@
+<?php
+    
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
+    if(!defined('INCLUDE')) {
+
+        die('Direct access is not permitted.');
+        
+    }
+    
+?>
 <div class="text-editor u-margin-top-small">
     <div class="text-editor__message"></div>
     <div class="text-editor__toolbox u-margin-top-small">

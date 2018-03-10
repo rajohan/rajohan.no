@@ -20,6 +20,7 @@
     $page = new Page_handler;
     $view = new Views;
     $bbcode = new Bbcode;
+    $login = new Login;
     
     //-------------------------------------------------
     // Get user data
@@ -38,7 +39,7 @@
         }
 
     }
-    else if(($profile === 0) && (isset($_SESSION['LOGGED_IN'])) && ($_SESSION['LOGGED_IN'] === true)) {
+    else if(($profile === 0) && ($login->login_check())) {
 
         $user_data = $user->get_user("ID", $_SESSION['USER']['ID']);
 

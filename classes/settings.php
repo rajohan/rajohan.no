@@ -45,7 +45,7 @@
             $this->send_mail = new Mail;
             $this->newsletter = new Newsletter;
 
-            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+            if($this->login->login_check()) {
 
                 $this->user_id = $this->filter->sanitize($_SESSION['USER']['ID']);
                 $this->username = $this->filter->sanitize($_SESSION['USER']['USERNAME']);
@@ -200,14 +200,7 @@
 
             } else {
 
-                if($mail_hide === "true") {
-
-                    $mail_hide = 1;
-
-                } else {
-
-                    $mail_hide = 0;
-                }
+                $mail_hide = $this->hide($mail_hide);
 
                 if($newsletters === "true") {
 

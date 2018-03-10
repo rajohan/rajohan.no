@@ -17,6 +17,7 @@
     class Traffic {
 
         private $filter;
+        private $login;
 
         //-------------------------------------------------
         // Construct
@@ -25,6 +26,7 @@
         function __construct() {
 
             $this->filter = new Filter;
+            $this->login = new Login;
             
         }
 
@@ -54,7 +56,7 @@
 
         private function user() {
 
-            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+            if($this->login->login_check()) {
 
                 $user = $this->filter->sanitize($_SESSION['USER']['ID']);
 

@@ -10,7 +10,9 @@
         
     }
 
-    if (isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+    $login = new Login;
+
+    if ($login->login_check()) {
 
         //-------------------------------------------------
         // Initialize classes

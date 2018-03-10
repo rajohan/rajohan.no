@@ -17,7 +17,8 @@
     class Views {
 
         private $ip; // User ip
-
+        private $login;
+        
         //-------------------------------------------------
         // Construct
         //-------------------------------------------------
@@ -25,6 +26,7 @@
         function __construct() {
 
             $this->ip = $_SERVER['REMOTE_ADDR']; // User ip
+            $this->login = new Login;
 
         }
 
@@ -57,7 +59,7 @@
         
         function add_blog_view($blog_id) {
             
-            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+            if($this->login->login_check()) {
 
                 $user = $_SESSION['USER']['ID'];
 
@@ -83,7 +85,7 @@
         
         function add_user_profile_view($user_id) {
             
-            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+            if($this->login->login_check()) {
 
                 $user = $_SESSION['USER']['ID'];
 

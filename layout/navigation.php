@@ -18,7 +18,8 @@
     $filter = new Filter;
     $page = new Page_handler;
     $user = new Users;
-    
+    $login = new Login;
+
     //-------------------------------------------------
     // Get the navigation
     //-------------------------------------------------
@@ -32,7 +33,7 @@
     // Get user data
     //-------------------------------------------------
 
-    if ((isset($_SESSION['LOGGED_IN'])) && ($_SESSION['LOGGED_IN'] === true)) {
+    if ($login->login_check()) {
 
         $user_data = $user->get_user("ID", $_SESSION['USER']['ID']);
 
@@ -69,7 +70,7 @@
     <div class="navigation__user-menu">
         <?php
 
-            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {       
+            if($login->login_check()) {       
 
         ?>
         <div class="navigation__user-menu__nav">
@@ -85,7 +86,7 @@
 
             <img src="<?php  echo $user_data['IMG']; ?>" alt="User photo" class="navigation__user-menu__nav__img"> 
             <div class="navigation__user-menu__nav__user">
-                <?php echo $filter->cut_string($filter->sanitize($_SESSION['USER']['USERNAME']), 7); ?>&nbsp;<span class="navigation__user-menu__nav__user__arrow">&dtrif;</span>
+                <?php echo $filter->cut_string($user_data['USERNAME'], 7); ?>&nbsp;<span class="navigation__user-menu__nav__user__arrow">&dtrif;</span>
             </div>
             <ul class="navigation__user-menu__nav__items">
                 <li>

@@ -10,6 +10,13 @@
         
     }
 
+    $login = new Login;
+    
+    if($login->login_check()) {
+
+        header('Location: /user/');
+    } else {
+
 ?>
 
 <!-- SECTION FORGOT PASSWORD START -->
@@ -21,11 +28,11 @@
         To request a password reset please fill out the fields below. You should then receive a email with a verification code that can be used to change your password. The email address have to be the same as the one registered with the username entered.
         <form method="post" id="forgot__password__form">
             <div class="input__box">    
-                <input type="text" id="forgot__password__username" name="forgot_password__username" placeholder="Your username...">
+                <input type="text" id="forgot__password__username" name="forgot__password__username" placeholder="Your username...">
             </div>
             <div class="error__box"></div>
             <div class="input__box">    
-                <input type="text" id="forgot__password__mail" name="forgot_password__mail" placeholder="Your email address...">
+                <input type="text" id="forgot__password__mail" name="forgot__password__mail" placeholder="Your email address...">
             </div>
             <div class="error__box u-margin-bottom-small"></div>
             <button type="submit" class="btn btn--primary btn--white u-margin-top-small">
@@ -35,3 +42,6 @@
     </div>
 </div>
 <!-- SECTION FORGOT PASSWORD END -->
+<?php 
+    }
+?>

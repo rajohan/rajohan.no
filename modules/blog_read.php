@@ -24,6 +24,7 @@
     $user = new Users;
     $pagination = new Pagination;
     $sort_data = new Sort;
+    $login = new Login;
 
     //-------------------------------------------------
     //  Set the blog id
@@ -179,7 +180,7 @@
         </div>
         <?php
 
-            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
+            if($login->login_check()) {
 
                 $placeholder = 'Your comment...';
                 $status_data = 'data-reply-to="0" data-blog-id="'.$blog_id.'"';

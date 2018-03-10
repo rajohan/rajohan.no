@@ -115,7 +115,7 @@ $(document).ready(function () {
                         },
                        
                         type: "post",
-                        url: "classes/register.php",
+                        url: "classes/ajax.php",
                        
                         // On success output the requested site.
                         success: function (data) {
@@ -292,7 +292,7 @@ $(document).ready(function () {
                         },
                        
                         type: "post",
-                        url: "classes/register.php",
+                        url: "classes/ajax.php",
                        
                         // On success output the requested site.
                         success: function (data) {

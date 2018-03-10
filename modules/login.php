@@ -9,17 +9,18 @@
         die('Direct access is not permitted.');
         
     }
+    
+    $login = new Login;
+    
+    if($login->login_check()) {
+
+        header('Location: /user/');
+
+    } else {
 
 ?>
 <!-- SECTION LOGIN START -->
 <div class="container">
-    <?php
-        if (isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
-
-            echo "Already logged in.";
-
-        } else {
-    ?>
     <h1 class="heading-secondary letter-spacing-medium u-center-text">
         &nbsp;Sign in
     </h1>
@@ -46,8 +47,8 @@
         -
         <a href="resend/">Resend email verification code</a>
     </div>
-    <?php
-        }
-    ?>
 </div>
 <!-- SECTION LOGIN END -->
+<?php
+    }
+?>

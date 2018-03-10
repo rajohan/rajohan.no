@@ -18,6 +18,13 @@
         $verification_code = $filter->sanitize($_GET['code']);
     }
 
+    $login = new Login;
+    
+    if($login->login_check()) {
+
+        header('Location: /user/');
+    } else {
+
 ?>
 
 <!-- SECTION FORGOT PASSWORD VERIFY START -->
@@ -47,3 +54,6 @@
     </div>
 </div>
 <!-- SECTION FORGOT PASSWORD VERIFY END -->
+<?php
+    }
+?>

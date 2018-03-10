@@ -157,7 +157,8 @@
         function add_comment($blog_id, $reply_to, $comment) {
             
             // Check that user is logged in
-            if(!isset($_SESSION['LOGGED_IN'])) {
+            $login = new Login;
+            if(!$login->login_check()) {
 
                 echo "You have to be logged in to post a comment.";
                 

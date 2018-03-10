@@ -10,6 +10,14 @@
         
     }
 
+    $login = new Login;
+    
+    if($login->login_check()) {
+
+        header('Location: /user/');
+
+    } else {
+
 ?>
 
 <!-- SECTION RESEND START -->
@@ -34,3 +42,6 @@
     </div>
 </div>
 <!-- SECTION RESEND END -->
+<?php
+    }
+?>

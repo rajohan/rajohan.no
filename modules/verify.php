@@ -10,15 +10,23 @@
         
     }
 
-    $filter = new Filter;
-
-    if(isset($_GET['email']) && !isset($mail)) {
-        $mail = $filter->sanitize($_GET['email']);
-    }
+    $login = new Login;
     
-    if(isset($_GET['code'])) {
-        $verification_code = $filter->sanitize($_GET['code']);
-    }
+    if($login->login_check()) {
+
+        header('Location: /user/');
+
+    } else {
+
+        $filter = new Filter;
+
+        if(isset($_GET['email']) && !isset($mail)) {
+            $mail = $filter->sanitize($_GET['email']);
+        }
+        
+        if(isset($_GET['code'])) {
+            $verification_code = $filter->sanitize($_GET['code']);
+        }
 
 ?>
 
@@ -42,3 +50,6 @@
     </form>
 </div>
 <!-- SECTION EMAIL VERIFY END -->
+<?php
+    }
+?>

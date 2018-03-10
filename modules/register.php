@@ -10,6 +10,14 @@
         
     }
 
+    $login = new Login;
+    
+    if($login->login_check()) {
+
+        header('Location: /user/');
+
+    } else {
+
 ?>
 
 <!-- SECTION REGISTER START -->
@@ -48,3 +56,6 @@
     </div>
 </div>
 <!-- SECTION REGISTER END -->
+<?php
+    }
+?>

@@ -42,7 +42,7 @@
         // Method to generate tokens and set remember me cookie
         //-------------------------------------------------
 
-        function remember($user_id) {
+        private function remember($user_id) {
 
             $token_array = $this->token->generate_token(32);
             $selector_array =  $this->token->generate_selector(16);
@@ -55,6 +55,21 @@
             $db_conn->db_insert("AUTH_TOKENS", "SELECTOR, USER, TOKEN, EXPIRES, IP", "sssss", array($selector_array[0], $user_id_encoded, $token_array[0], $expire_array[0], $this->ip));
 
             setcookie('REMEMBER_ME_TOKEN', $value, $expire_array[1], '/', $_SERVER['SERVER_NAME'], true, true);
+
+        }
+
+        //-------------------------------------------------
+        // Method to create sessions
+        //-------------------------------------------------
+
+        private function create_sessions($user_id) {
+
+            $user_id = $this->filter->sanitize($user_id);
+
+            $_SESSION['LOGGED_IN'] = true;
+            $_SESSION['USER']['ID'] = $user_id;
+            $_SESSION['USER']['USERNAME'] = $this->user->get_user("ID", $user_id)['USERNAME'];
+            $_SESSION['USER']['ACCESS_LEVEL'] = $this->user->get_user("ID", $user_id)['ADMIN'];
 
         }
 
@@ -136,17 +151,20 @@
         }
 
         //-------------------------------------------------
-        // Method to create sessions
+        // Method to check if user is logged in
         //-------------------------------------------------
 
-        function create_sessions($user_id) {
+        function login_check() {
 
-            $user_id = $this->filter->sanitize($user_id);
+            if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
 
-            $_SESSION['LOGGED_IN'] = true;
-            $_SESSION['USER']['ID'] = $user_id;
-            $_SESSION['USER']['USERNAME'] = $this->user->get_user("ID", $user_id)['USERNAME'];
-            $_SESSION['USER']['ACCESS_LEVEL'] = $this->user->get_user("ID", $user_id)['ADMIN'];
+                return true;
+
+            } else {
+
+                return false;
+                
+            }
 
         }
 
