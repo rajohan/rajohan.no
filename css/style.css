@@ -1383,8 +1383,44 @@ form {
     padding-bottom: 1rem;
     border-bottom: 1px solid #e8e8e8;
     user-select: none; }
-    .blog__comment__sort__by__link__active {
-      font-weight: 700; }
+    @media only screen and (max-width: 37.5em) {
+      .blog__comment__sort {
+        flex-direction: column; } }
+    .blog__comment__sort__by {
+      display: flex; }
+      @media only screen and (max-width: 37.5em) {
+        .blog__comment__sort__by {
+          justify-content: center;
+          margin-bottom: 1rem; } }
+      .blog__comment__sort__by__link {
+        padding: 0.2rem 0.8rem;
+        padding-top: 0.4rem;
+        text-decoration: none;
+        border: 1px solid #c5c5c5;
+        transition: all;
+        transition-duration: 0.4s;
+        line-height: 1; }
+        @media only screen and (max-width: 37.5em) {
+          .blog__comment__sort__by__link {
+            padding-top: 0.2rem; } }
+        .blog__comment__sort__by__link:not(:first-of-type) {
+          border-left: 0; }
+        .blog__comment__sort__by__link:hover:not(.blog__comment__sort__by__link__active) {
+          background-color: #77ABB7;
+          border: 1px solid #77ABB7;
+          color: #fff; }
+          .blog__comment__sort__by__link:hover:not(.blog__comment__sort__by__link__active):not(:first-of-type) {
+            border-left: 0; }
+        .blog__comment__sort__by__link:first-child {
+          border-top-left-radius: 0.5rem;
+          border-bottom-left-radius: 0.5rem; }
+        .blog__comment__sort__by__link:last-child {
+          border-top-right-radius: 0.5rem;
+          border-bottom-right-radius: 0.5rem; }
+        .blog__comment__sort__by__link__active {
+          background-color: #254B62;
+          color: #fff !important;
+          border: 1px solid #476D7C; }
   .blog__comment__user {
     display: flex;
     min-width: 100%;
@@ -1425,6 +1461,9 @@ form {
       user-select: none; }
   .blog__comment__reply {
     padding-left: 10rem; }
+    @media only screen and (max-width: 37.5em) {
+      .blog__comment__reply {
+        padding-left: 5rem; } }
   .blog__comment__reply-to {
     padding: 1rem;
     padding-bottom: 0;

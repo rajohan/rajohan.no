@@ -73,10 +73,8 @@
     
 <div class="blog__comment__sort">
     <div class="blog__comment__sort__by">
-        <a href="javascript:void(0);" id="blog__comment__sort__by__oldest" class="blog__comment__sort__by__link <?php if(($_SESSION['comment_sort'] === "oldest") || (empty($_SESSION['comment_sort']))) { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','oldest')">Oldest first</a> 
-        | 
+        <a href="javascript:void(0);" id="blog__comment__sort__by__oldest" class="blog__comment__sort__by__link <?php if(($_SESSION['comment_sort'] === "oldest") || (empty($_SESSION['comment_sort']))) { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','oldest')">Oldest first</a>  
         <a href="javascript:void(0);" id="blog__comment__sort__by__newest" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "newest") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','newest')">Newest first</a> 
-        | 
         <a href="javascript:void(0);" id="blog__comment__sort__by__best" class="blog__comment__sort__by__link <?php if($_SESSION['comment_sort'] === "best") { echo "blog__comment__sort__by__link__active"; } ?>" onclick="sort_comments('<?php echo $blog_id; ?>','best')">Best comments</a>
     </div>
     <div class="blog__comment__sort__pagination">
