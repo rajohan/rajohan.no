@@ -650,7 +650,7 @@ $(document).ready(function () {
                 var password = $("#change__email__password").val();
                 var mail = $("#change__email__mail").val();
                 
-                $("#change__email").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
+                $(".container").html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output a loading image.
                 
                 // Set timer for the loading image.
                 setTimeout(function () {
@@ -673,14 +673,14 @@ $(document).ready(function () {
                         // On success output the requested site.
                         success: function (data) {
 
-                            $("#change__email").html(data);
+                            $(".container").html(data);
 
                         },
                        
                         // On error output a error message.
                         error: function () {
                       
-                            $("#change__email").html("Sorry, an error has occurred. Please try again.");
+                            $(".container").html("Sorry, an error has occurred. Please try again.");
                       
                         }
 

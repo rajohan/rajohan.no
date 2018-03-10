@@ -241,7 +241,7 @@
                     $reply_to = "mail@rajohan.no";
                     $subject = "Email verification code";
     
-                    $body = "To complete your email change on rajohan.no please confirm your email address by typing in the verification code underneath on the verification page or click this link https://rajohan.no/verify/?email=".$new_mail."&code=".$code[1]."<br><br>Your verification code: ".$code[1]."<br><br>The email change was made from IP ".$this->ip.".";
+                    $body = "To complete your email change on rajohan.no please confirm your email address by typing in the verification code underneath on the verification page or click on this link https://rajohan.no/verify/?email=".$new_mail."&code=".$code[1]."<br><br>Your verification code: ".$code[1]."<br><br>The email change was made from IP ".$this->ip.".";
                     $alt_body = "To complete your email change on rajohan.no please confirm your email address by typing in the verification code underneath on the verification page or click on this link https://rajohan.no/verify/?email=".$new_mail."&code=".$code[1]."\r\n\r\nYour verification code: ".$code[1]."\r\n\r\nThe email change was made from IP ".$this->ip.".";
                     
                     $this->send_mail->send_mail($from, $from_name, $new_mail, $reply_to, $subject, $body, $alt_body);
