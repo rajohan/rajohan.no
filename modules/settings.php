@@ -512,7 +512,7 @@
     <h1 class="heading-tertiary u-center-text letter-spacing-small u-margin-bottom-small">
         &nbsp;Email settings
     </h1>
-    <div class="settings u-margin-top-small">    
+    <div class="settings u-margin-top-small">
         <form method="post" id="settings__mail__form">
             <div class="settings__input__box">
                 <div class="settings__checkbox"> 

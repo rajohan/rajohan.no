@@ -26,10 +26,10 @@
 
 <!-- SECTION CHANGE EMAIL START -->
 <div class="container">
-    <h1 class="heading-secondary letter-spacing-medium u-center-text">
-        &nbsp;Change email
-    </h1>
     <div id="change__email" class="form__box">
+        <h1 class="heading-secondary letter-spacing-medium u-center-text">
+            &nbsp;Change email
+        </h1>
         <form method="post" id="change__email__form">
             <div class="input__box">    
                 <input type="text" id="change__email__username" name="change__email__username" value="<?php if(isset($username)) { echo $username; } ?>" placeholder="Your username...">
