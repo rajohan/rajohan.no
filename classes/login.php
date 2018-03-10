@@ -71,6 +71,19 @@
             $_SESSION['USER']['USERNAME'] = $this->user->get_user("ID", $user_id)['USERNAME'];
             $_SESSION['USER']['ACCESS_LEVEL'] = $this->user->get_user("ID", $user_id)['ADMIN'];
 
+            $token = $this->token->generate_session_token(8);
+
+            // Delete old session token
+            $db_conn = new Database;
+            $db_conn->db_delete("SESSION_TOKENS", "USER", "i", $user_id);
+
+            // Insert new session token
+            $db_conn = new Database;
+            $db_conn->db_insert("SESSION_TOKENS", "USER, TOKEN, IP", "iss", array($user_id, $token, $this->ip));
+
+            $_SESSION['LOGGED_IN_TOKEN'] = $token;
+
+
         }
 
         //-------------------------------------------------
@@ -151,19 +164,64 @@
         }
 
         //-------------------------------------------------
-        // Method to check if user is logged in
+        // Method to check if user is logged in and have correct session token
         //-------------------------------------------------
 
         function login_check() {
 
             if(isset($_SESSION['LOGGED_IN']) && ($_SESSION['LOGGED_IN'] === true)) {
-
+                
                 return true;
-
+                
             } else {
 
                 return false;
                 
+            }
+
+        }
+
+        //-------------------------------------------------
+        // Method to check session token
+        //-------------------------------------------------
+
+        function session_check() {
+
+            $user_id = $this->filter->sanitize($_SESSION['USER']['ID']);
+            $token = $_SESSION['LOGGED_IN_TOKEN'];
+
+            $db_conn = new Database;
+            $count = $db_conn->count("SESSION_TOKENS", "WHERE USER = ? AND TOKEN = ?", "is", array($user_id, $token));
+
+            if($this->login_check()) {
+
+                // User session token is correct
+                if($count > 0) {
+                    
+                    $token = $this->token->generate_session_token(8);
+
+                    // Delete old session token
+                    $db_conn = new Database;
+                    $db_conn->db_delete("SESSION_TOKENS", "USER", "i", $user_id);
+
+                    // Insert new session token
+                    $db_conn = new Database;
+                    $db_conn->db_insert("SESSION_TOKENS", "USER, TOKEN, IP", "iss", array($user_id, $token, $this->ip));
+
+                    $_SESSION['LOGGED_IN_TOKEN'] = $token;
+
+                    return true;
+
+                } else { // User session token is incorrect
+
+                    return false;
+
+                }
+
+            } else {
+
+                return false;
+
             }
 
         }
@@ -182,6 +240,10 @@
             $user_id_encoded = $this->token->encode_data($user_id);
             $db_conn = new Database;
             $db_conn->db_delete('AUTH_TOKENS', 'USER', 's', $user_id_encoded);
+
+            // Delete session token if it exists
+            $db_conn = new Database;
+            $db_conn->db_delete("SESSION_TOKENS", "USER", "i", $user_id);
 
             // Delete cookie if it exists
             if (isset($_COOKIE['REMEMBER_ME_TOKEN'])) {

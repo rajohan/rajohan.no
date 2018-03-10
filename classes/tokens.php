@@ -54,6 +54,17 @@
             }
 
         }
+
+        //-------------------------------------------------
+        // Method to generate session token
+        //-------------------------------------------------
+        function generate_session_token($length) {
+
+            $token = base64_encode(bin2hex(random_bytes($length)));
+            
+            return $token;
+            
+        }
         
         //-------------------------------------------------
         // Method to generate expire date

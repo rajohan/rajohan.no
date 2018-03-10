@@ -40,6 +40,21 @@
     $traffic = new Traffic;
 
     //-------------------------------------------------
+    // Check session token and generate new token & logout user if its incorrect
+    //-------------------------------------------------
+
+    if($login->login_check()) {
+
+        if(!$login->session_check()) {
+
+            $login->logout();
+            header('Location: /home/');
+
+        }
+
+    }
+
+    //-------------------------------------------------
     // Add traffic to db
     //-------------------------------------------------
 
