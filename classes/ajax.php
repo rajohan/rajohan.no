@@ -267,7 +267,27 @@
                 $this->init();
                 $this->register->register_user($_POST['register_username'], $_POST['register_mail'], $_POST['register_password'], $_POST['register_password_repeat']);
 
-            } 
+            }
+            
+            // Check if username exist (when changing email with password)
+            else if((isset($_POST['change_mail_username_check'])) && ($_POST['change_mail_username_check'] === "true") && (isset($_POST['change_mail_username']))) {
+                $this->require_files();
+                $this->init();
+                $this->true_false($this->user->username_check($_POST['change_mail_username']) < 1);
+            }
+
+            // Check if email is already registered (when changing email with password)
+            else if((isset($_POST['change_mail_mail_check'])) && ($_POST['change_mail_mail_check'] === "true") && (isset($_POST['change_mail_mail']))) {
+                $this->require_files();
+                $this->init();
+                $this->true_false($this->register->mail_check($_POST['change_mail_mail']) > 0);
+            }
+
+            else if((isset($_POST['change_mail'])) && ($_POST['change_mail'] === "true") && (isset($_POST['change_mail_username'])) && (isset($_POST['change_mail_password'])) && (isset($_POST['change_mail_mail']))) {
+                $this->require_files();
+                $this->init();
+                $this->register->change_mail($_POST['change_mail_username'], $_POST['change_mail_password'], $_POST['change_mail_mail']);
+            }
 
         }
 

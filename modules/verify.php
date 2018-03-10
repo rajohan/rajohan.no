@@ -45,7 +45,9 @@
             Verify email
         </button>
         <div class="u-margin-top-small">
-        <a href="resend/">Resend email verification code</a>
+        <a href="resend/">Resend email verification code</a> 
+        -
+        <a href="change_email/">Change email address</a> 
     </div>
     </form>
 </div>

@@ -200,6 +200,7 @@
                     
                     $token = $this->token->generate_session_token(8);
                     $date = date("Y-m-d H:i:s");
+                    
                     // Insert new session token
                     $db_conn = new Database;
                     $db_conn->db_update("SESSION_TOKENS", "TOKEN, DATE, IP", "USER", "sssi", array($token, $date, $this->ip, $user_id));
@@ -300,7 +301,7 @@
             // Check that user's email address is verified
             else if($this->register->check_mail_verified($mail) > 0) {
 
-                echo "<span>Your email address have to be verified to sign in. Click <a href='verify/?email=".$mail."'>here</a> to verify your email.</span>";
+                echo "<span>Your email address have to be verified to sign in. Click <a href='verify/?email=".$mail."'>here</a> to verify your email.<br>If you don't have access to the registered email address you can change it by clicking <a href='change_email/?user=".$username."'>here</a></span>";
 
             }
 

@@ -518,6 +518,81 @@
 
         }
 
+        //-------------------------------------------------
+        // Method to change mail with username and password
+        //-------------------------------------------------
+
+        function change_mail($username, $password, $mail) {
+
+            $username = $this->filter->sanitize($username);
+            $password = $this->filter->sanitize($password);
+            $mail = $this->filter->sanitize($mail);
+            $user_id = $this->user->get_user("USERNAME", $username)['ID']; // Get user id from username
+
+            if(!$this->validator->validate_username($username)) {
+
+                echo "Invalid username";
+
+            }
+            else if(!$this->validator->validate_password($password)) {
+
+                echo "Invalid password. Minimum 6 characters.";
+
+            }
+            else if(!$this->validator->validate_mail($mail)) {
+
+                echo "Invalid email address.";
+
+            }
+            else if($this->user->username_check($username) < 1) {
+
+                echo "The username you entered does not exist.";
+
+            }
+            else if($this->mail_check($mail) > 0) {
+
+                echo "The email address you entered is already registered.";
+
+            }
+            else if(!$this->user->verify_password($username, $password)) {
+
+                echo "The password you entered is incorrect.";
+                
+                // Log to auth log
+                $db_conn = new Database;
+                $db_conn->db_insert("AUTH_LOG", "USER, IP", "is", array($user_id, $this->ip));
+                
+            } else {
+
+                $mail_verified = 0;
+                $code = $this->token->generate_token(3); // Generate 6 char long verification code
+
+                $action = "create";
+                $function = "verify email";
+
+                // Log to verification log
+                $db_conn = new Database;
+                $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 1, $user_id, $this->ip));
+
+                $from = "webmaster@rajohan.no";
+                $from_name = "Rajohan.no";
+                $reply_to = "mail@rajohan.no";
+                $subject = "Email verification code";
+
+                $body = "To complete your email change on rajohan.no please confirm your email address by typing in the verification code underneath on the verification page or click this link https://rajohan.no/verify/?email=".$mail."&code=".$code[1]."<br><br>Your verification code: ".$code[1]."<br><br>The email change was made from IP ".$this->ip.".";
+                $alt_body = "To complete your email change on rajohan.no please confirm your email address by typing in the verification code underneath on the verification page or click on this link https://rajohan.no/verify/?email=".$mail."&code=".$code[1]."\r\n\r\nYour verification code: ".$code[1]."\r\n\r\nThe email change was made from IP ".$this->ip.".";
+                
+                $this->send_mail->send_mail($from, $from_name, $mail, $reply_to, $subject, $body, $alt_body);
+
+                $db_conn = new Database;
+                $db_conn->db_update("USERS", "EMAIL, EMAIL_VERIFIED, CODE", "ID", "sisi", array($mail, $mail_verified, $code[0], $user_id));
+
+                require_once('../modules/verify.php');
+
+            }
+
+        }
+
     }
 
 ?>

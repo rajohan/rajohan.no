@@ -40,6 +40,9 @@
             <div class="error__box"></div>
         </form>
     </div>
+    <div class="small-bold-text u-margin-top-small">
+        If you don't have access to the email address associated with your user account you can change it by clicking <a href="change_email/">here</a>
+    </div> 
 </div>
 <!-- SECTION RESEND END -->
 <?php
