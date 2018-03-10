@@ -22,13 +22,13 @@
 
 <!-- SECTION REGISTER START -->
 <div class="container u-margin-bottom-medium">
-    <h1 class="heading-secondary letter-spacing-medium">
-        &nbsp;Register today
-    </h1>
-    <h1 class="heading-tertiary u-margin-bottom-small">
-    &nbsp;&nbsp;&nbsp;Take part in the blog discussions and much more
-    </h1>
     <div class="form__box">
+        <h1 class="heading-secondary letter-spacing-medium">
+            &nbsp;Register today
+        </h1>
+        <h1 class="heading-tertiary u-margin-bottom-small">
+        &nbsp;&nbsp;&nbsp;Take part in the blog discussions and much more
+        </h1>
         <form method="post" id="register__form">
             <div class="input__box">
                 <input type="text" id="register__username" name="register__username" placeholder="Username...">

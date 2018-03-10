@@ -22,6 +22,7 @@
         private $send_mail;
         private $user;
         private $tokens;
+        private $newsletter;
 
         //-------------------------------------------------
         // Construct
@@ -35,6 +36,7 @@
             $this->send_mail = new Mail;
             $this->user = new Users;
             $this->token = new Tokens;
+            $this->newsletter = new Newsletter;
 
         }
 
@@ -225,8 +227,12 @@
                 $user_id = $this->user->get_user("EMAIL", $mail)['ID'];
 
                 // Add mail to newsletters
-                $db_conn = new Database;
-                $db_conn->db_insert("NEWSLETTER", "EMAIL, USER, IP", "sis", array($mail, $user_id, $this->ip));
+                if($this->newsletter->check_email($mail) < 1) {
+
+                    $db_conn = new Database;
+                    $db_conn->db_insert("NEWSLETTER", "EMAIL, USER, IP", "sis", array($mail, $user_id, $this->ip));
+
+                }
 
                 // Log to verification log
                 $db_conn = new Database;
