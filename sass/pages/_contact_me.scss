@@ -1,146 +1,148 @@
 // Contact me
 .contact-me {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 6rem;
-  user-select: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 6rem;
+    user-select: none;
 
-  &__bg-color-primary {
-    background-color: $color-primary;
-  }
-
-  &__bg-color-white {
-    background-color: $color-white;
-  }
-    
-  &__container {
-    max-width: 45rem;
-    width: 100%;
-    margin-top: 4.5rem;
-    z-index: 1;
-  }
-
-  &__form {
-    padding: 0 2.5rem;
-  }
-
-  &__input, 
-  &__textarea {
-    width: 100%;
-    border: 2px solid $color-grey;
-    background: $color-white;
-    margin: 0 0 0.5rem;
-    padding: 1rem;
-    padding-top: 1rem;
-    padding-left: 3.4rem;
-    font-family: inherit;
-    font-size:  1.4rem;
-    font-weight: 400;
-    outline-width: 0;
-    border-radius: 0;
-
-    &:hover {
-      transition: border-color 0.3s ease-in-out;
+    &__bg-color-primary {
+        background-color: $color-primary;
     }
-  }
 
-  &__textarea {
-    height: 10rem;
-    max-width:100%;
-    min-width: 100%;
-    margin-bottom: -0.3rem;
-  }
+    &__bg-color-white {
+        background-color: $color-white;
+    }
+    
+    &__container {
+        max-width: 45rem;
+        width: 100%;
+        margin-top: 4.5rem;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+    }
 
-  &__input-img {
-    content: "";
-    position: absolute;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: 2.2rem;
-    height: 100%;
-    top: 0.9rem;
-    left: 1rem;
-  }
+    &__form {
+        padding: 0 2.5rem;
+    }
+
+    &__input, 
+    &__textarea {
+        width: 100%;
+        border: 2px solid $color-grey;
+        background: $color-white;
+        margin: 0 0 0.5rem;
+        padding: 1rem;
+        padding-top: 1rem;
+        padding-left: 3.4rem;
+        font-family: inherit;
+        font-size:  1.4rem;
+        font-weight: 400;
+        outline-width: 0;
+        border-radius: 0;
+
+        &:focus {
+            background-color: $color-white;
+        }
+    }
+
+    &__textarea {
+        height: 10rem;
+        max-width:100%;
+        min-width: 100%;
+        margin-bottom: -0.3rem;
+    }
+
+    &__input-img {
+        content: "";
+        position: absolute;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        width: 2.2rem;
+        height: 100%;
+        top: 0.9rem;
+        left: 1rem;
+    }
 }
 
 fieldset {
-  border: medium none !important;
-  margin: 0 0 1rem;
-  min-width: 100%;
-  padding: 0;
-  width: 100%;
-    
-  &:last-child {
-    margin-top: -1.5rem;
-    margin-bottom: 0;
-  }
+    border: medium none !important;
+    margin: 0 0 1rem;
+    min-width: 100%;
+    padding: 0;
+    width: 100%;
+      
+    &:last-child {
+      margin-top: -1.5rem;
+      margin-bottom: 0;
+    }
 }
 
 // Error border
 .error {
-  border: 2px solid $red;
+    border: 2px solid $red;
 }
 
 // Valid border
 .valid {
-  border: 2px solid $green;
+    border: 2px solid $green;
 }
 
 // Input field img
 #contact-me__name-img {
-  background-image: url('../img/icons/user.svg');
+    background-image: url('../img/icons/user.svg');
 }
 
 #contact-me__mail-img {
-  background-image: url('../img/icons/email.svg');
+    background-image: url('../img/icons/email.svg');
 }
 
 #contact-me__firmname-img {
-  background-image: url('../img/icons/firmname.svg');
+    background-image: url('../img/icons/firmname.svg');
 }
 
 #contact-me__tel-img {
-  background-image: url('../img/icons/phone.svg');
+    background-image: url('../img/icons/phone.svg');
 }
 
 #contact-me__webpage-img {
-  background-image: url('../img/icons/webpage.svg');
+    background-image: url('../img/icons/webpage.svg');
 }
 
 #contact-me__subject-img {
-  background-image: url('../img/icons/subject.svg');
+    background-image: url('../img/icons/subject.svg');
 }
 
 #contact-me__message-img {
-  background-image: url('../img/icons/message.svg');
+    background-image: url('../img/icons/message.svg');
 }
 
 // Error box
 [id^="contact-me__"][id$="-error"] {
-  background: $red;
-  padding: 1rem 1.5rem;
-  border: 0;
-  color: $color-white;
-  position: relative;
-  font-size: 1.3rem;
-  display: none;
-  margin-top: -0.5rem;
-  margin-bottom: 0.5rem;
-  text-align: left;
-  border-radius: 0;
+    background: $red;
+    padding: 1rem 1.5rem;
+    border: 0;
+    color: $color-white;
+    position: relative;
+    font-size: 1.3rem;
+    display: none;
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    border-radius: 0;
 
   &::before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 1rem solid transparent;
-    border-right: 1rem solid transparent;
-    border-bottom: 1rem solid $red;
-    position: absolute;
-    top: -1rem;
-    left: 3rem;
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 1rem solid transparent;
+      border-right: 1rem solid transparent;
+      border-bottom: 1rem solid $red;
+      position: absolute;
+      top: -1rem;
+      left: 3rem;
   }
 }
 
@@ -150,141 +152,141 @@ fieldset {
   display: inline-block;
   z-index: 1;
 
-  &::after {
-    content: "*";
-    position: absolute;
-    background-color: rgba($color-black, 0);
-    text-align: right;
-    padding-right: 0.5rem;
-    padding-top: 0;
-    padding-bottom: 1.2rem;
-    width: 3rem;
-    right: 0.1rem;
-    top: 0.08rem;
-    z-index: 5;
-  }
-
-  &__img {
-
-    input, textarea {
-      background-size: 2.2rem;
-      background-repeat: no-repeat;
-      background-position: right 3rem top 0.7rem;
-      padding-right: 5.5rem;
-      
-      &:focus {
-        padding-left: 3.1rem;
-      }
-    }
-  }
-
-  &__grey {
-    input, textarea {
-      background-color: $color-white;
-  
-      &:focus {
-        border-left: 0.5rem solid $color-grey;
-        padding-left: 3.1rem;
-      }
-    }
-  
-    &::after { 
-      background-image: linear-gradient(45deg, rgba($color-black, 0) 55%, $color-grey 55%);
-      color: $color-black-light;
-    }
-  }
-
-  &__red {
-
-    input,
-    textarea {
-      background-color: $red-light;
-      background-image: url('../img/icons/invalid.svg');
-  
-      &:focus {
-        border-left: 0.5rem solid $red;
-      }
-    }
-  
     &::after {
       content: "*";
-      background-image: linear-gradient(45deg, rgba($color-black, 0) 55%, $red 55%);
-      color: $color-white;
+      position: absolute;
+      background-color: rgba($color-black, 0);
+      text-align: right;
+      padding-right: 0.5rem;
+      padding-top: 0;
+      padding-bottom: 1.2rem;
+      width: 3rem;
+      right: 0.1rem;
+      top: 0.08rem;
+      z-index: 5;
     }
-  }
 
-  &__green {
+    &__img {
 
-    input,
-    textarea {
-      background-color: $green-light;
-      background-image: url('../img/icons/valid.svg');
-  
-      &:focus {
-        border-left: 0.5rem solid $green;
-      }
+      input, textarea {
+          background-size: 2.2rem;
+          background-repeat: no-repeat;
+          background-position: right 3rem top 0.7rem;
+          padding-right: 5.5rem;
+          
+          &:focus {
+              padding-left: 3.1rem;
+          }
+        }
     }
-  
-    &::after {
-      background-image: linear-gradient(45deg, rgba($color-black, 0) 55%, $green 55%);
-      color: $color-white;
+
+    &__grey {
+        input, textarea {
+            background-color: $color-white;
+      
+            &:focus {
+                border-left: 0.5rem solid $color-grey;
+                padding-left: 3.1rem;
+            }
+        }
+      
+        &::after { 
+            background-image: linear-gradient(45deg, rgba($color-black, 0) 55%, $color-grey 55%);
+            color: $color-black-light;
+        }
     }
-  }
+
+    &__red {
+
+        input,
+        textarea {
+            background-color: $red-light;
+            background-image: url('../img/icons/invalid.svg');
+      
+            &:focus {
+              border-left: 0.5rem solid $red;
+            }
+        }
+      
+        &::after {
+            content: "*";
+            background-image: linear-gradient(45deg, rgba($color-black, 0) 55%, $red 55%);
+            color: $color-white;
+        }
+    }
+
+    &__green {
+
+        input,
+        textarea {
+            background-color: $green-light;
+            background-image: url('../img/icons/valid.svg');
+        
+            &:focus {
+                border-left: 0.5rem solid $green;
+            }
+        }
+      
+        &::after {
+            background-image: linear-gradient(45deg, rgba($color-black, 0) 55%, $green 55%);
+            color: $color-white;
+        }
+    }
 }
 
 // Not required input fields
 .not-required {
-  position: relative;
-  display: block;
-  z-index: 1;
+    position: relative;
+    display: block;
+    z-index: 1;
 
-  &__img {
-    input,
-    textarea {
-      background-size: 2.2rem;
-      background-repeat: no-repeat;
-      background-position: right 3rem top 0.7rem;
-      padding-right: 5.5rem;
+    &__img {
+        input,
+        textarea {
+            background-size: 2.2rem;
+            background-repeat: no-repeat;
+            background-position: right 3rem top 0.7rem;
+            padding-right: 5.5rem;
 
-      &:focus {
-        padding-left: 3.1rem;
-      }
+          &:focus {
+              padding-left: 3.1rem;
+          }
+        }
     }
-  }
 
-  &__grey {
-    input,
-    textarea {
-      background-color: $color-white;
-  
-      &:focus {
-        border-left: 0.5rem solid $color-grey;
-        padding-left: 3.1rem;
-      }
+    &__grey {
+        input,
+        textarea {
+            background-color: $color-white;
+      
+            &:focus {
+                border-left: 0.5rem solid $color-grey;
+                padding-left: 3.1rem;
+            }
+        }
     }
-  }
 
-  &__red {
-    input,
-    textarea {
-      background-color: $red-light;
-      background-image: url('../img/icons/invalid.svg');
-  
-      &:focus {
-        border-left: 0.5rem solid $red;
-      }
+    &__red {
+        input,
+        textarea {
+            background-color: $red-light;
+            background-image: url('../img/icons/invalid.svg');
+        
+            &:focus {
+                border-left: 0.5rem solid $red;
+            }
+        }
     }
-  }
 
-  &__green {
-    input,
-    textarea {
-      background-color: $green-light;
-      background-image: url('../img/icons/valid.svg');
+    &__green {
+        input,
+        textarea {
+            background-color: $green-light;
+            background-image: url('../img/icons/valid.svg');
 
-      &:focus {
-        border-left: 0.5rem solid $green;
-      }
+            &:focus {
+                border-left: 0.5rem solid $green;
+            }
+        }
     }
-  }
 }

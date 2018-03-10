@@ -9,6 +9,7 @@
     $ajax->add_comment();
     $ajax->settings_nav();
     $ajax->settings();
+    $ajax->contact();
 
     //-------------------------------------------------
     // Direct access check
@@ -35,6 +36,7 @@
         private $votes;
         private $comment;
         private $settings;
+        private $contact;
 
         //-------------------------------------------------
         // Require files
@@ -66,6 +68,7 @@
             $this->votes = new Vote;
             $this->comment = new Comments;
             $this->settings = new Settings;
+            $this->contact = new Contact;
 
         }
 
@@ -444,6 +447,22 @@
                 $this->require_files();
                 $this->init();
                 $this->settings->personal_details($_POST['username'], $_POST['first_name'], $_POST['first_name_hide'], $_POST['last_name'], $_POST['last_name_hide'], $_POST['birth_day'], $_POST['birth_month'], $_POST['birth_year'], $_POST['birth_hide'], $_POST['phone'], $_POST['phone_hide'], $_POST['address'], $_POST['address_hide'], $_POST['country'], $_POST['webpage'], $_POST['company'], $_POST['company_role'], $_POST['bio']);
+
+            }
+
+        }
+
+        //-------------------------------------------------
+        // Contact me
+        //-------------------------------------------------
+
+        function contact() {
+
+            if((isset($_POST['contact_send'])) && ($_POST['contact_send'] === "true") && (isset($_POST['contact_name'])) && (isset($_POST['contact_mail'])) && (isset($_POST['contact_firmname'])) && (isset($_POST['contact_tel'])) && (isset($_POST['contact_webpage'])) && (isset($_POST['contact_subject'])) && (isset($_POST['contact_message']))) {
+                
+                $this->require_files();
+                $this->init();
+                $this->contact->send($_POST['contact_name'], $_POST['contact_mail'], $_POST['contact_firmname'], $_POST['contact_tel'], $_POST['contact_webpage'], $_POST['contact_subject'], $_POST['contact_message']);
 
             }
 

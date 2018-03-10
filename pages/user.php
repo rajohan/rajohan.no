@@ -22,7 +22,7 @@
     
     require_once('layout/back_to_top_button.php');              // BACK TO TOP BUTTON
     require_once('layout/navigation.php');                      // NAVIGATION
-    echo '<section class="wrapper u-margin-top-medium">';       // SECTION START
+    echo '<section class="wrapper2 u-margin-top-medium">';       // SECTION START
     require_once('modules/user.php');                           // USER
     require_once('layout/blog_nav.php');                        // BLOG NAV
     echo '</section>';                                          // SECTION END

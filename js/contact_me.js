@@ -164,7 +164,7 @@ $(document).ready(function () {
                 var subject = $("#contact-me__subject").val();
                 var message = $("#contact-me__message").val();
                 
-                $("#content-box").html("<img title=\"loading\" src=\"/img/loading.gif\">"); // Output a loading image.
+                $(".contact-me__container").html("<img title=\"loading\" src=\"/img/loading.gif\">"); // Output a loading image.
                 
                 // Set timer for the loading image.
                 setTimeout(function () {
@@ -174,32 +174,30 @@ $(document).ready(function () {
                        
                         data: {
                           
-                            name: name,
-                            mail: mail,
-                            firmname: firmname,
-                            tel: tel,
-                            webpage: webpage,
-                            subject: subject,
-                            message: message,
-                            send: "true",
+                            contact_name: name,
+                            contact_mail: mail,
+                            contact_firmname: firmname,
+                            contact_tel: tel,
+                            contact_webpage: webpage,
+                            contact_subject: subject,
+                            contact_message: message,
+                            contact_send: "true",
                        
                         },
                        
                         type: "post",
-                        url: location.protocol + "//" + location.host + "/ajax_contact.php/",
+                        url: "classes/ajax.php",
                        
-                        // On success output the requested site.
-                        success: function () {
+                        success: function (data) {
                          
-                            $("#content-box").html("Din melding er sendt, du vil få svar innen 24 timer!");
-                            // check if category is set and then update url.
+                            $(".contact-me__container").html(data);
                         
                         },
                        
                         // On error output a error message.
                         error: function () {
                       
-                            $("#content-box").html("Beklager en feil har oppst&aring;tt!");
+                            $(".contact-me__container").html("Sorry, an error has occurred. Please try again.");
                       
                         }
 
@@ -208,6 +206,7 @@ $(document).ready(function () {
                 }, 500);
 
                 return false;
+                
             }
 
         });
