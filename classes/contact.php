@@ -91,15 +91,17 @@
                 $db_conn = new Database;
                 $db_conn->db_insert("CONTACT", "NAME, EMAIL, FIRMNAME, PHONE, WEBPAGE, SUBJECT, MESSAGE, IP", "ssssssss", array($name, $mail, $firmname, $tel, $webpage, $subject, $message, $this->ip));
                 
-                $to = "webmaster@rajohan.no";
+                $to = "mail@rajohan.no";
                 $from_name = "Rajohan.no";
-                $reply_to = "mail@rajohan.no";
+                $from = "webmaster@rajohan.no";
+                $reply_to = $mail;
                 
                 $body = $message."<br><br>From: ".$name."<br>Email: ".$mail."<br>Firm name: ".$firmname."<br>Phone number: ".$tel."<br>Webpage: ".$webpage."<br>Date: ".$date."<br>Time: ".$time."<br>Ip: ".$this->ip;
                 $alt_body = $message."\r\n\r\nFrom: ".$name."\r\nEmail: ".$mail."\r\nFirm name: ".$firmname."\r\nPhone number: ".$tel."\r\nWebpage: ".$webpage."\r\nDate: ".$date."\r\nTime: ".$time."\r\nIp: ".$this->ip;
-                $this->send_mail->send_mail($mail, $from_name, $to, $reply_to, $subject, $body, $alt_body); 
+                $this->send_mail->send_mail($from, $from_name, $to, $reply_to, $subject, $body, $alt_body); 
                 
                 echo "Your message has been sent, you will receive a response within 24 hours.";
+
             }
 
         }
