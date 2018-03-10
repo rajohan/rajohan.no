@@ -106,7 +106,7 @@
                 <img class="blog-navigation__sort__content__img" src="img/blog/'.$img.'" alt="'.$title.'">
             </a>
             <div class="blog-navigation__sort__content__text">
-                <a href="blog/read/'.$id.'/'.$converter->generate_slug($title).'/"">'.ucfirst($title).'</a>
+                <a class="blog-navigation__sort__content__title" href="blog/read/'.$id.'/'.$converter->generate_slug($title).'/"">'.ucfirst($filter->cut_string($title, 20)).'</a>
                 <span class="blog-navigation__sort__content__text__by">
                     <img src="img/icons/write.svg" alt="posted" class="blog-navigation__sort__content__text__img">
                     '.$publish_date.'

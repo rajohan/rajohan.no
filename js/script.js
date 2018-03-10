@@ -439,3 +439,29 @@ function settingsNav(page) {
     });
 
 }
+
+//-------------------------------------------------
+// Blog nav bar on hover image/title
+//-------------------------------------------------
+
+$(".blog-navigation__sort__content__title").hover(
+    function() {
+        $(this).parent().parent().children("a").css("opacity", "0.7"); 
+        $(this).css({"color" : "#254B62" , "opacity" : "1"}); 
+    },
+    function(){
+        $(this).parent().parent().children("a").css("opacity", "1"); 
+        $(this).css({"color" : "#000000" , "opacity" : "1"} ); 
+    }
+);
+
+$(".blog-navigation__sort__content__img").hover(
+    function() {
+        $(this).parent().siblings(".blog-navigation__sort__content__text").children(".blog-navigation__sort__content__title").css("color", "#254B62");
+        $(this).css("opacity", "0.7");
+    },
+    function(){
+        $(this).parent().siblings(".blog-navigation__sort__content__text").children(".blog-navigation__sort__content__title").css("color", "#000000"); 
+        $(this).css("opacity", "1");
+    }
+);

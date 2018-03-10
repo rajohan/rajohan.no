@@ -44,8 +44,8 @@
 
                 echo '<div class="projects-short__item">';
                 echo '<img src="img/projects/'.$img.'" alt="'.$name.'" class="projects-short__img">';
-                echo '<h3 class="u-margin-top-small">'.ucfirst($category).' &ndash; '.ucfirst($name).'</h3>';
-                echo $description;
+                echo '<h3 class="u-margin-top-small">'.ucfirst($category).' &ndash; '.ucfirst($filter->cut_string($name, 22)).'</h3>';
+                echo $filter->cut_string($description, 140);
                 echo '<span class="u-margin-top-small">';
                 echo '<a href="'.$url.'" target="_blank" class="projects-short__view whitelink">View project <span>&roarr;</span></a>';
                 echo '</span>';

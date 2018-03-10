@@ -224,6 +224,10 @@
                 $function = "verify email";
                 $user_id = $this->user->get_user("EMAIL", $mail)['ID'];
 
+                // Add mail to newsletters
+                $db_conn = new Database;
+                $db_conn->db_insert("NEWSLETTER", "EMAIL, USER, IP", "sis", array($mail, $user_id, $this->ip));
+
                 // Log to verification log
                 $db_conn = new Database;
                 $db_conn->db_insert("VERIFICATION_LOG", "ACTION, FUNCTION, EMAIL, SUCCESS, USER, IP", "sssiis", array($action, $function, $mail, 1, $user_id, $this->ip));

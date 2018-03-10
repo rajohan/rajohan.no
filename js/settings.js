@@ -308,7 +308,7 @@ $(document).ready(function () {
 
                             if(data === "Email changed") {
 
-                                window.location.replace("/verify/");
+                                window.location.replace("/verify/?email="+mail);
 
                             } else {
 

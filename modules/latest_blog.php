@@ -43,8 +43,8 @@
                 echo '<div class="latest-blog__box">';
                 echo '<img src="img/blog/'.$img.'" alt="'.$title.'" class="latest-blog__img">';
                 echo '<div class="latest-blog__text">';
-                echo '<h3>'.ucfirst($title).'</h3>';
-                echo $short_blog;
+                echo '<h3>'.ucfirst($filter->cut_string($title, 28)).'</h3>';
+                echo $filter->cut_string($short_blog, 140);
                 echo '<span class="u-margin-top-small">';
                 echo '<a href="blog/'.$id.'/" class="latest-blog__read-more">Read more <span>&roarr;</span></a>';
                 echo '</h3>';
