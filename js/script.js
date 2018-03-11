@@ -291,7 +291,7 @@ $(".blog__comment__message__hide").on("click", function() {
 // Highlight comment parent 
 //-------------------------------------------------
 
-$(".blog__comment__reply-to__text").on("click", function() { 
+$(".blog__box").on("click", ".blog__comment__reply-to__text", function() { 
     
     var id = $(this).attr("data-reply-id"); // Id to parent message
     $("#message_id_"+id).css("background-color", "#FDFF47"); // Highlight message
@@ -359,7 +359,7 @@ $("#blog-navigation__newsletter__button").on("click", function(event) {
 // Comment reply button click
 //-------------------------------------------------
 
-$(".blog__comment__date-reply__img").on("click", function() { 
+$(".blog__box").on("click", ".blog__comment__date-reply__img", function() { 
 
     // If user is logged in
     if($(".text-editor").length) {

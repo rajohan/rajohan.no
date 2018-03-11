@@ -92,7 +92,7 @@
             $sort = "WHERE `BLOG_ID`= $blog_id  AND `REPLY_TO` < 1 ORDER BY $order";
 
             echo '<div class="comments__pagination">';
-            $pagination->output_pagination(1, "COMMENTS", $sort); 
+            $pagination->output_pagination(2, "COMMENTS", $sort); 
             echo '</div>';
 
         ?>
@@ -102,7 +102,7 @@
 
 <?php
 
-    $max = 1;
+    $max = 3;
 
     $offset = ($pagination->valid_page_number($pagination->get_page_number(), "COMMENTS") - 1) * $max; // Set the page number to generate offset (* + number of items per site)
     $comment = $comments->get_comments($blog_id, $_SESSION['order'], $offset, $max);
@@ -221,7 +221,7 @@
         if(($reply_to > 0) && (!empty($root_id)) && ($root_id !== $reply_to)) {
 
             $reply_author_name = $user->get_user("ID", $comments->get_author($reply_to))['USERNAME'];
-            echo "<span id='message_top_id_".$id."' class='blog__comment__reply-to'><span data-reply-id='".$reply_to."' class='blog__comment__reply-to__text'><span class='blog__comment__reply-to__arrow'>&ltrif;</span> In reply to ".ucfirst($reply_author_name)."</span></span>";
+            echo "<span id='message_top_id_".$id."' class='blog__comment__reply-to'><span data-reply-id='".$reply_to."' class='blog__comment__reply-to__text'><span class='blog__comment__reply-to__arrow'>&ltrif;</span> In reply to ".$reply_author_name."</span></span>";
 
         }
 

@@ -41,26 +41,33 @@ $(document).ready(function () {
                     url: "classes/ajax.php",
                        
                     // On success reload comments
-                    success: function () {
+                    success: function (data) {
 
-                        $.ajax({
-        
-                            url: "blog/read/"+blog_id+"/1/",
-                            type: "post",
-                            data: {sort_comments: "true", blog_id: blog_id, order: "newest"},
-                        
-                            // On success output comments
-                            success: function (data) {
-                    
-                                $("body").html(data);
-                    
-                                $(".blog__comment__sort__by__link").removeClass("blog__comment__sort__by__link__active");
-                                $("#blog__comment__sort__by__newest").addClass("blog__comment__sort__by__link__active");
-                                scroll($(".blog__comment"), 0); // Scroll text editor
+                        $(".text-editor__message").html("");
+                        $("#text-editor__box")[0].innerHTML = "";
+
+                        if($("#message_id_"+reply_to).length > 0) { // Comment is a reply
+
+                            // Check if blog reply container exist
+                            if ($("#message_id_"+reply_to).parent(".blog__comment__reply").length > 0) {
+
+                                $("#message_id_"+reply_to).parent().append(data);
+
+                            } else { // Create blog reply container and append data
+
+                                $("#message_id_"+reply_to).parent().append("<div class='blog__comment__reply'>"+data+"</div>");
 
                             }
-                    
-                        });
+
+                        } else { // Comment is not a reply, append after all other comments
+
+                            $(".blog__comment__message__box:last").append(data);
+
+                        }
+
+                        highlight($("#new_comment pre"));
+
+                        scroll($("#new_comment"), -50); // Scroll to posted comment
 
                     },
                        

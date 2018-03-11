@@ -22,52 +22,56 @@ var htmlTagReg = /(&lt;[^\&]*&gt;)/g;
 
 var sqlReg = /\b(CREATE|ALL|DATABASE|TABLE|GRANT|PRIVILEGES|IDENTIFIED|FLUSH|SELECT|UPDATE|DELETE|INSERT|FROM|WHERE|ORDER|BY|GROUP|LIMIT|INNER|OUTER|AS|ON|COUNT|CASE|TO|IF|WHEN|BETWEEN|AND|OR)(?=[^\w])/g;
 
-var codeElements = $("pre");
-
-codeElements.each(function (){
-
-    var string = $(this)[0].innerHTML,
-        parsed = string.replace(strReg1,"<span class=\"string\">\"$1\"</span>");
-    parsed = parsed.replace(strReg2,"<span class=\"string\">'$1'</span>");
-    parsed = parsed.replace(variablesReg, "$1<span class=\"variables\">$2</span>");
-    parsed = parsed.replace(arrowReg, "<span class=\"wrappers_dot\">$1</span>");
-    parsed = parsed.replace(classReg, "<span class=\"special\">$1$3</span><span class=\"classes\">$2$4</span>");
-    parsed = parsed.replace(specialReg,"<span class=\"special\">$1</span>");
-    parsed = parsed.replace(specialJsGlobReg,"<span class=\"special-js-glob\">$1</span>");
-    parsed = parsed.replace(specialJsReg,"<span class=\"special-js\">$1</span>");
-    parsed = parsed.replace(specialMethReg,"<span class=\"special-js-meth\">$1</span>");
-    parsed = parsed.replace(htmlTagReg,"<span class=\"special-html\">$1</span>");
-    parsed = parsed.replace(sqlReg,"<span class=\"special-sql\">$1</span>");
-    parsed = parsed.replace(specialPhpReg,"<span class=\"special-php\">$1</span>");
-    parsed = parsed.replace(functionMethodReg,"<span class=\"function-method\">$1</span>");
-    parsed = parsed.replace(variables2Reg, "<span class=\"variables\">$1</span>");
-    parsed = parsed.replace(wrappersDotReg, "<span class=\"wrappers_dot\">$1</span>");
-    parsed = parsed.replace(specialCommentReg,function (result) {
-        result = result.replace(/(<([^>]+)>)/ig, "");
-        return "<span class=\"special-comment\">"+result+"</span>";
-
-    });
-    parsed = parsed.replace(inlineCommentReg,function (result) {
-
-        result = result.replace(/(<([^>]+)>)/ig, "");
-        return "<span class=\"special-comment\">"+result+"</span>";
-
-    });
-
-    this.innerHTML = parsed;
+function highlight(codeElements) { 
     
-});
+    codeElements.each(function (){
 
-//-------------------------------------------------
-// Add <code></code> for each new line
-//-------------------------------------------------
+        var string = $(this)[0].innerHTML,
+            parsed = string.replace(strReg1,"<span class=\"string\">\"$1\"</span>");
+        parsed = parsed.replace(strReg2,"<span class=\"string\">'$1'</span>");
+        parsed = parsed.replace(variablesReg, "$1<span class=\"variables\">$2</span>");
+        parsed = parsed.replace(arrowReg, "<span class=\"wrappers_dot\">$1</span>");
+        parsed = parsed.replace(classReg, "<span class=\"special\">$1$3</span><span class=\"classes\">$2$4</span>");
+        parsed = parsed.replace(specialReg,"<span class=\"special\">$1</span>");
+        parsed = parsed.replace(specialJsGlobReg,"<span class=\"special-js-glob\">$1</span>");
+        parsed = parsed.replace(specialJsReg,"<span class=\"special-js\">$1</span>");
+        parsed = parsed.replace(specialMethReg,"<span class=\"special-js-meth\">$1</span>");
+        parsed = parsed.replace(htmlTagReg,"<span class=\"special-html\">$1</span>");
+        parsed = parsed.replace(sqlReg,"<span class=\"special-sql\">$1</span>");
+        parsed = parsed.replace(specialPhpReg,"<span class=\"special-php\">$1</span>");
+        parsed = parsed.replace(functionMethodReg,"<span class=\"function-method\">$1</span>");
+        parsed = parsed.replace(variables2Reg, "<span class=\"variables\">$1</span>");
+        parsed = parsed.replace(wrappersDotReg, "<span class=\"wrappers_dot\">$1</span>");
+        parsed = parsed.replace(specialCommentReg,function (result) {
+            result = result.replace(/(<([^>]+)>)/ig, "");
+            return "<span class=\"special-comment\">"+result+"</span>";
 
-$("pre").each( function() {
-    var text = $(this)[0].innerHTML.split(/\n|<br>/);
-    $(this).html("");
-  
-    for(var i = 0; i <  text.length; i++) {
-        $(this).append( $("<code>").html( text[i] ) );
-    }
-  
-});
+        });
+        parsed = parsed.replace(inlineCommentReg,function (result) {
+
+            result = result.replace(/(<([^>]+)>)/ig, "");
+            return "<span class=\"special-comment\">"+result+"</span>";
+
+        });
+
+        this.innerHTML = parsed;
+        
+    });
+
+    //-------------------------------------------------
+    // Add <code></code> for each new line
+    //-------------------------------------------------
+
+    $("pre").each( function() {
+        var text = $(this)[0].innerHTML.split(/\n|<br>/);
+        $(this).html("");
+    
+        for(var i = 0; i <  text.length; i++) {
+            $(this).append( $("<code>").html( text[i] ) );
+        }
+    
+    });
+
+}
+
+highlight($("pre"));
