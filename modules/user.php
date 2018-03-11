@@ -103,7 +103,7 @@
 
                             } else {
 
-                                echo $user_data['FIRST_NAME']." ".$user_data['LAST_NAME']; 
+                                echo ucfirst($user_data['FIRST_NAME'])." ".ucfirst($user_data['LAST_NAME']); 
 
                             }
                         
@@ -204,6 +204,22 @@
                 </span>
                 <span class="user__info__details__item">
                     <span class="user__info__details__item__title">
+                        Gender:
+                    </span>
+                    <?php 
+
+                        if(empty($user_data['GENDER'])) {
+
+                            $user_data['GENDER'] = "N/A";
+
+                        } 
+
+                        echo ucfirst($user_data['GENDER']);
+
+                    ?>
+                </span>
+                <span class="user__info__details__item">
+                    <span class="user__info__details__item__title">
                         Age:
                     </span>
                     <?php 
@@ -272,7 +288,7 @@
 
                             }
 
-                            echo $user_data['ADDRESS']; 
+                            echo ucfirst($user_data['ADDRESS']); 
 
                         }
 
@@ -290,7 +306,7 @@
 
                         }
 
-                        echo $user_data['COUNTRY']; 
+                        echo ucfirst($user_data['COUNTRY']); 
 
                     ?>
                 </span>
@@ -323,7 +339,7 @@
 
                         }
 
-                        echo $user_data['FIRMNAME']; 
+                        echo ucfirst($user_data['FIRMNAME']); 
                     
                     ?>
                 </span>
@@ -339,7 +355,7 @@
 
                         }
 
-                        echo $user_data['FIRM_ROLE']; 
+                        echo ucfirst($user_data['FIRM_ROLE']); 
                     
                     ?>
                 </span>

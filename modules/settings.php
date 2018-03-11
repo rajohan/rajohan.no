@@ -79,6 +79,21 @@
                 <input type="text" id="settings__last-name" name="settings__last-name" value="<?php echo $user_data['LAST_NAME']; ?>">
             </div>
             <div class="error__box"></div>
+            <div class="settings__input__box"> 
+                <div class="select__div"> 
+                    <label class="settings__label" for="settings__gender">Gender</label>  
+                    <select id="settings__gender" name="settings__gender">
+                        <?php
+                            if(empty($user_data['GENDER'])) {
+                                echo '<option value="" selected></option>';
+                            }
+                        ?>
+                        <option value="Male" <?php if($user_data['GENDER'] === "Male") { echo "selected"; } ?>>Male</option>
+                        <option value="Female" <?php if($user_data['GENDER'] === "Female") { echo "selected"; } ?>>Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="error__box"></div>
             <div class="settings__input__box__multiple">
                 <div class="select__div" style="margin-right: 1rem;"> 
                     <div class="settings__checkbox"> 

@@ -584,6 +584,13 @@ $(document).ready(function () {
 
                 },
 
+                "settings__gender": {
+               
+                    required: false,
+                    regex: /^(male|female)$/i,
+
+                },
+
                 "settings__birth__day": {
                
                     required: false,
@@ -675,6 +682,12 @@ $(document).ready(function () {
                
                 },
 
+                "settings__gender": {
+               
+                    regex: "Invalid gender.",
+               
+                },
+
                 "settings__birth__day": {
                
                     regex: "Invalid birth date.",
@@ -762,6 +775,7 @@ $(document).ready(function () {
                 var first_name_hide = $("#settings__first-name__hide").is(":checked");
                 var last_name = $("#settings__last-name").val();
                 var last_name_hide = $("#settings__last-name__hide").is(":checked");
+                var gender = $("#settings__gender").val();
                 var birth_day = $("#settings__birth__day").val();
                 var birth_month = $("#settings__birth__month").val();
                 var birth_year = $("#settings__birth__year").val();
@@ -792,6 +806,7 @@ $(document).ready(function () {
                             first_name_hide: first_name_hide,
                             last_name: last_name,
                             last_name_hide: last_name_hide,
+                            gender: gender,
                             birth_day: birth_day,
                             birth_month: birth_month,
                             birth_year: birth_year,

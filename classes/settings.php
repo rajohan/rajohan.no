@@ -313,13 +313,14 @@
         // Personal details
         //-------------------------------------------------
 
-        function personal_details($new_username, $firstname, $firstname_hide, $lastname, $lastname_hide, $birth_day, $birth_month, $birth_year, $birth_hide, $phone, $phone_hide, $address, $address_hide, $country, $webpage, $company, $company_role, $bio) {
+        function personal_details($new_username, $firstname, $firstname_hide, $lastname, $lastname_hide, $gender, $birth_day, $birth_month, $birth_year, $birth_hide, $phone, $phone_hide, $address, $address_hide, $country, $webpage, $company, $company_role, $bio) {
             
             $new_username = $this->filter->sanitize($new_username);
             $firstname = $this->filter->sanitize($firstname);
             $firstname_hide = $this->filter->sanitize($firstname_hide);
             $lastname = $this->filter->sanitize($lastname);
             $lastname_hide = $this->filter->sanitize($lastname_hide);
+            $gender = $this->filter->sanitize($gender);
             $birth_day = $this->filter->sanitize($birth_day);
             $birth_month = $this->filter->sanitize($birth_month);
             $birth_year = $this->filter->sanitize($birth_year);
@@ -359,6 +360,13 @@
             else if((!empty($lastname)) && (!$this->validator->validate_name($lastname))) {
 
                 echo "Invalid last name.";
+
+            }
+
+            // Validate gender
+            else if((!empty($gender)) && (!$this->validator->validate_gender($gender))) {
+
+                echo "Invalid gender.";
 
             }
 
@@ -427,7 +435,7 @@
 
                 // Update user details
                 $db_conn = new Database;
-                $db_conn->db_update("USERS", "USERNAME, FIRST_NAME, HIDE_FIRST_NAME, LAST_NAME, HIDE_LAST_NAME, HIDE_BORN, PHONE, HIDE_PHONE, ADDRESS, HIDE_ADDRESS, COUNTRY, WEBPAGE, FIRMNAME, FIRM_ROLE, BIO", "ID", "ssisiisisisssssi", array($new_username, $firstname, $firstname_hide, $lastname, $lastname_hide, $birth_hide, $phone, $phone_hide, $address, $address_hide, $country, $webpage, $company, $company_role, $bio, $this->user_id));
+                $db_conn->db_update("USERS", "USERNAME, FIRST_NAME, HIDE_FIRST_NAME, LAST_NAME, HIDE_LAST_NAME, GENDER, HIDE_BORN, PHONE, HIDE_PHONE, ADDRESS, HIDE_ADDRESS, COUNTRY, WEBPAGE, FIRMNAME, FIRM_ROLE, BIO", "ID", "ssisisisisisssssi", array($new_username, $firstname, $firstname_hide, $lastname, $lastname_hide, $gender, $birth_hide, $phone, $phone_hide, $address, $address_hide, $country, $webpage, $company, $company_role, $bio, $this->user_id));
 
                 echo "Personal details updated.";
 
