@@ -45,6 +45,8 @@ $(document).ready(function () {
 
                         $(".text-editor__message").html("");
                         $("#text-editor__box")[0].innerHTML = "";
+                        $("#text-editor__reply-to").text("none");
+                        $("#text-editor__status").attr("data-reply-to", "0");
 
                         if($("#message_id_"+reply_to).length > 0) { // Comment is a reply
 
