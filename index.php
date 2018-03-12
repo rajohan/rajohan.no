@@ -112,6 +112,7 @@
         <script src="js/syntax_highlighting.js"></script>
         <script src="js/comment.js"></script>
         <script src="js/settings.js"></script>
+        <script src="js/image_uploader.js"></script>
     </body>
   </head>
 </html>

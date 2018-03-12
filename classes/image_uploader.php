@@ -1,0 +1,278 @@
+<?php
+    
+    //-------------------------------------------------
+    // Direct access check
+    //-------------------------------------------------
+
+    //if(!defined('INCLUDE')) {
+
+      //  die('Direct access is not permitted.');
+        
+    //}
+
+    //-------------------------------------------------
+    // Image uploader
+    //-------------------------------------------------
+
+    class Image_uploader {
+
+        private $uploadDir;
+        private $watermarkImageWhite;
+        private $watermarkImageBlack;
+        private $fileExtensions;
+        private $fileTypes;
+        private $maxFileSize;
+
+        private $fileInfo;
+        private $filename;
+        private $fileExtension;
+        private $fileTmpName;
+        private $fileType;
+        private $fileSize;
+        private $imageSize;
+        private $watermarkEnabled;
+        private $watermarkColor;
+        private $newFilename;
+        
+        //-------------------------------------------------
+        // Construct
+        //-------------------------------------------------
+
+        function __construct() {
+
+            $this->uploadDir = '../uploads/img/';
+            $this->watermarkImageWhite = '../img/watermark_white.png';
+            $this->watermarkImageBlack = '../img/watermark_black.png';
+            $this->fileExtensions = ['jpeg' , 'jpg' , 'png', 'gif'];
+            $this->fileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+            $this->maxFileSize = (1024 * 1024) * 3; // 2MB
+
+        }
+
+        //-------------------------------------------------
+        // Method to generate a placeholder file to ensure unique file names
+        //-------------------------------------------------
+
+        private function placeholder() {
+
+            $filename = tempnam($this->uploadDir, 'image'); // Create a new file
+            unlink($filename); // Delete file, we now have the unique file name
+
+            return $filename;
+
+        }
+
+        //-------------------------------------------------
+        // Method to generate a watermark to place on uploaded images
+        //-------------------------------------------------
+
+        private function watermark($img) {
+
+            // creating png image of watermark
+            if($this->watermarkColor === "white") {
+
+                $watermark = imagecreatefrompng($this->watermarkImageWhite); 
+
+            } else {
+
+                $watermark = imagecreatefrompng($this->watermarkImageBlack); 
+
+            }
+
+            // getting dimensions of watermark image
+            $watermarkWidth = imagesx($watermark);  
+            $watermarkHeight = imagesy($watermark);
+            
+            // placing the watermark 10px from bottom and right
+            $destX = $this->imageSize[0] - $watermarkWidth - 10;  
+            $destY = $this->imageSize[1] - $watermarkHeight - 10;
+
+            // creating a cut resource
+            $cut = imagecreatetruecolor($watermarkWidth, $watermarkHeight);
+
+            // set background transparent
+            imagefill($cut,0,0,0x7fff0000);
+
+            // copying that section of the background to the cut
+            imagecopy($cut, $img, 0, 0, $destX, $destY, $watermarkWidth, $watermarkHeight);
+
+            // placing the watermark now
+            imagecopy($cut, $watermark, 0, 0, 0, 0, $watermarkWidth, $watermarkHeight);
+
+            // merging both of the images
+            imagecopy($img, $cut, $destX, $destY, 0, 0, $watermarkWidth, $watermarkHeight);
+
+            // free memory
+            imagedestroy($watermark);
+
+        }
+
+        //-------------------------------------------------
+        // Method to generate a new image to replace uploaded image
+        //-------------------------------------------------
+
+        private function imageCreate() { 
+
+            if(($this->fileType === "image/jpeg") || ($this->fileType === "image/jpg")) {
+
+                $this->newFilename = $this->placeholder();
+
+                $img = imageCreateFromJpeg($this->fileTmpName);
+                
+                if($this->watermarkEnabled === true) {
+
+                    $this->watermark($img);
+
+                }
+                
+                $newFile = imageJpeg($img, $this->newFilename.".".$this->fileExtension);
+
+            }
+
+            else if($this->fileType === "image/png") {
+
+                $this->newFilename = $this->placeholder();
+                $img = imageCreateFromPng($this->fileTmpName);
+
+                // Keep transparency
+                imageAlphaBlending($img, true);
+                imageSaveAlpha($img, true);
+
+                if($this->watermarkEnabled === true) {
+
+                    $this->watermark($img);
+
+                }
+
+                $newFile = imagePng($img, $this->newFilename.".".$this->fileExtension);
+
+            }
+
+            else if ($this->fileType === "image/gif") {
+
+                $this->newFilename = $this->placeholder();
+                $img = imageCreateFromGif($this->fileTmpName);
+
+                // Keep transparency
+                imageAlphaBlending($img, true);
+                imageSaveAlpha($img, true);
+
+                if($this->watermarkEnabled === true) {
+
+                    $this->watermark($img);
+
+                }
+
+                // Convert gif to png. For transparent background on watermark
+                $this->fileExtension = "png";
+                $newFile = imagePng($img, $this->newFilename.".".$this->fileExtension); 
+                
+
+            } else {
+
+                return false;
+
+            }
+
+            // free memory
+            imagedestroy($img);
+
+            return $newFile;
+
+        } 
+
+        //-------------------------------------------------
+        // Method to upload image
+        //-------------------------------------------------
+
+        function upload($watermarkEnabled = true, $watermarkColor = "white") {
+
+            if($_FILES['files']['error'][1] < 1) {
+
+                $this->fileInfo = pathinfo($_FILES['files']['name'][1]);
+                $this->filename = $this->fileInfo['filename'];
+                $this->fileExtension = strtolower($this->fileInfo['extension']);
+                $this->fileTmpName  = $_FILES['files']['tmp_name'][1];
+                $this->fileType = strtolower(finfo_file(finfo_open(FILEINFO_MIME_TYPE), $this->fileTmpName));
+                $this->fileSize = $_FILES['files']['size'][1];
+                $this->imageSize = getimagesize($this->fileTmpName);
+                $this->watermarkEnabled = $watermarkEnabled;
+                $this->watermarkColor = $watermarkColor;
+
+                $errors = [];
+
+                if (!in_array($this->fileExtension,$this->fileExtensions)) {
+
+                    $errors[] = "This file extension is not allowed. Please upload a JPEG, JPG, GIF or PNG file.";
+
+                }
+
+                if(!in_array($this->fileType, $this->fileTypes)) {
+
+                    $errors[] = "This file type is not allowed. Please upload a JPEG, JPG, GIF or PNG file.";
+
+                }
+
+                if(!$this->imageSize) {
+
+                    $errors[] = "Only images can be uploaded.";
+
+                }
+
+                if ($this->fileSize > $this->maxFileSize) {
+
+                    $errors[] = "This file is more than 2MB. Sorry, it has to be less than or equal to 2MB.";
+
+                }
+
+                if (empty($errors)) {
+                    
+                    if(is_uploaded_file($this->fileTmpName)) {
+
+                        $upload = $this->imageCreate();
+
+                        if($upload) {
+
+                            echo json_encode([ 'success'=> "Image uploaded!<img src='/uploads/img/".basename($this->newFilename).".".$this->fileExtension."'><a href='/uploads/img/".basename($this->newFilename).".".$this->fileExtension."'>Link to your image</a>"]);
+
+                        } else {
+
+                            echo "An error occurred.";
+
+                        }
+
+                    } else {
+
+                        echo "An error occurred.";
+
+                    }
+
+                } else {
+
+                    print_r($errors);
+
+                }
+
+
+            } else {
+
+                echo "An error occurred.1";
+
+            }
+
+        }
+
+    }
+
+?>
+
+<?php 
+
+    if(!empty($_FILES['files'])) {
+
+        $upload = new Image_uploader;
+        $upload->upload(true, "black");
+
+    }
+
+?>

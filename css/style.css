@@ -1923,6 +1923,52 @@ fieldset {
       .cv__content {
         min-width: 100%; } }
 
+.box.has-advanced-upload {
+  outline: 2px dashed black;
+  outline-offset: -10px; }
+
+.box.has-advanced-upload .box__dragndrop {
+  display: inline; }
+
+.box.is-dragover {
+  background-color: grey; }
+
+.box.is-uploading .box__input {
+  visibility: none; }
+
+.box.is-uploading .box__uploading {
+  display: block; }
+
+.box {
+  display: flex;
+  min-height: 40rem;
+  width: 50rem;
+  max-width: 50rem;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+  padding: 4rem; }
+  .box img {
+    max-width: 90%;
+    margin: 4rem; }
+  .box__dragndrop, .box__uploading, .box__success, .box__error {
+    display: none; }
+  .box__img {
+    width: 10rem;
+    height: 10rem;
+    margin-bottom: 4rem;
+    margin-top: 0 !important; }
+  .box__file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1; }
+    .box__file__label {
+      display: inline-block;
+      cursor: pointer; }
+
 .latest-blog {
   background-color: #f7f7f7;
   display: flex;
