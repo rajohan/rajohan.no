@@ -14,25 +14,19 @@
 
 <!-- IMAGE UPLOADER START -->
 <div class="container">
-    <form class="box" method="post" action="" enctype="multipart/form-data">
-        <img src="img/icons/upload.svg" class="box__img">
-        <div class="box__input">
-            <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
-            <label class="box__file__label" for="file">
-                <strong>Choose a file</strong>
-                <span class="box__dragndrop"> or drag it here</span>.
-            </label>
+    <form class="image-uploader__box" method="post" action="" enctype="multipart/form-data">
+        <img src="img/icons/upload.svg" class="image-uploader__box__img">
+        <div class="image-uploader__box__input">
+            <input class="image-uploader__box__file" type="file" name="files[]" id="image-uploader__file" multiple />
+            <div class="image-uploader__box__cta">
+                <span class="image-uploader__box__cta__text">Drag your images here</span>
+                <span>or</span>
+                <label class="image-uploader__box__file__label" for="image-uploader__file">
+                    Select one
+                </label>
+            </div>
         </div>
-        <div class="box__uploading">
-            Uploading&hellip;
-        </div>
-        <div class="box__success">
-            Done!
-        </div>
-        <div class="box__error">
-            Error! 
-            <span></span>
-            .
+        <div class="image-uploader__box__status">
         </div>
     </form>
 </div>

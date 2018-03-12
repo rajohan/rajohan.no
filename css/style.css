@@ -1923,23 +1923,7 @@ fieldset {
       .cv__content {
         min-width: 100%; } }
 
-.box.has-advanced-upload {
-  outline: 2px dashed black;
-  outline-offset: -10px; }
-
-.box.has-advanced-upload .box__dragndrop {
-  display: inline; }
-
-.box.is-dragover {
-  background-color: grey; }
-
-.box.is-uploading .box__input {
-  visibility: none; }
-
-.box.is-uploading .box__uploading {
-  display: block; }
-
-.box {
+.image-uploader__box {
   display: flex;
   min-height: 40rem;
   width: 50rem;
@@ -1947,27 +1931,54 @@ fieldset {
   align-items: center;
   justify-content: center;
   background-color: #f7f7f7;
-  padding: 4rem; }
-  .box img {
-    max-width: 90%;
-    margin: 4rem; }
-  .box__dragndrop, .box__uploading, .box__success, .box__error {
-    display: none; }
-  .box__img {
+  padding: 4rem;
+  outline: 2px dashed #999999;
+  outline-offset: -10px; }
+  .image-uploader__box__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .image-uploader__box__cta__text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      padding: 1rem 0; }
+  .image-uploader__box__dragover {
+    background-color: #e8e8e8; }
+  .image-uploader__box__img {
     width: 10rem;
-    height: 10rem;
-    margin-bottom: 4rem;
-    margin-top: 0 !important; }
-  .box__file {
+    height: 10rem; }
+  .image-uploader__box__file {
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
     z-index: -1; }
-    .box__file__label {
-      display: inline-block;
-      cursor: pointer; }
+    .image-uploader__box__file__label {
+      background-color: #254B62;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      margin: 1rem 0;
+      border: 0.1rem solid #476D7C;
+      box-shadow: 0.15rem 0.15rem 0.15rem 0px rgba(0, 0, 0, 0.5);
+      border-radius: 0.5rem;
+      font-size: 1.3rem;
+      text-transform: uppercase; }
+      .image-uploader__box__file__label:focus, .image-uploader__box__file__label:active {
+        box-shadow: 0.07rem 0.07rem 0.07rem 0px rgba(0, 0, 0, 0.5); }
+      .image-uploader__box__file__label:hover {
+        background-color: #476D7C; }
+  .image-uploader__box__status {
+    margin-top: 2rem; }
+    .image-uploader__box__status li {
+      margin-left: 2rem;
+      font-size: 1.3rem;
+      text-align: left; }
+    .image-uploader__box__status img {
+      max-width: 90%;
+      display: block;
+      margin: 2rem; }
 
 .latest-blog {
   background-color: #f7f7f7;

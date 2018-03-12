@@ -1,62 +1,85 @@
-.box.has-advanced-upload {
-    outline: 2px dashed black;
-    outline-offset: -10px;
-}
-.box.has-advanced-upload .box__dragndrop {
-    display: inline;
-}
+.image-uploader {
 
-.box.is-dragover {
-    background-color: grey;
-  }
-
-.box.is-uploading .box__input {
-visibility: none;
-}
-.box.is-uploading .box__uploading {
-display: block;
-}
-
-.box {
-    display: flex;
-    min-height: 40rem;
-    width: 50rem;
-    max-width: 50rem;
-    align-items: center;
-    justify-content: center;
-    background-color: $color-grey-light;
-    padding: 4rem;
-
-    img {
-        max-width: 90%;
-        margin: 4rem;
-    }
-
-    &__dragndrop,
-    &__uploading,
-    &__success,
-    &__error {
-      display: none;
-    }
-
-    &__img {
-        width: 10rem;
-        height: 10rem;
-        margin-bottom: 4rem;
-        margin-top: 0 !important;
-    }
-
-    &__file {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
+    &__box {
+        display: flex;
+        min-height: 40rem;
+        width: 50rem;
+        max-width: 50rem;
+        align-items: center;
+        justify-content: center;
+        background-color: $color-grey-light;
+        padding: 4rem;
+        outline: 2px dashed $color-grey-dark;
+        outline-offset: -10px;
         
-        &__label {
-            display: inline-block;
-            cursor: pointer;
+        &__cta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &__text {
+                font-size: 1.8rem;
+                font-weight: 700;
+                padding: 1rem 0;
+            }
+
+        }
+
+        &__dragover {
+            background-color: $color-grey-2;
+        }
+
+        &__img {
+            width: 10rem;
+            height: 10rem;
+        }
+
+        &__file {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+            
+            &__label {
+                background-color: $color-primary;
+                color: $color-white;
+                padding: 0.5rem 1rem;
+                cursor: pointer;
+                margin: 1rem 0;
+                border: 0.1rem solid $color-primary-light;
+                box-shadow: 0.15rem 0.15rem 0.15rem 0px rgba($color-black,0.50);
+                border-radius: 0.5rem;
+                font-size: 1.3rem;
+                text-transform: uppercase;
+
+                &:focus,
+                &:active {
+                    box-shadow: 0.07rem 0.07rem 0.07rem 0px rgba($color-black,0.50);
+                }
+
+                &:hover {
+                    background-color: $color-primary-light;
+                }
+            }
+        }
+
+        &__status {
+            margin-top: 2rem;
+
+            li {
+                margin-left: 2rem;
+                font-size: 1.3rem;
+                text-align: left;
+            }
+
+            img {
+                max-width: 90%;
+                display: block;
+                margin: 2rem;
+            }
+
         }
     }
 }
