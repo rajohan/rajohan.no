@@ -45,7 +45,7 @@
             $this->watermarkImageBlack = '../img/watermark_black.png';
             $this->fileExtensions = ['jpeg' , 'jpg' , 'png', 'gif'];
             $this->fileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-            $this->maxFileSize = (1024 * 1024) * 3; // 3MB
+            $this->maxFileSize = 3; // In MB
 
         }
 
@@ -244,9 +244,9 @@
                 }
 
                 // Validate file size
-                if ($this->fileSize > $this->maxFileSize) {
+                if ($this->fileSize > ((1024 * 1024) * $this->maxFileSize)) {
 
-                    $errors[] = "This file is more than "+($this->maxFileSize / 1024)+"MB. Sorry, it has to be less than or equal to "+($this->maxFileSize / 1024)+"MB.";
+                    $errors[] = "This file is more than ".$this->maxFileSize."MB. Sorry, it has to be less than or equal to ".$this->maxFileSize."MB.";
 
                 }
 
@@ -265,25 +265,26 @@
 
                         } else { // Error while creating a new image from uploaded file
 
-                            echo json_encode(["status" => "error", "errors" => "Sorry, an error has occurred while creating the image. Please try again."]);
-
+                            $errors[] = "Sorry, an error has occurred while creating the image. Please try again.";
+                        
                         }
 
                     } else { // Working on wrong file?
 
-                        echo json_encode(["status" => "error", "errors" => "Sorry, an error has occurred. Please try again."]);
+                        $errors[] = "Sorry, an error has occurred. Please try again.";
                     }
-
-                } else { // File failed validation
-
-                    echo json_encode(["status" => "error", "errors" => $errors]);
 
                 }
 
-
             } else { // Error with the submit/ajax request. Usually means file size is > max allowed file size in php.ini
+                
+                $errors[] = "Sorry, an error has occurred while uploading your image. Please make sure the image is less than or equal to ".$this->maxFileSize."MB and try again.";
 
-                echo json_encode(["status" => "error", "errors" => "Sorry, an error has occurred while uploading your image. Please make sure the image is less than or equal to "+($this->maxFileSize / 1024)+"MB and try again."]);
+            }
+
+            if(!empty($errors)) {
+
+                echo json_encode(["status" => "error", "errors" => $errors]);
 
             }
 
