@@ -69,9 +69,11 @@ var imageUploader = function() {
             }); 
         }
 
+        ajaxData.append("upload_image", "true");
+
         // Ajax request for image upload
         $.ajax({
-            url: "classes/image_uploader.php",
+            url: "classes/ajax.php",
             type: "post",
             data: ajaxData,
             dataType: "json",

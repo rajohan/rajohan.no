@@ -4,11 +4,11 @@
     // Direct access check
     //-------------------------------------------------
 
-    //if(!defined('INCLUDE')) {
+    if(!defined('INCLUDE')) {
 
-      //  die('Direct access is not permitted.');
+        die('Direct access is not permitted.');
         
-    //}
+    }
 
     //-------------------------------------------------
     // Image uploader
@@ -24,6 +24,8 @@
         private $maxFileSize;
         private $errors;
         private $success;
+        private $ip;
+        private $user;
 
         private $fileInfo;
         private $filename;
@@ -43,7 +45,7 @@
 
         function __construct() {
 
-            $this->uploadDir = '../uploads/img/';
+            $this->uploadDir = '../../uploads/img/';
             $this->watermarkImageWhite = '../img/watermark_white.png';
             $this->watermarkImageBlack = '../img/watermark_black.png';
             $this->fileExtensions = ['jpeg' , 'jpg' , 'png', 'gif'];
@@ -51,6 +53,8 @@
             $this->maxFileSize = 3; // In MB
             $this->errors = []; // Create errors array
             $this->success = []; // Create success array
+            $this->user = 1;
+            $this->ip = $_SERVER['REMOTE_ADDR'];
 
         }
 
@@ -202,11 +206,33 @@
         } 
 
         //-------------------------------------------------
+        // Method to get database id for uploaded image
+        //-------------------------------------------------
+
+        private function getImageId() {
+
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT ID FROM `IMAGES` WHERE `USER` = ? ORDER BY ID DESC LIMIT 1");
+            $stmt->bind_param("i", $this->user);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+        
+                $imageId = $row['ID'];
+        
+            }
+        
+            return $imageId;
+
+        }
+
+        //-------------------------------------------------
         // Method to initialize the upload
         //-------------------------------------------------
 
         function init($files, $limitFiles = false, $watermarkEnabled = true, $watermarkColor = "white") {
-            
+
             // Remove elements with errors from $_FILES array (file missing, empty name etc)
             foreach($files as $key => $value) {
 
@@ -215,6 +241,7 @@
 
                     // Check for errors
                     if($key === "error" && $v !== 0) {
+                        
                         // Remove element key's with error from every inner array
                         foreach($files as $key2 => $value2) {
 
@@ -283,7 +310,7 @@
         // Method to upload image
         //-------------------------------------------------
 
-        function upload($files , $i) {
+        private function upload($files , $i) {
 
             if($files['error'][$i] < 1) {
 
@@ -332,7 +359,13 @@
 
                         if($upload) { // Imaged created successfully
 
-                            $this->success[] = "Image uploaded!<img src='/uploads/img/".basename($this->newFilename).".".$this->fileExtension."'><a href='/uploads/img/".basename($this->newFilename).".".$this->fileExtension."'>Link to your image</a>";
+                            // Insert image data to database
+                            $db_conn = new Database;
+                            $db_conn->db_insert('IMAGES', 'FILENAME, FILE_TYPE, USER, IP', 'ssis', array(basename($this->newFilename).".".$this->fileExtension, $this->fileType, $this->user, $this->ip));
+
+                            $imageId = $this->getImageId();
+
+                            $this->success[] = "Image uploaded!<img src='image/".$imageId."'><a href='image/".$imageId."'>Link to your image</a>";
 
                         } else { // Error while creating a new image from uploaded file
 
@@ -354,17 +387,6 @@
             }
 
         }
-
-    }
-
-?>
-
-<?php 
-
-    if(!empty($_FILES['files'])) {
-
-        $upload = new Image_uploader;
-        $upload->init($_FILES['files'], false, true, "black");
 
     }
 

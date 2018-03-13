@@ -10,6 +10,7 @@
     $ajax->settings_nav();
     $ajax->settings();
     $ajax->contact();
+    $ajax->image_uploader();
 
     //-------------------------------------------------
     // Direct access check
@@ -37,6 +38,7 @@
         private $comment;
         private $settings;
         private $contact;
+        private $upload;
 
         //-------------------------------------------------
         // Require files
@@ -69,6 +71,7 @@
             $this->comment = new Comments;
             $this->settings = new Settings;
             $this->contact = new Contact;
+            $this->upload = new Image_uploader;
 
         }
 
@@ -466,6 +469,22 @@
 
             }
 
+        }
+
+        //-------------------------------------------------
+        // Image uploader
+        //-------------------------------------------------
+
+        function image_uploader() {
+
+            if((isset($_POST['upload_image'])) && ($_POST['upload_image'] === "true") && (!empty($_FILES['files']))) {
+
+                $this->require_files();
+                $this->init();
+                $this->upload->init($_FILES['files'], false, true, "black");
+        
+            }
+        
         }
 
     }

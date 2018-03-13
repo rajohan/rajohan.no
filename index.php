@@ -61,6 +61,15 @@
     $traffic->add_traffic();
 
     //-------------------------------------------------
+    // Require image and exit if requested page is /image/
+    //-------------------------------------------------
+
+    if($page->page === "image") {
+        require_once('pages/view_image.php');
+        exit;
+    } 
+
+    //-------------------------------------------------
     // Login user if cookie is set and valid
     //-------------------------------------------------
 
