@@ -104,17 +104,15 @@ var imageUploader = function() {
 
                 } 
 
-                else if(data.status === "success"){ 
+                if(data.status === "success"){ 
 
-                    statusBox.html(""); // Empty status box
-                    statusBox.html(data.output);
+                    for(var x = 0; x < data.output.length; x++) {
 
-                } else {
+                        statusBox.append(data.output[x]);
 
-                    form.removeClass("uploading"); // Remove uploading class
-                    statusBox.html("Sorry, an error has occurred. Please try again.");
-                    
-                }
+                    }
+
+                } 
 
             },
 

@@ -22,6 +22,8 @@
         private $fileExtensions;
         private $fileTypes;
         private $maxFileSize;
+        private $errors;
+        private $success;
 
         private $fileInfo;
         private $filename;
@@ -33,6 +35,7 @@
         private $watermarkEnabled;
         private $watermarkColor;
         private $newFilename;
+        private $limitFiles;
         
         //-------------------------------------------------
         // Construct
@@ -46,6 +49,8 @@
             $this->fileExtensions = ['jpeg' , 'jpg' , 'png', 'gif'];
             $this->fileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
             $this->maxFileSize = 3; // In MB
+            $this->errors = []; // Create errors array
+            $this->success = []; // Create success array
 
         }
 
@@ -197,23 +202,90 @@
         } 
 
         //-------------------------------------------------
-        // Method to upload image
+        // Method to initialize the upload
         //-------------------------------------------------
 
-        function upload($watermarkEnabled = true, $watermarkColor = "white") {
+        function init($files, $limitFiles = false, $watermarkEnabled = true, $watermarkColor = "white") {
+            
+            // Remove elements with errors from $_FILES array (file missing, empty name etc)
+            foreach($files as $key => $value) {
 
-            if($_FILES['files']['error'][1] < 1) {
+                // Loop inner arrays (name, type, tmp_name, error, size)
+                foreach($value as $k => $v) {
+
+                    // Check for errors
+                    if($key === "error" && $v !== 0) {
+                        // Remove element key's with error from every inner array
+                        foreach($files as $key2 => $value2) {
+
+                            unset($files[$key2][$k]);
+
+                        }
+
+                    }
+    
+                } 
+
+            }
+
+            // Reorder array
+            foreach ($files as $key => $value) {
+
+                $files[$key] = array_values($files[$key]);
+                
+            }
+
+            // No limit to how many images can be uploaded simantanously
+            if($limitFiles === false) {
+
+                $this->limitFiles = count($files['name']);
+
+            } else { // Limit is set
+
+                $this->limitFiles = $limitFiles;
+
+            }
+
+            // Loop through every file and upload until last file or max file number is reached
+            for($i = 0; $i < $this->limitFiles; $i++) {
 
                 // Set variables needed
-                $this->fileInfo = pathinfo($_FILES['files']['name'][1]);
+                $this->fileInfo = pathinfo($files['name'][$i]);
                 $this->filename = $this->fileInfo['filename'];
-                $this->fileTmpName  = $_FILES['files']['tmp_name'][1];
+                $this->fileTmpName  = $files['tmp_name'][$i];
                 $this->fileType = strtolower(finfo_file(finfo_open(FILEINFO_MIME_TYPE), $this->fileTmpName));
-                $this->fileSize = $_FILES['files']['size'][1];
+                $this->fileSize = $files['size'][$i];
                 $this->imageSize = getimagesize($this->fileTmpName);
                 $this->watermarkEnabled = $watermarkEnabled;
                 $this->watermarkColor = $watermarkColor;
-                $errors = []; // Create errors array
+
+                $this->upload($files, $i);
+
+            }
+
+            // Output errors
+            if(!empty($this->errors)) {
+
+                echo json_encode(["status" => "error", "errors" => $this->errors]);
+
+            }
+
+            // Output successfully uploaded images
+            if(!empty($this->success)) {
+
+                echo json_encode(["status" => "success", "output" => $this->success]);
+
+            }
+
+        }
+
+        //-------------------------------------------------
+        // Method to upload image
+        //-------------------------------------------------
+
+        function upload($files , $i) {
+
+            if($files['error'][$i] < 1) {
 
                 // Make sure file extension exists
                 if(!empty($this->fileInfo['extension'])) {
@@ -225,66 +297,59 @@
                 // Validate file extension
                 if (!in_array($this->fileExtension,$this->fileExtensions)) {
 
-                    $errors[] = "This file extension is not allowed. Please upload a JPEG, JPG, GIF or PNG file.";
+                    $this->errors[] = "This file extension is not allowed. Please upload a JPEG, JPG, GIF or PNG file.";
 
                 }
 
                 // Validate file type
                 if(!in_array($this->fileType, $this->fileTypes)) {
 
-                    $errors[] = "This file type is not allowed. Please upload a JPEG, JPG, GIF or PNG file.";
+                    $this->errors[] = "This file type is not allowed. Please upload a JPEG, JPG, GIF or PNG file.";
 
                 }
 
                 // Validate that file is a image
                 if(!$this->imageSize) {
 
-                    $errors[] = "Only images can be uploaded.";
+                    $this->errors[] = "Only images can be uploaded.";
 
                 }
 
                 // Validate file size
                 if ($this->fileSize > ((1024 * 1024) * $this->maxFileSize)) {
 
-                    $errors[] = "This file is more than ".$this->maxFileSize."MB. Sorry, it has to be less than or equal to ".$this->maxFileSize."MB.";
+                    $this->errors[] = "This file is more than ".$this->maxFileSize."MB. Sorry, it has to be less than or equal to ".$this->maxFileSize."MB.";
 
                 }
 
                 // File validated without errors
-                if (empty($errors)) {
+                if (empty($this->errors)) {
                     
                     // Confirm we are working on the uploaded file
                     if(is_uploaded_file($this->fileTmpName)) {
 
                         $upload = $this->imageCreate(); // Create a new image from uploaded file
 
-                        // Imaged created successfully
-                        if($upload) {
+                        if($upload) { // Imaged created successfully
 
-                            echo json_encode(["status" => "success", "output" => "Image uploaded!<img src='/uploads/img/".basename($this->newFilename).".".$this->fileExtension."'><a href='/uploads/img/".basename($this->newFilename).".".$this->fileExtension."'>Link to your image</a>"]);
+                            $this->success[] = "Image uploaded!<img src='/uploads/img/".basename($this->newFilename).".".$this->fileExtension."'><a href='/uploads/img/".basename($this->newFilename).".".$this->fileExtension."'>Link to your image</a>";
 
                         } else { // Error while creating a new image from uploaded file
 
-                            $errors[] = "Sorry, an error has occurred while creating the image. Please try again.";
+                            $this->errors[] = "Sorry, an error has occurred while creating the image. Please try again.";
                         
                         }
 
                     } else { // Working on wrong file?
 
-                        $errors[] = "Sorry, an error has occurred. Please try again.";
+                        $this->errors[] = "Sorry, an error has occurred. Please try again.";
                     }
 
                 }
 
             } else { // Error with the submit/ajax request. Usually means file size is > max allowed file size in php.ini
                 
-                $errors[] = "Sorry, an error has occurred while uploading your image. Please make sure the image is less than or equal to ".$this->maxFileSize."MB and try again.";
-
-            }
-
-            if(!empty($errors)) {
-
-                echo json_encode(["status" => "error", "errors" => $errors]);
+                $this->errors[] = "Sorry, an error has occurred while uploading your image. Please make sure the image is less than or equal to ".$this->maxFileSize."MB and try again.";
 
             }
 
@@ -299,7 +364,7 @@
     if(!empty($_FILES['files'])) {
 
         $upload = new Image_uploader;
-        $upload->upload(true, "black");
+        $upload->init($_FILES['files'], false, true, "black");
 
     }
 

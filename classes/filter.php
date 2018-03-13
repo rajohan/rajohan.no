@@ -74,7 +74,7 @@
 
             }
 
-            $data = array_values ($data); // Reorder array
+            $data = array_values($data); // Reorder array
 
             foreach($data as $key => $value) {
 
