@@ -11,6 +11,7 @@
     $ajax->settings();
     $ajax->contact();
     $ajax->image_uploader();
+    $ajax->image_resizer();
 
     //-------------------------------------------------
     // Direct access check
@@ -39,6 +40,7 @@
         private $settings;
         private $contact;
         private $upload;
+        private $imageResizer;
 
         //-------------------------------------------------
         // Require files
@@ -72,6 +74,7 @@
             $this->settings = new Settings;
             $this->contact = new Contact;
             $this->upload = new Image_uploader;
+            $this->imageResizer = new image_resizer;
 
         }
 
@@ -486,6 +489,22 @@
             }
         
         }
+
+        //-------------------------------------------------
+        // Image resizer
+        //-------------------------------------------------
+
+        function image_resizer() {
+
+            if((isset($_POST['editImage'])) && ($_POST['editImage'] === "true") && isset($_POST['image'])) {
+
+                $this->require_files();
+                $this->init();
+                $this->imageResizer->init($_POST['image']);
+
+            }
+        
+        }   
 
     }
 

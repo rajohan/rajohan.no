@@ -51,15 +51,7 @@
             $this->id = $last_param;
 
             // Only numbers are valid id's
-            if (!preg_match("/^[0-9]{1,}$/", $this->id)) {
-
-                return false;
-
-            } else {
-
-                return true;
-
-            }
+            return preg_match("/^[0-9]{1,}$/", $this->id);
 
         }
 
@@ -77,8 +69,8 @@
             
             while ($row = $result->fetch_assoc()) {
         
-                $filename = $row['FILENAME'];
-                $fileType = $row['FILE_TYPE'];
+                $filename = $this->filter->sanitize($row['FILENAME']);
+                $fileType = $this->filter->sanitize($row['FILE_TYPE']);
         
             }
         

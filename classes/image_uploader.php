@@ -77,7 +77,7 @@
 
         private function watermark($img) {
 
-            // creating png image of watermark
+            // Creating png image of watermark
             if($this->watermarkColor === "white") {
 
                 $watermark = imagecreatefrompng($this->watermarkImageWhite); 
@@ -88,27 +88,27 @@
 
             }
 
-            // getting dimensions of watermark image
+            // Getting dimensions of watermark image
             $watermarkWidth = imagesx($watermark);  
             $watermarkHeight = imagesy($watermark);
             
-            // placing the watermark 10px from bottom and right
+            // Placing the watermark 10px from bottom and right
             $destX = $this->imageSize[0] - $watermarkWidth - 10;  
             $destY = $this->imageSize[1] - $watermarkHeight - 10;
 
-            // creating a cut resource
+            // Create a empty image
             $cut = imagecreatetruecolor($watermarkWidth, $watermarkHeight);
 
-            // set background transparent
+            // Set background transparent
             imagefill($cut,0,0,0x7fff0000);
 
-            // copying that section of the background to the cut
+            // Copying related section of image to the empty image
             imagecopy($cut, $img, 0, 0, $destX, $destY, $watermarkWidth, $watermarkHeight);
 
-            // placing the watermark now
+            // Placing the watermark
             imagecopy($cut, $watermark, 0, 0, 0, 0, $watermarkWidth, $watermarkHeight);
 
-            // merging both of the images
+            // Merging both of the images
             imagecopy($img, $cut, $destX, $destY, 0, 0, $watermarkWidth, $watermarkHeight);
 
             // free memory
@@ -242,6 +242,13 @@
                     // Check for errors
                     if($key === "error" && $v !== 0) {
                         
+                        // If a error is detected and filename not empty
+                        if(!empty($files['name'][$k])) {
+
+                            $this->errors[] = "Sorry, an error has occurred while uploading your image. Please make sure the image is less than or equal to ".$this->maxFileSize."MB and try again.";
+
+                        }
+
                         // Remove element key's with error from every inner array
                         foreach($files as $key2 => $value2) {
 

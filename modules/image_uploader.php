@@ -21,7 +21,7 @@
             <div class="image-uploader__box__cta">
                 <span class="image-uploader__box__cta__text">Drag your images here</span>
                 <span>or</span>
-                <label class="image-uploader__box__file__label" for="image-uploader__file">
+                <label class="btn-flat" for="image-uploader__file">
                     Select one
                 </label>
             </div>

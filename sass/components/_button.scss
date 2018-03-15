@@ -99,6 +99,28 @@
   }
 }
 
+.btn-flat {
+  background-color: $color-primary;
+  color: $color-white;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin: 1rem 0;
+  border: 0.1rem solid $color-primary-light;
+  box-shadow: 0.15rem 0.15rem 0.15rem 0px rgba($color-black,0.50);
+  border-radius: 0.5rem;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+
+  &:focus,
+  &:active {
+      box-shadow: 0.07rem 0.07rem 0.07rem 0px rgba($color-black,0.50);
+  }
+
+  &:hover {
+      background-color: $color-primary-light;
+  }
+}
+
 // Back to top button
 .back-to-top {
   position: fixed;

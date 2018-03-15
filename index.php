@@ -122,6 +122,7 @@
         <script src="js/comment.js"></script>
         <script src="js/settings.js"></script>
         <script src="js/image_uploader.js"></script>
+        <script src="js/image_resize.js"></script>
     </body>
   </head>
 </html>
