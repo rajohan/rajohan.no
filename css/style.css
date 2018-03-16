@@ -955,6 +955,49 @@ form {
   align-items: center;
   text-align: center; }
 
+.admin-navigation {
+  max-width: 33rem;
+  min-width: 33rem;
+  margin: 2rem;
+  margin-left: 0;
+  background-color: #f7f7f7;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-bottom: 6rem; }
+  @media only screen and (max-width: 56.25em) {
+    .admin-navigation {
+      display: none; } }
+  .admin-navigation__heading {
+    background-color: #476D7C;
+    color: #fff;
+    display: flex;
+    padding: 0.5rem;
+    padding-left: 2rem;
+    text-transform: uppercase;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem; }
+  .admin-navigation__list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    list-style: none;
+    margin: 2rem; }
+    .admin-navigation__list__item {
+      display: flex;
+      line-height: 1; }
+      .admin-navigation__list__item a {
+        display: flex;
+        align-items: center; }
+        .admin-navigation__list__item a img {
+          width: 2rem;
+          height: 2rem;
+          margin-right: 0.5rem;
+          margin-bottom: 0.2rem; }
+
 .blog-navigation {
   max-width: 33rem;
   min-width: 33rem;
@@ -1148,7 +1191,8 @@ form {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  user-select: none; }
+  user-select: none;
+  margin-bottom: 6rem; }
   .navigation__logo {
     height: 4rem;
     margin-left: 2rem;
@@ -1251,7 +1295,8 @@ form {
         background-color: #254B62;
         padding-right: auto;
         width: 20rem;
-        display: none; }
+        display: none;
+        line-height: 1; }
         @media only screen and (max-width: 56.25em) {
           .navigation__user-menu__nav__items {
             width: 25rem; } }
@@ -1265,7 +1310,8 @@ form {
           .navigation__user-menu__nav__items li img {
             width: 2rem;
             height: 2rem;
-            margin-right: 1rem; }
+            margin-right: 1rem;
+            margin-bottom: 0.1rem; }
           .navigation__user-menu__nav__items li a {
             font-size: 1.6rem;
             display: flex;

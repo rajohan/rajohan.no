@@ -18,7 +18,7 @@
     $sort_data = new Sort;
 
 ?>
-<!-- SECTION BLOG SHORT START -->
+<!-- SECTION BLOG NAVIGATION START -->
 <div class="blog-navigation">
     <div class="blog-navigation__sort">
         <div class="blog-navigation__sort__buttons">
@@ -77,4 +77,4 @@
         </div>
     </div>
 </div>
-<!-- SECTION NAV BLOG END -->
+<!-- SECTION NAV NAVIGATION END -->

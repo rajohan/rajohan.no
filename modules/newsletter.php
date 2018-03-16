@@ -11,7 +11,6 @@
     }
 
 ?>
-
 <!-- SECTION NEWSLETTER START -->
 <div class="container u-margin-bottom-medium">
     <h1 class="heading-secondary letter-spacing-medium u-center-text u-margin-bottom-small">

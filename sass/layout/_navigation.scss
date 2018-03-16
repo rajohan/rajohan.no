@@ -10,6 +10,7 @@
     justify-content: flex-start;
     align-items: center;
     user-select: none;
+    margin-bottom: 6rem;
 
     &__logo {
         height: 4rem;
@@ -150,6 +151,7 @@
                 padding-right: auto;
                 width: 20rem;
                 display: none;
+                line-height: 1;
 
                 @include respond(tab-port) { // width < 900px?
                     width: 25rem;
@@ -167,6 +169,7 @@
                         width: 2rem;
                         height: 2rem;
                         margin-right: 1rem;
+                        margin-bottom: 0.1rem;
                     }
 
                     a {

@@ -101,6 +101,18 @@
                         Settings
                     </a>
                 </li>
+                <?php 
+                    if($user_data['ADMIN'] > 0) {
+                ?>
+                <li>
+                    <a href="admin/">
+                        <img src="img/icons/admin.svg" alt="profile">
+                        Admin
+                    </a>
+                </li>
+                <?php
+                    }
+                ?>
                 <li>
                     <a href="logout/">
                         <img src="img/icons/logout.svg" alt="profile">
