@@ -1395,6 +1395,28 @@ form {
     max-width: 80rem;
     padding: 0 2.5rem; }
 
+.table {
+  display: table;
+  border: 0.1rem solid #254B62;
+  border-bottom: 0; }
+  .table__row {
+    display: table-row;
+    border-bottom: 0.1rem solid #254B62; }
+    .table__row:nth-of-type(even) {
+      background-color: #fff; }
+    .table__row:nth-of-type(odd) {
+      background-color: #f7f7f7; }
+    .table__row :not(:last-child) {
+      border-right: 0.1rem solid #254B62; }
+  .table__column {
+    display: table-cell;
+    padding: 0 1rem;
+    border-bottom: 0.1rem solid #254B62;
+    font-size: 1.3rem; }
+  .table__header {
+    background-color: #476D7C !important;
+    color: #fff; }
+
 .blog {
   width: 100vw;
   max-width: 100%;

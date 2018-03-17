@@ -18,6 +18,10 @@
 
         private $filter;
         private $page;
+        private $user;
+        private $login;
+        private $validator;
+        private $ip;
 
         //-------------------------------------------------
         // Construct
@@ -27,6 +31,10 @@
 
             $this->filter = new Filter;
             $this->page = new Page_handler;
+            $this->user = new Users;
+            $this->login = new Login;
+            $this->validator = new Validator;
+            $this->ip = $_SERVER['REMOTE_ADDR'];
 
         }
 
@@ -175,6 +183,81 @@
                 echo '<span class="tags">'.$tags[$i].'</span>';
 
             } 
+
+        }
+
+        //-------------------------------------------------
+        // Method to create new tags
+        //-------------------------------------------------
+
+        function create_tags($tags) {
+
+            $tags = $this->filter->sanitize($tags);
+
+            // Split the tags at every whitespace
+            $tags = preg_split('/\s+/', $tags, -1, PREG_SPLIT_NO_EMPTY);
+
+            $success = []; // success array
+            $errors = []; // errors array
+
+            // Get user details
+            if ($this->login->login_check()) {
+
+                $user_data = $this->user->get_user("ID", $_SESSION['USER']['ID']);
+        
+            }
+
+            // Create tag if user is admin
+            if((isset($user_data['ADMIN'])) && ($user_data['ADMIN'] > 0)) {
+
+                foreach($tags as $key => $value) {
+
+                    $db_conn = new Database;
+                    $count = $db_conn->count("TAGS", "WHERE TAG = ?", "s", array($value));
+
+                    // Tag do not already exist
+                    if(($count < 1) && ($this->validator->validate_tag($value))) {
+
+                        // Add tag to database
+                        $db_conn = new Database;
+                        $db_conn->db_insert("TAGS", "TAG, CREATED_BY_USER, CREATED_BY_IP", "sis", array($value, $user_data['ID'], $this->ip));
+
+                        $success[] = $value;
+
+
+                    } else {
+
+                        $errors[] = $value;
+
+                    }
+
+                }
+
+                // Output errors
+                if(!empty($errors)) {
+
+                    $output['errors'] = $errors;
+
+                }
+
+                // Output success
+                if(!empty($success)) {
+
+                    $output['success'] = $success;
+
+                }
+
+                if(!empty($output)) { 
+
+                    return $output;
+                    
+                }
+
+            } else { // User not logged in or are not a admin
+
+                $output['errors'] = "You do not have access to create new tags.";
+
+            }
 
         }
 

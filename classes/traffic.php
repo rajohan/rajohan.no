@@ -18,6 +18,7 @@
 
         private $filter;
         private $login;
+        private $details;
 
         //-------------------------------------------------
         // Construct
@@ -27,6 +28,7 @@
 
             $this->filter = new Filter;
             $this->login = new Login;
+            $this->details = get_browser(null, true);
             
         }
 
@@ -91,27 +93,67 @@
         }
 
         //-------------------------------------------------
-        // Method to get user agent
+        // Method to get user browser
         //-------------------------------------------------
 
-        private function agent() {
+        private function browser() {
 
-            if(isset($_SERVER['HTTP_USER_AGENT'])) {
+            if(isset($this->details['browser'])) {
 
-                $agent = $this->filter->sanitize($_SERVER['HTTP_USER_AGENT']);
+                $browser = $this->filter->sanitize($this->details['browser']);
 
             } else {
 
-                $agent = "N/A";
+                $browser = "N/A";
 
             }
 
-            return $agent;
+            return $browser;
 
         }
 
         //-------------------------------------------------
-        // Method to get reguested page
+        // Method to get user platform
+        //-------------------------------------------------
+
+        private function platform() {
+
+            if(isset($this->details['platform'])) {
+
+                $platform = $this->filter->sanitize($this->details['platform']);
+
+            } else {
+
+                $platform = "N/A";
+
+            }
+
+            return $platform;
+
+        }
+
+        //-------------------------------------------------
+        // Method to get user platform description
+        //-------------------------------------------------
+
+        private function platform_description() {
+
+            if(isset($this->details['platform_description'])) {
+
+                $platform_description = $this->filter->sanitize($this->details['platform_description']);
+
+            } else {
+
+                $platform_description = "N/A";
+
+            }
+
+            return $platform_description;
+
+        }
+
+        //-------------------------------------------------
+        // Method to get requested page
         //-------------------------------------------------
 
         private function page() {
@@ -171,26 +213,6 @@
         }
 
         //-------------------------------------------------
-        // Method to get current url
-        //-------------------------------------------------
-
-        private function url() {
-
-            if(isset($_SERVER['REQUEST_URI'])) {
-
-                $url = $this->filter->sanitize($_SERVER['REQUEST_URI']);
-
-            } else {
-
-                $url = "N/A";
-
-            }
-
-            return $url;
-
-        }
-
-        //-------------------------------------------------
         // Insert traffic to db
         //-------------------------------------------------
 
@@ -199,14 +221,15 @@
             $ip = $this->ip();
             $user = $this->user();
             $referrer = $this->referrer();
-            $agent = $this->agent();
+            $browser = $this->browser();
+            $platform = $this->platform();
+            $platform_description = $this->platform_description();
             $page = $this->page();
             $script = $this->script();
             $path = $this->path();
-            $url = $this->url();
 
             $db_conn = new Database;
-            $db_conn->db_insert('TRAFFIC_LOG', 'USER, IP, REFERRER, AGENT, PAGE, SCRIPT, PATH, URL', 'isssssss', array($user, $ip, $referrer, $agent, $page, $script, $path, $url)); // Add traffic to db
+            $db_conn->db_insert('TRAFFIC_LOG', 'USER, IP, REFERRER, BROWSER, PLATFORM, PLATFORM_DESCRIPTION, PAGE, SCRIPT, PATH', 'issssssss', array($user, $ip, $referrer, $browser, $platform, $platform_description, $page, $script, $path)); // Add traffic to db
 
         }
 

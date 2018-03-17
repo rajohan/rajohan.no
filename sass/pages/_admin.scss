@@ -1,0 +1,34 @@
+.table {
+    display: table;
+    border: 0.1rem solid $color-primary;
+    border-bottom: 0;
+
+    &__row {
+        display: table-row;
+        border-bottom:  0.1rem solid $color-primary;
+
+        &:nth-of-type(even) {
+            background-color: $color-white;
+        }
+
+        &:nth-of-type(odd) {
+            background-color: $color-grey-light;
+        }
+
+        :not(:last-child) {
+            border-right: 0.1rem solid $color-primary;
+        }
+    }
+
+    &__column {
+        display: table-cell;
+        padding: 0 1rem;
+        border-bottom:  0.1rem solid $color-primary;
+        font-size: 1.3rem;
+    }
+
+    &__header {
+        background-color: $color-primary-light !important;
+        color: $color-white;
+    }
+}
