@@ -15,6 +15,7 @@
     if($login->login_check()) {
 
         header('Location: /user/');
+        exit;
 
     } else {
 

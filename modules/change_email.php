@@ -11,7 +11,9 @@
     }
 
     if(isset($_GET['user']) && !isset($username)) {
+
         $username = $filter->sanitize($_GET['user']);
+        
     }
 
     $login = new Login;
@@ -19,6 +21,7 @@
     if($login->login_check()) {
 
         header('Location: /user/');
+        exit;
 
     } else {
 

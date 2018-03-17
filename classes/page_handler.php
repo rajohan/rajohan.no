@@ -23,6 +23,7 @@
         public $page;
         public $url;
         public $blog_id;
+        public $adminPage;
 
         //-----------------------------------------------
         // Construct
@@ -70,6 +71,18 @@
 
                 } else {
                     
+                    // Check if the first paramater is admin and that second parameter is set
+                    if(($params[$this->base_param_num] === "admin") && (!empty($params[$this->base_param_num+1]))) {
+
+                        // Check that parameter 2 is valid
+                        if(!preg_match('~\W~', $params[$this->base_param_num+1])) {
+
+                            $this->adminPage = $params[$this->base_param_num+1];
+
+                        }
+
+                    }
+
                     // Check if the first paramater is blog and that second parameter is set
                     if(($params[$this->base_param_num] === "blog") && (!empty($params[$this->base_param_num+1]))) {
 

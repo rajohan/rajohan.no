@@ -17,10 +17,12 @@
         $login->logout();
 
         header('Location: /home/');
+        exit;
 
     } else {
 
         header('Location: /home/');
+        exit;
 
     }
 
