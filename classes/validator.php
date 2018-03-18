@@ -28,6 +28,17 @@
         }
 
         //-------------------------------------------------
+        // Username/id validator
+        //-------------------------------------------------
+
+        function validate_username_id($data) {
+
+            $pattern = '/^[\w\-]{1,15}$/';
+            return preg_match($pattern, $data);
+
+        }
+
+        //-------------------------------------------------
         // Password validator
         //-------------------------------------------------
 
@@ -167,6 +178,50 @@
         function validate_forgot_password_code($data) {
 
             $pattern = '/^[A-z0-9]{8,8}$/';
+            return preg_match($pattern, $data);
+
+        }
+
+        //-------------------------------------------------
+        // Number validator
+        //-------------------------------------------------
+
+        function validate_number($data) {
+
+            $pattern = '/^[0-9]{1,}$/';
+            return preg_match($pattern, $data);
+
+        }
+
+        //-------------------------------------------------
+        // Id validator
+        //-------------------------------------------------
+
+        function validate_id($data) {
+
+            $pattern = '/^[1-9][0-9]*$/';
+            return preg_match($pattern, $data);
+
+        }
+
+        //-------------------------------------------------
+        // Page validator
+        //-------------------------------------------------
+
+        function validate_page($data) {
+
+            $pattern = '/^[\w]{1,}$/';
+            return preg_match($pattern, $data);
+
+        }
+
+        //-------------------------------------------------
+        // File validator
+        //-------------------------------------------------
+
+        function validate_file($data) {
+
+            $pattern = '/^[\w]{1,}[.][A-z]{1,}$/';
             return preg_match($pattern, $data);
 
         }

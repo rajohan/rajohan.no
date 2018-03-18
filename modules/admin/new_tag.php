@@ -56,7 +56,7 @@
 <!-- SECTION NEW TAGS END -->
 <?php
 
-        if(isset($_POST['new_tags']) && !(empty($_POST['new_tags']))) {
+        if((isset($_POST['new_tags'])) && (!empty($_POST['new_tags']))) {
 
             $create_tag = $tag->create_tags($_POST['new_tags']);
 

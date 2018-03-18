@@ -1,11 +1,11 @@
 .table {
     display: table;
-    border: 0.1rem solid $color-primary;
+    border: 1px solid $color-primary;
     border-bottom: 0;
 
     &__row {
         display: table-row;
-        border-bottom:  0.1rem solid $color-primary;
+        border-bottom:  1px solid $color-primary;
 
         &:nth-of-type(even) {
             background-color: $color-white;
@@ -16,14 +16,14 @@
         }
 
         :not(:last-child) {
-            border-right: 0.1rem solid $color-primary;
+            border-right: 1px solid $color-primary;
         }
     }
 
     &__column {
         display: table-cell;
         padding: 0 1rem;
-        border-bottom:  0.1rem solid $color-primary;
+        border-bottom:  1px solid $color-primary;
         font-size: 1.3rem;
         vertical-align: middle;
 

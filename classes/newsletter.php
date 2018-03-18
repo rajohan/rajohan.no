@@ -30,7 +30,7 @@
 
         function __construct() {
 
-            $this->ip = $_SERVER['REMOTE_ADDR'];;
+            $this->ip = $_SERVER['REMOTE_ADDR'];
             $this->filter = new Filter;
             $this->validator = new Validator;
             $this->user = new Users;

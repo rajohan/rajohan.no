@@ -19,6 +19,7 @@
         private $allowed_pages = [];
         private $filter;
         private $converter;
+        private $validator;
         private $base_param_num;
         public $page;
         public $url;
@@ -35,12 +36,13 @@
             // Allowed pages
             //-----------------------------------------------
             
-            $db_conn = new Database;
             $this->filter = new Filter;
             $this->converter = new Converter;
+            $this->validator = new Validator;
 
             $this->base_param_num = 1; // What parameter number website base is on
 
+            $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT `PAGE`, `FILE` FROM `PAGES` ORDER BY `ID` DESC"); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
@@ -65,7 +67,7 @@
             if(!empty($params[$this->base_param_num])) {
 
                 // Only allow word characters (a-z, A-Z, 0-9 and _.)
-                if (preg_match('~\W~', $params[$this->base_param_num])) {
+                if (!$this->validator->validate_page($params[$this->base_param_num])) {
 
                     $this->page = 'home'; // Value in url parameter is invalid. Setting $page to home
 
@@ -75,7 +77,7 @@
                     if(($params[$this->base_param_num] === "admin") && (!empty($params[$this->base_param_num+1]))) {
 
                         // Check that parameter 2 is valid
-                        if(!preg_match('~\W~', $params[$this->base_param_num+1])) {
+                        if($this->validator->validate_page($params[$this->base_param_num+1])) {
 
                             $this->adminPage = $params[$this->base_param_num+1];
 
@@ -87,10 +89,10 @@
                     if(($params[$this->base_param_num] === "blog") && (!empty($params[$this->base_param_num+1]))) {
 
                         // Check if parameter 2 is set and is valid
-                        if((($params[$this->base_param_num+1]) === "read") && (!preg_match('~\W~', $params[$this->base_param_num+1]))) {
+                        if((($params[$this->base_param_num+1]) === "read") && ($this->validator->validate_page($params[$this->base_param_num+1]))) {
 
                             // Check if parameter 3 is set and is valid
-                            if((!empty($params[$this->base_param_num+2])) && preg_match('/^[1-9][0-9]*$/', $params[$this->base_param_num+2])) {
+                            if((!empty($params[$this->base_param_num+2])) && $this->validator->validate_id($params[$this->base_param_num+2])) {
 
                                 $db_conn = new Database;
                                 
@@ -264,8 +266,8 @@
             // Set the $page variable
             if(!empty($last_param)) {
 
-                // Only allow word numbers (0-9)
-                if (!preg_match('/^[0-9]+$/', $last_param)) {
+                // Only numbers (0-9)
+                if (!$this->validator->validate_number($last_param)) {
 
                     return 1; // Value in url parameter is invalid. Returning 1 as page.
 
@@ -295,7 +297,7 @@
             if(!empty($params[$this->base_param_num])) {
 
                 // Only allow word characters (a-z, A-Z, 0-9 and _.)
-                if (preg_match('~\W~', $params[$this->base_param_num])) {
+                if (!$this->validator->validate_page($params[$this->base_param_num])) {
 
                   return 0; // Value in url parameter is invalid. Setting user to 0
 
@@ -308,7 +310,7 @@
                         if(!empty($last_param)) {
 
                             // Only allow valid username/ids
-                            if (!preg_match('/^[\w\-]{1,15}$/', $last_param)) {
+                            if (!$this->validator->validate_username_id($last_param)) {
 
                                 return 0; // Value in url parameter is invalid. Returning 0 as user.
 
