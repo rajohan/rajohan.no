@@ -70,7 +70,7 @@
         //-------------------------------------------------
 
         $db_conn = new Database;
-        $stmt = $db_conn->connect->prepare("SELECT * FROM `VERIFICATION_LOG` ORDER BY `ID` DESC");
+        $stmt = $db_conn->connect->prepare("SELECT * FROM `NEWSLETTER` ORDER BY `ID` DESC");
         $stmt->execute();
         $result = $stmt->get_result();
         
