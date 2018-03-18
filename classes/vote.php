@@ -172,6 +172,10 @@
 
         }
 
+        //-------------------------------------------------
+        // Method to calculate blog post rating based on votes
+        //-------------------------------------------------
+
         function rating($blog_id) {
 
             $blog_id = $this->filter->sanitize($blog_id);

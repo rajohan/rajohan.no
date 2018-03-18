@@ -25,6 +25,13 @@
         padding: 0 1rem;
         border-bottom:  0.1rem solid $color-primary;
         font-size: 1.3rem;
+        vertical-align: middle;
+
+        img {
+            max-width: 5rem;
+            display: block;
+            margin: 0.2rem 0;
+        }
     }
 
     &__header {

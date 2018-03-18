@@ -41,13 +41,13 @@
 
             $this->base_param_num = 1; // What parameter number website base is on
 
-            $stmt = $db_conn->connect->prepare("SELECT `PAGE`, `URL` FROM `PAGES` ORDER BY `ID` DESC"); // prepare statement
+            $stmt = $db_conn->connect->prepare("SELECT `PAGE`, `FILE` FROM `PAGES` ORDER BY `ID` DESC"); // prepare statement
             $stmt->execute(); // select from database
             $result = $stmt->get_result(); // Get the result
            
             while ($row = $result->fetch_assoc()) {
                 
-                $this->allowed_pages[$this->filter->sanitize(strtolower($row['PAGE']))] = $this->filter->sanitize($row['URL']); // Push rows to array
+                $this->allowed_pages[$this->filter->sanitize(strtolower($row['PAGE']))] = $this->filter->sanitize($row['FILE']); // Push rows to array
         
             }
 

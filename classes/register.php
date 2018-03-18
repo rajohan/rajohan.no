@@ -224,6 +224,8 @@
 
                 $action = "create";
                 $function = "verify email";
+
+                // Get new users id
                 $user_id = $this->user->get_user("EMAIL", $mail)['ID'];
 
                 // Add mail to newsletters
@@ -231,6 +233,11 @@
 
                     $db_conn = new Database;
                     $db_conn->db_insert("NEWSLETTER", "EMAIL, USER, IP", "sis", array($mail, $user_id, $this->ip));
+
+                } else { // Update newsletter email with user id
+
+                    $db_conn = new Database;
+                    $db_conn->db_update("NEWSLETTER", "USER", "EMAIL", "ss", array($user_id, $mail));
 
                 }
 

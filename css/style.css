@@ -1412,7 +1412,12 @@ form {
     display: table-cell;
     padding: 0 1rem;
     border-bottom: 0.1rem solid #254B62;
-    font-size: 1.3rem; }
+    font-size: 1.3rem;
+    vertical-align: middle; }
+    .table__column img {
+      max-width: 5rem;
+      display: block;
+      margin: 0.2rem 0; }
   .table__header {
     background-color: #476D7C !important;
     color: #fff; }

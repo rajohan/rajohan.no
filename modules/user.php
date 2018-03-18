@@ -374,29 +374,7 @@
                     </span>
                     <?php 
                         
-                        $admin = $user_data['ADMIN'];
-
-                        if($admin === "1") {
-
-                            echo 'Guest blogger';
-
-                        }
-
-                        else if($admin === "2") {
-
-                            echo 'Moderator';
-
-                        }
-
-                        else if($admin === "3") {
-
-                            echo 'Site owner';
-
-                        } else {
-
-                            echo "Member"; 
-
-                        }
+                        echo $converter->admin($user_data['ADMIN']);
                     
                     ?>
                 </span>

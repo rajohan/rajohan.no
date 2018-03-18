@@ -66,6 +66,9 @@
             IP
         </div>
         <div class="table__column">
+            RATING (VOTES)
+        </div>
+        <div class="table__column">
             ACCESS LEVEL
         </div>
     </div>
@@ -89,6 +92,12 @@
             $reg_date = $converter->date_time($filter->sanitize($row['REG_DATE']));
             $user_ip = $filter->sanitize($row['IP']);
             $access_level = $converter->admin($filter->sanitize($row['ADMIN']));
+            $ratio = $user->rating($id);
+
+            // Total number of votes
+            $comment_votes = $user->comment_votes($id);
+            $blog_votes = $user->blog_votes($id);
+            $total_votes = $comment_votes['upvotes'] + $comment_votes['downvotes'] + $blog_votes['upvotes'] + $blog_votes['downvotes'];
 
             echo 
             '<div class="table__row">
@@ -109,6 +118,9 @@
                 </div>
                 <div class="table__column">
                     '.$user_ip.'
+                </div>
+                <div class="table__column">
+                    '.$ratio.' ('.$total_votes.')
                 </div>
                 <div class="table__column">
                     '.$access_level.'
