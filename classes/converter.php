@@ -99,6 +99,38 @@
             
         }
 
+        //-------------------------------------------------
+        // Method to convert admin lvl to describing text
+        //-------------------------------------------------
+
+        function admin($data) {
+
+            if($data === "1") {
+
+                $data = "Guest blogger";
+
+            }
+
+            else if($data === "2") {
+
+                $data = "Moderator";
+
+            }
+
+            else if($data === "3") {
+
+                $data = "Site owner";
+
+            } else {
+
+                $data = "Member";
+
+            }
+
+            return $data;
+
+        }
+
     }
 
 ?>

@@ -18,6 +18,7 @@
         
         private $ip; // User ip
         private $login;
+        private $filter;
 
         //-------------------------------------------------
         // Construct
@@ -27,6 +28,7 @@
 
             $this->ip = $_SERVER['REMOTE_ADDR']; // User ip
             $this->login = new Login;
+            $this->filter = new Filter;
 
         }
 
@@ -167,6 +169,34 @@
                 }
 
             }
+
+        }
+
+        function rating($blog_id) {
+
+            $blog_id = $this->filter->sanitize($blog_id);
+
+            // Get vote count
+            $db_conn2 = new Database;
+            $like_vote_count = $db_conn2->count('BLOG_VOTES', 'WHERE ITEM_ID = ? AND VOTE = 1', 'i', array($blog_id));
+
+            // Get vote count
+            $db_conn2 = new Database;
+            $dis_like_vote_count = $db_conn2->count('BLOG_VOTES', 'WHERE ITEM_ID = ? AND VOTE = 0', 'i', array($blog_id));
+
+            $total_votes = $like_vote_count + $dis_like_vote_count;
+
+            // If past have no votes set rating to 0
+            if ($total_votes === 0) {
+                $rating = "0.0";
+
+            } else {
+
+                $rating = number_format((($like_vote_count * 10) / $total_votes), 1);
+
+            }
+
+            return $rating;
 
         }
 
