@@ -367,8 +367,8 @@ $(".blog__box").on("click", ".blog__comment__date-reply__img", function() {
         var reply_to = $(this).attr("data-id");
         var reply_to_user = $(this).attr("data-user");
 
-        $("#text-editor__status").attr("data-reply-to", reply_to);
-        $("#text-editor__reply-to").text(reply_to_user);
+        $(".text-editor__status").attr("data-reply-to", reply_to);
+        $(".text-editor__reply-to").text(reply_to_user);
         $(".text-editor__status__cancel").css("display", "flex");
 
         scroll($(".text-editor"), 0); // Scroll text editor
@@ -388,8 +388,8 @@ $(".blog__box").on("click", ".blog__comment__date-reply__img", function() {
 
 $(".text-editor__status__cancel").on("click", function() { 
 
-    $("#text-editor__reply-to").text("none");
-    $("#text-editor__status").attr("data-reply-to", "0");
+    $(".text-editor__reply-to").text("none");
+    $(".text-editor__status").attr("data-reply-to", "0");
     $(".text-editor__status__cancel").css("display", "none");
 
 });

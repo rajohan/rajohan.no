@@ -183,8 +183,8 @@
             if($login->login_check()) {
 
                 $placeholder = 'Your comment...';
-                $status_data = 'data-reply-to="0" data-blog-id="'.$blog_id.'"';
-                $status = 'Reply to:&nbsp;<span id="text-editor__reply-to">none</span><span class="text-editor__status__cancel"><img class="text-editor__status__cancel__img" src="img/icons/cancel.svg" alt="cancel"></span>';
+                $statusData = 'data-reply-to="0" data-blog-id="'.$blog_id.'"';
+                $status = 'Reply to:&nbsp;<span class="text-editor__reply-to">none</span><span class="text-editor__status__cancel"><img class="text-editor__status__cancel__img" src="img/icons/cancel.svg" alt="cancel"></span>';
                 require_once('text_editor.php');
                 
         ?>

@@ -1,18 +1,18 @@
 //-------------------------------------------------
 // Show/hide code box
 //-------------------------------------------------
-$("#toolbox__embed").click(function(){
+$(".toolbox__embed").click(function(){
 
-    $("#text-editor__code").text($("#text-editor__box")[0].innerHTML);
-    $("#text-editor__code-heading").toggle();
-    $("#text-editor__code").toggle();
+    $(this).parent().parent().siblings().next(".text-editor__code").text($(this).parent().parent().next(".text-editor__box")[0].innerHTML);
+    $(this).parent().parent().siblings().next(".text-editor__code-heading").toggle();
+    $(this).parent().parent().siblings().next(".text-editor__code").toggle();
 
 });
 
 //-------------------------------------------------
 // Insert 2 * <br> on "return" keydown
 //-------------------------------------------------
-$("#text-editor__box").keydown(function(event) {
+$(".text-editor__box").keydown(function(event) {
 
     // trap the return key being pressed
     if (event.keyCode == 13) {
@@ -29,14 +29,14 @@ $("#text-editor__box").keydown(function(event) {
 //-------------------------------------------------
 var placeholder;
 
-$("#text-editor__box").focusin(function () {
+$(".text-editor__box").focusin(function () {
 
-    placeholder = $("#text-editor__box").attr("data-placeholder");
+    placeholder = $(this).attr("data-placeholder");
     $(this).attr("data-placeholder", "");
 
 });
 
-$("#text-editor__box").focusout(function () {
+$(".text-editor__box").focusout(function () {
 
     $(this).attr("data-placeholder", placeholder);
 
@@ -45,15 +45,15 @@ $("#text-editor__box").focusout(function () {
 //-------------------------------------------------
 // Show/hide emoticon box
 //-------------------------------------------------
-$("#toolbox__emoticons").click(function(){
+$(".toolbox__emoticons").click(function(){
 
-    $("#toolbox__emoticons__box").toggle();
+    $(this).next(".toolbox__emoticons__box").toggle();
 
 });
 
-$("#toolbox__emoticons__box__close").click(function(){
+$(".toolbox__emoticons__box__close").click(function(){
 
-    $("#toolbox__emoticons__box").hide();
+    $(this).parent().hide();
 
 });
 
@@ -61,11 +61,10 @@ $("#toolbox__emoticons__box__close").click(function(){
 //-------------------------------------------------
 //  Toolbar icon click
 //-------------------------------------------------
-function execCmd(command, input) {
+function execCmd(event, command, input) {
 
     var selection = document.getSelection(); // Get selected element
-    $("#text-editor__box").focus(); // Focus the text editor box
-
+    $(event).parent().parent().next(".text-editor__box").focus(); // Focus the text editor box
     // run create url function
     if(command === "createLink") {
 
@@ -117,7 +116,7 @@ function execCmd(command, input) {
     else if(command === "insertEmoticon") {
 
         document.execCommand("insertHTML", false, "<img src='img/icons/emoticons/"+input+"' class='emoticon' style='margin-bottom: -0.3rem; width: 1.7rem; height: 1.7rem;'>");
-        $("#toolbox__emoticons__box").hide();
+        $(".toolbox__emoticons__box").hide();
 
     }
 
@@ -235,10 +234,10 @@ $(document).ready(function() {
         
     ];
 
-    $("#text-editor__box").on("click keyup focus focusin focusout blur", function () {
+    $(".text-editor__box").on("click keyup focus focusin focusout blur", function () {
 
-        var element = document.getElementById("text-editor__box");
-        var content = $("#text-editor__box")[0].innerHTML;
+        var element = this;
+        var content = $(this)[0].innerHTML;
         var changed = false;
 
         // Check for emoticon matches
@@ -256,9 +255,9 @@ $(document).ready(function() {
         // Change content if content have changed
         if (changed) {
 
-            $("#text-editor__box")[0].innerHTML = content;
+            $(this)[0].innerHTML = content;
             setEndOfContenteditable(element);
-            $("#text-editor__box").focus(); // Focus the text editor box
+            $(this).focus(); // Focus the text editor box
 
         }
 
@@ -270,7 +269,7 @@ $(document).ready(function() {
 // User paste handler
 //-------------------------------------------------
 
-$(document).on("paste",$("#text-editor__box"),function(event) {
+$(document).on("paste",$(".text-editor__box"),function(event) {
 
     event.preventDefault();
     var text = (event.originalEvent || event).clipboardData.getData("text/plain"); // get pasted text

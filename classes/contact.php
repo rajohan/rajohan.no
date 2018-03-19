@@ -112,7 +112,7 @@
                 $from = "webmaster@rajohan.no";
                 $reply_to = $mail;
                 
-                $body = $message."<br><br>From: ".$name."<br>Email: ".$mail."<br>User: ".$username."(".$user_id.")<br>Firm name: ".$firmname."<br>Phone number: ".$tel."<br>Webpage: ".$webpage."<br>Date: ".$date."<br>Time: ".$time."<br>Ip: ".$this->ip;
+                $body = $message."<br><br>From: ".$name."<br>Email: ".$mail."<br>User: ".$username." (".$user_id.")<br>Firm name: ".$firmname."<br>Phone number: ".$tel."<br>Webpage: ".$webpage."<br>Date: ".$date."<br>Time: ".$time."<br>Ip: ".$this->ip;
                 $alt_body = $message."\r\n\r\nFrom: ".$name."\r\nEmail: ".$mail."\r\nUser: ".$username." (".$user_id.")\r\nFirm name: ".$firmname."\r\nPhone number: ".$tel."\r\nWebpage: ".$webpage."\r\nDate: ".$date."\r\nTime: ".$time."\r\nIp: ".$this->ip;
                 $this->send_mail->send_mail($from, $from_name, $to, $reply_to, $subject, $body, $alt_body); 
                 

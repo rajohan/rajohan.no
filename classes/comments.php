@@ -18,10 +18,22 @@
 
         private $comments;
         private $blog_id;
+        private $validator;
+        private $filter;
+        private $login;
+        private $user;
+        private $converter;
+        private $bbcode;
 
         function __construct() {
 
             $this->comments = [];
+            $this->validator = new Validator();
+            $this->filter = new Filter;
+            $this->login = new Login;
+            $this->user = new Users;
+            $this->converter = new Converter;
+            $this->bbcode = new Bbcode;
 
         }
         
@@ -31,6 +43,8 @@
 
         private function get_reply_childs($id) {
             
+            $id = $this->filter->sanitize($id);
+
             if($this->count_replys($id) > 0) {
                 
                 $db_conn = new Database;
@@ -63,6 +77,8 @@
         
         private function get_root_replys($id) {
 
+            $id = $this->filter->sanitize($id);
+
             if($this->count_replys($id) > 0) {
                 
                 $db_conn = new Database;
@@ -91,6 +107,8 @@
 
         function count_replys($id) {
 
+            $id = $this->filter->sanitize($id);
+
             $db_conn2 = new Database;
             $reply_count = $db_conn2->count('COMMENTS', 'WHERE `REPLY_TO` = ?', 'i', array($id));
 
@@ -104,6 +122,8 @@
 
         function get_author($id) {
 
+            $id = $this->filter->sanitize($id);
+
             $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT `POSTED_BY_USER` FROM `COMMENTS` WHERE `ID`=?");
             $stmt->bind_param("i", $id);
@@ -112,7 +132,7 @@
                 
             while ($row = $result->fetch_assoc()) {
                 
-               $author = $row['POSTED_BY_USER'];
+               $author = $this->filter->sanitize($row['POSTED_BY_USER']);
 
             }
 
@@ -128,7 +148,10 @@
 
         function get_comments($blog_id, $order, $offset = 0, $max = 1000000) {
 
-            $this->blog_id = $blog_id;
+            $this->blog_id = $this->filter->sanitize($blog_id);
+            $order = $this->filter->sanitize($order);
+            $offset = $this->filter->sanitize($offset);
+            $max = $this->filter->sanitize($max);
 
             $db_conn = new Database;
             $stmt = $db_conn->connect->prepare("SELECT * FROM `COMMENTS` WHERE `BLOG_ID`=?  AND `REPLY_TO` < 1 ORDER BY $order LIMIT $offset , $max");
@@ -156,15 +179,10 @@
 
         private function generate_comment($reply_to, $user_id, $comment) {
 
-            $filter = new Filter;
-            $user = new Users;
-            $converter = new Converter;
-            $bbcode = new Bbcode;
-
-            $reply_to = $filter->sanitize($reply_to);
-            $user_id = $filter->sanitize($_SESSION['USER']['ID']);
-            $comment = $filter->strip($comment);
-            $comment = $bbcode->replace($filter->sanitize_code($comment));
+            $reply_to = $this->filter->sanitize($reply_to);
+            $user_id = $this->filter->sanitize($_SESSION['USER']['ID']);
+            $comment = $this->filter->strip($comment);
+            $comment = $this->bbcode->replace($this->filter->sanitize_code($comment));
 
             // Get id and posted date for comment
             $db_conn = new Database;
@@ -175,8 +193,8 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                $id = $filter->sanitize($row['ID']);
-                $posted_date = $filter->sanitize($row['POSTED_BY_DATE']);
+                $id = $this->filter->sanitize($row['ID']);
+                $posted_date = $this->filter->sanitize($row['POSTED_BY_DATE']);
 
             }
 
@@ -196,8 +214,8 @@
 
             }
 
-            $posted_date = $converter->date_time($posted_date);
-            $user_data = $user->get_user("ID", $user_id);
+            $posted_date = $this->converter->date_time($posted_date);
+            $user_data = $this->user->get_user("ID", $user_id);
             $admin = "";
             $reply = "";
             
@@ -221,7 +239,7 @@
             // Set reply variable if comment is a reply
             if((!empty($reply_to)) && ($reply_to !== "0")) {
 
-                $reply_author_name = $user->get_user("ID", $this->get_author($reply_to))['USERNAME'];
+                $reply_author_name = $this->user->get_user("ID", $this->get_author($reply_to))['USERNAME'];
 
                 $reply = '<span id="message_top_id_'.$id.'" class="blog__comment__reply-to">
                             <span data-reply-id="'.$reply_to.'" class="blog__comment__reply-to__text">
@@ -266,7 +284,7 @@
                     </span>
                 </div>
                 <div class="blog__comment__user__stats">
-                    '.$comment_count.' | Registered '.$converter->date($user_data['REG_DATE']).'
+                    '.$comment_count.' | Registered '.$this->converter->date($user_data['REG_DATE']).'
                 </div>
             </div>';
 
@@ -279,39 +297,76 @@
         //-------------------------------------------------
 
         function add_comment($blog_id, $reply_to, $comment) {
-            
-            // Check that user is logged in
-            $login = new Login;
-            if(!$login->login_check()) {
 
-                echo "You have to be logged in to post a comment.";
+            
+            $blog_id = $this->filter->sanitize($blog_id);
+            $reply_to = $this->filter->sanitize($reply_to);
+            $user_id = $this->filter->sanitize($_SESSION['USER']['ID']);
+            $comment = $this->filter->strip($comment);
+            $errors = []; // Create errors array
+            $success = []; // Create success array
+
+            // Check that blogpost with current blog id exist
+            $db_conn = new Database;
+            $count = $db_conn->count("BLOG", "WHERE ID = ?", "i", array($blog_id));
+
+            // Check that user is logged in
+            if(!$this->login->login_check()) {
+
+                $errors[] = "You have to be logged in to post a comment.";
                 
             }
+
             // Check that comment field not is empty
             else if(empty($comment)) {
 
-                echo "The comment field can not be empty.";
+                $errors[] =  "The comment field can not be empty.";
 
-            } else {
+            } 
 
-                $filter = new Filter;
+            // Check that blog id is valid
+            else if(!$this->validator->validate_id($blog_id)) {
 
-                $blog_id = $filter->sanitize($blog_id);
-                $reply_to = $filter->sanitize($reply_to);
-                $user_id = $filter->sanitize($_SESSION['USER']['ID']);
-                $comment = $filter->strip($comment);
+                $errors[] = "Invalid blog id.";
 
-                // Check if comment is a reply
-                if(empty($reply_to)) {
+            }
 
-                    $reply_to = 0;
+            else if(empty($errors)) {
+
+                // Check that blog post with current blog id exist
+                if($count < 1) {
+                    
+                    $errors[] = "Invalid blog id.";
+                    
+                } else {
+
+                    // Check if comment is a reply
+                    if(empty($reply_to)) {
+
+                        $reply_to = 0;
+
+                    }
+
+                    $db_conn = new Database;
+                    $db_conn->db_insert("COMMENTS", "COMMENT, BLOG_ID, REPLY_TO, POSTED_BY_USER", "siii", array($comment, $blog_id, $reply_to, $user_id));
+
+                    $success[] = $this->generate_comment($reply_to, $user_id, $comment);
 
                 }
 
-                $db_conn = new Database;
-                $db_conn->db_insert("COMMENTS", "COMMENT, BLOG_ID, REPLY_TO, POSTED_BY_USER", "siii", array($comment, $blog_id, $reply_to, $user_id));
+            }
 
-                echo $this->generate_comment($reply_to, $user_id, $comment);
+            // Output errors
+            if(!empty($errors)) {
+
+                echo json_encode(["status" => "error", "errors" => $errors]);
+
+            }
+
+            // Output successfully uploaded images
+            if(!empty($success)) {
+
+                echo json_encode(["status" => "success", "output" => $success]);
 
             }
 
