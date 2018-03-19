@@ -66,6 +66,9 @@
             ANSWERED
         </div>
         <div class="table__column">
+            USER (ID)
+        </div>
+        <div class="table__column">
             IP
         </div>
         <div class="table__column ">
@@ -86,13 +89,15 @@
         while ($row = $result->fetch_assoc()) {
 
             $id = $filter->sanitize($row['ID']);
-            $name = $filter->sanitize($row['NAME']);
+            $name = $filter->cut_string($filter->sanitize($row['NAME']), 20);
             $mail = $filter->sanitize($row['EMAIL']);
-            $subject = $filter->sanitize($row['SUBJECT']);
+            $subject = $filter->cut_string($filter->sanitize($row['SUBJECT']), 15);
             $seen = $converter->yes_no($filter->sanitize($row['SEEN']));
             $answered = $converter->yes_no($filter->sanitize($row['ANSWERED']));
+            $user_id = $filter->sanitize($row['USER']);
             $ip = $filter->sanitize($row['IP']);
             $date = $converter->date_time($filter->sanitize($row['DATE']));
+            $username = $user->get_user("ID", $user_id)['USERNAME'];
 
             echo 
             '<div class="table__row">
@@ -113,6 +118,9 @@
                 </div>
                 <div class="table__column">
                     '.$answered.'
+                </div>
+                <div class="table__column">
+                    '.$username.' ('.$user_id.')
                 </div>
                 <div class="table__column">
                     '.$ip.'

@@ -59,9 +59,6 @@
         <div class="table__column">
             USER (ID)
         </div>
-        <div class="table__column">
-            IP
-        </div>
         <div class="table__column ">
             DATE
         </div>
@@ -82,23 +79,8 @@
             $id = $filter->sanitize($row['ID']);
             $tag = $filter->sanitize($row['TAG']);
             $created_by_user = $filter->sanitize($row['CREATED_BY_USER']);
-            $created_by_ip = $filter->sanitize($row['CREATED_BY_IP']);
             $date = $converter->date($filter->sanitize($row['CREATED_DATE']));
-
-            // Check if user id exsist
-            $db_conn2 = new Database;
-            $count = $db_conn2->count("USERS", "WHERE ID= ?", "s", array($created_by_user));
-
-            if($count > 0) {
-
-                // Get username from id
-                $username = $user->get_user("ID", $created_by_user)['USERNAME'];
-
-            } else {
-
-                $username = "N/A";
-
-            }
+            $username = $user->get_user("ID", $user_id)['USERNAME'];
 
             // Get tag times used count
             $db_conn2 = new Database;
@@ -117,9 +99,6 @@
                 </div>
                 <div class="table__column">
                     '.$username.' ('.$created_by_user.')
-                </div>
-                <div class="table__column">
-                    '.$created_by_ip.'
                 </div>
                 <div class="table__column">
                     '.$date.'

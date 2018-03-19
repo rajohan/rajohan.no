@@ -58,9 +58,6 @@
             USER (ID)
         </div>
         <div class="table__column">
-            IP
-        </div>
-        <div class="table__column">
             DATE
         </div>
         <div class="table__column">
@@ -91,11 +88,11 @@
 
             $id = $filter->sanitize($row['ID']);
             $title = $filter->cut_string($filter->sanitize($row['TITLE']), 15);
-            $published_by_user = $filter->sanitize($row['PUBLISHED_BY_USER']);
-            $published_by_ip = $filter->sanitize($row['PUBLISHED_BY_IP']);
+            $user_id = $filter->sanitize($row['PUBLISHED_BY_USER']);
             $date = $converter->date($filter->sanitize($row['PUBLISH_DATE']));
             $published = $converter->yes_no($filter->sanitize($row['PUBLISHED']));
             $force_frontpage = $converter->yes_no($filter->sanitize($row['FORCE_FRONTPAGE']));
+            $username = $user->get_user("ID", $user_id)['USERNAME'];
 
             // Get view count
             $db_conn2 = new Database;
@@ -106,21 +103,6 @@
             $vote_count = $db_conn2->count('BLOG_VOTES', 'WHERE ITEM_ID = ?', 'i', array($id));
 
             $rating = $vote->rating($id);
-
-            // Check if user id exsist
-            $db_conn2 = new Database;
-            $count = $db_conn2->count("USERS", "WHERE ID= ?", "s", array($published_by_user));
-
-            if($count > 0) {
-
-                // Get username from id
-                $username = $user->get_user("ID", $published_by_user)['USERNAME'];
-
-            } else {
-
-                $username = "N/A";
-
-            }
 
             // Get tag times used count
             $db_conn2 = new Database;
@@ -135,10 +117,7 @@
                     '.$title.'
                 </div>
                 <div class="table__column">
-                    '.$username.' ('.$published_by_user.')
-                </div>
-                <div class="table__column">
-                    '.$published_by_ip.'
+                    '.$username.' ('.$user_id.')
                 </div>
                 <div class="table__column">
                     '.$date.'

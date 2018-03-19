@@ -121,6 +121,18 @@
                 
             }
 
+            if(empty($user_data['ID'])) {
+
+                $user_data['USERNAME'] = "N/A";
+                
+            }
+
+            if(empty($user_data['EMAIL'])) {
+
+                $user_data['EMAIL'] = "N/A";
+                
+            }
+
             return $user_data;
 
         }

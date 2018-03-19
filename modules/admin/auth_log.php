@@ -85,21 +85,7 @@
             $success = $converter->yes_no($filter->sanitize($row['SUCCESS']));
             $user_ip = $filter->sanitize($row['IP']);
             $date = $converter->date_time($filter->sanitize($row['DATE']));
-
-            // Check if user id exsist
-            $db_conn2 = new Database;
-            $count = $db_conn2->count("USERS", "WHERE ID= ?", "s", array($user_id));
-
-            if($count > 0) {
-
-                // Get username from id
-                $username = $user->get_user("ID", $user_id)['USERNAME'];
-
-            } else {
-
-                $username = "N/A";
-
-            }
+            $username = $user->get_user("ID", $user_id)['USERNAME'];
 
             echo 
             '<div class="table__row">

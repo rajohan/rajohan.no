@@ -63,9 +63,6 @@
             REG DATE
         </div>
         <div class="table__column">
-            IP
-        </div>
-        <div class="table__column">
             RATING (VOTES)
         </div>
         <div class="table__column">
@@ -89,8 +86,7 @@
             $username = $filter->sanitize($row['USERNAME']);
             $mail = $filter->sanitize($row['EMAIL']);
             $verified = $converter->yes_no($filter->sanitize($row['EMAIL_VERIFIED']));
-            $reg_date = $converter->date_time($filter->sanitize($row['REG_DATE']));
-            $user_ip = $filter->sanitize($row['IP']);
+            $reg_date = $converter->date($filter->sanitize($row['REG_DATE']));
             $access_level = $converter->admin($filter->sanitize($row['ADMIN']));
             $ratio = $user->rating($id);
 
@@ -115,9 +111,6 @@
                 </div>
                 <div class="table__column">
                     '.$reg_date.'
-                </div>
-                <div class="table__column">
-                    '.$user_ip.'
                 </div>
                 <div class="table__column">
                     '.$ratio.' ('.$total_votes.')

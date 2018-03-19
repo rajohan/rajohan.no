@@ -21,7 +21,7 @@
     // Get footer nav
     //-------------------------------------------------
 
-    $stmt = $db_conn->connect->prepare("SELECT NAME, URL FROM `FOOTER_NAVIGATION` ORDER BY `ID` ASC");
+    $stmt = $db_conn->connect->prepare("SELECT `NAME`, `PAGE` FROM `FOOTER` ORDER BY `ID` ASC");
     $stmt->execute();
     $result = $stmt->get_result();
  
@@ -43,7 +43,7 @@
         while ($row = $result->fetch_assoc()) {
 
             $name = $filter->sanitize($row['NAME']);
-            $url = $filter->sanitize($row['URL']);
+            $url = $filter->sanitize($row['PAGE']);
 
             echo '&ndash; <a href="'.$url.'/">'.ucfirst($name).'</a> ';
 

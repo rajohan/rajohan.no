@@ -56,9 +56,6 @@
         <div class="table__column">
             USER (ID)
         </div>
-        <div class="table__column">
-            IP
-        </div>
         <div class="table__column ">
             DATE
         </div>
@@ -79,30 +76,8 @@
             $id = $filter->sanitize($row['ID']);
             $mail = $filter->sanitize($row['EMAIL']);
             $user_id = $filter->sanitize($row['USER']);
-            $user_ip = $filter->sanitize($row['IP']);
-            $date = $converter->date_time($filter->sanitize($row['DATE']));
-
-            // Check if user id exsist
-            $db_conn2 = new Database;
-            $count = $db_conn2->count("USERS", "WHERE ID= ?", "s", array($user_id));
-
-            if($count > 0) {
-
-                // Get username from id
-                $username = $user->get_user("ID", $user_id)['USERNAME'];
-
-            } else {
-
-                $username = "N/A";
-
-            }
-
-
-            if((empty($mail)) || ($mail === 0)) {
-
-                $mail = "N/A";
-
-            }
+            $date = $converter->date($filter->sanitize($row['DATE']));
+            $username = $user->get_user("ID", $user_id)['USERNAME'];
 
             echo 
             '<div class="table__row">
@@ -114,9 +89,6 @@
                 </div>
                 <div class="table__column">
                     '.$username.' ('.$user_id.')
-                </div>
-                <div class="table__column">
-                    '.$user_ip.'
                 </div>
                 <div class="table__column">
                     '.$date.'

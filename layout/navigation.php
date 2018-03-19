@@ -25,7 +25,7 @@
     //-------------------------------------------------
 
     $db_conn = new Database;
-    $stmt = $db_conn->connect->prepare("SELECT `NAME`, `URL` FROM `NAVIGATION` ORDER BY `ID` ASC");
+    $stmt = $db_conn->connect->prepare("SELECT `NAME`, `PAGE` FROM `NAVIGATION` ORDER BY `ID` ASC");
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -51,7 +51,7 @@
             while ($row = $result->fetch_assoc()) {
 
                 $name = $filter->sanitize($row['NAME']);
-                $url = $filter->sanitize($row['URL']);
+                $url = $filter->sanitize($row['PAGE']);
 
                 echo '<li class="navigation__item">';
                 echo '<a href="'.$url.'/" class="navigation__link '.$page->set_active($url).'">';

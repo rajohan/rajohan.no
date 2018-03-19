@@ -59,9 +59,6 @@
         <div class="table__column">
             USER (ID)
         </div>
-        <div class="table__column">
-            IP
-        </div>
         <div class="table__column ">
             DATE
         </div>
@@ -83,23 +80,8 @@
             $page = $filter->sanitize($row['PAGE']);
             $file = $filter->sanitize($row['FILE']);
             $user_id = $filter->sanitize($row['CREATED_BY_USER']);
-            $user_ip = $filter->sanitize($row['CREATED_BY_IP']);
-            $date = $converter->date_time($filter->sanitize($row['CREATED_DATE']));
-
-            // Check if user id exsist
-            $db_conn2 = new Database;
-            $count = $db_conn2->count("USERS", "WHERE ID= ?", "s", array($user_id));
-
-            if($count > 0) {
-
-                // Get username from id
-                $username = $user->get_user("ID", $user_id)['USERNAME'];
-
-            } else {
-
-                $username = "N/A";
-
-            }
+            $date = $converter->date($filter->sanitize($row['CREATED_DATE']));
+            $username = $user->get_user("ID", $user_id)['USERNAME'];
 
             echo 
             '<div class="table__row">
@@ -114,9 +96,6 @@
                 </div>
                 <div class="table__column">
                     '.$username.' ('.$user_id.')
-                </div>
-                <div class="table__column">
-                    '.$user_ip.'
                 </div>
                 <div class="table__column">
                     '.$date.'
