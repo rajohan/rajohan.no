@@ -64,7 +64,17 @@ $(".toolbox__emoticons__box__close").click(function(){
 function execCmd(event, command, input) {
 
     var selection = document.getSelection(); // Get selected element
-    $(event).parent().parent().next(".text-editor__box").focus(); // Focus the text editor box
+
+    if($(event).parent().parent().parent().next(".text-editor__box").length > 0) { // For emoticons
+
+        $(event).parent().parent().parent().next(".text-editor__box").focus(); // Focus the text editor box
+
+    } else {
+
+        $(event).parent().parent().next(".text-editor__box").focus(); // Focus the text editor box
+
+    }
+
     // run create url function
     if(command === "createLink") {
 
