@@ -218,21 +218,10 @@
             $user_data = $this->user->get_user("ID", $user_id);
             $admin = "";
             $reply = "";
-            
-            // Set admin variable if user is admin
-            if($user_data['ADMIN'] === "1") {
 
-                $admin = '<span class="blog__comment__user__admin">Guest blogger</span>';
+            if($user_data['ADMIN'] > 0) {
 
-            }
-            else if($user_data['ADMIN']=== "2") {
-
-                $admin = '<span class="blog__comment__user__admin">Moderator</span>';
-
-            }
-            else if($user_data['ADMIN'] === "3") {
-
-                $admin = '<span class="blog__comment__user__admin">Site owner</span>';
+                echo '<span class="blog__comment__user__admin">'.$this->converter->admin($user_data['ADMIN']).'</span>';
 
             }
 

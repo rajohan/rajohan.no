@@ -165,7 +165,7 @@
                 <img src="img/icons/reddit.svg" alt="reddit" class="blog__comment__stats__social_media__img">
             </div>
         </div>
-        <div id="<?php echo $blog_id; ?>" class="blog__comment">
+        <div class="u-margin-bottom-small" id="<?php echo $blog_id; ?>" class="blog__comment">
             
             <?php 
 

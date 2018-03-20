@@ -1,0 +1,46 @@
+.suggestions__box {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 6.2rem;
+    background-color: $color-grey-light;
+    border: 1px solid $color-grey-2;
+    z-index: 100;
+
+    :not(:last-child) {
+
+        border-bottom: 1px solid $color-grey-2;
+
+    }
+
+    &::before,
+    &::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 1rem solid transparent;
+        border-right: 1rem solid transparent;
+        position: absolute;
+        left: 3rem;
+    }
+
+    &::before {
+        top: -0.9rem;
+        border-bottom: 1rem solid $color-grey-light;
+        z-index: 20;
+    }
+
+    &::after {
+        top: -1rem;
+        border-bottom: 1rem solid $color-grey-2;
+    }
+    
+    &__item {
+        width: 100%;
+        display: flex;
+        cursor: pointer;
+        padding: 0rem 2rem;
+        font-size: 1.3rem;
+    }
+}

@@ -12,6 +12,7 @@
     $ajax->contact();
     $ajax->image_uploader();
     $ajax->image_resizer();
+    $ajax->suggest_tags();
 
     //-------------------------------------------------
     // Direct access check
@@ -41,6 +42,7 @@
         private $contact;
         private $upload;
         private $imageResizer;
+        private $tags;
 
         //-------------------------------------------------
         // Require files
@@ -75,6 +77,7 @@
             $this->contact = new Contact;
             $this->upload = new Image_uploader;
             $this->imageResizer = new image_resizer;
+            $this->tags = new Tags;
 
         }
 
@@ -501,6 +504,22 @@
                 $this->require_files();
                 $this->init();
                 $this->imageResizer->init($_POST['image']);
+
+            }
+        
+        }  
+        
+        //-------------------------------------------------
+        // Tag suggestions
+        //-------------------------------------------------
+
+        function suggest_tags() {
+
+            if((isset($_POST['new_post_tag'])) && (!empty($_POST['new_post_tag']))) {
+
+                $this->require_files();
+                $this->init();
+                $this->tags->suggest_tags($_POST['new_post_tag']);
 
             }
         

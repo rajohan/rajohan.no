@@ -74,6 +74,14 @@ body {
   color: $color-grey !important;
 }
 
+.heading-tertiary__black {
+  display: block;
+  font-size: $default-font-size;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: $color-black-light !important;
+}
+
 .heading-quaternary {
   display: block;
   font-size: $default-font-size;

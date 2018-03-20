@@ -123,6 +123,7 @@
         <script src="js/settings.js"></script>
         <script src="js/image_uploader.js"></script>
         <script src="js/image_resize.js"></script>
+        <script src="js/new_blog_post.js"></script>
     </body>
   </head>
 </html>

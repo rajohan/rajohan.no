@@ -183,6 +183,13 @@ body {
   text-transform: uppercase;
   color: #c5c5c5 !important; }
 
+.heading-tertiary__black {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #363636 !important; }
+
 .heading-quaternary {
   display: block;
   font-size: 1.6rem;
@@ -790,6 +797,39 @@ form {
     cursor: pointer; }
     .social-media__img:hover {
       opacity: 0.7; }
+
+.suggestions__box {
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 6.2rem;
+  background-color: #f7f7f7;
+  border: 1px solid #e8e8e8;
+  z-index: 100; }
+  .suggestions__box :not(:last-child) {
+    border-bottom: 1px solid #e8e8e8; }
+  .suggestions__box::before, .suggestions__box::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid transparent;
+    position: absolute;
+    left: 3rem; }
+  .suggestions__box::before {
+    top: -0.9rem;
+    border-bottom: 1rem solid #f7f7f7;
+    z-index: 20; }
+  .suggestions__box::after {
+    top: -1rem;
+    border-bottom: 1rem solid #e8e8e8; }
+  .suggestions__box__item {
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    padding: 0rem 2rem;
+    font-size: 1.3rem; }
 
 .tags {
   display: inline-block;
@@ -1422,6 +1462,30 @@ form {
   .table__header {
     background-color: #476D7C !important;
     color: #fff; }
+
+.admin__input-box {
+  display: flex;
+  flex-direction: column;
+  max-width: 100rem;
+  width: 100%;
+  margin-top: 2rem;
+  position: relative; }
+
+.admin__label {
+  text-align: left;
+  margin-left: 2rem; }
+
+.admin__input {
+  width: 100%;
+  padding: 0.8rem 2rem;
+  background-color: #e8e8e8;
+  border: none; }
+  .admin__input:focus {
+    outline: none;
+    background-color: #c5c5c5; }
+  .admin__input::-webkit-input-placeholder {
+    font-weight: 100;
+    color: #999999; }
 
 .blog {
   width: 100vw;

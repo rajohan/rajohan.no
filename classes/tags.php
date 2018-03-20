@@ -261,6 +261,31 @@
 
         }
 
+        function suggest_tags($tag) {
+
+            $tag = $this->filter->sanitize($tag);
+            $tag = "%".$tag."%";
+            
+            $tags = [];
+
+            $db_conn = new Database;
+            $stmt = $db_conn->connect->prepare("SELECT * FROM `TAGS` WHERE TAG LIKE ? ORDER BY `TAG` ASC LIMIT 5");
+            $stmt->bind_param("s", $tag);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+
+                array_push($tags, ucfirst($row['TAG']));
+
+            }
+
+            $db_conn->free_close($result, $stmt);
+
+            echo json_encode(["new_post_tags" => $tags]);
+
+        }
+
     }
 
 ?>

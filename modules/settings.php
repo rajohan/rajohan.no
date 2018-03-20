@@ -451,6 +451,7 @@
                 <input type="text" id="settings__company-role" name="settings__company-role" value="<?php echo $user_data['FIRM_ROLE']; ?>">
             </div>
             <div class="error__box"></div>
+            <h1 class="heading-tertiary__black">Biography</h1>
             <div class="settings__input__box">
                 <?php
 
