@@ -2,9 +2,7 @@
 
     &__box {
         display: flex;
-        min-height: 40rem;
-        width: 50rem;
-        max-width: 50rem;
+        width: 100%;
         align-items: center;
         justify-content: center;
         background-color: $color-grey-light;

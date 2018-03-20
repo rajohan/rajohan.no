@@ -261,6 +261,10 @@
 
         }
 
+        //-------------------------------------------------
+        // Method to suggest tags
+        //-------------------------------------------------
+
         function suggest_tags($tag) {
 
             $tag = $this->filter->sanitize($tag);
@@ -269,7 +273,7 @@
             $tags = [];
 
             $db_conn = new Database;
-            $stmt = $db_conn->connect->prepare("SELECT * FROM `TAGS` WHERE TAG LIKE ? ORDER BY `TAG` ASC LIMIT 5");
+            $stmt = $db_conn->connect->prepare("SELECT TAG FROM `TAGS` WHERE TAG LIKE ? ORDER BY `TAG` ASC LIMIT 5");
             $stmt->bind_param("s", $tag);
             $stmt->execute();
             $result = $stmt->get_result();
