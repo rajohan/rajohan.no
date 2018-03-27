@@ -8,7 +8,7 @@
     <form class="image-uploader__box u-margin-top-small" method="post" action="" enctype="multipart/form-data">
         <img src="img/icons/upload.svg" class="image-uploader__box__img">
         <div class="image-uploader__box__input">
-            <input class="image-uploader__box__file" type="file" name="files[]" id="image-uploader__file" multiple />
+            <input class="image-uploader__box__file" type="file" name="new_post_image[]" id="image-uploader__file">
             <div class="image-uploader__box__cta">
                 <span class="image-uploader__box__cta__text">Drag your image here</span>
                 <span>or</span>
@@ -31,27 +31,29 @@
     <input type="text" class="admin__input" data-tags="" id="new_post_tags" name="new_post_blog_tags" placeholder="Tags separated by space...">
     <div class="suggestions__box"></div>
 </div>
-    <div class="admin__input-box"> 
-        <h1 class="heading-tertiary__black">Short story</h1>
-        <?php
+<div class="admin__input-box"> 
+    <h1 class="heading-tertiary__black">Short story</h1>
+    <?php
 
-            $textEditorId = "new_post_short_story";
-            $placeholder = "Short story...";
-            require('modules/text_editor.php');
+        $textEditorId = "new_post_short_story";
+        $placeholder = "Short story...";
+        require('modules/text_editor.php');
 
-        ?>
-    </div>
-    <div class="admin__input-box">
-        <h1 class="heading-tertiary__black">Full story</h1>
-        <?php
+    ?>
+</div>
+<div class="admin__input-box">
+    <h1 class="heading-tertiary__black">Full story</h1>
+    <?php
 
-            $textEditorId = "new_post_full_story";
-            $placeholder = "Full story...";
-            require('modules/text_editor.php');
+        $textEditorId = "new_post_full_story";
+        $placeholder = "Full story...";
+        require('modules/text_editor.php');
 
-        ?>
-    </div>
-<button type="submit" class="btn-flat u-margin-top-small">
+    ?>
+</div>
+<button type="submit" id="create_post" class="btn-flat u-margin-top-small">
     Submit blog post
 </button>
+<div class="admin__status-box u-margin-top-small">
+</div>
 <!-- SECTION NEW BLOG POST START -->

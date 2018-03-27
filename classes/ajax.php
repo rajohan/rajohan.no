@@ -13,6 +13,7 @@
     $ajax->image_uploader();
     $ajax->image_resizer();
     $ajax->suggest_tags();
+    $ajax->create_new_post();
 
     //-------------------------------------------------
     // Direct access check
@@ -43,6 +44,7 @@
         private $upload;
         private $imageResizer;
         private $tags;
+        private $new_post;
 
         //-------------------------------------------------
         // Require files
@@ -76,8 +78,9 @@
             $this->settings = new Settings;
             $this->contact = new Contact;
             $this->upload = new Image_uploader;
-            $this->imageResizer = new image_resizer;
+            $this->imageResizer = new Image_resizer;
             $this->tags = new Tags;
+            $this->new_post = new New_post;
 
         }
 
@@ -483,11 +486,21 @@
 
         function image_uploader() {
 
+            // Main upload page
             if((isset($_POST['upload_image'])) && ($_POST['upload_image'] === "true") && (!empty($_FILES['files']))) {
 
                 $this->require_files();
                 $this->init();
-                $this->upload->init($_FILES['files'], false, true, "black");
+                $this->upload->init($_FILES['files'], true, 3, true, "black");
+        
+            }
+
+            // New blog post image upload
+            if((isset($_POST['upload_image'])) && ($_POST['upload_image'] === "true") && (!empty($_FILES['new_post_image']))) {
+
+                $this->require_files();
+                $this->init();
+                $this->upload->init($_FILES['new_post_image'], false, 1, true, "black");
         
             }
         
@@ -523,7 +536,23 @@
 
             }
         
-        }   
+        }
+        
+        //-------------------------------------------------
+        // Create new blog post
+        //-------------------------------------------------
+
+        function create_new_post() {
+
+            if((isset($_POST['create_new_post'])) && ($_POST['create_new_post'] === "true") && (isset($_POST['image'])) && (isset($_POST['title'])) && (isset($_POST['tags'])) && (isset($_POST['shortStory'])) && (isset($_POST['fullStory']))) {
+
+                $this->require_files();
+                $this->init();
+                $this->new_post->create_post($_POST['image'], $_POST['title'], $_POST['tags'], $_POST['shortStory'], $_POST['fullStory']);
+
+            }
+
+        }
 
     }
 

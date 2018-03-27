@@ -38,6 +38,7 @@
         private $watermarkColor;
         private $newFilename;
         private $limitFiles;
+        private $message;
         
         //-------------------------------------------------
         // Construct
@@ -231,7 +232,9 @@
         // Method to initialize the upload
         //-------------------------------------------------
 
-        function init($files, $limitFiles = false, $watermarkEnabled = true, $watermarkColor = "white") {
+        function init($files, $message = true, $limitFiles = false, $watermarkEnabled = true, $watermarkColor = "white") {
+
+            $this->message = $message; // Decides if a success message and link to image should be outputed with each image
 
             // Remove elements with errors from $_FILES array (file missing, empty name etc)
             foreach($files as $key => $value) {
@@ -276,7 +279,15 @@
 
             } else { // Limit is set
 
-                $this->limitFiles = $limitFiles;
+                if(count($files['name']) > $limitFiles) {
+
+                    $this->limitFiles = $limitFiles;
+
+                } else {
+
+                    $this->limitFiles = count($files['name']);
+
+                }
 
             }
 
@@ -372,7 +383,15 @@
 
                             $imageId = $this->getImageId();
 
-                            $this->success[] = "Image uploaded!<img src='image/".$imageId."'><a href='image/".$imageId."'>Link to your image</a>";
+                            if($this->message === true) {
+
+                                $this->success[] = "Image uploaded!<img id='".$imageId."' class='uploaded_image' src='image/".$imageId."'><a href='image/".$imageId."'>Link to your image</a>";
+
+                            } else {
+
+                                $this->success[] = "<img id='".$imageId."' class='uploaded_image' src='image/".$imageId."'>";
+
+                            }
 
                         } else { // Error while creating a new image from uploaded file
 

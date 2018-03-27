@@ -110,3 +110,92 @@ $(document).ready(function () {
     });
 
 });
+
+//-------------------------------------------------
+//  Create blog post
+//-------------------------------------------------
+$("#create_post").on("click", function (e) {
+
+    // Prevent double submit
+    if (!$("#create_post").hasClass("posting")) {
+
+        $("#create_post").addClass("posting"); // Add uploading class
+        e.preventDefault(); // Prevent default behavior
+
+        var image = $(".uploaded_image").attr("id");
+        var title = $("#new_post_title").val();
+        var tags = $("#new_post_tags").attr("data-tags");
+        var shortStory = $("#new_post_short_story").html();
+        var fullStory = $("#new_post_full_story").html();
+        var statusBox = $(".admin__status-box");
+
+        if(image == null) {
+
+            image = "";
+
+        }
+
+        statusBox.html("<img alt=\"loading\" src=\"img/loading.gif\">"); // Output loading image
+
+        // Ajax request for auto complete tags
+        $.ajax({
+                    
+            url: "classes/ajax.php",
+            type: "post",
+            data: {
+                image: image,
+                title: title,
+                tags: tags,
+                shortStory: shortStory,
+                fullStory: fullStory,
+                create_new_post: true
+            },
+            dataType: "json",
+
+            complete: function() {
+
+                $("#create_post").removeClass("posting");
+
+            },
+
+            success: function(data) {
+
+                statusBox.html("");
+
+                if(data.status === "error"){
+
+                    statusBox.append("<ul>");
+
+                    for(var i = 0; i < data.errors.length; i++) {
+
+                        statusBox.append("<li>"+data.errors[i]+"</li>");
+
+                    }
+
+                    statusBox.append("</ul>");
+
+                } 
+
+                if(data.status === "success"){ 
+
+                    for(var x = 0; x < data.output.length; x++) {
+
+                        statusBox.append(data.output[x]);
+
+                    }
+
+                } 
+
+            },
+
+            error: function() {
+
+                statusBox.html("Sorry, an error has occurred. Please try again.");
+
+            }
+
+        });
+
+    }
+
+});

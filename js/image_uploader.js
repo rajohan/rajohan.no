@@ -78,9 +78,9 @@
             // loop through the dragged & dropped files and add them to the data stack
             if (droppedFiles) {
 
-                $.each( droppedFiles, function(i, file) {
+                $.each(droppedFiles, function(i, file) {
 
-                    ajaxData.append( input.attr("name"), file );
+                    ajaxData.append(input.attr("name"), file);
 
                 }); 
             }

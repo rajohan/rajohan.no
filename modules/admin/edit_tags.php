@@ -78,7 +78,7 @@
 
             $id = $filter->sanitize($row['ID']);
             $tag = $filter->sanitize($row['TAG']);
-            $created_by_user = $filter->sanitize($row['CREATED_BY_USER']);
+            $user_id = $filter->sanitize($row['CREATED_BY_USER']);
             $date = $converter->date($filter->sanitize($row['CREATED_DATE']));
             $username = $user->get_user("ID", $user_id)['USERNAME'];
 
@@ -98,7 +98,7 @@
                     '.$count.'
                 </div>
                 <div class="table__column">
-                    '.$username.' ('.$created_by_user.')
+                    '.$username.' ('.$user_id.')
                 </div>
                 <div class="table__column">
                     '.$date.'
